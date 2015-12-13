@@ -26,5 +26,5 @@ local toggle_enabled = function()
 	functionality_enabled = not functionality_enabled
 end
 
-SlashCmdList["TOGGLE"] = function() toggle_enabled() print("Errors shown: "..tostring(!functionality_enabled)) end
+SlashCmdList["TOGGLE"] = function() toggle_enabled() print("Errors shown: "..tostring(not functionality_enabled)) end
 SLASH_TOGGLE1 = "/errors"

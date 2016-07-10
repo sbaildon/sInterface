@@ -3,4 +3,5 @@
 ## Title: sInterface
 ## Notes: Interface things
 
+globals.lua
 ui.xml

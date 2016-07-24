@@ -50,8 +50,7 @@ hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
 	frame.name:SetFont(font, 10, "OUTLINE")
 end)
 
-function events:NAME_PLATE_CREATED(unitBarId)
-	namePlate = unitBarId
+function events:NAME_PLATE_CREATED(namePlate)
 	namePlate.UnitFrame.healthBar.barTexture:SetTexture(globals.media.bar)
 	namePlate.UnitFrame.healthBar.border:Hide();
 

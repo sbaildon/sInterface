@@ -57,7 +57,16 @@ function events:NAME_PLATE_CREATED(namePlate)
 	namePlate.UnitFrame.name:ClearAllPoints()
 	namePlate.UnitFrame.name:SetPoint("BOTTOM", namePlate.UnitFrame.healthBar, "TOP")
 	namePlate.UnitFrame.name:SetTextColor(1,1,1,1)
-	namePlate.UnitFrame.name:Hide()
+
+	local shadowFrame = CreateFrame("Frame", nil, namePlate.UnitFrame.healthBar)
+	shadowFrame:SetFrameStrata("BACKGROUND")
+	shadowFrame:SetPoint("TOPLEFT", namePlate.UnitFrame.healthBar, "TOPLEFT", -3, 3)
+	shadowFrame:SetPoint("BOTTOMRIGHT", namePlate.UnitFrame.healthBar, "BOTTOMRIGHT", 3, -3)
+	shadowFrame:SetBackdrop({
+		edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
+		edgeSize = 5,
+	})
+	shadowFrame:SetBackdropBorderColor(0, 0, 0, 1)
 end
 
 sPlates:SetScript("OnEvent", function(self, event, ...)

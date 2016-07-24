@@ -2,8 +2,7 @@ local addon, ns = ...
 local globals = ns.globals
 
 config = {
-	tanking = false,
-	tickRate = 0.1
+	tanking = true,
 }
 
 stuff = {

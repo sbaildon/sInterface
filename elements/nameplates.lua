@@ -50,24 +50,36 @@ hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
 	frame.name:SetFont(font, 10, "OUTLINE")
 end)
 
-function events:NAME_PLATE_CREATED(namePlate)
-	namePlate.UnitFrame.healthBar.barTexture:SetTexture(globals.media.bar)
-	namePlate.UnitFrame.healthBar.border:Hide();
+hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
+	namePlate.healthBar:SetStatusBarTexture(globals.media.bar)
+	namePlate.healthBar.border:Hide()
 
-	namePlate.UnitFrame.name:ClearAllPoints()
-	namePlate.UnitFrame.name:SetPoint("BOTTOM", namePlate.UnitFrame.healthBar, "TOP")
-	namePlate.UnitFrame.name:SetTextColor(1,1,1,1)
+	namePlate.castBar:SetStatusBarTexture(globals.media.bar)
+	namePlate.castBar:SetHeight(4)
 
-	local shadowFrame = CreateFrame("Frame", nil, namePlate.UnitFrame.healthBar)
-	shadowFrame:SetFrameStrata("BACKGROUND")
-	shadowFrame:SetPoint("TOPLEFT", namePlate.UnitFrame.healthBar, "TOPLEFT", -3, 3)
-	shadowFrame:SetPoint("BOTTOMRIGHT", namePlate.UnitFrame.healthBar, "BOTTOMRIGHT", 3, -3)
-	shadowFrame:SetBackdrop({
-		edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
-		edgeSize = 5,
-	})
-	shadowFrame:SetBackdropBorderColor(0, 0, 0, 1)
-end
+	namePlate.castBar.Icon:ClearAllPoints()
+	namePlate.castBar.Icon:SetHeight(namePlate.castBar:GetHeight() + namePlate.healthBar:GetHeight())
+	namePlate.castBar.Icon:SetWidth(namePlate.castBar:GetHeight() + namePlate.healthBar:GetHeight())
+	namePlate.castBar.Icon:SetPoint("BOTTOMRIGHT", namePlate.castBar, "BOTTOMLEFT", 0, 0)
+
+	namePlate.name:SetParent(namePlate.healthBar)
+	namePlate.name:SetPoint("BOTTOM", namePlate.healthBar, "TOP", 0, -2)
+	namePlate.name:SetTextColor(1,1,1,1)
+
+	if not (namePlate.healthBar.shadowFrame) then
+		local shadowFrame = CreateFrame("Frame", nil, namePlate.healthBar)
+		shadowFrame:SetFrameStrata("BACKGROUND")
+		shadowFrame:SetPoint("TOPLEFT", namePlate.healthBar, "TOPLEFT", -3, 3)
+		shadowFrame:SetPoint("BOTTOMRIGHT", namePlate.healthBar, "BOTTOMRIGHT", 3, -3)
+		shadowFrame:SetBackdrop({
+			edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
+			edgeSize = 5,
+		})
+		shadowFrame:SetBackdropBorderColor(0, 0, 0, 0.7)
+		namePlate.healthBar.shadowFrame = shadowFrame
+	end
+end)
+--end
 
 sPlates:SetScript("OnEvent", function(self, event, ...)
   events[event](self, ...); -- call one of the functions above

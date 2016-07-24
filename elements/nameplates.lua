@@ -42,6 +42,9 @@ hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
 end)
 
 hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+	if UnitIsPlayer(frame.unit) then
+		frame.name:SetText(UnitName(frame.unit))
+	end
 	frame.name:SetTextColor(1, 1, 1, 1)
 	local font, _ = frame.name:GetFont()
 	frame.name:SetFont(font, 10, "OUTLINE")

@@ -1,7 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Include file="tooltips\tooltips.xml" />
-	<Include file="nameplates\nameplates.xml" />
-	<Include file="minimap\minimap.xml" />
-	<Include file="objectivetracker\objectivetracker.xml" />
+	<Include file="auras\auras.xml" />
 	<Include file="errors\errors.xml" />
+	<Include file="minimap\minimap.xml" />
+	<Include file="nameplates\nameplates.xml" />
+	<Include file="objectivetracker\objectivetracker.xml" />
+	<Include file="tooltips\tooltips.xml" />
 </Ui>

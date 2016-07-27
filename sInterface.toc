@@ -3,5 +3,5 @@
 ## Title: sInterface
 ## Notes: Interface things
 
+modules\modules.xml
 globals.lua
-ui.xml

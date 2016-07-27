@@ -1,5 +1,4 @@
 local addon, ns = ...
-local globals = ns.globals
 
 config = {
 	tanking = true,
@@ -51,10 +50,10 @@ hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
 end)
 
 hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
-	namePlate.healthBar:SetStatusBarTexture(globals.media.bar)
+	namePlate.healthBar:SetStatusBarTexture("Interface\\AddOns\\sInterface\\media\\bar")
 	namePlate.healthBar.border:Hide()
 
-	namePlate.castBar:SetStatusBarTexture(globals.media.bar)
+	namePlate.castBar:SetStatusBarTexture("Interface\\AddOns\\sInterface\\media\\bar")
 	namePlate.castBar:SetHeight(4)
 
 	namePlate.castBar.Icon:ClearAllPoints()

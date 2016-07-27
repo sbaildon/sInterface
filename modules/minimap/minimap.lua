@@ -1,5 +1,4 @@
 local addon, ns = ...
-local globals = ns.globals
 
 local cfg = {
 	position = { "TOPRIGHT", UIParent, "TOPRIGHT", -20, -20 },
@@ -65,7 +64,7 @@ MiniMapMailFrame:ClearAllPoints()
 MiniMapMailFrame:SetPoint("TOPLEFT", Minimap, 0, 0)
 MiniMapMailFrame:SetFrameStrata("LOW")
 MiniMapMailBorder:Hide()
-MiniMapMailIcon:SetTexture(globals.media.mail)
+MiniMapMailIcon:SetTexture("Interface\\AddOns\\sInterface\\media\\mail")
 
 -- Queues
 QueueStatusMinimapButton:SetParent(Minimap)
@@ -81,7 +80,7 @@ MiniMapInstanceDifficulty:Hide()
 MiniMapWorldMapButton:Hide()
 
 local shadows = {
-	edgeFile = globals.media.shadow, 
+	edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border", 
 	edgeSize = 5,
 	insets = { left = 0, right = 0, top = 0, bottom = 0 }
 }

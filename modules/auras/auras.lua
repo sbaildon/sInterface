@@ -66,7 +66,7 @@ end
 
 local function updateDebuffAnchors(buttonName, index)
 	local button = _G[buttonName..index]
-	if not button then print("no button "..buttonName..index) return end
+	if not button then return end
 
 	if BUFF_ACTUAL_DISPLAY == 0 then
 		if (Minimap:IsShown()) then
@@ -85,7 +85,6 @@ local function updateDebuffAnchors(buttonName, index)
 	end
 
 	for i = 1, DEBUFF_ACTUAL_DISPLAY do
-		print("yep"..i)
 		local debuff = _G["DebuffButton"..i]
 		style(debuff)
 	end

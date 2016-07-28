@@ -6,26 +6,29 @@ local cfg = {
 	auraSize = 26
 }
 
-local function style(buff)
-	if not buff or (buff and buff.styled) then return end
+local function style(aura)
+	if not aura or (aura and aura.styled) then return end
 
-	local name = buff:GetName()
+	local name = aura:GetName()
 	local icon = _G[name.."Icon"]
 	icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
-	buff:SetSize(cfg.auraSize, cfg.auraSize)
+	local border = _G[name.."Border"]
+	if border then border:SetAlpha(0) end
 
-	local font, _ = buff.duration:GetFont()
-	buff.duration:SetParent(buff)
-	buff.duration:SetPoint("TOP", buff, "BOTTOM", 0, 5)
-	buff.duration:SetJustifyH("CENTER")
-	buff.duration:SetFont(font, cfg.durationHeight, "OUTLINE")
+	aura:SetSize(cfg.auraSize, cfg.auraSize)
 
-	local shadow = CreateFrame("Frame", nil, buff)
+	local font, _ = aura.duration:GetFont()
+	aura.duration:SetParent(aura)
+	aura.duration:SetPoint("TOP", aura, "BOTTOM", 0, 5)
+	aura.duration:SetJustifyH("CENTER")
+	aura.duration:SetFont(font, cfg.durationHeight, "OUTLINE")
+
+	local shadow = CreateFrame("Frame", nil, aura)
 	shadow:SetFrameLevel(1)
-	shadow:SetFrameStrata(buff:GetFrameStrata())
-	shadow:SetPoint("TOPLEFT", buff, "TOPLEFT", -3, 3)
-	shadow:SetPoint("BOTTOMRIGHT", buff, "BOTTOMRIGHT", 3, -3)
+	shadow:SetFrameStrata(aura:GetFrameStrata())
+	shadow:SetPoint("TOPLEFT", aura, "TOPLEFT", -3, 3)
+	shadow:SetPoint("BOTTOMRIGHT", aura, "BOTTOMRIGHT", 3, -3)
 	shadow:SetBackdrop({
 		edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
 		edgeSize = 5,
@@ -35,16 +38,16 @@ local function style(buff)
 	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
 	
 
-	buff:SetBackdrop({
+	aura:SetBackdrop({
 		edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1,
 		insets = { left = 0, right = 0, top = 0, bottom = 0 }
 	})
-	buff:SetBackdropBorderColor(0, 0, 0, 1)	
+	aura:SetBackdropBorderColor(0, 0, 0, 1)	
 
-	buff.styled = true
+	aura.styled = true
 end
 
-local function updateAnchors()
+local function updateBuffAnchors()
 	if BUFF_ACTUAL_DISPLAY == 0 then return end
 
 	local buff = _G["BuffButton1"]
@@ -53,14 +56,49 @@ local function updateAnchors()
 	else
 		buff:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", BUFF_HORIZ_SPACING, BUFF_HORIZ_SPACING);
 	end
-	
 
 	for i = 1, BUFF_ACTUAL_DISPLAY do
 		local buff = _G["BuffButton"..i]
 		style(buff)
 	end
+	
 end
 
-hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", updateAnchors)
-Minimap:HookScript("OnHide", updateAnchors)
-Minimap:HookScript("OnShow", updateAnchors)
+local function updateDebuffAnchors(buttonName, index)
+	local button = _G[buttonName..index]
+	if not button then print("no button "..buttonName..index) return end
+
+	if BUFF_ACTUAL_DISPLAY == 0 then
+		if (Minimap:IsShown()) then
+			button:SetPoint("TOPRIGHT", Minimap, "TOPLEFT", BUFF_HORIZ_SPACING, 0)
+		else
+			button:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", BUFF_HORIZ_SPACING, BUFF_HORIZ_SPACING)
+		end
+	else
+		local anchorIndex, anchor, modulo, ab
+		modulo = BUFF_ACTUAL_DISPLAY % BUFFS_PER_ROW
+		ab = abs(modulo - 1)
+		anchorIndex = modulo == 0 and (BUFF_ACTUAL_DISPLAY - (BUFFS_PER_ROW - 1)) or (BUFF_ACTUAL_DISPLAY - ab)
+		anchor = _G["BuffButton"..anchorIndex]
+		button:ClearAllPoints()
+		button:SetPoint("TOPRIGHT", anchor, "BOTTOMRIGHT", 0, -ceil(anchor:GetHeight()*1.5))
+	end
+
+	for i = 1, DEBUFF_ACTUAL_DISPLAY do
+		print("yep"..i)
+		local debuff = _G["DebuffButton"..i]
+		style(debuff)
+	end
+end
+
+
+local function updateAllAnchors()
+	updateBuffAnchors()
+	updateDebuffAnchors("DebuffButton", 1)
+end
+
+
+hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", updateAllAnchors)
+hooksecurefunc("DebuffButton_UpdateAnchors", updateAllAnchors)
+Minimap:HookScript("OnHide", updateAllAnchors)
+Minimap:HookScript("OnShow", updateAllAnchors)

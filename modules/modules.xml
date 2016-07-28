@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Include file="auras\auras.xml" />
+	<Include file="chat\chat.xml" />
 	<Include file="errors\errors.xml" />
 	<Include file="minimap\minimap.xml" />
 	<Include file="nameplates\nameplates.xml" />

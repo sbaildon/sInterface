@@ -53,16 +53,6 @@ fs(CoolBar, tick4, segment * 4)
 fs(CoolBar, tick5, segment * 5)
 fs(CoolBar, tick6, (segment * 6) + 6, "RIGHT")
 
-CoolBar.hideAnimation = CoolBar:CreateAnimationGroup()
-CoolBar.hideAnimation.alphaOut = CoolBar.hideAnimation:CreateAnimation("Alpha")
-CoolBar.hideAnimation.alphaOut:SetToAlpha(0)
-CoolBar.hideAnimation.alphaOut:SetDuration(1)
-CoolBar.hideAnimation.alphaOut:SetSmoothing("IN")
-CoolBar.hideAnimation:HookScript("OnFinished", function(self)
-	print("here")
-	CoolBar:Hide()
-end)
-
 function CoolBar:CreateCooldown(spellId)
 	local start, dur, enabled = GetSpellCooldown(spellId)
 	if (dur < 2) then return end --probably GCD
@@ -93,10 +83,9 @@ function CoolBar:CreateCooldown(spellId)
 		f.finishAnimation.scaleUp:SetSmoothing("OUT")
 		f.finishAnimation.alphaOut = f.finishAnimation:CreateAnimation("Alpha")
 		f.finishAnimation.alphaOut:SetFromAlpha(1)
-		f.finishAnimation.alphaOut:SetToAlpha(0)
+		f.finishAnimation.alphaOut:SetToAlpha(0.2)
 		f.finishAnimation.alphaOut:SetDuration(0.3)
-		f.finishAnimation.alphaOut:SetOrder(2)
-		f.finishAnimation.scaleUp:SetEndDelay(0.1)
+		f.finishAnimation.scaleUp:SetEndDelay(0.2)
 
 		f.failAnimation = f:CreateAnimationGroup()
 		f.failAnimation.scaleUp = f.failAnimation:CreateAnimation("Scale")
@@ -142,11 +131,10 @@ function CoolBar:CreateCooldown(spellId)
 		local gameTime = GetTime()
 		local remain = f.endTime - gameTime
 		if gameTime >= f.endTime then
-			if f.finishAnimation:IsPlaying() then return end
 			f.ticker:Cancel()
 			active = active - 1
 			if active == 0 then
-				CoolBar.hideAnimation:Play()
+				CoolBar:Hide()
 			end
 		end	
 
@@ -161,7 +149,7 @@ function CoolBar:CreateCooldown(spellId)
 		elseif remain < tick3 then
 			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.14285714 * remain) + 1.5714285)*segment, 0)
 		elseif remain < tick4 then
-			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.5 * remain) + 2.5)*segment, 0)
+			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.05 * remain) + 2.5)*segment, 0)
 		elseif remain < tick5 then
 			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.01111112 * remain) + 3.666665)*segment, 0)
 		else

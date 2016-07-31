@@ -1,9 +1,18 @@
+local _, ns = ...
+
 local CoolBar = CreateFrame("Frame", "CoolBar", UIParent)
 
 local tick0, tick1, tick2, tick3, tick4, tick5, tick6 = 0, 1, 3, 10, 30, 120, 360
 local segment
 local cooldowns = {}
 local active = 0
+
+local config = {
+	width = 160,
+	height = 12,
+	transparency = 0.7,
+	pos = { "TOP", "oUF_SkaarjPlayer", "BOTTOM", 0, -50 }
+}
 
 local function fs(frame, text, offset, just)
 	local fs = frame:CreateFontString(nil, "OVERLAY")
@@ -16,21 +25,23 @@ end
 
 function CoolBar:PLAYER_LOGIN()
 	CoolBar:SetFrameStrata("BACKGROUND")
-	CoolBar:SetHeight(12)
-	CoolBar:SetWidth(160)
-	CoolBar:SetPoint("CENTER", 140, 0)
+	CoolBar:SetHeight(config.height)
+	CoolBar:SetWidth(config.width)
+	CoolBar:SetPoint(unpack(config.pos))
 
 	CoolBar.bg = CoolBar:CreateTexture(nil, "ARTWORK")
 	CoolBar.bg:SetTexture("Interface\\AddOns\\sInterface\\media\\bar")
-	CoolBar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.6)
+	CoolBar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.5)
 	CoolBar.bg:SetAllPoints(CoolBar)
+
+	CoolBar:SetAlpha(config.transparency)
 	CoolBar:Hide()
 
 	local shadow = CreateFrame("Frame", nil, CoolBar)
 	shadow:SetFrameLevel(1)
 	shadow:SetFrameStrata(CoolBar:GetFrameStrata())
-	shadow:SetPoint("TOPLEFT", CoolBar, "TOPLEFT", -3, 3)
-	shadow:SetPoint("BOTTOMRIGHT", CoolBar, "BOTTOMRIGHT", 3, -3)
+	shadow:SetPoint("TOPLEFT", CoolBar, "TOPLEFT", -5, 5)
+	shadow:SetPoint("BOTTOMRIGHT", CoolBar, "BOTTOMRIGHT", 5, -5)
 	shadow:SetBackdrop({
 		edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
 		edgeSize = 5,
@@ -48,6 +59,26 @@ function CoolBar:PLAYER_LOGIN()
 	fs(CoolBar, tick4, segment * 4)
 	fs(CoolBar, tick5, segment * 5)
 	fs(CoolBar, tick6, (segment * 6) + 6, "RIGHT")
+
+	CoolBar.hideAnimation = CoolBar:CreateAnimationGroup()
+	CoolBar.hideAnimation.alpha = CoolBar.hideAnimation:CreateAnimation("Alpha")
+	CoolBar.hideAnimation.alpha:SetFromAlpha(1)
+	CoolBar.hideAnimation.alpha:SetToAlpha(0)
+	CoolBar.hideAnimation.alpha:SetDuration(0.1)
+	CoolBar.hideAnimation.alpha:SetSmoothing("OUT")
+	CoolBar.hideAnimation:HookScript("OnFinished", function()
+		CoolBar:Hide()
+	end)
+
+	CoolBar.revealAnimation = CoolBar:CreateAnimationGroup()
+	CoolBar.revealAnimation.alpha = CoolBar.revealAnimation:CreateAnimation("Alpha")
+	CoolBar.revealAnimation.alpha:SetFromAlpha(0)
+	CoolBar.revealAnimation.alpha:SetToAlpha(1)
+	CoolBar.revealAnimation.alpha:SetDuration(0.1)
+	CoolBar.revealAnimation.alpha:SetSmoothing("OUT")
+	CoolBar.revealAnimation:HookScript("OnPlay", function()
+		CoolBar:Show()
+	end)
 end
 
 function CoolBar:CreateCooldown(spellId)
@@ -78,11 +109,14 @@ function CoolBar:CreateCooldown(spellId)
 		f.finishAnimation.scaleUp:SetToScale(4, 4)
 		f.finishAnimation.scaleUp:SetDuration(0.3)
 		f.finishAnimation.scaleUp:SetSmoothing("OUT")
+		f.finishAnimation.scaleUp:SetEndDelay(0.8)
 		f.finishAnimation.alphaOut = f.finishAnimation:CreateAnimation("Alpha")
 		f.finishAnimation.alphaOut:SetFromAlpha(1)
-		f.finishAnimation.alphaOut:SetToAlpha(0.2)
+		f.finishAnimation.alphaOut:SetToAlpha(0)
 		f.finishAnimation.alphaOut:SetDuration(0.6)
-		f.finishAnimation.alphaOut:SetEndDelay(20)
+		f.finishAnimation:HookScript("OnFinished", function() 
+			f:Hide()
+		end)
 
 		f.failAnimation = f:CreateAnimationGroup()
 		f.failAnimation.scaleUp = f.failAnimation:CreateAnimation("Scale")
@@ -112,12 +146,14 @@ function CoolBar:CreateCooldown(spellId)
 	end
 	f.finishAnimation:Stop()
 	f.endTime = start + dur
-	f:SetHeight(CoolBar:GetHeight()*1.4)
-	f:SetWidth(CoolBar:GetHeight()*1.4)
-	f:SetAlpha(1)
+	f:SetHeight(CoolBar:GetHeight()*1.5)
+	f:SetWidth(CoolBar:GetHeight()*1.5)
 	f:Show()
 	active = active + 1
-	CoolBar:Show()
+	CoolBar.hideAnimation:Stop()
+	if not CoolBar:IsShown() then
+		CoolBar.revealAnimation:Play()
+	end
 
 	f.ticker = C_Timer.NewTicker(0.01, function(self)
 		local start, dur, enabled = GetSpellCooldown(f.spellId)
@@ -131,8 +167,11 @@ function CoolBar:CreateCooldown(spellId)
 			f.ticker:Cancel()
 			active = active - 1
 			if active == 0 then
-				CoolBar:Hide()
+				C_Timer.After(0.5, function()
+					CoolBar.hideAnimation:Play()
+				end)
 			end
+			return
 		end	
 
 		if remain < tick1 then
@@ -153,7 +192,7 @@ function CoolBar:CreateCooldown(spellId)
 			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.00416667 * remain) + 4.5)*segment, 0)
 		end
 
-		if (random() > .95) then
+		if (random() > .98) then
 			f:SetFrameLevel(random(1,5) * 2 + 2)
 		end
 	end, dur/0.01)
@@ -188,7 +227,7 @@ function CoolBar:PLAYER_REGEN_DISABLED()
 end
 
 function CoolBar:PLAYER_REGEN_ENABLED()
-	CoolBar:SetAlpha(0.7)
+	CoolBar:SetAlpha(config.transparency)
 end
 
 CoolBar:SetScript("OnEvent", function(this, event, ...)

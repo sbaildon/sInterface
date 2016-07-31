@@ -10,11 +10,14 @@ local CoolBar = CreateFrame("Frame", "CoolBar", UIParent)
 CoolBar:SetFrameStrata("BACKGROUND")
 CoolBar:SetHeight(12)
 CoolBar:SetWidth(160)
-CoolBar:SetPoint("CENTER", 0, 0)
+CoolBar:SetPoint("CENTER", 140, 0)
 
 CoolBar.bg = CoolBar:CreateTexture(nil, "ARTWORK")
 CoolBar.bg:SetTexture("Interface\\AddOns\\sInterface\\media\\bar")
+CoolBar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.6)
 CoolBar.bg:SetAllPoints(CoolBar)
+CoolBar:Hide()
+
 
 local shadow = CreateFrame("Frame", nil, CoolBar)
 shadow:SetFrameLevel(1)
@@ -30,6 +33,8 @@ shadow:SetBackdropColor(0, 0, 0, 0)
 shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
 
 local segment = CoolBar:GetWidth() / 7
+local cooldowns = {}
+local active = 0
 
 local function fs(frame, text, offset, just)
 	local fs = frame:CreateFontString(nil, "OVERLAY")
@@ -40,62 +45,131 @@ local function fs(frame, text, offset, just)
 	fs:SetPoint("LEFT", offset, 0)
 end
 
-fs(CoolBar, tick0, 3, "LEFT")
+fs(CoolBar, tick0, 4, "LEFT")
 fs(CoolBar, tick1, segment)
 fs(CoolBar, tick2, segment* 2)
 fs(CoolBar, tick3, segment * 3)
 fs(CoolBar, tick4, segment * 4)
 fs(CoolBar, tick5, segment * 5)
-fs(CoolBar, tick6, (segment * 6) + 3, "RIGHT")
+fs(CoolBar, tick6, (segment * 6) + 6, "RIGHT")
+
+CoolBar.hideAnimation = CoolBar:CreateAnimationGroup()
+CoolBar.hideAnimation.alphaOut = CoolBar.hideAnimation:CreateAnimation("Alpha")
+CoolBar.hideAnimation.alphaOut:SetToAlpha(0)
+CoolBar.hideAnimation.alphaOut:SetDuration(1)
+CoolBar.hideAnimation.alphaOut:SetSmoothing("IN")
+CoolBar.hideAnimation:HookScript("OnFinished", function(self)
+	print("here")
+	CoolBar:Hide()
+end)
 
 function CoolBar:CreateCooldown(spellId)
-	local _, _, icon, _ = GetSpellInfo(spellId)
 	local start, dur, enabled = GetSpellCooldown(spellId)
+	if (dur < 2) then return end --probably GCD
 
-	local f = CreateFrame("Frame", "FRAMEWORK")
-	f.pos = 0
-	f.spellId = spellId
+	local f
+
+	for index, frame in pairs(cooldowns) do
+		if frame.spellId == spellId then
+			f = frame
+			break
+		end
+	end
+
+	if not f then
+		local _, _, icon, _ = GetSpellInfo(spellId)
+		f = CreateFrame("Frame", nil, CoolBar)
+		f.spellId = spellId
+		f.icon = f:CreateTexture(nil, "ARTWORK")
+		f.icon:SetTexture(icon)
+		f.icon:SetAllPoints(f)
+		f.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+
+		f.finishAnimation = f:CreateAnimationGroup()
+		f.finishAnimation.scaleUp = f.finishAnimation:CreateAnimation("Scale")
+		f.finishAnimation.scaleUp:SetFromScale(1, 1)
+		f.finishAnimation.scaleUp:SetToScale(4, 4)
+		f.finishAnimation.scaleUp:SetDuration(0.3)
+		f.finishAnimation.scaleUp:SetSmoothing("OUT")
+		f.finishAnimation.alphaOut = f.finishAnimation:CreateAnimation("Alpha")
+		f.finishAnimation.alphaOut:SetFromAlpha(1)
+		f.finishAnimation.alphaOut:SetToAlpha(0)
+		f.finishAnimation.alphaOut:SetDuration(0.3)
+		f.finishAnimation.alphaOut:SetOrder(2)
+		f.finishAnimation.scaleUp:SetEndDelay(0.1)
+
+		f.failAnimation = f:CreateAnimationGroup()
+		f.failAnimation.scaleUp = f.failAnimation:CreateAnimation("Scale")
+		f.failAnimation.scaleUp:SetFromScale(1, 1)
+		f.failAnimation.scaleUp:SetToScale(4, 4)
+		f.failAnimation.scaleUp:SetDuration(0.3)
+		f.failAnimation.scaleUp:SetSmoothing("OUT")
+		f.failAnimation.scaleUp:SetEndDelay(0.1)
+
+		f.failAnimation.alphaOut = f.failAnimation:CreateAnimation("Alpha")
+		f.failAnimation.alphaOut:SetFromAlpha(1)
+		f.failAnimation.alphaOut:SetToAlpha(0)
+		f.failAnimation.alphaOut:SetDuration(0.2)
+		f.failAnimation.alphaOut:SetOrder(2)
+		f.failAnimation.scaleDown = f.failAnimation:CreateAnimation("Scale")
+		f.failAnimation.scaleDown:SetFromScale(1, 1)
+		f.failAnimation.scaleDown:SetToScale(0.25, 0.25)
+		f.failAnimation.scaleDown:SetDuration(0.2)
+		f.failAnimation.scaleDown:SetOrder(2)
+
+		f.failAnimation.alphaIn = f.failAnimation:CreateAnimation("Alpha")
+		f.failAnimation.alphaIn:SetToAlpha(1)
+		f.failAnimation.alphaIn:SetDuration(0.2)
+		f.failAnimation.alphaIn:SetOrder(3)
+
+		table.insert(cooldowns, f)
+	end
+	f.finishAnimation:Stop()
 	f.endTime = start + dur
-	f.icon = f:CreateTexture(nil, "ARTWORK")
-	f.icon:SetTexture(icon)
-	f.icon:SetAllPoints(f)
-	f.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-	f:SetHeight(CoolBar:GetHeight())
-	f:SetWidth(CoolBar:GetHeight())
-	f:SetPoint("CENTER", CoolBar, "LEFT", f.pos, 0)
+	f:SetHeight(CoolBar:GetHeight()*1.4)
+	f:SetWidth(CoolBar:GetHeight()*1.4)
+	f:SetAlpha(1)
 	f:Show()
+	active = active + 1
+	CoolBar:Show()
 
 	f.ticker = C_Timer.NewTicker(0.01, function(self)
-		local ctime = GetTime()
-		local remain = f.endTime - ctime
-		if ctime >= f.endTime then
-			f:Hide()
+		local start, dur, enabled = GetSpellCooldown(f.spellId)
+		if f.endTime > start + dur then
+			f.endTime = start + dur
+		end
+
+		local gameTime = GetTime()
+		local remain = f.endTime - gameTime
+		if gameTime >= f.endTime then
+			if f.finishAnimation:IsPlaying() then return end
+			f.ticker:Cancel()
+			active = active - 1
+			if active == 0 then
+				CoolBar.hideAnimation:Play()
+			end
 		end	
 
-		local tick0 = 0
-		local tick1 = 1
-		local tick2 = 3
-		local tick3 = 10
-		local tick4 = 30
-		local tick5 = 120
-		local tick6 = 360
-
-		local pos = (segment * remain) 
-		print(pos)
-		f:SetPoint("CENTER", CoolBar, "LEFT", pos, 0)
-
 		if remain < tick1 then
-			--f:SetPoint("CENTER", CoolBar, "LEFT", segment * remain, 0)
+			f:SetPoint("CENTER", CoolBar, "LEFT", segment * remain, 0)
+			if remain < 0.3 and not f.finishAnimation:IsPlaying() then
+				f.failAnimation:Stop()
+				f.finishAnimation:Play()
+			end
 		elseif remain < tick2 then
-			--f:SetPoint("CENTER", CoolBar, "LEFT", segment * (remain + 1) * 0.5, 0)
+			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.5 * remain) + 0.5)*segment, 0)
 		elseif remain < tick3 then
-			--f:SetPoint("CENTER", CoolBar, "LEFT", segment * (remain + 11) * 0.14286 , 0)
+			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.14285714 * remain) + 1.5714285)*segment, 0)
 		elseif remain < tick4 then
-			--f:SetPoint("CENTER", CoolBar, "LEFT", segment * (remain + 50) * 0.05, 0)
+			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.5 * remain) + 2.5)*segment, 0)
 		elseif remain < tick5 then
-			--f:SetPoint("CENTER", CoolBar, "LEFT", segment * (remain + 200) * 0.011111, 0)
-		elseif remain < tick6 then
-			--f:SetPoint("CENTER", CoolBar, "LEFT", segment * (remain + 1080) * 0.0041667, 0)
+			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.01111112 * remain) + 3.666665)*segment, 0)
+		else
+			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.00416667 * remain) + 4.5)*segment, 0)
+		end
+
+		if (random() > .95) then
+			f:SetFrameLevel(random(1,5) * 2 + 2)
 		end
 	end, dur/0.01)
 end
@@ -103,11 +177,45 @@ end
 CoolBar:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, _, _, _, spellId)
 	if  not (unitId == "player") then return end
-	local timer = C_Timer.NewTimer(0.1, function()
+	local timer = C_Timer.After(0.1, function()
 		CoolBar:CreateCooldown(spellId)
 	end)
+end
+
+CoolBar:RegisterEvent("UNIT_SPELLCAST_FAILED")
+function CoolBar:UNIT_SPELLCAST_FAILED(unitId, _, _, _, spellId)
+	if  not (unitId == "player") then return end
+	local f
+	for index, frame in pairs(cooldowns) do
+		if frame.spellId == spellId then
+			f = frame
+			break
+		end
+	end
+	if not f then return end
+
+	if not f.finishAnimation:IsPlaying() then
+		f.failAnimation:Stop()
+		f.failAnimation:Play()
+	end
+end
+
+
+CoolBar:RegisterEvent("PLAYER_REGEN_DISABLED")
+function CoolBar:PLAYER_REGEN_DISABLED()
+	CoolBar:SetAlpha(1)
+end
+
+CoolBar:RegisterEvent("PLAYER_REGEN_ENABLED")
+function CoolBar:PLAYER_REGEN_ENABLED()
+	CoolBar:SetAlpha(0.5)
 end
 
 CoolBar:SetScript("OnEvent", function(this, event, ...)
 	this[event](this, ...)
 end)
+
+
+-- Backup
+--local seg = 5.252965681843572 + -45.95077065387291 / ( remain - -9.971661373489298)
+--local pos = (seg * segment)

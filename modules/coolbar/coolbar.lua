@@ -192,7 +192,7 @@ function CoolBar:CreateCooldown(spellId)
 		elseif remain < tick5 then
 			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.01111112 * remain) + 3.666665)*segment, 0)
 		else
-			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.00416667 * remain) + 4.5)*segment, 0)
+			f:SetPoint("CENTER", CoolBar, "LEFT", CoolBar:GetWidth(), 0)
 		end
 
 		if (random() > .98) then

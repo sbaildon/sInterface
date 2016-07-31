@@ -1,38 +1,7 @@
-local tick0 = 0
-local tick1 = 1
-local tick2 = 3
-local tick3 = 10
-local tick4 = 30
-local tick5 = 120
-local tick6 = 360
-
 local CoolBar = CreateFrame("Frame", "CoolBar", UIParent)
-CoolBar:SetFrameStrata("BACKGROUND")
-CoolBar:SetHeight(12)
-CoolBar:SetWidth(160)
-CoolBar:SetPoint("CENTER", 140, 0)
 
-CoolBar.bg = CoolBar:CreateTexture(nil, "ARTWORK")
-CoolBar.bg:SetTexture("Interface\\AddOns\\sInterface\\media\\bar")
-CoolBar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.6)
-CoolBar.bg:SetAllPoints(CoolBar)
-CoolBar:Hide()
-
-
-local shadow = CreateFrame("Frame", nil, CoolBar)
-shadow:SetFrameLevel(1)
-shadow:SetFrameStrata(CoolBar:GetFrameStrata())
-shadow:SetPoint("TOPLEFT", CoolBar, "TOPLEFT", -3, 3)
-shadow:SetPoint("BOTTOMRIGHT", CoolBar, "BOTTOMRIGHT", 3, -3)
-shadow:SetBackdrop({
-	edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
-	edgeSize = 5,
-	insets = { left = 0, right = 0, top = 0, bottom = 0 }
-})
-shadow:SetBackdropColor(0, 0, 0, 0)
-shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
-
-local segment = CoolBar:GetWidth() / 7
+local tick0, tick1, tick2, tick3, tick4, tick5, tick6 = 0, 1, 3, 10, 30, 120, 360
+local segment
 local cooldowns = {}
 local active = 0
 
@@ -45,13 +14,41 @@ local function fs(frame, text, offset, just)
 	fs:SetPoint("LEFT", offset, 0)
 end
 
-fs(CoolBar, tick0, 4, "LEFT")
-fs(CoolBar, tick1, segment)
-fs(CoolBar, tick2, segment* 2)
-fs(CoolBar, tick3, segment * 3)
-fs(CoolBar, tick4, segment * 4)
-fs(CoolBar, tick5, segment * 5)
-fs(CoolBar, tick6, (segment * 6) + 6, "RIGHT")
+function CoolBar:PLAYER_LOGIN()
+	CoolBar:SetFrameStrata("BACKGROUND")
+	CoolBar:SetHeight(12)
+	CoolBar:SetWidth(160)
+	CoolBar:SetPoint("CENTER", 140, 0)
+
+	CoolBar.bg = CoolBar:CreateTexture(nil, "ARTWORK")
+	CoolBar.bg:SetTexture("Interface\\AddOns\\sInterface\\media\\bar")
+	CoolBar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.6)
+	CoolBar.bg:SetAllPoints(CoolBar)
+	CoolBar:Hide()
+
+	local shadow = CreateFrame("Frame", nil, CoolBar)
+	shadow:SetFrameLevel(1)
+	shadow:SetFrameStrata(CoolBar:GetFrameStrata())
+	shadow:SetPoint("TOPLEFT", CoolBar, "TOPLEFT", -3, 3)
+	shadow:SetPoint("BOTTOMRIGHT", CoolBar, "BOTTOMRIGHT", 3, -3)
+	shadow:SetBackdrop({
+		edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
+		edgeSize = 5,
+		insets = { left = 0, right = 0, top = 0, bottom = 0 }
+	})
+	shadow:SetBackdropColor(0, 0, 0, 0)
+	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
+	
+	segment = CoolBar:GetWidth() / 7
+
+	fs(CoolBar, tick0, 4, "LEFT")
+	fs(CoolBar, tick1, segment)
+	fs(CoolBar, tick2, segment* 2)
+	fs(CoolBar, tick3, segment * 3)
+	fs(CoolBar, tick4, segment * 4)
+	fs(CoolBar, tick5, segment * 5)
+	fs(CoolBar, tick6, (segment * 6) + 6, "RIGHT")
+end
 
 function CoolBar:CreateCooldown(spellId)
 	local start, dur, enabled = GetSpellCooldown(spellId)
@@ -84,8 +81,8 @@ function CoolBar:CreateCooldown(spellId)
 		f.finishAnimation.alphaOut = f.finishAnimation:CreateAnimation("Alpha")
 		f.finishAnimation.alphaOut:SetFromAlpha(1)
 		f.finishAnimation.alphaOut:SetToAlpha(0.2)
-		f.finishAnimation.alphaOut:SetDuration(0.3)
-		f.finishAnimation.scaleUp:SetEndDelay(0.2)
+		f.finishAnimation.alphaOut:SetDuration(0.6)
+		f.finishAnimation.alphaOut:SetEndDelay(20)
 
 		f.failAnimation = f:CreateAnimationGroup()
 		f.failAnimation.scaleUp = f.failAnimation:CreateAnimation("Scale")
@@ -162,7 +159,6 @@ function CoolBar:CreateCooldown(spellId)
 	end, dur/0.01)
 end
 
-CoolBar:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, _, _, _, spellId)
 	if  not (unitId == "player") then return end
 	local timer = C_Timer.After(0.1, function()
@@ -170,7 +166,6 @@ function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, _, _, _, spellId)
 	end)
 end
 
-CoolBar:RegisterEvent("UNIT_SPELLCAST_FAILED")
 function CoolBar:UNIT_SPELLCAST_FAILED(unitId, _, _, _, spellId)
 	if  not (unitId == "player") then return end
 	local f
@@ -188,22 +183,19 @@ function CoolBar:UNIT_SPELLCAST_FAILED(unitId, _, _, _, spellId)
 	end
 end
 
-
-CoolBar:RegisterEvent("PLAYER_REGEN_DISABLED")
 function CoolBar:PLAYER_REGEN_DISABLED()
 	CoolBar:SetAlpha(1)
 end
 
-CoolBar:RegisterEvent("PLAYER_REGEN_ENABLED")
 function CoolBar:PLAYER_REGEN_ENABLED()
-	CoolBar:SetAlpha(0.5)
+	CoolBar:SetAlpha(0.7)
 end
 
 CoolBar:SetScript("OnEvent", function(this, event, ...)
 	this[event](this, ...)
 end)
-
-
--- Backup
---local seg = 5.252965681843572 + -45.95077065387291 / ( remain - -9.971661373489298)
---local pos = (seg * segment)
+for k, v in pairs(CoolBar) do
+	if (k  == string.upper(k)) then
+		CoolBar:RegisterEvent(k)
+	end
+end

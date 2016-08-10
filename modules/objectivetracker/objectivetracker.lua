@@ -1,18 +1,16 @@
-local unpack = unpack
+local _, ns = ...
+local C = ns.C
+
 local ObjectiveTrackerFrame = ObjectiveTrackerFrame
 
 local frame = CreateFrame("Frame")
-
-local cfg = {}
-cfg.pos = {"TOPRIGHT", UIParent, "TOPLEFT", 280, -20}
-cfg.pos_raid = {"TOPRIGHT", "oUF_sInterfaceRaid", "BOTTOMLEFT", 260, -20}
 
 local gettingSet
 local function AdjustSetPoint(self,...)
 	if gettingSet then return end
  	gettingSet = true
  	local raidindex = UnitInRaid("player")
- 	local pos = (raidindex == nil) and cfg.pos or cfg.pos_raid
+ 	local pos = (raidindex == nil) and C.objectivetracker.pos or C.objectivetracker.pos_raid
 
 	self:SetPoint(unpack(pos))
 	gettingSet = false

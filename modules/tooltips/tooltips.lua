@@ -1,15 +1,5 @@
-local cfg = {}
-local addon, ns = ...
-local globals = ns.globals
-  
-cfg.pos   = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -180, 180 }
-cfg.scale = 1
-cfg.font = {}
-cfg.font.family = STANDARD_TEXT_FONT
--- cfg.font.family = 'Interface\\AddOns\\oUF_Skaarj\\Media\\normal.ttf'
-cfg.backdrop = { bgFile = "Interface\\Buttons\\WHITE8x8", edgeFile = "Interface\\Buttons\\WHITE8x8",  tiled = false, edgeSize = 1, insets = {left=0, right=0, top=0, bottom=0} }
-cfg.backdrop.bgColor = {0.03,0.03,0.03,0.8}
-cfg.backdrop.borderColor = {0.8,0.8,0.8,0}
+local _, ns = ...
+local C = ns.C
 
 ---------------------------------------------
 --  VARIABLES
@@ -28,9 +18,9 @@ local classes = { "Warrior", "Paladin", "Hunter", "Shaman", "Druid", "Rogue", "M
 ---------------------------------------------
 
 --change some text sizes
-GameTooltipHeaderText:SetFont(cfg.font.family, 15)
-GameTooltipText:SetFont(cfg.font.family, 13)
-Tooltip_Small:SetFont(cfg.font.family, 12)
+GameTooltipHeaderText:SetFont(C.tooltips.font, 15)
+GameTooltipText:SetFont(C.tooltips.font, 13)
+Tooltip_Small:SetFont(C.tooltips.font, 12)
 
 --gametooltip statusbar
 GameTooltipStatusBar:ClearAllPoints()
@@ -42,27 +32,27 @@ GameTooltipStatusBar.bg:SetVertexColor(0,0,0,0.7)
 
 -- HookScript GameTooltip OnTooltipCleared
 GameTooltip:HookScript("OnSizeChanged", function(self)
-	self:SetBackdropColor(unpack(cfg.backdrop.bgColor))
+	self:SetBackdropColor(unpack(C.tooltips.bgColor))
 end)
 
 --hooksecurefunc GameTooltip_SetDefaultAnchor
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	tooltip:SetOwner(parent, "ANCHOR_NONE")
 	tooltip:ClearAllPoints()
-	tooltip:SetPoint(unpack(cfg.pos))
+	tooltip:SetPoint(unpack(C.tooltips.pos))
 end)
 
 hooksecurefunc(GameTooltip, "Show", function(self)
-	self:SetBackdropColor(unpack(cfg.backdrop.bgColor))
+	self:SetBackdropColor(unpack(C.tooltips.bgColor))
 	if not self:GetItem() and not self:GetUnit() then
-		self:SetBackdropBorderColor(unpack(cfg.backdrop.borderColor))
+		self:SetBackdropBorderColor(unpack(C.tooltips.borderColor))
 	end
 end)
 
 GameTooltip:HookScript("OnUpdate", function(self, elapsed)
 	if not self.currentItem and not self.currentUnit then
-		self:SetBackdropColor(unpack(cfg.backdrop.bgColor))
-		self:SetBackdropBorderColor(unpack(cfg.backdrop.borderColor))
+		self:SetBackdropColor(unpack(C.tooltips.bgColor))
+		self:SetBackdropBorderColor(unpack(C.tooltips.borderColor))
 	end
 
 	if self.currentUnit and not UnitExists(self.currentUnit) then
@@ -179,8 +169,8 @@ end)
 
 --func TooltipOnShow
 local function TooltipOnShow(self,...)
-	self:SetBackdropColor(unpack(cfg.backdrop.bgColor))
-	self:SetBackdropBorderColor(unpack(cfg.backdrop.borderColor))
+	self:SetBackdropColor(unpack(C.tooltips.bgColor))
+	self:SetBackdropBorderColor(unpack(C.tooltips.borderColor))
 	local itemName, itemLink = self:GetItem()
 	if itemLink then
 		local itemRarity = select(3,GetItemInfo(itemLink))
@@ -192,17 +182,17 @@ end
   
 --func TooltipOnShow
 local function TooltipOnHide(self,...)
-	self:SetBackdropColor(unpack(cfg.backdrop.bgColor))
-	self:SetBackdropBorderColor(unpack(cfg.backdrop.borderColor))
+	self:SetBackdropColor(unpack(C.tooltips.bgColor))
+	self:SetBackdropBorderColor(unpack(C.tooltips.borderColor))
 end
 
 --loop over tooltips
 local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip, }
 local tt = { GameTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, ItemRefTooltip, ItemRefShoppingTooltip1, ItemRefShoppingTooltip2, ItemRefShoppingTooltip3, WorldMapTooltip, WorldMapCompareTooltip1, WorldMapCompareTooltip2, WorldMapCompareTooltip3, AtlasLootTooltip, QuestHelperTooltip, QuestGuru_QuestWatchTooltip, }
 for idx, tooltip in ipairs(tooltips) do
-	tooltip:SetBackdrop(cfg.backdrop)
-	tooltip:SetBackdropColor(unpack(cfg.backdrop.bgColor))
-	tooltip:SetScale(cfg.scale)
+	tooltip:SetBackdrop(C.tooltips.backdrop)
+	tooltip:SetBackdropColor(unpack(C.tooltips.bgColor))
+	tooltip:SetScale(C.tooltips.scale)
 	tooltip:HookScript("OnShow", TooltipOnShow)
 	tooltip:HookScript("OnHide", TooltipOnHide)
 end
@@ -213,5 +203,5 @@ local menues = {
 	DropDownList2MenuBackdrop,
 }
 for idx, menu in ipairs(menues) do
-	menu:SetScale(cfg.scale)
+	menu:SetScale(C.tooltips.scale)
 end

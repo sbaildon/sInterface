@@ -1,0 +1,13 @@
+local _, ns = ...
+local C = ns.C
+
+C["coolbar"] = {
+	width = 160,
+	height = 12,
+	oocTransparency = 0.7,
+	pos = { "TOP", "oUF_sInterfacePlayer", "BOTTOM", 0, -50 },
+	disabled = {
+		[GetItemInfo(6948) or "Hearthstone"] = true,
+	}
+}
+

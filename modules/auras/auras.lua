@@ -1,10 +1,7 @@
+local _, ns = ...
+local C = ns.C
 -- Not sure if overwriting blizzard variables is a good idea?
 BUFF_HORIZ_SPACING = -8
-
-local cfg = {
-	durationHeight = 12,
-	auraSize = 26
-}
 
 local function style(aura)
 	if not aura or (aura and aura.styled) then return end
@@ -16,13 +13,13 @@ local function style(aura)
 	local border = _G[name.."Border"]
 	if border then border:SetAlpha(0) end
 
-	aura:SetSize(cfg.auraSize, cfg.auraSize)
+	aura:SetSize(C.auras.size, C.auras.size)
 
 	local font, _ = aura.duration:GetFont()
 	aura.duration:SetParent(aura)
 	aura.duration:SetPoint("TOP", aura, "BOTTOM", 0, 5)
 	aura.duration:SetJustifyH("CENTER")
-	aura.duration:SetFont(font, cfg.durationHeight, "OUTLINE")
+	aura.duration:SetFont(font, C.auras.durationHeight, "OUTLINE")
 
 	local shadow = CreateFrame("Frame", nil, aura)
 	shadow:SetFrameLevel(1)

@@ -1,15 +1,10 @@
 local addon, ns = ...
-
-local cfg = {
-	position = { "TOPRIGHT", UIParent, "TOPRIGHT", -20, -20 },
-	width = 150,
-	height = 150
-}
+local C = ns.C
 
 -- Position
 Minimap:ClearAllPoints()
-Minimap:SetPoint(unpack(cfg.position))
-Minimap:SetSize(cfg.width, cfg.height)
+Minimap:SetPoint(unpack(C.minimap.position))
+Minimap:SetSize(C.minimap.width, C.minimap.height)
 
 -- Square Shape
 Minimap:SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
@@ -101,7 +96,7 @@ end
 
 function frame1px(f)
 	f:SetBackdrop({
-        edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1, 
+	edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1, 
 		insets = { left = 0, right = 0, top = 0, bottom = 0 } 
 	})
 	f:SetBackdropBorderColor(0, 0, 0, 1)
@@ -202,7 +197,6 @@ local micromenu = {
 	end},
 
 }
-
 Minimap:SetScript("OnMouseUp", function(self, btn)
 	if btn == "RightButton" then
 		EasyMenu(micromenu, menuFrame, "cursor", 0, 0, "MENU", 2)	
@@ -210,4 +204,5 @@ Minimap:SetScript("OnMouseUp", function(self, btn)
 		Minimap_OnClick(self)
 	end
 end)
+
 

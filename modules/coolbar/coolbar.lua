@@ -1,4 +1,5 @@
 local _, ns = ...
+local C = ns.C
 
 local CoolBar = CreateFrame("Frame", "CoolBar", UIParent)
 
@@ -6,16 +7,6 @@ local tick0, tick1, tick2, tick3, tick4, tick5, tick6 = 0, 1, 3, 10, 30, 120, 36
 local segment
 local cooldowns = {}
 local active = 0
-
-local config = {
-	width = 160,
-	height = 12,
-	transparency = 0.7,
-	pos = { "TOP", "oUF_sInterfacePlayer", "BOTTOM", 0, -50 },
-	disabled = {
-		[GetItemInfo(6948) or "Hearthstone"] = true,
-	}
-}
 
 local function fs(frame, text, offset, just)
 	local fs = frame:CreateFontString(nil, "OVERLAY")
@@ -28,16 +19,16 @@ end
 
 function CoolBar:PLAYER_LOGIN()
 	CoolBar:SetFrameStrata("BACKGROUND")
-	CoolBar:SetHeight(config.height)
-	CoolBar:SetWidth(config.width)
-	CoolBar:SetPoint(unpack(config.pos))
+	CoolBar:SetHeight(C.coolbar.height)
+	CoolBar:SetWidth(C.coolbar.width)
+	CoolBar:SetPoint(unpack(C.coolbar.pos))
 
 	CoolBar.bg = CoolBar:CreateTexture(nil, "ARTWORK")
 	CoolBar.bg:SetTexture("Interface\\AddOns\\sInterface\\media\\bar")
 	CoolBar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.5)
 	CoolBar.bg:SetAllPoints(CoolBar)
 
-	CoolBar:SetAlpha(config.transparency)
+	CoolBar:SetAlpha(C.coolbar.oocTransparency)
 	CoolBar:Hide()
 
 	local shadow = CreateFrame("Frame", nil, CoolBar)
@@ -81,7 +72,7 @@ function CoolBar:PLAYER_LOGIN()
 	CoolBar.revealAnimation = CoolBar:CreateAnimationGroup()
 	CoolBar.revealAnimation.alpha = CoolBar.revealAnimation:CreateAnimation("Alpha")
 	CoolBar.revealAnimation.alpha:SetFromAlpha(0)
-	CoolBar.revealAnimation.alpha:SetToAlpha(UnitAffectingCombat("player") and 1 or config.transparency)
+	CoolBar.revealAnimation.alpha:SetToAlpha(UnitAffectingCombat("player") and 1 or C.coolbar.oocTransparency)
 	CoolBar.revealAnimation.alpha:SetDuration(0.2)
 	CoolBar.revealAnimation.alpha:SetSmoothing("OUT")
 	CoolBar.revealAnimation:HookScript("OnPlay", function()
@@ -206,7 +197,7 @@ function CoolBar:CreateCooldown(spellId)
 end
 
 function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, spell, _, _, spellId)
-	if unitId == "player" or unitId == "vehicle" and not config.disabled[spell] then
+	if unitId == "player" or unitId == "vehicle" and not C.coolbar.disabled[spell] then
 		local timer = C_Timer.After(0.1, function()
 			CoolBar:CreateCooldown(spellId)
 		end)
@@ -235,7 +226,7 @@ function CoolBar:PLAYER_REGEN_DISABLED()
 end
 
 function CoolBar:PLAYER_REGEN_ENABLED()
-	CoolBar:SetAlpha(config.transparency)
+	CoolBar:SetAlpha(C.coolbar.oocTransparency)
 end
 
 CoolBar:SetScript("OnEvent", function(this, event, ...)

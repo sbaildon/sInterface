@@ -4,5 +4,7 @@
 ## Notes: Interface things
 
 embeds\embeds.xml
+core\_core.xml
+config\_config.xml
 modules\modules.xml
-globals.lua
+init.lua

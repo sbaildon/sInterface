@@ -11,7 +11,7 @@ local config = {
 	width = 160,
 	height = 12,
 	transparency = 0.7,
-	pos = { "TOP", "oUF_SkaarjPlayer", "BOTTOM", 0, -50 },
+	pos = { "TOP", "oUF_sInterfacePlayer", "BOTTOM", 0, -50 },
 	disabled = {
 		[GetItemInfo(6948) or "Hearthstone"] = true,
 	}

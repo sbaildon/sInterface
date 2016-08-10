@@ -1008,19 +1008,19 @@ local UnitSpecific = {
 
 UnitSpecific.focustarget = UnitSpecific.targettarget
 
-oUF:RegisterStyle('Skaarj', Shared)
+oUF:RegisterStyle('sInterface', Shared)
 
 for unit,layout in next, UnitSpecific do
-	oUF:RegisterStyle('Skaarj - ' .. unit:gsub('^%l', string.upper), layout)
+	oUF:RegisterStyle('sInterface - ' .. unit:gsub('^%l', string.upper), layout)
 end
 
 local spawnHelper = function(self, unit, pos)
 	if(UnitSpecific[unit]) then
-		self:SetActiveStyle('Skaarj - ' .. unit:gsub('^%l', string.upper))
+		self:SetActiveStyle('sInterface - ' .. unit:gsub('^%l', string.upper))
 	elseif(UnitSpecific[unit:match('[^%d]+')]) then
-		self:SetActiveStyle('Skaarj - ' .. unit:match('[^%d]+'):gsub('^%l', string.upper))
+		self:SetActiveStyle('sInterface - ' .. unit:match('[^%d]+'):gsub('^%l', string.upper))
 	else
-		self:SetActiveStyle'Skaarj'
+		self:SetActiveStyle'sInterface'
 	end
 	local object = self:Spawn(unit)
 	object:SetPoint(unpack(pos))
@@ -1038,7 +1038,7 @@ oUF:Factory(function(self)
 	if cfg.uf.boss then
 		spawnHelper(self, 'boss1', cfg.unit_positions.Boss)
 		for i = 2, MAX_BOSS_FRAMES do
-			local pos = { 'BOTTOMLEFT', 'oUF_SkaarjBoss'..i-1, 'TOPLEFT', 0, 20 }
+			local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceBoss'..i-1, 'TOPLEFT', 0, 20 }
 			spawnHelper(self, 'boss' .. i, pos)
 		end
 	end
@@ -1046,7 +1046,7 @@ oUF:Factory(function(self)
 	if cfg.uf.arena then
 		spawnHelper(self, 'arena1', cfg.unit_positions.Arena)
 		for i = 2, 5 do
-			local pos = { 'BOTTOMLEFT', 'oUF_SkaarjArena'..i-1, 'TOPLEFT', 0, 40 }
+			local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceArena'..i-1, 'TOPLEFT', 0, 40 }
 			spawnHelper(self, 'arena' .. i, pos)
 		end
 
@@ -1121,7 +1121,7 @@ oUF:Factory(function(self)
 			_G[pet]:SetParent(Hider)
 			_G[pet..'HealthBar']:UnregisterAllEvents()
 		end
-		self:SetActiveStyle'Skaarj - Party'
+		self:SetActiveStyle'sInterface - Party'
 		local party = self:SpawnHeader('oUF_Party', nil, 'custom [group:party,nogroup:raid] show; hide',
 		'showPlayer', false,
 		'showSolo', false,
@@ -1137,7 +1137,7 @@ oUF:Factory(function(self)
 	end
 
 	if cfg.uf.tank then
-		self:SetActiveStyle'Skaarj - Tank'
+		self:SetActiveStyle'sInterface - Tank'
 		local maintank = self:SpawnHeader('oUF_MainTank', nil, 'raid',
 		'showRaid', true,
 		'showSolo', false,
@@ -1158,7 +1158,7 @@ oUF:Factory(function(self)
 	end
 
 	if cfg.uf.raid then
-		self:SetActiveStyle'Skaarj - Raid'
+		self:SetActiveStyle'sInterface - Raid'
 		local raid = oUF:SpawnHeader(nil, nil, 'raid', 
 		'showPlayer', true,
 		'showSolo', false,

@@ -5,7 +5,7 @@ local frame = CreateFrame("Frame")
 
 local cfg = {}
 cfg.pos = {"TOPRIGHT", UIParent, "TOPLEFT", 280, -20}
-cfg.pos_raid = {"TOPRIGHT", "oUF_SkaarjRaid", "BOTTOMLEFT", 260, -20}
+cfg.pos_raid = {"TOPRIGHT", "oUF_sInterfaceRaid", "BOTTOMLEFT", 260, -20}
 
 local gettingSet
 local function AdjustSetPoint(self,...)
@@ -15,11 +15,7 @@ local function AdjustSetPoint(self,...)
  	local pos = (raidindex == nil) and cfg.pos or cfg.pos_raid
 
 	self:SetPoint(unpack(pos))
-
-    -- if InCombatLockdown() then
-    --   frame:RegisterEvent("PLAYER_REGEN_ENABLED")
-    -- end
-  gettingSet = false
+	gettingSet = false
 end
 
 frame:SetScript("OnEvent", function(self,event)

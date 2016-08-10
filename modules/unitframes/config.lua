@@ -59,16 +59,16 @@ cfg.uf.raid = {
 
 cfg.unit_positions = {
 	Player = { 'CENTER', UIParent, 'CENTER', 0, -200 },
-	Target = { 'TOPLEFT', 'oUF_SkaarjPlayer', 'TOPRIGHT', 56, 89 },
-	Targettarget = { 'TOPLEFT', 'oUF_SkaarjTarget', 'TOPRIGHT', 7, 0 },
-	Focus = { 'TOPLEFT', 'oUF_SkaarjPlayer', 'TOPRIGHT', 56, -100 },
-	Focustarget = { 'TOPLEFT', 'oUF_SkaarjFocus', 'TOPRIGHT', 67, 4 },
-	Pet = { 'TOPLEFT', 'oUF_SkaarjPlayer', 'TOPRIGHT', 5, 0 },
-	Boss = { 'BOTTOMLEFT', 'oUF_SkaarjTarget', 'TOPRIGHT', 300, 250 },
-	Tank = { 'BOTTOMRIGHT', 'oUF_SkaarjPlayer', 'TOPLEFT', -350, 150 },
+	Target = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 56, 89 },
+	Targettarget = { 'TOPLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 7, 0 },
+	Focus = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 56, -100 },
+	Focustarget = { 'TOPLEFT', 'oUF_sInterfaceFocus', 'TOPRIGHT', 67, 4 },
+	Pet = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 5, 0 },
+	Boss = { 'BOTTOMLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 300, 250 },
+	Tank = { 'BOTTOMRIGHT', 'oUF_sInterfacePlayer', 'TOPLEFT', -350, 150 },
 	Raid = { 'TOPLEFT', UIParent, 'TOPLEFT', 20, -20 },
-	Party = { 'BOTTOMRIGHT', 'oUF_SkaarjPlayer', 'TOPLEFT', -350, 150 },
-	Arena = { 'BOTTOMLEFT', 'oUF_SkaarjTarget', 'TOPRIGHT', 250, 175 },
+	Party = { 'BOTTOMRIGHT', 'oUF_sInterfacePlayer', 'TOPLEFT', -350, 150 },
+	Arena = { 'BOTTOMLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 250, 175 },
 }
 
 -----------------------------
@@ -139,7 +139,7 @@ cfg.aura.target.spacing = ((cfg.uf.primary.width - (cfg.aura.target.size * cfg.a
 
 --Experience/Reputation
 cfg.exp_rep = {
-	pos = {'BOTTOM', 'oUF_SkaarjPlayer', 'TOP', 0, 5},
+	pos = {'BOTTOM', 'oUF_sInterfacePlayer', 'TOP', 0, 5},
 	height = 2,
 	mouseover_text = true,
 	colour_standing = true --rep bar coloured by faction standing

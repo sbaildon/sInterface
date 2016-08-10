@@ -3,5 +3,6 @@
 ## Title: sInterface
 ## Notes: Interface things
 
+embeds\embeds.xml
 modules\modules.xml
 globals.lua

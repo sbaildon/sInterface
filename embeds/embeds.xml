@@ -1,0 +1,8 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="oUF\oUF.xml" />
+	<Include file="oUF_Experience\oUF_Experience.lua" />
+	<Include file="oUF_Reputation\oUF_Reputation.lua" />
+	<Include file="oUF_Smooth\oUF_Smooth.lua" />
+	<Include file="oUF_GCD\oUF_GCD.lua" />
+	<Include file="oUF_FloatingCombatFeedback\oUF_FloatingCombatFeedback.lua" />
+</Ui>

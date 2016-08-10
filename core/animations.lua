@@ -1,0 +1,23 @@
+function FadeOut(frame)
+	frame.hideAnimation = frame:CreateAnimationGroup()
+	frame.hideAnimation.alpha = frame.hideAnimation:CreateAnimation("Alpha")
+	frame.hideAnimation.alpha:SetFromAlpha(1)
+	frame.hideAnimation.alpha:SetToAlpha(0)
+	frame.hideAnimation.alpha:SetDuration(0.1)
+	frame.hideAnimation.alpha:SetSmoothing("OUT")
+	frame.hideAnimation:HookScript("OnFinished", function()
+		frame:Hide()
+	end)
+end
+
+function FadeIn(frame)
+	frame.revealAnimation = frame:CreateAnimationGroup()
+	frame.revealAnimation.alpha = frame.revealAnimation:CreateAnimation("Alpha")
+	frame.revealAnimation.alpha:SetFromAlpha(0)
+	frame.revealAnimation.alpha:SetToAlpha(1)
+	frame.revealAnimation.alpha:SetDuration(0.1)
+	frame.revealAnimation.alpha:SetSmoothing("OUT")
+	frame.revealAnimation:HookScript("OnPlay", function()
+		frame:Show()
+	end)
+end

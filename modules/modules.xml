@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="unitframes\unitframes.xml" />
 	<Include file="auras\auras.xml" />
 	<Include file="chat\chat.xml" />
 	<Include file="coolbar\coolbar.xml" />

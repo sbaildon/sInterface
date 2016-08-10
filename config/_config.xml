@@ -3,6 +3,7 @@
 	<Script file="chat.lua"/>
 	<Script file="coolbar.lua"/>
 	<Script file="errors.lua"/>
+	<Script file="general.lua"/>
 	<Script file="minimap.lua"/>
 	<Script file="nameplates.lua"/>
 	<Script file="objectivetracker.lua"/>

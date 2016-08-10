@@ -3,8 +3,8 @@
 ## Title: sInterface
 ## Notes: Interface things
 
-embeds\embeds.xml
+embeds\_embeds.xml
 core\_core.xml
 config\_config.xml
-modules\modules.xml
+modules\_modules.xml
 init.lua

@@ -11,7 +11,10 @@ local config = {
 	width = 160,
 	height = 12,
 	transparency = 0.7,
-	pos = { "TOP", "oUF_SkaarjPlayer", "BOTTOM", 0, -50 }
+	pos = { "TOP", "oUF_SkaarjPlayer", "BOTTOM", 0, -50 },
+	disabled = {
+		[GetItemInfo(6948) or "Hearthstone"] = true,
+	}
 }
 
 local function fs(frame, text, offset, just)
@@ -170,6 +173,7 @@ function CoolBar:CreateCooldown(spellId)
 		local remain = f.endTime - gameTime
 		if gameTime >= f.endTime then
 			f.ticker:Cancel()
+			f.finishAnimation:Play()
 			active = active - 1
 			if active == 0 then
 				CoolBar.hideAnimation:Play()
@@ -201,15 +205,16 @@ function CoolBar:CreateCooldown(spellId)
 	end, dur/0.01)
 end
 
-function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, _, _, _, spellId)
-	if  not (unitId == "player") then return end
-	local timer = C_Timer.After(0.1, function()
-		CoolBar:CreateCooldown(spellId)
-	end)
+function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, spell, _, _, spellId)
+	if unitId == "player" or unitId == "vehicle" and not config.disabled[spell] then
+		local timer = C_Timer.After(0.1, function()
+			CoolBar:CreateCooldown(spellId)
+		end)
+	end
 end
 
 function CoolBar:UNIT_SPELLCAST_FAILED(unitId, _, _, _, spellId)
-	if  not (unitId == "player") then return end
+	if not (unitId == "player") then return end
 	local f
 	for index, frame in pairs(cooldowns) do
 		if frame.spellId == spellId then

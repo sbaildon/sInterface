@@ -64,7 +64,7 @@ MiniMapMailFrame:ClearAllPoints()
 MiniMapMailFrame:SetPoint("TOPLEFT", Minimap, 0, 0)
 MiniMapMailFrame:SetFrameStrata("LOW")
 MiniMapMailBorder:Hide()
-MiniMapMailIcon:SetTexture("Interface\\AddOns\\sInterface\\media\\mail")
+MiniMapMailIcon:SetTexture("Interface\\AddOns\\sInterface\\media\\mail.blp")
 
 -- Queues
 QueueStatusMinimapButton:SetParent(Minimap)

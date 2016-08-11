@@ -1,8 +1,6 @@
 local name, ns = ...
-local cfg = ns.cfg
 
-local solid = "Interface\\AddOns\\Kui_Media\\t\\solid"
-local shadow = "Interface\\AddOns\\sInterface\\media\\shadow_border"
+local C = ns.C
 
 framebd = function(parent, anchor) 
     local frame = CreateFrame('Frame', nil, parent)
@@ -23,7 +21,7 @@ framebd = function(parent, anchor)
     shadowframe:SetPoint('TOPLEFT', frame, 'TOPLEFT', -3, 3)
     shadowframe:SetPoint('BOTTOMRIGHT', frame, 'BOTTOMRIGHT', 3, -3)
     shadowframe:SetBackdrop({
-	    edgeFile = shadow, edgeSize = 5,
+	    edgeFile = C.uf.shadow, edgeSize = 5,
     })
     shadowframe:SetBackdropBorderColor(0, 0, 0, 0.7)
     return frame
@@ -46,7 +44,6 @@ end
 fs = function(parent, layer, font, fontsiz, outline, r, g, b, justify)
     local string = parent:CreateFontString(nil, layer)
     string:SetFont(font, fontsiz, outline)
-    string:SetShadowOffset(cfg.shadowoffsetX, cfg.shadowoffsetY)
     string:SetTextColor(r, g, b)
     if justify then
         string:SetJustifyH(justify)

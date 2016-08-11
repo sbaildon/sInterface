@@ -3,7 +3,7 @@ local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 local class_color = RAID_CLASS_COLORS[class]
 
-local C = ns.C
+local E, C = ns.E, ns.C
 
 local backdrop = {
 	bgFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
@@ -92,28 +92,6 @@ local FormatTime = function(s)
 	return format('%d', fmod(s, minute))
 end
 
-local CreateAuraTimer = function(self,elapsed)
-	self.elapsed = (self.elapsed or 0) + elapsed
-	if self.elapsed >= 0.1 then
-		self.timeLeft = self.expires - GetTime()
-		if self.timeLeft > 0 then
-			local time = FormatTime(self.timeLeft)
-				self.remaining:SetText(time)
-			if self.timeLeft < 6 then
-				self.remaining:SetTextColor(0.69, 0.31, 0.31)
-			elseif self.timeLeft < 60 then
-				self.remaining:SetTextColor(1, 0.85, 0)
-			else
-				self.remaining:SetTextColor(1, 1, 1)
-			end
-		else
-			self.remaining:Hide()
-			self:SetScript('OnUpdate', nil)
-		end
-		self.elapsed = 0
-	end
-end
-
 local auraIcon = function(auras, button)
 	local c = button.count
 	c:ClearAllPoints()
@@ -136,10 +114,6 @@ local auraIcon = function(auras, button)
 	})
 	button.glow:SetBackdropBorderColor(0, 0, 0, 0.5)
 	button.glow:SetAlpha(1)
-
-	local remaining = fs(button, 'OVERLAY', C.uf.aura.font, C.uf.aura.fontsize, C.uf.aura.fontflag, 1, 1, 1)
-	remaining:SetPoint('TOPLEFT')
-	button.remaining = remaining
 end
 
 local PostUpdateIcon = function(icons, unit, icon, index, offset)
@@ -150,15 +124,9 @@ local PostUpdateIcon = function(icons, unit, icon, index, offset)
 	else
 		texture:SetDesaturated(true)
 	end
-	if duration and duration > 0 then
-		icon.remaining:Show()
-	else
-		icon.remaining:Hide()
-	end
 
 	icon.duration = duration
 	icon.expires = expirationTime
-	icon:SetScript('OnUpdate', CreateAuraTimer)
 end
 
 local Auras = function(self)
@@ -445,8 +413,7 @@ local Castbar = function(self, unit)
 	cb.PostCastFailed = PostCastFailed
 	cb.PostCastInterrupted = PostCastFailed
 	cb.bg = cbbg
-	cb.Backdrop = framebd(cb, cb)
-	cb.IBackdrop = framebd(cb, cb.Icon)
+	E:ShadowedBorder(cb)
 
 	cb.hideAnim = cb:CreateAnimationGroup()
 	cb.hideAnim.fadeOut = cb.hideAnim:CreateAnimation("ALPHA")
@@ -617,7 +584,7 @@ local Shared = function(self, unit)
 	Health(self)
 	Healcomm(self)
 
-	framebd(self, self)
+	E:ShadowedBorder(self)
 
 	local ricon = self.Health:CreateTexture(nil, 'OVERLAY')
 	ricon:SetTexture(C.uf.raidicons)
@@ -671,7 +638,7 @@ local UnitSpecific = {
 		ClassIconBar:SetWidth(self:GetWidth())
 		ClassIconBar:SetHeight(self.Power:GetHeight())
 		ClassIconBar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -4)
-		framebd(ClassIconBar, ClassIconBar)
+		E:ShadowedBorder(ClassIconBar)
 
 		local ClassIcons = {}
 		ClassIcons.UpdateTexture = UpdateClassIconTexture
@@ -746,7 +713,7 @@ local UnitSpecific = {
 		exp_rep_bar.text:Hide()
 		exp_rep_bar:SetScript('OnEnter', function(self)UIFrameFadeIn(exp_rep_bar.text, 0.3, 0, 1)end)
 		exp_rep_bar:SetScript('OnLeave', function(self)UIFrameFadeOut(exp_rep_bar.text, 0.3, 1, 0)end)
-		exp_rep_bar.bd = framebd(exp_rep_bar, exp_rep_bar)
+		E:ShadowedBorder(exp_rep_bar)
 
 		if UnitLevel('player') < MAX_PLAYER_LEVEL and not IsXPUserDisabled() then
 			self.OverrideUpdateColor = function(element, honor)
@@ -766,7 +733,6 @@ local UnitSpecific = {
 
 		local altp = createStatusbar(self, C.uf.texture, nil, self.Power:GetHeight(), self:GetWidth(), 1, 1, 1, 1)
 		altp:SetPoint("BOTTOM", exp_rep_bar, "TOP", 0, 5)
-		altp.bd = framebd(altp, altp)
 		altp.bg = altp:CreateTexture(nil, 'BORDER')
 		altp.bg:SetAllPoints(altp)
 		altp.bg:SetTexture(C.uf.texture)
@@ -776,6 +742,7 @@ local UnitSpecific = {
 		self:Tag(altp.Text, '[altpower]')
 		altp:EnableMouse(true)
 		altp.colorTexture = true
+		E:ShadowedBorder(altp)
 		self.AltPowerBar = altp
 	end,
 
@@ -845,7 +812,6 @@ local UnitSpecific = {
 
 		local altp = createStatusbar(self, C.uf.texture, nil, self.Power:GetHeight(), self:GetWidth(), 1, 1, 1, 1)
 		altp:SetPoint('BOTTOM', self, 'TOP', 0, 5)
-		altp.bd = framebd(altp, altp)
 		altp.bg = altp:CreateTexture(nil, 'BORDER')
 		altp.bg:SetAllPoints(altp)
 		altp.bg:SetTexture(C.uf.texture)
@@ -855,6 +821,7 @@ local UnitSpecific = {
 		self:Tag(altp.Text, '[altpower]')
 		altp:EnableMouse(true)
 		altp.colorTexture = true
+		E:ShadowedBorder(altp)
 		self.AltPowerBar = altp
 	end,
 
@@ -974,9 +941,9 @@ local UnitSpecific = {
 		local t = CreateFrame('Frame', nil, self)
 		t:SetSize(C.uf.size.secondary.health+C.uf.size.secondary.power+1, C.uf.size.secondary.health+C.uf.size.secondary.power+1)
 		t:SetPoint('TOPRIGHT', self, 'TOPLEFT', -4, 0)
-		t.framebd = framebd(t, t)
 		t.trinketUseAnnounce = true
 		t.trinketAnnounce = "SAY"
+		E:ShadowedBorder(t)
 		self.Trinket = t
 	end,
 
@@ -1046,7 +1013,7 @@ oUF:Factory(function(self)
 		arenaprep[i] = CreateFrame('Frame', 'oUF_ArenaPrep'..i, UIParent)
 		arenaprep[i]:SetAllPoints(_G['oUF_Arena'..i])
 		arenaprep[i]:SetFrameStrata('BACKGROUND')
-		arenaprep[i].framebd = framebd(arenaprep[i], arenaprep[i])
+		E:ShadowedBorder(arenaprep[i])
 
 		arenaprep[i].Health = CreateFrame('StatusBar', nil, arenaprep[i])
 		arenaprep[i].Health:SetStatusBarTexture(C.uf.texture)

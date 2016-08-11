@@ -1,5 +1,6 @@
 local _, ns = ...
-local C = ns.C
+local E, C = ns.E, ns.C
+
 -- Not sure if overwriting blizzard variables is a good idea?
 BUFF_HORIZ_SPACING = -8
 
@@ -21,26 +22,8 @@ local function style(aura)
 	aura.duration:SetJustifyH("CENTER")
 	aura.duration:SetFont(font, C.auras.durationHeight, "OUTLINE")
 
-	local shadow = CreateFrame("Frame", nil, aura)
-	shadow:SetFrameLevel(1)
-	shadow:SetFrameStrata(aura:GetFrameStrata())
-	shadow:SetPoint("TOPLEFT", aura, "TOPLEFT", -3, 3)
-	shadow:SetPoint("BOTTOMRIGHT", aura, "BOTTOMRIGHT", 3, -3)
-	shadow:SetBackdrop({
-		edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
-		edgeSize = 5,
-		insets = { left = 0, right = 0, top = 0, bottom = 0 }
-	})
-	shadow:SetBackdropColor(0, 0, 0, 0)
-	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
+	E:ShadowedBorder(aura)
 	
-
-	aura:SetBackdrop({
-		edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1,
-		insets = { left = 0, right = 0, top = 0, bottom = 0 }
-	})
-	aura:SetBackdropBorderColor(0, 0, 0, 1)	
-
 	aura.styled = true
 end
 
@@ -51,7 +34,7 @@ local function updateBuffAnchors()
 	if (Minimap:IsShown()) then
 		buff:SetPoint("TOPRIGHT", Minimap, "TOPLEFT", BUFF_HORIZ_SPACING, 0);
 	else
-		buff:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", BUFF_HORIZ_SPACING, BUFF_HORIZ_SPACING);
+		buff:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -C.general.edgeSpacing, -C.general.edgeSpacing);
 	end
 
 	for i = 1, BUFF_ACTUAL_DISPLAY do

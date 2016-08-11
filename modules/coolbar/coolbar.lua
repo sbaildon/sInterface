@@ -1,5 +1,5 @@
 local _, ns = ...
-local C = ns.C
+local E, C = ns.E, ns.C
 
 local CoolBar = CreateFrame("Frame", "CoolBar", UIParent)
 
@@ -31,19 +31,8 @@ function CoolBar:PLAYER_LOGIN()
 	CoolBar:SetAlpha(C.coolbar.oocTransparency)
 	CoolBar:Hide()
 
-	local shadow = CreateFrame("Frame", nil, CoolBar)
-	shadow:SetFrameLevel(1)
-	shadow:SetFrameStrata(CoolBar:GetFrameStrata())
-	shadow:SetPoint("TOPLEFT", CoolBar, "TOPLEFT", -5, 5)
-	shadow:SetPoint("BOTTOMRIGHT", CoolBar, "BOTTOMRIGHT", 5, -5)
-	shadow:SetBackdrop({
-		edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
-		edgeSize = 5,
-		insets = { left = 0, right = 0, top = 0, bottom = 0 }
-	})
-	shadow:SetBackdropColor(0, 0, 0, 0)
-	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
-	
+	E:ShadowedBorder(CoolBar)
+
 	segment = CoolBar:GetWidth() / 7
 
 	CoolBar.fontLayer = CreateFrame("Frame", nil, CoolBar)

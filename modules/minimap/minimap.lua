@@ -1,5 +1,5 @@
 local addon, ns = ...
-local C = ns.C
+local E, C = ns.E, ns.C
 
 -- Position
 Minimap:ClearAllPoints()
@@ -74,36 +74,7 @@ MiniMapInstanceDifficulty:Hide()
 -- World Map
 MiniMapWorldMapButton:Hide()
 
-local shadows = {
-	edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border", 
-	edgeSize = 5,
-	insets = { left = 0, right = 0, top = 0, bottom = 0 }
-}
-
-function CreateShadow(f)
-	if f.shadow then return end
-	local shadow = CreateFrame("Frame", nil, f)
-	shadow:SetFrameLevel(1)
-	shadow:SetFrameStrata(f:GetFrameStrata())
-	shadow:SetPoint("TOPLEFT", f, "TOPLEFT", -3, 3)
-	shadow:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", 3, -3)
-	shadow:SetBackdrop(shadows)
-	shadow:SetBackdropColor(0, 0, 0, 0)
-	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
-	f.shadow = shadow
-	return shadow
-end
-
-function frame1px(f)
-	f:SetBackdrop({
-	edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1, 
-		insets = { left = 0, right = 0, top = 0, bottom = 0 } 
-	})
-	f:SetBackdropBorderColor(0, 0, 0, 1)
-end
-
-frame1px(Minimap)
-CreateShadow(Minimap)
+E:ShadowedBorder(Minimap)
 
 ----------------------------------------------------------------------------------------
 --	Right click menu

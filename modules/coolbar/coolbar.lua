@@ -47,26 +47,8 @@ function CoolBar:PLAYER_LOGIN()
 	fs(CoolBar.fontLayer, tick5, segment * 5)
 	fs(CoolBar.fontLayer, tick6, (segment * 6) + 6, "RIGHT")
 
-	CoolBar.hideAnimation = CoolBar:CreateAnimationGroup()
-	CoolBar.hideAnimation.alpha = CoolBar.hideAnimation:CreateAnimation("Alpha")
-	CoolBar.hideAnimation.alpha:SetStartDelay(0.5)
-	CoolBar.hideAnimation.alpha:SetFromAlpha(CoolBar:GetAlpha())
-	CoolBar.hideAnimation.alpha:SetToAlpha(0)
-	CoolBar.hideAnimation.alpha:SetDuration(0.2)
-	CoolBar.hideAnimation.alpha:SetSmoothing("OUT")
-	CoolBar.hideAnimation:HookScript("OnFinished", function()
-		CoolBar:Hide()
-	end)
-
-	CoolBar.revealAnimation = CoolBar:CreateAnimationGroup()
-	CoolBar.revealAnimation.alpha = CoolBar.revealAnimation:CreateAnimation("Alpha")
-	CoolBar.revealAnimation.alpha:SetFromAlpha(0)
-	CoolBar.revealAnimation.alpha:SetToAlpha(UnitAffectingCombat("player") and 1 or C.coolbar.oocTransparency)
-	CoolBar.revealAnimation.alpha:SetDuration(0.2)
-	CoolBar.revealAnimation.alpha:SetSmoothing("OUT")
-	CoolBar.revealAnimation:HookScript("OnPlay", function()
-		CoolBar:Show()
-	end)
+	E:RegisterHideAnimation(CoolBar)
+	E:RegisterRevealAnimation(CoolBar)
 end
 
 function CoolBar:CreateCooldown(spellId)
@@ -136,7 +118,6 @@ function CoolBar:CreateCooldown(spellId)
 	f.endTime = start + dur
 	f:SetHeight(CoolBar:GetHeight()*1.5)
 	f:SetWidth(CoolBar:GetHeight()*1.5)
-	f:Show()
 	active = active + 1
 	CoolBar.hideAnimation:Stop()
 	if not CoolBar:IsShown() then
@@ -183,6 +164,7 @@ function CoolBar:CreateCooldown(spellId)
 			f:SetFrameLevel(random(1,5) * 2 + 2)
 		end
 	end, dur/0.01)
+	f:Show()
 end
 
 function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, spell, _, _, spellId)

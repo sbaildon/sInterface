@@ -414,6 +414,7 @@ local Castbar = function(self, unit)
 	cb.PostCastInterrupted = PostCastFailed
 	cb.bg = cbbg
 	E:ShadowedBorder(cb)
+	E:ShadowedBorder(cb.Icon)
 
 	cb.hideAnim = cb:CreateAnimationGroup()
 	cb.hideAnim.fadeOut = cb.hideAnim:CreateAnimation("ALPHA")
@@ -869,7 +870,6 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
-		Castbar(self)
 		PhaseIcon(self)
 		LFD(self)
 

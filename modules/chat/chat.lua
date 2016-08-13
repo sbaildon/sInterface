@@ -1,3 +1,6 @@
+local _, ns = ...
+local E, C = ns.E, ns.C
+
 TypeInfo = { "SYSTEM", "SAY", "PARTY", "RAID", "GUILD", "OFFICER", "YELL", "WHISPER",
 	"SMART_WHISPER", "WHISPER_INFORM", "REPLY", "EMOTE", "TEXT_EMOTE", "MONSTER_SAY",
 	"MONSTER_PARTY", "MONSTER_YELL", "MONSTER_WHISPER", "MONSTER_EMOTE", "CHANNEL",
@@ -100,7 +103,7 @@ hooksecurefunc("FloatingChatFrame_Update", function()
 	FCF_SetLocked(ChatFrame1, false)
 
 	ChatFrame1:ClearAllPoints()
-	ChatFrame1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 20, 20)
+	ChatFrame1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", C.general.edgeSpacing, C.general.edgeSpacing)
 	ChatFrame1:SetUserPlaced(true)
 	ChatFrame1:SetHeight(110)
 

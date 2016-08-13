@@ -175,5 +175,3 @@ Minimap:SetScript("OnMouseUp", function(self, btn)
 		Minimap_OnClick(self)
 	end
 end)
-
-

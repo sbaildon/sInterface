@@ -67,7 +67,6 @@ oUF.Tags.Methods['threat'] = function(u, r)
 end
 oUF.Tags.Events['threat'] = 'UNIT_THREAT_SITUATION_UPDATE'
 
-
 oUF.Tags.Methods['long:name'] = function(u, r)
     local name = UnitName(realUnit or u or r)
     if string.len(name) > 18 then

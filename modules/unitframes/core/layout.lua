@@ -97,7 +97,7 @@ local auraIcon = function(auras, button)
 	c:ClearAllPoints()
 	c:SetPoint('BOTTOMRIGHT', 3, -1)
 	c:SetFontObject(nil)
-	c:SetFont(C.uf.aura.font, C.uf.aura.fontsize, C.uf.aura.fontflag)
+	c:SetFont(C.general.font, C.general.fontSize, C.uf.aura.fontflag)
 	c:SetTextColor(1, 1, 1)
 
 	button.overlay:SetTexture(nil)
@@ -105,15 +105,7 @@ local auraIcon = function(auras, button)
 	button:SetBackdrop(backdrop)
 	button:SetBackdropColor(0, 0, 0, 1)
 
-	button.glow = CreateFrame('Frame', nil, button)
-	button.glow:SetPoint('TOPLEFT', button, 'TOPLEFT', -4, 4)
-	button.glow:SetPoint('BOTTOMRIGHT', button, 'BOTTOMRIGHT', 4, -4)
-	button.glow:SetFrameLevel(button:GetFrameLevel()-1)
-	button.glow:SetBackdrop({
-		edgeFile = C.uf.shadow, edgeSize = 5,
-	})
-	button.glow:SetBackdropBorderColor(0, 0, 0, 0.5)
-	button.glow:SetAlpha(1)
+	E:ShadowedBorder(button)
 end
 
 local PostUpdateIcon = function(icons, unit, icon, index, offset)
@@ -277,7 +269,7 @@ local setBarTicks = function(castBar, ticknum)
 		for k = 1, ticknum do
 			if not ticks[k] then
 				ticks[k] = castBar:CreateTexture(nil, 'OVERLAY')
-				ticks[k]:SetTexture(C.uf.texture)
+				ticks[k]:SetTexture(C.general.texture)
 				ticks[k]:SetVertexColor(0.6, 0.6, 0.6)
 				ticks[k]:SetWidth(2)
 				ticks[k]:SetHeight(castBar:GetHeight())
@@ -380,14 +372,14 @@ local PostCastFailed = function(self, event, unit)
 end
 
 local Castbar = function(self, unit)
-	local cb = createStatusbar(self, C.uf.texture, nil, nil, nil, 1, 1, 1, 1)
+	local cb = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	local cbbg = cb:CreateTexture(nil, 'BACKGROUND')
 	cbbg:SetAllPoints(cb)
-	cbbg:SetTexture(C.uf.texture)
+	cbbg:SetTexture(C.general.texture)
 	cbbg:SetVertexColor(1, 1, 1, .2)
-	cb.Time = fs(cb, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1, 'RIGHT')
+	cb.Time = E:FontString({parent=cb, layer='OVERLAY', justify='RIGHT'}) 
 	cb.Time:SetPoint('RIGHT', cb, -2, 4)
-	cb.Text = fs(cb, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1, 'LEFT')
+	cb.Text = E:FontString({parent=cb, layer='OVERLAY', justify='LEFT'})
 	cb.Text:SetPoint('LEFT', cb, 2, 4)
 	cb.Text:SetPoint('RIGHT', cb.Time, 'LEFT')
 	cb.CastingColor = {C.uf.Color.Castbar.r, C.uf.Color.Castbar.g, C.uf.Color.Castbar.b}
@@ -435,28 +427,28 @@ local Castbar = function(self, unit)
 end
 
 local Healcomm = function(self)
-	local myBar = createStatusbar(self.Health, C.uf.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
+	local myBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	myBar:SetPoint('TOP')
 	myBar:SetPoint('BOTTOM')
 	myBar:SetFrameStrata(self.Health:GetFrameStrata())
 	myBar:SetFrameLevel(self.Health:GetFrameLevel())
 	myBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
 
-	local otherBar = createStatusbar(self.Health, C.uf.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
+	local otherBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	otherBar:SetPoint('TOP')
 	otherBar:SetPoint('BOTTOM')
 	otherBar:SetFrameStrata(self.Health:GetFrameStrata())
 	otherBar:SetFrameLevel(self.Health:GetFrameLevel())
 	otherBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
 
-	local absorbBar = createStatusbar(self.Health, C.uf.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
+	local absorbBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	absorbBar:SetPoint('TOP')
 	absorbBar:SetPoint('BOTTOM')
 	absorbBar:SetFrameStrata(self.Health:GetFrameStrata())
 	absorbBar:SetFrameLevel(self.Health:GetFrameLevel())
 	absorbBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
 
-	local healAbsorbBar = createStatusbar(self.Health, C.uf.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
+	local healAbsorbBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	healAbsorbBar:SetPoint('TOP')
 	healAbsorbBar:SetPoint('BOTTOM')
 	healAbsorbBar:SetFrameStrata(self.Health:GetFrameStrata())
@@ -474,7 +466,7 @@ local Healcomm = function(self)
 end
 
 local Health = function(self)
-	local h = createStatusbar(self, C.uf.texture, nil, nil, nil, 1, 1, 1, 1)
+	local h = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	h:SetPoint'TOP'
 	h:SetPoint'LEFT'
 	h:SetPoint'RIGHT'
@@ -483,7 +475,7 @@ local Health = function(self)
 	local hbg = h:CreateTexture(nil, 'BACKGROUND')
 	hbg:SetDrawLayer('BACKGROUND', 1)
 	hbg:SetAllPoints(h)
-	hbg:SetTexture(C.uf.texture)
+	hbg:SetTexture(C.general.texture)
 
 	h.colorClass = true
 	h.colorReaction = true
@@ -499,7 +491,7 @@ local Health = function(self)
 end
 
 local LFD = function(self)
-	local lfd = fs(self.Health, 'OVERLAY', C.uf.symbol, 13, C.uf.fontflag, 1, 1, 1)
+	local lfd = E:FontString({parent=self.Health, layer='OVERLAY', font=C.uf.symbol})
 	lfd:SetPoint('LEFT', self.Name, 'RIGHT', 0, 0)
 	lfd:SetJustifyH'LEFT'
 
@@ -528,7 +520,7 @@ local LFD = function(self)
 end
 
 local Power = function(self)
-	local p = createStatusbar(self, C.uf.texture, nil, nil, nil, 1, 1, 1, 1)
+	local p = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	p:SetPoint'LEFT'
 	p:SetPoint'RIGHT'
 	p:SetPoint('TOP', self.Health, 'BOTTOM', 0, -1)
@@ -540,7 +532,7 @@ local Power = function(self)
 
 	local pbg = p:CreateTexture(nil, 'BACKGROUND')
 	pbg:SetAllPoints(p)
-	pbg:SetTexture(C.uf.texture)
+	pbg:SetTexture(C.general.texture)
 
 	p.colorPower = true
 	pbg.multiplier = .4
@@ -625,12 +617,12 @@ local UnitSpecific = {
 		PetCastingBarFrame.Show = function() end
 		PetCastingBarFrame:Hide()
 
-		local htext = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local htext = E:FontString({parent=self.Health})
 		htext:SetPoint('TOPRIGHT', -2, 4)
 		htext.frequentUpdates = .1
 		self:Tag(htext, '[primary:health]')
 
-		local ptext = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local ptext = E:FontString({parent=self.Health})
 		ptext:SetPoint('TOPLEFT', 2, 4)
 		ptext.frequentUpdates = .1
 		self:Tag(ptext, '[player:power]')
@@ -670,7 +662,7 @@ local UnitSpecific = {
 				local Rune = CreateFrame('StatusBar', nil, ClassIconBar)
 				local width = (self:GetWidth()/6)-1
 				Rune:SetSize(width, C.uf.size.primary.power)
-				Rune:SetStatusBarTexture(C.uf.texture)
+				Rune:SetStatusBarTexture(C.general.texture)
 				Rune:SetStatusBarColor(0.9, 0, 0.7)
 
 				if index > 1 then
@@ -704,12 +696,12 @@ local UnitSpecific = {
 		self.GCD.Spark:SetWidth(9)
 		self.GCD.Spark:SetPoint('LEFT', self.Health, 'LEFT', 0, 0)
 
-		local exp_rep_bar = createStatusbar(self, C.uf.texture, nil, self.Power:GetHeight(), C.uf.size.primary.width, 1, 0, 1, 1)
+		local exp_rep_bar = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), C.uf.size.primary.width, 1, 0, 1, 1)
 		exp_rep_bar:SetPoint('BOTTOM', self, 'TOP', 0, 5)
 		exp_rep_bar.bg = exp_rep_bar:CreateTexture(nil, 'BORDER')
 		exp_rep_bar.bg:SetAllPoints(exp_rep_bar)
-		exp_rep_bar.bg:SetTexture(C.uf.texture)
-		exp_rep_bar.text = fs(exp_rep_bar, 'OVERLAY', C.uf.aura.font, C.uf.aura.fontsize, C.uf.aura.fontflag, 1, 1, 1)
+		exp_rep_bar.bg:SetTexture(C.general.texture)
+		exp_rep_bar.text = E:FontString({parent=exp_rep_bar})
 		exp_rep_bar.text:SetPoint("CENTER", 0, 10)
 		exp_rep_bar.text:Hide()
 		exp_rep_bar:SetScript('OnEnter', function(self)UIFrameFadeIn(exp_rep_bar.text, 0.3, 0, 1)end)
@@ -721,7 +713,7 @@ local UnitSpecific = {
 				element:SetStatusBarColor(1, 0, 1, 1)
 			end
 			exp_rep_bar.bg:SetVertexColor(1, 0.3, 1, 0.3)
-			exp_rep_bar.Rested = createStatusbar(exp_rep_bar, C.uf.texture, nil, nil, nil, 0, .4, 1, .6)
+			exp_rep_bar.Rested = createStatusbar(exp_rep_bar, C.general.texture, nil, nil, nil, 0, .4, 1, .6)
 			exp_rep_bar.Rested:SetAllPoints(exp_rep_bar)
 			self:Tag(exp_rep_bar.text, '[curxp] / [maxxp] ([perxp]%)')
 			self.Experience = exp_rep_bar
@@ -732,13 +724,13 @@ local UnitSpecific = {
 			self.Reputation = exp_rep_bar
 		end
 
-		local altp = createStatusbar(self, C.uf.texture, nil, self.Power:GetHeight(), self:GetWidth(), 1, 1, 1, 1)
+		local altp = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), self:GetWidth(), 1, 1, 1, 1)
 		altp:SetPoint("BOTTOM", exp_rep_bar, "TOP", 0, 5)
 		altp.bg = altp:CreateTexture(nil, 'BORDER')
 		altp.bg:SetAllPoints(altp)
-		altp.bg:SetTexture(C.uf.texture)
+		altp.bg:SetTexture(C.general.texture)
 		altp.bg:SetVertexColor(1, 1, 1, 0.3)
-		altp.Text = fs(altp, 'OVERLAY', C.uf.aura.font, C.uf.aura.fontsize, C.uf.aura.fontflag, 1, 1, 1)
+		altp.Text = E:FontString({parent=altp})
 		altp.Text:SetPoint("BOTTOM", 0, 5)
 		self:Tag(altp.Text, '[altpower]')
 		altp:EnableMouse(true)
@@ -759,11 +751,11 @@ local UnitSpecific = {
 
 		if C.uf.aura.target.enable then Auras(self) end
 
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('TOPLEFT', 2, 4)
 		self:Tag(name, '[lvl][color][long:name]')
 
-		local htext = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local htext = E:FontString({parent=self.Health})
 		htext:SetPoint('TOPRIGHT', -2, 4)
 		htext.frequentUpdates = .1
 		self:Tag(htext, '[primary:health]')
@@ -781,13 +773,13 @@ local UnitSpecific = {
 
 		if C.uf.aura.focus.enable then Auras(self) end
 
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('LEFT', 2, 4)
 		name:SetJustifyH'LEFT'
 		self:Tag(name, '[lvl][color][long:name]')
 		self.Name = name
 
-		local htext = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local htext = E:FontString({parent=self.Health})
 		htext:SetPoint('RIGHT', -2, 4)
 		self:Tag(htext, '[primary:health]')
 	end,
@@ -802,26 +794,26 @@ local UnitSpecific = {
 		Castbar(self)
 		PhaseIcon(self)
 
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('TOPLEFT', 2, 4)
 		name:SetJustifyH'LEFT'
 		self:Tag(name, '[color][long:name]')
 
-		local htext = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local htext = E:FontString({parent=self.Health})
 		htext:SetPoint('TOPRIGHT', -2, 4)
 		self:Tag(htext, '[percent:health]')
 
-		local altp = createStatusbar(self, C.uf.texture, nil, self.Power:GetHeight(), self:GetWidth(), 1, 1, 1, 1)
+		local altp = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), self:GetWidth(), 1, 1, 1, 1)
 		altp:SetPoint('BOTTOM', self, 'TOP', 0, 5)
 		altp.bg = altp:CreateTexture(nil, 'BORDER')
 		altp.bg:SetAllPoints(altp)
-		altp.bg:SetTexture(C.uf.texture)
+		altp.bg:SetTexture(C.general.texture)
 		altp.bg:SetVertexColor(1, 1, 1, 0.3)
-		altp.Text = fs(altp, 'OVERLAY', C.uf.aura.font, C.uf.aura.fontsize, C.uf.aura.fontflag, 1, 1, 1)
+		altp.Text = E:FontString({parent=altp})
 		altp.Text:SetPoint('CENTER')
-		self:Tag(altp.Text, '[altpower]')
 		altp:EnableMouse(true)
 		altp.colorTexture = true
+		self:Tag(altp.Text, '[altpower]')
 		E:ShadowedBorder(altp)
 		self.AltPowerBar = altp
 	end,
@@ -833,7 +825,7 @@ local UnitSpecific = {
 
 		PhaseIcon(self)
 
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('CENTER', self.Health, 0, 3)
 		self:Tag(name, '[color][long:name]')
 		self.Name = name;
@@ -848,7 +840,7 @@ local UnitSpecific = {
 
 		Shared(self, ...)
 
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('CENTER', self.Health)
 		self:Tag(name, '[color][long:name]')
 	end,
@@ -858,7 +850,7 @@ local UnitSpecific = {
 
 		Shared(self, ...)
 		
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('CENTER', 0, 3)
 		self:Tag(name, '[color][short:name]')
 	end,
@@ -874,15 +866,15 @@ local UnitSpecific = {
 		LFD(self)
 
 		if C.uf.aura.party.enable then Auras(self) end
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('LEFT', 2, 4)
 		name:SetJustifyH'LEFT'
 		self:Tag(name, '[lvl][color][threat][limit:name]')
 		self.Name = name
 
-		local htext = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local htext= E:FontString({parent=self.Health})
 		htext:SetPoint('RIGHT', -2, 4)
-		self:Tag(htext, '[percent:health]')
+		self:Tag(htext, '[primary:health]')
 
 		local rc = self.Health:CreateTexture(nil, 'OVERLAY')
 		rc:SetPoint('CENTER')
@@ -902,13 +894,13 @@ local UnitSpecific = {
 
 		if C.uf.aura.tank.enable then Auras(self) end
 
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('LEFT', 2, 4)
 		name:SetJustifyH'LEFT'
 		self:Tag(name, '[lvl][color][limit:name]')
 		self.Name = name
 
-		local htext = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local htext = E:FontString({parent=self.Health})
 		htext:SetPoint('RIGHT', -2, 4)
 		self:Tag(htext, '[primary:health]')
 
@@ -928,13 +920,13 @@ local UnitSpecific = {
 		Castbar(self)
 		PhaseIcon(self)
 
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('LEFT', 2, 4)
 		name:SetJustifyH'LEFT'
 		self:Tag(name, '[color][limit:name]')
 		self.Name = name
 
-		local htext = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local htext = E:FontString({parent=self.Health})
 		htext:SetPoint('RIGHT', -2, 4)
 		self:Tag(htext, '[primary:health]')
 
@@ -954,7 +946,7 @@ local UnitSpecific = {
 
 		LFD(self)
 
-		local name = fs(self.Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		local name = E:FontString({parent=self.Health})
 		name:SetPoint('LEFT', 2, 4)
 		name:SetJustifyH'LEFT'
 		self:Tag(name, '[color][threat][short:name]')
@@ -1016,9 +1008,9 @@ oUF:Factory(function(self)
 		E:ShadowedBorder(arenaprep[i])
 
 		arenaprep[i].Health = CreateFrame('StatusBar', nil, arenaprep[i])
-		arenaprep[i].Health:SetStatusBarTexture(C.uf.texture)
+		arenaprep[i].Health:SetStatusBarTexture(C.general.texture)
 
-		arenaprep[i].Spec = fs(arenaprep[i].Health, 'OVERLAY', C.uf.font, C.uf.fontsize, C.uf.fontflag, 1, 1, 1)
+		arenaprep[i].Spec = E:FontString({parent=arenaprep[i].Health})
 		arenaprep[i].Spec:SetPoint('CENTER')
 		arenaprep[i].Spec:SetJustifyH'CENTER'
 

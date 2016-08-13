@@ -6,14 +6,8 @@ local _, class = UnitClass('player')
 local mediaPath = 'Interface\\AddOns\\sInterface\\media\\'
 
 C["uf"] = { 
-	texture = mediaPath..'bar',
 	symbol = mediaPath..'symbol.ttf',
 	raidicons = mediaPath..'raidicons',
-	shadow = mediaPath..'shadow_border',
-	font = mediaPath..'font.ttf',
-	fontsize = 11,
-	fontflag = 'OUTLINE'
-
 }
 
 C["uf"].size = {
@@ -88,10 +82,6 @@ C["uf"].aura = {
 		num = 9,
 		gap = false,
 	},
-
-	font = C["uf"].font,
-	fontsize = 12,
-	fontflag = 'OUTLINE',
 }
 
 C["uf"].Color = {

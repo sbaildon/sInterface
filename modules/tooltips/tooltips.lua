@@ -35,11 +35,6 @@ end)
 GameTooltip:HookScript("OnUpdate", function(self, elapsed)
 	if not self.currentItem and not self.currentUnit then
 		self:SetBackdropColor(unpack(C.tooltips.bgColor))
-		self:SetBackdropBorderColor(unpack(C.tooltips.borderColor))
-	end
-
-	if self.currentUnit and not UnitExists(self.currentUnit) then
-		self:Hide()
 	end
 end)
 
@@ -147,20 +142,12 @@ end)
 --func TooltipOnShow
 local function TooltipOnShow(self,...)
 	self:SetBackdropColor(unpack(C.tooltips.bgColor))
-	self:SetBackdropBorderColor(unpack(C.tooltips.borderColor))
-	local itemName, itemLink = self:GetItem()
-	if itemLink then
-		local itemRarity = select(3,GetItemInfo(itemLink))
-		if itemRarity then
-			self:SetBackdropBorderColor(unpack({GetItemQualityColor(itemRarity)}))
-		end
-	end
+	self:SetBackdropBorderColor(0, 0, 0, 0)
 end
   
 --func TooltipOnShow
 local function TooltipOnHide(self,...)
 	self:SetBackdropColor(unpack(C.tooltips.bgColor))
-	self:SetBackdropBorderColor(unpack(C.tooltips.borderColor))
 end
 
 --loop over tooltips

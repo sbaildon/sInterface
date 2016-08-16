@@ -41,10 +41,6 @@ GameTooltip:HookScript("OnUpdate", function(self, elapsed)
 	if self.currentUnit and not UnitExists(self.currentUnit) then
 		self:Hide()
 	end
-
-	if self.newHeight and abs(self:GetHeight() - self.newHeight) > 0.1 then
-		self:SetHeight(self.newHeight)
-	end
 end)
 
 --func GetHexColor

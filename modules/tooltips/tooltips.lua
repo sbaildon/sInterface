@@ -25,11 +25,6 @@ Tooltip_Small:SetFont(C.tooltips.font, 12)
 GameTooltipStatusBar:ClearAllPoints()
 GameTooltipStatusBar:Hide()
 
--- HookScript GameTooltip OnTooltipCleared
-GameTooltip:HookScript("OnSizeChanged", function(self)
-	self:SetBackdropColor(unpack(C.tooltips.bgColor))
-end)
-
 --hooksecurefunc GameTooltip_SetDefaultAnchor
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	tooltip:SetOwner(parent, "ANCHOR_NONE")

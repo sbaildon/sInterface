@@ -9,11 +9,9 @@ local cooldowns = {}
 local active = 0
 
 local function fs(frame, text, offset, just)
-	local fs = frame:CreateFontString(nil, "OVERLAY")
-	fs:SetFont("Fonts\\FRIZQT__.TTF", 12)
+	local fs = E:FontString({parent=frame, justify=just})
 	if (text > 60) then text = (text/60).."m" end
 	fs:SetText(text)
-	fs:SetJustifyH(just or "CENTER")
 	fs:SetPoint("LEFT", offset, 0)
 end
 
@@ -24,7 +22,7 @@ function CoolBar:PLAYER_LOGIN()
 	CoolBar:SetPoint(unpack(C.coolbar.pos))
 
 	CoolBar.bg = CoolBar:CreateTexture(nil, "ARTWORK")
-	CoolBar.bg:SetTexture("Interface\\AddOns\\sInterface\\media\\bar")
+	CoolBar.bg:SetTexture(C.general.texture)
 	CoolBar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.5)
 	CoolBar.bg:SetAllPoints(CoolBar)
 
@@ -40,15 +38,15 @@ function CoolBar:PLAYER_LOGIN()
 	CoolBar.fontLayer:SetFrameLevel(128)
 
 	fs(CoolBar.fontLayer, tick0, 4, "LEFT")
-	fs(CoolBar.fontLayer, tick1, segment)
-	fs(CoolBar.fontLayer, tick2, segment* 2)
-	fs(CoolBar.fontLayer, tick3, segment * 3)
-	fs(CoolBar.fontLayer, tick4, segment * 4)
-	fs(CoolBar.fontLayer, tick5, segment * 5)
+	fs(CoolBar.fontLayer, tick1, segment, "CENTER")
+	fs(CoolBar.fontLayer, tick2, segment* 2, "CENTER")
+	fs(CoolBar.fontLayer, tick3, segment * 3, "CENTER")
+	fs(CoolBar.fontLayer, tick4, segment * 4, "CENTER")
+	fs(CoolBar.fontLayer, tick5, segment * 5, "CENTER")
 	fs(CoolBar.fontLayer, tick6, (segment * 6) + 6, "RIGHT")
 
 	E:RegisterHideAnimation(CoolBar)
-	E:RegisterRevealAnimation(CoolBar)
+	E:RegisterRevealAnimation(CoolBar, 0.6)
 end
 
 function CoolBar:CreateCooldown(spellId)
@@ -91,7 +89,7 @@ function CoolBar:CreateCooldown(spellId)
 		f.failAnimation = f:CreateAnimationGroup()
 		f.failAnimation.scaleUp = f.failAnimation:CreateAnimation("Scale")
 		f.failAnimation.scaleUp:SetFromScale(1, 1)
-		f.failAnimation.scaleUp:SetToScale(4, 4)
+		f.failAnimation.scaleUp:SetToScale(3, 3)
 		f.failAnimation.scaleUp:SetDuration(0.3)
 		f.failAnimation.scaleUp:SetSmoothing("OUT")
 		f.failAnimation.scaleUp:SetEndDelay(0.1)
@@ -103,7 +101,7 @@ function CoolBar:CreateCooldown(spellId)
 		f.failAnimation.alphaOut:SetOrder(2)
 		f.failAnimation.scaleDown = f.failAnimation:CreateAnimation("Scale")
 		f.failAnimation.scaleDown:SetFromScale(1, 1)
-		f.failAnimation.scaleDown:SetToScale(0.25, 0.25)
+		f.failAnimation.scaleDown:SetToScale(0.33, 0.33)
 		f.failAnimation.scaleDown:SetDuration(0.2)
 		f.failAnimation.scaleDown:SetOrder(2)
 
@@ -114,10 +112,12 @@ function CoolBar:CreateCooldown(spellId)
 
 		table.insert(cooldowns, f)
 	end
+
 	f.finishAnimation:Stop()
 	f.endTime = start + dur
 	f:SetHeight(CoolBar:GetHeight()*1.5)
 	f:SetWidth(CoolBar:GetHeight()*1.5)
+	f:SetAlpha(1)
 	active = active + 1
 	CoolBar.hideAnimation:Stop()
 	if not CoolBar:IsShown() then
@@ -144,7 +144,7 @@ function CoolBar:CreateCooldown(spellId)
 
 		if remain < tick1 then
 			f:SetPoint("CENTER", CoolBar, "LEFT", segment * remain, 0)
-			if remain < 0.3 and not f.finishAnimation:IsPlaying() then
+			if remain < 0.2 and not f.finishAnimation:IsPlaying() then
 				f.failAnimation:Stop()
 				f.finishAnimation:Play()
 			end
@@ -164,7 +164,10 @@ function CoolBar:CreateCooldown(spellId)
 			f:SetFrameLevel(random(1,5) * 2 + 2)
 		end
 	end, dur/0.01)
-	f:Show()
+
+	C_Timer.After(0.01, function(self)
+		f:Show()
+	end)
 end
 
 function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, spell, _, _, spellId)

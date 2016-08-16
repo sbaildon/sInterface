@@ -34,7 +34,7 @@ function E:RegisterHideAnimation(frame)
         frame.hideAnimation.alpha:SetStartDelay(0.5)
         frame.hideAnimation.alpha:SetFromAlpha(frame:GetAlpha())
         frame.hideAnimation.alpha:SetToAlpha(0)
-        frame.hideAnimation.alpha:SetDuration(frame:GetAlpha()/5)
+        frame.hideAnimation.alpha:SetDuration(0.2)
         frame.hideAnimation.alpha:SetSmoothing("OUT")
         frame.hideAnimation:HookScript("OnFinished", function()
                 frame:Hide()
@@ -42,16 +42,20 @@ function E:RegisterHideAnimation(frame)
 
 end
 
-function E:RegisterRevealAnimation(frame)
+function E:RegisterRevealAnimation(frame, oocAlpha)
+	local alpha = oocAlpha or 1
         frame.revealAnimation = frame:CreateAnimationGroup()
         frame.revealAnimation.alpha = frame.revealAnimation:CreateAnimation("Alpha")
-        frame.revealAnimation.alpha:SetFromAlpha(frame:GetAlpha())
-        frame.revealAnimation.alpha:SetToAlpha(1)
-        frame.revealAnimation.alpha:SetDuration(4.2)
+        frame.revealAnimation.alpha:SetFromAlpha(0)
+        frame.revealAnimation.alpha:SetToAlpha(UnitAffectingCombat("player") and 1 or alpha)
+        frame.revealAnimation.alpha:SetDuration(0.2)
         frame.revealAnimation.alpha:SetSmoothing("OUT")
         frame.revealAnimation:HookScript("OnPlay", function()
                 frame:Show()
         end)
+	frame.revealAnimation:HookScript("OnFinished", function()
+		frame:SetAlpha(UnitAffectingCombat("player") and 1 or alpha)
+	end)
 end
 
 function E:FontString(options)

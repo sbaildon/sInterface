@@ -32,13 +32,6 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	tooltip:SetPoint(unpack(C.tooltips.pos))
 end)
 
-hooksecurefunc(GameTooltip, "Show", function(self)
-	self:SetBackdropColor(unpack(C.tooltips.bgColor))
-	if not self:GetItem() and not self:GetUnit() then
-		self:SetBackdropBorderColor(unpack(C.tooltips.borderColor))
-	end
-end)
-
 GameTooltip:HookScript("OnUpdate", function(self, elapsed)
 	if not self.currentItem and not self.currentUnit then
 		self:SetBackdropColor(unpack(C.tooltips.bgColor))

@@ -9,7 +9,6 @@ local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local FACTION_BAR_COLORS = FACTION_BAR_COLORS
 local WorldFrame = WorldFrame
 local GameTooltip = GameTooltip
-local GameTooltipStatusBar = GameTooltipStatusBar
 
 local classes = { "Warrior", "Paladin", "Hunter", "Shaman", "Druid", "Rogue", "Monk", "Death Knight", "Mage", "Warlock", "Priest" }
 
@@ -24,11 +23,7 @@ Tooltip_Small:SetFont(C.tooltips.font, 12)
 
 --gametooltip statusbar
 GameTooltipStatusBar:ClearAllPoints()
-GameTooltipStatusBar.bg = GameTooltipStatusBar:CreateTexture(nil,"BACKGROUND",nil,-8)
-GameTooltipStatusBar.bg:SetPoint("TOPLEFT",-1,1)
-GameTooltipStatusBar.bg:SetPoint("BOTTOMRIGHT",1,-1)
-GameTooltipStatusBar.bg:SetTexture(1,1,1)
-GameTooltipStatusBar.bg:SetVertexColor(0,0,0,0.7)
+GameTooltipStatusBar:Hide()
 
 -- HookScript GameTooltip OnTooltipCleared
 GameTooltip:HookScript("OnSizeChanged", function(self)
@@ -108,7 +103,6 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 	if UnitIsPlayer(unit) then
 		local _, unitClass = UnitClass(unit)
 		local color = RAID_CLASS_COLORS[unitClass]
-		GameTooltipStatusBar:SetStatusBarColor(color.r,color.g,color.b)
 		local text = GameTooltipTextLeft1:GetText()
 		GameTooltipTextLeft1:SetFormattedText("|cff%02x%02x%02x%s|r", color.r * 255, color.g * 255, color.b * 255, text:match("|cff\x\x\x\x\x\x(.+)|r") or text)
 		if UnitIsAFK(unit) then
@@ -137,7 +131,6 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 		if reaction then
 			local color = FACTION_BAR_COLORS[reaction]
 		if color then
-			GameTooltipStatusBar:SetStatusBarColor(color.r,color.g,color.b)
 			GameTooltipTextLeft1:SetTextColor(color.r,color.g,color.b)
 		end
 	end

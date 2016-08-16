@@ -70,6 +70,5 @@ function E:FontString(options)
 	return string
 end
 
-
 SLASH_RELOADUI1 = '/rl'
 SlashCmdList.RELOADUI = ReloadUI

@@ -185,16 +185,6 @@ local tt = { GameTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, 
 for idx, tooltip in ipairs(tooltips) do
 	tooltip:SetBackdrop(C.tooltips.backdrop)
 	tooltip:SetBackdropColor(unpack(C.tooltips.bgColor))
-	tooltip:SetScale(C.tooltips.scale)
 	tooltip:HookScript("OnShow", TooltipOnShow)
 	tooltip:HookScript("OnHide", TooltipOnHide)
-end
-
---loop over menues
-local menues = {
-	DropDownList1MenuBackdrop,
-	DropDownList2MenuBackdrop,
-}
-for idx, menu in ipairs(menues) do
-	menu:SetScale(C.tooltips.scale)
 end

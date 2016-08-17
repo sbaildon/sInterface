@@ -79,6 +79,7 @@ oUF.Tags.Events['long:name'] = 'UNIT_NAME_UPDATE UNIT_CONNECTION'
 
 oUF.Tags.Methods['limit:name'] = function(u, r)
     local name = UnitName(realUnit or u or r)
+    if name == nil then return 'non' end
     return string.sub(name, 1,  12)
 end
 oUF.Tags.Events['limit:name'] = 'UNIT_NAME_UPDATE UNIT_CONNECTION'

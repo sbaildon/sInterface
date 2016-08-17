@@ -43,7 +43,7 @@ C["uf"].positions = {
 	Tank = { 'BOTTOMRIGHT', 'oUF_sInterfacePlayer', 'TOPLEFT', -350, 150 },
 	Raid = { 'TOPLEFT', UIParent, 'TOPLEFT', 20, -20 },
 	Party = { 'BOTTOMRIGHT', 'oUF_sInterfacePlayer', 'TOPLEFT', -350, 150 },
-	Arena = { 'BOTTOMLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 250, 175 },
+	Arena = { 'BOTTOMLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 225, 150 },
 }
 
 C["uf"].aura = {

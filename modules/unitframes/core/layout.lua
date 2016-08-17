@@ -918,12 +918,11 @@ local UnitSpecific = {
 
 		Power(self)
 		Castbar(self)
-		PhaseIcon(self)
 
 		local name = E:FontString({parent=self.Health})
 		name:SetPoint('LEFT', 2, 4)
 		name:SetJustifyH'LEFT'
-		self:Tag(name, '[color][limit:name]')
+		self:Tag(name, '[arenaspec]')
 		self.Name = name
 
 		local htext = E:FontString({parent=self.Health})
@@ -994,75 +993,17 @@ oUF:Factory(function(self)
 		spawnHelper(self, 'boss' .. i, pos)
 	end
 
-	spawnHelper(self, 'arena1', C.uf.positions.Arena)
-	for i = 2, 5 do
-		local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceArena'..i-1, 'TOPLEFT', 0, 40 }
-		spawnHelper(self, 'arena' .. i, pos)
-	end
-
-	local arenaprep = {}
+	local arena = {}
+	self:SetActiveStyle'sInterface - Arena'
 	for i = 1, 5 do
-		arenaprep[i] = CreateFrame('Frame', 'oUF_ArenaPrep'..i, UIParent)
-		arenaprep[i]:SetAllPoints(_G['oUF_Arena'..i])
-		arenaprep[i]:SetFrameStrata('BACKGROUND')
-		E:ShadowedBorder(arenaprep[i])
-
-		arenaprep[i].Health = CreateFrame('StatusBar', nil, arenaprep[i])
-		arenaprep[i].Health:SetStatusBarTexture(C.general.texture)
-
-		arenaprep[i].Spec = E:FontString({parent=arenaprep[i].Health})
-		arenaprep[i].Spec:SetPoint('CENTER')
-		arenaprep[i].Spec:SetJustifyH'CENTER'
-
-		arenaprep[i]:Hide()
+		arena[i] = self:Spawn('arena'..i, 'oUF_Arena'..i)
+		if i == 1 then
+			arena[i]:SetPoint(unpack(C.uf.positions.Arena))
+		else
+			arena[i]:SetPoint('BOTTOM', arena[i-1], 'TOP', 0, 35)
+		end
 	end
 
-	local arenaprepupdate = CreateFrame('Frame')
-	arenaprepupdate:RegisterEvent('PLAYER_LOGIN')
-	arenaprepupdate:RegisterEvent('PLAYER_ENTERING_WORLD')
-	arenaprepupdate:RegisterEvent('ARENA_OPPONENT_UPDATE')
-	arenaprepupdate:RegisterEvent('ARENA_PREP_OPPONENT_SPECIALIZATIONS')
-	arenaprepupdate:SetScript('OnEvent', function(self, event)
-		if event == 'PLAYER_LOGIN' then
-			for i = 1, 5 do
-				arenaprep[i]:SetAllPoints(_G['oUF_Arena'..i])
-			end
-		elseif event == 'ARENA_OPPONENT_UPDATE' then
-			for i = 1, 5 do
-				arenaprep[i]:Hide()
-			end
-		else
-			local numOpps = GetNumArenaOpponentSpecs()
-
-			if numOpps > 0 then
-				for i = 1, 5 do
-					local f = arenaprep[i]
-
-					if i <= numOpps then
-						local s = GetArenaOpponentSpec(i)
-						local _, spec, class = nil, 'UNKNOWN', 'UNKNOWN'
-
-						if s and s > 0 then
-							_, spec, _, _, _, _, class = GetSpecializationInfoByID(s)
-						end
-
-						if class and spec then
-							local color = RAID_CLASS_COLORS[class]
-							f.Health:SetStatusBarColor(color.r, color.g, color.b)
-							f.Spec:SetText(spec..'  -  '..LOCALIZED_CLASS_NAMES_MALE[class])
-							f:Show()
-						end
-					else
-						f:Hide()
-					end
-				end
-			else
-				for i = 1, 5 do
-					arenaprep[i]:Hide()
-				end
-			end
-		end
-	end)
 
 	for i = 1, MAX_PARTY_MEMBERS do
 		local pet = 'PartyMemberFrame'..i..'PetFrame'

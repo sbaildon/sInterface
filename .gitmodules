@@ -22,3 +22,11 @@
 	path = embeds/oUF_GCD
 	url = https://gitlab.com/sBaildon/oUF_GCD.git
 	branch = master
+[submodule "embeds/rActionBar"]
+	path = embeds/rActionBar
+	url = https://gitlab.com/sBaildon/rActionBar.git
+	branch = master
+[submodule "embeds/rLib"]
+	path = embeds/rLib
+	url = https://gitlab.com/sBaildon/rLib.git
+	branch = master

@@ -198,7 +198,9 @@ function CoolBar:UNIT_SPELLCAST_FAILED(unitId, _, _, _, spellId)
 end
 
 function CoolBar:PLAYER_REGEN_DISABLED()
-	CoolBar:PlayReveal()
+	if CoolBar.active > 0 then
+		CoolBar:PlayReveal()
+	end
 end
 
 function CoolBar:PLAYER_REGEN_ENABLED()

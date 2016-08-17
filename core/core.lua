@@ -28,34 +28,32 @@ function E:ShadowedBorder(anchor)
 	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
 end
 
-function E:RegisterHideAnimation(frame)
-        frame.hideAnimation = frame:CreateAnimationGroup()
-        frame.hideAnimation.alpha = frame.hideAnimation:CreateAnimation("Alpha")
-        frame.hideAnimation.alpha:SetStartDelay(0.5)
-        frame.hideAnimation.alpha:SetFromAlpha(frame:GetAlpha())
-        frame.hideAnimation.alpha:SetToAlpha(0)
-        frame.hideAnimation.alpha:SetDuration(0.2)
-        frame.hideAnimation.alpha:SetSmoothing("OUT")
-        frame.hideAnimation:HookScript("OnFinished", function()
-                frame:Hide()
-        end)
+function E:RegisterAlphaAnimation(frame)
+	frame.alphaAnimation = frame:CreateAnimationGroup()
+	frame.alphaAnimation.alpha = frame.alphaAnimation:CreateAnimation("Alpha")
+	frame.alphaAnimation.alpha:SetDuration(0.2)
+	frame.alphaAnimation.alpha:SetSmoothing("OUT")
+	function frame:PlayAlpha(toAlpha, startDelay, enableMouse)
+		if toAlpha == self:GetAlpha() then return end
 
-end
+		local startDelay = startDelay or 0.0
+		local enableMouse = enableMouse or true
 
-function E:RegisterRevealAnimation(frame, oocAlpha)
-	local alpha = oocAlpha or 1
-        frame.revealAnimation = frame:CreateAnimationGroup()
-        frame.revealAnimation.alpha = frame.revealAnimation:CreateAnimation("Alpha")
-        frame.revealAnimation.alpha:SetFromAlpha(0)
-        frame.revealAnimation.alpha:SetToAlpha(UnitAffectingCombat("player") and 1 or alpha)
-        frame.revealAnimation.alpha:SetDuration(0.2)
-        frame.revealAnimation.alpha:SetSmoothing("OUT")
-        frame.revealAnimation:HookScript("OnPlay", function()
-                frame:Show()
-        end)
-	frame.revealAnimation:HookScript("OnFinished", function()
-		frame:SetAlpha(UnitAffectingCombat("player") and 1 or alpha)
-	end)
+
+		if self.alphaAnimation:IsPlaying() then self.alphaAnimation:Stop() end
+		self:EnableMouse(enableMouse)
+		self.alphaAnimation.alpha:SetStartDelay(startDelay)
+		self.alphaAnimation.alpha:SetFromAlpha(self:GetAlpha())
+		self.alphaAnimation.alpha:SetToAlpha(toAlpha)
+		self.alphaAnimation:SetToFinalAlpha(toAlpha)
+		self.alphaAnimation:Play()
+	end
+	function frame:PlayReveal()
+		self:PlayAlpha(1, 0.0, true)
+	end
+	function frame:PlayHide()
+		self:PlayAlpha(0, 0.5, false)
+	end
 end
 
 function E:FontString(options)

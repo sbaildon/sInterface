@@ -10,6 +10,43 @@ local backdrop = {
 	insets = {top = -1, left = -1, bottom = -1, right = -1},
 }
 
+function EnterCombat(self)
+	self:PlayReveal()
+end
+
+function LeaveCombat(self)
+	local min, max = UnitHealth('player'), UnitHealthMax('player')
+	if min ~= max then return end
+	self:PlayHide()
+end
+
+function HealthUpdate(self)
+	if UnitAffectingCombat('player') and self:GetAlpha() == 1 then return end
+
+	local min, max = UnitHealth('player'), UnitHealthMax('player')
+
+	if UnitAffectingCombat('player') then
+		self:PlayReveal()
+	elseif min ~= max then
+		self:PlayAlpha(C.general.oocAlpha)
+	else
+		self:PlayHide()
+	end
+
+end
+
+function SpellStart(self)
+	if not UnitAffectingCombat('player') or self:GetAlpha() == 0 then
+		self:PlayAlpha(C.general.oocAlpha)
+	end
+end
+
+function SpellFinish(self)
+	if not UnitAffectingCombat('player') then
+		self:PlayHide()
+	end
+end
+
 local OnEnter = function(self)
 	UnitFrame_OnEnter(self)
 	if self.lfd then
@@ -737,6 +774,16 @@ local UnitSpecific = {
 		altp.colorTexture = true
 		E:ShadowedBorder(altp)
 		self.AltPowerBar = altp
+
+		E:RegisterAlphaAnimation(self)
+
+		self:RegisterEvent("PLAYER_REGEN_ENABLED", LeaveCombat)
+		self:RegisterEvent("PLAYER_REGEN_DISABLED", EnterCombat)
+		self:RegisterEvent("UNIT_HEALTH", HealthUpdate)
+		self:RegisterEvent("UNIT_SPELLCAST_START", SpellStart)
+		self:RegisterEvent("UNIT_SPELLCAST_STOP", SpellFinish)
+
+		self:PlayHide()
 	end,
 
 	target = function(self, ...)

@@ -6,7 +6,6 @@ local CoolBar = CreateFrame("Frame", "CoolBar", UIParent)
 local tick0, tick1, tick2, tick3, tick4, tick5, tick6 = 0, 1, 3, 10, 30, 120, 360
 local segment
 local cooldowns = {}
-local active = 0
 
 local function fs(frame, text, offset, just)
 	local fs = E:FontString({parent=frame, justify=just})
@@ -26,9 +25,6 @@ function CoolBar:PLAYER_LOGIN()
 	CoolBar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.5)
 	CoolBar.bg:SetAllPoints(CoolBar)
 
-	CoolBar:SetAlpha(C.coolbar.oocTransparency)
-	CoolBar:Hide()
-
 	E:ShadowedBorder(CoolBar)
 
 	segment = CoolBar:GetWidth() / 7
@@ -45,8 +41,10 @@ function CoolBar:PLAYER_LOGIN()
 	fs(CoolBar.fontLayer, tick5, segment * 5, "CENTER")
 	fs(CoolBar.fontLayer, tick6, (segment * 6) + 6, "RIGHT")
 
-	E:RegisterHideAnimation(CoolBar)
-	E:RegisterRevealAnimation(CoolBar, 0.6)
+	CoolBar.active = 0
+
+	E:RegisterAlphaAnimation(CoolBar)
+	CoolBar:PlayHide()
 end
 
 function CoolBar:CreateCooldown(spellId)
@@ -118,10 +116,14 @@ function CoolBar:CreateCooldown(spellId)
 	f:SetHeight(CoolBar:GetHeight()*1.5)
 	f:SetWidth(CoolBar:GetHeight()*1.5)
 	f:SetAlpha(1)
-	active = active + 1
-	CoolBar.hideAnimation:Stop()
-	if not CoolBar:IsShown() then
-		CoolBar.revealAnimation:Play()
+	CoolBar.active = CoolBar.active + 1
+
+	if CoolBar:GetAlpha() < C.general.oocAlpha then
+		if UnitAffectingCombat('player') then
+			CoolBar:PlayReveal()
+		else
+			CoolBar:PlayAlpha(C.general.oocAlpha)
+		end
 	end
 
 	f.ticker = C_Timer.NewTicker(0.01, function(self)
@@ -135,9 +137,9 @@ function CoolBar:CreateCooldown(spellId)
 		if gameTime >= f.endTime then
 			f.ticker:Cancel()
 			f.finishAnimation:Play()
-			active = active - 1
-			if active == 0 then
-				CoolBar.hideAnimation:Play()
+			CoolBar.active = CoolBar.active - 1
+			if CoolBar.active == 0 then
+				CoolBar:PlayHide()
 			end
 			return
 		end	
@@ -196,11 +198,13 @@ function CoolBar:UNIT_SPELLCAST_FAILED(unitId, _, _, _, spellId)
 end
 
 function CoolBar:PLAYER_REGEN_DISABLED()
-	CoolBar:SetAlpha(1)
+	CoolBar:PlayReveal()
 end
 
 function CoolBar:PLAYER_REGEN_ENABLED()
-	CoolBar:SetAlpha(C.coolbar.oocTransparency)
+	if CoolBar.active > 0 then
+		CoolBar:PlayAlpha(C.general.oocAlpha)
+	end
 end
 
 CoolBar:SetScript("OnEvent", function(this, event, ...)

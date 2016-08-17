@@ -1,36 +1,30 @@
 local _, ns = ...
 local C = ns.C
 
----------------------------------------------
---  VARIABLES
----------------------------------------------
 local unpack, type = unpack, type
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local FACTION_BAR_COLORS = FACTION_BAR_COLORS
 local WorldFrame = WorldFrame
 local GameTooltip = GameTooltip
 
-local classes = { "Warrior", "Paladin", "Hunter", "Shaman", "Druid", "Rogue", "Monk", "Death Knight", "Mage", "Warlock", "Priest" }
-
----------------------------------------------
---  FUNCTIONS
----------------------------------------------
-
---change some text sizes
 GameTooltipHeaderText:SetFont(C.tooltips.font, 15)
 GameTooltipText:SetFont(C.tooltips.font, 13)
 Tooltip_Small:SetFont(C.tooltips.font, 12)
 
---gametooltip statusbar
 GameTooltipStatusBar:ClearAllPoints()
 GameTooltipStatusBar:Hide()
 
---hooksecurefunc GameTooltip_SetDefaultAnchor
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	tooltip:SetOwner(parent, "ANCHOR_NONE")
 	tooltip:ClearAllPoints()
 	tooltip:SetPoint(unpack(C.tooltips.pos))
 end)
+
+local left = setmetatable({}, { __index = function(left, i)
+	local line = _G["GameTooltipTextLeft" .. i]
+	if line then rawset(left, i, line) end
+	return line
+end })
 
 GameTooltip:HookScript("OnUpdate", function(self, elapsed)
 	if not self.currentItem and not self.currentUnit then
@@ -38,121 +32,69 @@ GameTooltip:HookScript("OnUpdate", function(self, elapsed)
 	end
 end)
 
---func GetHexColor
 local function GetHexColor(color)
 	return ("%.2x%.2x%.2x"):format(color.r*255, color.g*255, color.b*255)
 end
 
-local classColors, reactionColors = {}, {}
-
-for class, color in pairs(RAID_CLASS_COLORS) do
-	classColors[class] = GetHexColor(RAID_CLASS_COLORS[class])
-end
-
-for i = 1, #FACTION_BAR_COLORS do
-	reactionColors[i] = GetHexColor(FACTION_BAR_COLORS[i])
-end
-
---HookScript GameTooltip OnTooltipSetUnit
 GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
-	GameTooltipTextLeft5:Hide()
-	if (GameTooltipTextLeft4:GetText() == "PvP") then GameTooltipTextLeft4:Hide() end
-	three_text = GameTooltipTextLeft3:GetText()
-	if (three_text) then
-		three_text = three_text:gsub("%b()", "")
-		for i,v in ipairs(classes) do
-			three_text = three_text:gsub(v, "")
-		end
-		GameTooltipTextLeft3:SetText(three_text)
-	end
 	local unit = select(2, self:GetUnit()) or (GetMouseFocus() and GetMouseFocus():GetAttribute("unit")) or (UnitExists("mouseover") and "mouseover")
-	if not unit or (unit and type(unit) ~= "string") then return end
-	if not UnitGUID(unit) then return end
-	local ricon = GetRaidTargetIndex(unit)
-	if ricon then
-		local text = GameTooltipTextLeft1:GetText()
-		GameTooltipTextLeft1:SetText(("%s %s"):format(ICON_LIST[ricon].."14|t", text))
-	end
-	for i = 2, GameTooltip:NumLines() do
-		local line = _G["GameTooltipTextLeft"..i]
-		if line then
-			line:SetTextColor(0.5,0.5,0.5)
-		end
-	end
+	local line = 1
 	if UnitIsPlayer(unit) then
+		local name, realm = UnitName(unit)
 		local _, unitClass = UnitClass(unit)
 		local color = RAID_CLASS_COLORS[unitClass]
-		local text = GameTooltipTextLeft1:GetText()
-		GameTooltipTextLeft1:SetFormattedText("|cff%02x%02x%02x%s|r", color.r * 255, color.g * 255, color.b * 255, text:match("|cff\x\x\x\x\x\x(.+)|r") or text)
-		if UnitIsAFK(unit) then
-			self:AppendText(" |cff00cccc<AFK>|r")
-		elseif UnitIsDND(unit) then
-			self:AppendText(" |cffcc0000<DND>|r")
-		end
-
-		local unitGuild = GetGuildInfo(unit)
-		local text = GameTooltipTextLeft2:GetText()
-		if unitGuild and text and text:find("^"..unitGuild) then
-			GameTooltipTextLeft2:SetText("<"..text..">")
-			GameTooltipTextLeft2:SetTextColor(205/255, 126/255, 215/255)
+		if realm then
+			left[line]:SetFormattedText("|cff%02x%02x%02x%s %s %s|r", color.r*255, color.g*255, color.b*255, name, 'of', realm)
 		else
-			three_text = GameTooltipTextLeft2:GetText()
-			if (three_text) then
-				three_text = three_text:gsub("%b()", "")
-				for i,v in ipairs(classes) do
-					three_text = three_text:gsub(v, "")
-				end
-				GameTooltipTextLeft2:SetText(three_text)
-			end
+			left[line]:SetFormattedText("|cff%02x%02x%02x%s|r", color.r*255, color.g*255, color.b*255, name)
 		end
-	else
-		local reaction = UnitReaction(unit, "player")
-		if reaction then
-			local color = FACTION_BAR_COLORS[reaction]
-		if color then
-			GameTooltipTextLeft1:SetTextColor(color.r,color.g,color.b)
-		end
-	end
+		line = line + 1
 
-	local unitClassification = UnitClassification(unit)
-	if unitClassification == "worldboss" or UnitLevel(unit) == -1 then
-		if UnitReaction(unit, "player") == 2 then
-			--highlight bosses
-			GameTooltipTextLeft1:SetTextColor(1,0.1,0)
+		local guild = GetGuildInfo(unit)
+		if guild then
+			left[line]:SetFormattedText('|cff%02x%02x%02x%s|r', 255, 213, 131, guild)
+			line = line + 1
 		end
-		self:AppendText(" |TInterface\\TargetingFrame\\UI-TargetingFrame-Skull:14:14|t")
-	elseif unitClassification == "rare" then
-		self:AppendText(" |TInterface\\AddOns\\rTooltip\\diablo:14:14:0:0:16:16:0:15:0:14|t")
-	elseif unitClassification == "rareelite" then
-		self:AppendText(" |TInterface\\AddOns\\rTooltip\\diablo:14:14:0:0:16:16:0:15:0:14|t")
-	elseif unitClassification == "elite" then
-		self:AppendText(" |TInterface\\AddOns\\rTooltip\\plus:14:14|t")
-	end
-	end
 
-	if UnitIsGhost(unit) then
-		self:AppendText(" |cffaaaaaa<GHOST>|r")
-		GameTooltipTextLeft1:SetTextColor(0.5,0.5,0.5)
-	elseif UnitIsDead(unit) then
-		self:AppendText(" |cffaaaaaa<DEAD>|r")
-		GameTooltipTextLeft1:SetTextColor(0.5,0.5,0.5)
+		local level, race = UnitLevel(unit), UnitRace(unit)
+		level = level > 0 and level or '??'
+		local color = GetQuestDifficultyColor(level)
+		left[line]:SetFormattedText('|cff%02x%02x%02x%d|r %s', color.r*255, color.g*255, color.b*255, level, race)
+		line = line + 1
+
+		for i = line, GameTooltip:NumLines() do
+			left[i]:SetText(nil)
+		end
+	else	
+		local name = UnitName(unit)
+		left[line]:SetText(name)
+		line = line + 1
+
+		local info = left[line]:GetText()
+		if not info then return GameTooltip:Show() end
+
+		if not strmatch(info, "Level") and not strmatch(info, "Pet Level") then 
+			line = line + 1
+		end
+
+		local level, race = UnitLevel(unit), UnitCreatureType(unit)
+		level = level == -1 and '??' or level
+		local color = type(level) == 'number' and GetQuestDifficultyColor(level) or {r=1, g=0.5, b=0.5}
+		left[line]:SetFormattedText('|cff%02x%02x%02x%s|r %s', color.r*255, color.g*255, color.b*255, level, race)
 	end
 end)
 
---func TooltipOnShow
 local function TooltipOnShow(self,...)
 	self:SetBackdropColor(unpack(C.tooltips.bgColor))
 	self:SetBackdropBorderColor(0, 0, 0, 0)
 end
   
---func TooltipOnShow
 local function TooltipOnHide(self,...)
 	self:SetBackdropColor(unpack(C.tooltips.bgColor))
 end
 
---loop over tooltips
-local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip, }
-local tt = { GameTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, ItemRefTooltip, ItemRefShoppingTooltip1, ItemRefShoppingTooltip2, ItemRefShoppingTooltip3, WorldMapTooltip, WorldMapCompareTooltip1, WorldMapCompareTooltip2, WorldMapCompareTooltip3, AtlasLootTooltip, QuestHelperTooltip, QuestGuru_QuestWatchTooltip, }
+local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip }
+local tt = { GameTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, ItemRefTooltip, ItemRefShoppingTooltip1, ItemRefShoppingTooltip2, ItemRefShoppingTooltip3, WorldMapTooltip, WorldMapCompareTooltip1, WorldMapCompareTooltip2, WorldMapCompareTooltip3, AtlasLootTooltip, QuestHelperTooltip, QuestGuru_QuestWatchTooltip }
 for idx, tooltip in ipairs(tooltips) do
 	tooltip:SetBackdrop(C.tooltips.backdrop)
 	tooltip:SetBackdropColor(unpack(C.tooltips.bgColor))

@@ -80,7 +80,9 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 		local level, race = UnitLevel(unit), UnitCreatureType(unit)
 		level = level == -1 and '??' or level
 		local color = type(level) == 'number' and GetQuestDifficultyColor(level) or {r=1, g=0.5, b=0.5}
-		left[line]:SetFormattedText('|cff%02x%02x%02x%s|r %s', color.r*255, color.g*255, color.b*255, level, race)
+		if level and race then
+			left[line]:SetFormattedText('|cff%02x%02x%02x%s|r %s', color.r*255, color.g*255, color.b*255, level, race)
+		end
 	end
 end)
 

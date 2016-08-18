@@ -33,8 +33,8 @@ C["uf"].size = {
 }
 
 C["uf"].positions = {
-	Player = { 'CENTER', UIParent, 'CENTER', 0, -200 },
-	Target = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 56, 89 },
+	Player = { 'CENTER', UIParent, 'CENTER', 0, -275 },
+	Target = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 55, 130 },
 	Targettarget = { 'TOPLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 7, 0 },
 	Focus = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 56, -100 },
 	Focustarget = { 'TOPLEFT', 'oUF_sInterfaceFocus', 'TOPRIGHT', 67, 4 },

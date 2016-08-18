@@ -110,7 +110,6 @@ function CoolBar:CreateCooldown(spellId)
 
 		table.insert(cooldowns, f)
 	end
-
 	f.finishAnimation:Stop()
 	f.endTime = start + dur
 	f:SetHeight(CoolBar:GetHeight()*1.5)
@@ -158,6 +157,8 @@ function CoolBar:CreateCooldown(spellId)
 			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.05 * remain) + 2.5)*segment, 0)
 		elseif remain < tick5 then
 			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.01111112 * remain) + 3.666665)*segment, 0)
+		elseif remain < tick6 then
+			f:SetPoint("CENTER", CoolBar, "LEFT", ((0.00416666 * remain) + 5.5)*segment, 0)
 		else
 			f:SetPoint("CENTER", CoolBar, "LEFT", CoolBar:GetWidth(), 0)
 		end
@@ -166,6 +167,7 @@ function CoolBar:CreateCooldown(spellId)
 			f:SetFrameLevel(random(1,5) * 2 + 2)
 		end
 	end, dur/0.01)
+	
 
 	C_Timer.After(0.01, function(self)
 		f:Show()
@@ -173,7 +175,7 @@ function CoolBar:CreateCooldown(spellId)
 end
 
 function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, spell, _, _, spellId)
-	if unitId == "player" or unitId == "vehicle" and not C.coolbar.disabled[spell] then
+	if (unitId == "player" or unitId == "vehicle") and not C.coolbar.disabled[spell] then
 		local timer = C_Timer.After(0.1, function()
 			CoolBar:CreateCooldown(spellId)
 		end)

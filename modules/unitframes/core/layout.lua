@@ -350,9 +350,7 @@ local OnCastbarUpdate = function(self, elapsed)
 end
 
 local PostCastStart = function(self, unit)
-	if self.hideAnim:IsPlaying() then
-		self.hideAnim:Stop()
-	end
+	self:PlayReveal()
 	self.Spark:Show()
 	self:SetStatusBarColor(unpack(self.casting and self.CastingColor or self.ChannelingColor))
 	if self.casting then
@@ -392,14 +390,11 @@ local PostCastStop = function(self, unit)
 	self:Show()
 	self:SetStatusBarColor(unpack(self.CompleteColor))
 	self:SetValue(self.cast and self.max or 0)
-	self.hideAnim:Play()
+	self:PlayAlpha(0, 0)
 end
 
 local PostCastFailed = function(self, event, unit)
-	self:Show()
-	self:SetStatusBarColor(unpack(self.FailColor))
-	self:SetValue(self.max)
-	self.hideAnim:Play()
+	self:SetStatusBarColor(1, 1, 0, 1)
 end
 
 local Castbar = function(self, unit)
@@ -407,7 +402,7 @@ local Castbar = function(self, unit)
 	local cbbg = cb:CreateTexture(nil, 'BACKGROUND')
 	cbbg:SetAllPoints(cb)
 	cbbg:SetTexture(C.general.texture)
-	cbbg:SetVertexColor(1, 1, 1, .2)
+	cbbg:SetVertexColor(1, 1, 1, 0.2)
 	cb.Time = E:FontString({parent=cb, layer='OVERLAY', justify='RIGHT'}) 
 	cb.Time:SetPoint('RIGHT', cb, -2, 4)
 	cb.Text = E:FontString({parent=cb, layer='OVERLAY', justify='LEFT'})
@@ -422,11 +417,8 @@ local Castbar = function(self, unit)
 	cb.Icon:SetTexCoord(.1, .9, .1, .9)
 
 	cb.Spark = cb:CreateTexture(nil,'OVERLAY')
-	cb.Spark:SetTexture([=[Interface\Buttons\WHITE8x8]=])
 	cb.Spark:SetBlendMode('Add')
-	cb.Spark:SetHeight(cb:GetHeight())
-	cb.Spark:SetWidth(1)
-	cb.Spark:SetVertexColor(1, 1, 1)
+	cb.Spark:SetSize(10, cb:GetHeight())
 
 	cb.OnUpdate = OnCastbarUpdate
 	cb.PostCastStart = PostCastStart
@@ -439,16 +431,7 @@ local Castbar = function(self, unit)
 	E:ShadowedBorder(cb)
 	E:ShadowedBorder(cb.Icon)
 
-	cb.hideAnim = cb:CreateAnimationGroup()
-	cb.hideAnim.fadeOut = cb.hideAnim:CreateAnimation("ALPHA")
-	cb.hideAnim.fadeOut:SetStartDelay(0.1)
-	cb.hideAnim.fadeOut:SetFromAlpha(cb:GetAlpha())
-	cb.hideAnim.fadeOut:SetToAlpha(0)
-	cb.hideAnim.fadeOut:SetDuration(0.2)
-	cb.hideAnim.fadeOut:SetSmoothing("NONE")
-	cb.hideAnim.fadeOut:HookScript("OnFinished", function()
-		cb:Hide()
-	end)
+	E:RegisterAlphaAnimation(cb)
 
 	local height = self.Health:GetHeight() - self.Power:GetHeight()
 	cb:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -15)

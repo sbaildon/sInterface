@@ -416,6 +416,10 @@ local Castbar = function(self, unit)
 	cb.Icon:SetPoint('BOTTOMRIGHT', cb, 'BOTTOMLEFT', -6, 0)
 	cb.Icon:SetTexCoord(.1, .9, .1, .9)
 
+	cb.Shield = cb:CreateTexture(nil, 'ARTWORK')
+	cb.Shield:SetSize(self:GetHeight(), self:GetHeight())
+	cb.Shield:SetPoint('BOTTOMRIGHT', cb, 'BOTTOMLEFT', -6, 0)
+
 	cb.Spark = cb:CreateTexture(nil,'OVERLAY')
 	cb.Spark:SetBlendMode('Add')
 	cb.Spark:SetSize(10, cb:GetHeight())
@@ -428,6 +432,7 @@ local Castbar = function(self, unit)
 	cb.PostCastFailed = PostCastFailed
 	cb.PostCastInterrupted = PostCastFailed
 	cb.bg = cbbg
+
 	E:ShadowedBorder(cb)
 	E:ShadowedBorder(cb.Icon)
 

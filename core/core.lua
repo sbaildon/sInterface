@@ -33,12 +33,11 @@ function E:RegisterAlphaAnimation(frame)
 	frame.alphaAnimation.alpha = frame.alphaAnimation:CreateAnimation("Alpha")
 	frame.alphaAnimation.alpha:SetDuration(0.2)
 	frame.alphaAnimation.alpha:SetSmoothing("OUT")
-	function frame:PlayAlpha(toAlpha, startDelay, enableMouse)
+	function frame:PlayAlpha(toAlpha, startDelay)
 		if toAlpha == self:GetAlpha() then return end
 
 		local startDelay = startDelay or 0.0
-		local enableMouse = enableMouse or true
-
+		local enableMouse = toAlpha ~= 0 and true or false
 
 		if self.alphaAnimation:IsPlaying() then self.alphaAnimation:Stop() end
 		self:EnableMouse(enableMouse)
@@ -49,10 +48,10 @@ function E:RegisterAlphaAnimation(frame)
 		self.alphaAnimation:Play()
 	end
 	function frame:PlayReveal()
-		self:PlayAlpha(1, 0.0, true)
+		self:PlayAlpha(1, 0.0)
 	end
 	function frame:PlayHide()
-		self:PlayAlpha(0, 0.5, false)
+		self:PlayAlpha(0, 0.5)
 	end
 end
 

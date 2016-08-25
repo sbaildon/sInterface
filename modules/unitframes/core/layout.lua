@@ -532,6 +532,14 @@ local LFD = function(self)
 	self.LFDRole = LFDRole
 end
 
+local ReadyCheck = function(self)
+	local rc = self.Health:CreateTexture(nil, 'OVERLAY')
+	rc:SetPoint('CENTER', self.Health, 'LEFT', 0, 0)
+	rc:SetSize(12, 12)
+	self.ReadyCheck = rc
+end
+
+
 local Power = function(self)
 	local p = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	p:SetPoint('LEFT')
@@ -887,6 +895,7 @@ local UnitSpecific = {
 		Power(self)
 		PhaseIcon(self)
 		LFD(self)
+		ReadyCheck(self)
 
 		if C.uf.aura.party.enable then Auras(self) end
 		local name = E:FontString({parent=self.Health})
@@ -898,11 +907,6 @@ local UnitSpecific = {
 		local htext= E:FontString({parent=self.Health})
 		htext:SetPoint('RIGHT', -2, 4)
 		self:Tag(htext, '[primary:health]')
-
-		local rc = self.Health:CreateTexture(nil, 'OVERLAY')
-		rc:SetPoint('CENTER')
-		rc:SetSize(12, 12)
-		self.ReadyCheck = rc
 	end,
 
 	tank = function(self, ...)
@@ -967,18 +971,13 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		LFD(self)
+		ReadyCheck(self)
 
 		local name = E:FontString({parent=self.Health})
 		name:SetPoint('LEFT', 2, 4)
 		name:SetJustifyH'LEFT'
 		self:Tag(name, '[color][threat][short:name]')
 		self.Name = name
-
-
-		local rc = self.Health:CreateTexture(nil, 'OVERLAY')
-		rc:SetPoint('CENTER')
-		rc:SetSize(12, 12)
-		self.ReadyCheck = rc
 	end,
 }
 

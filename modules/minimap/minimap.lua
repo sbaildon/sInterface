@@ -76,9 +76,6 @@ MiniMapWorldMapButton:Hide()
 
 E:ShadowedBorder(Minimap)
 
-----------------------------------------------------------------------------------------
---	Right click menu
-----------------------------------------------------------------------------------------
 local level = UnitLevel("player")
 local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", UIParent, "UIDropDownMenuTemplate")
 local micromenu = {
@@ -168,6 +165,7 @@ local micromenu = {
 	end},
 
 }
+
 Minimap:SetScript("OnMouseUp", function(self, btn)
 	if btn == "RightButton" then
 		EasyMenu(micromenu, menuFrame, "cursor", 0, 0, "MENU", 2)	

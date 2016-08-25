@@ -16,11 +16,11 @@
 	branch = master
 [submodule "embeds/oUF_Smooth"]
 	path = embeds/oUF_Smooth
-	url = https://gitlab.com/sBaildon/oUF_Smooth.git
+	url = https://github.com/sBaildon/oUF_Smooth.git
 	branch = master
 [submodule "embeds/oUF_GCD"]
 	path = embeds/oUF_GCD
-	url = https://gitlab.com/sBaildon/oUF_GCD.git
+	url = https://github.com/sBaildon/oUF_GCD.git
 	branch = master
 [submodule "embeds/rActionBar"]
 	path = embeds/rActionBar

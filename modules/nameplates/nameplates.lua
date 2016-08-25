@@ -1,15 +1,10 @@
 local addon, ns = ...
+local C = ns.C
 
-config = {
-	tanking = true,
-}
-
-stuff = {
-	colours = {
-		secure = { 0, 255, 0 },
-		insecure = { 255, 124, 0 },
-		na = { 255, 0, 0 }
-	}
+local colours = {
+	secure = { 0, 255, 0 },
+	insecure = { 255, 124, 0 },
+	na = { 255, 0, 0 }
 }
 
 local sPlates, events = CreateFrame("FRAME"), {};
@@ -26,16 +21,16 @@ end
 
 hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
 	if UnitIsPlayer(frame.unit) or not UnitAffectingCombat("player") then return end
-	if not (config.tanking and IsPlayerEffectivelyTank())  then return end
+	if not (C.np.tankMode and IsPlayerEffectivelyTank())  then return end
 
 	status = UnitThreatSituation("player", frame.unit)
 	if status == nil then return end
 	if status == 3 then
-		r, g, b = unpack(stuff.colours.secure)
+		r, g, b = unpack(colours.secure)
 	elseif status == 2 then
-		r, g, b = unpack(stuff.colours.insecure)
+		r, g, b = unpack(colours.insecure)
 	else
-		r, g, b = unpack(stuff.colours.na)
+		r, g, b = unpack(colours.na)
 	end
 	frame.healthBar.barTexture:SetVertexColor (r, g, b)
 end)

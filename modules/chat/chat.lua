@@ -89,7 +89,6 @@ for i = 1, NUM_CHAT_WINDOWS do
 	style(_G["ChatFrame"..i])
 end
 
-
 hooksecurefunc("FCF_OpenTemporaryWindow", function()
 	for _, chatFrameName in pairs(CHAT_FRAMES) do
 		local frame = _G[chatFrameName]
@@ -107,10 +106,17 @@ hooksecurefunc("FloatingChatFrame_Update", function()
 	ChatFrame1:SetUserPlaced(true)
 	ChatFrame1:SetHeight(110)
 
+	FCF_SetLocked(ChatFrame1, true)
+end)
+
+local function ColourByClass()
 	for i = 1,#TypeInfo do
 		local info = ChatTypeInfo[TypeInfo[i]]
 		info.colorNameByClass = true
 	end
+end
 
-	FCF_SetLocked(ChatFrame1, true)
-end)
+local ChatLogin = CreateFrame('Frame', nil)
+ChatLogin:RegisterEvent('PLAYER_LOGIN')
+ChatLogin:SetScript('OnEvent', ColourByClass)
+

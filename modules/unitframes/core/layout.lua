@@ -49,24 +49,17 @@ end
 
 local OnEnter = function(self)
 	UnitFrame_OnEnter(self)
-	if self.lfd then
-		if self.lfd:IsShown() and self.lfd.lfdHideAnim:IsPlaying() then
-			self.lfd.lfdHideAnim:Stop()
-		elseif self.lfd.lfdShowAnim and self.lfd.lfdHideAnim then
-			self.lfd.lfdHideAnim:Stop()
-			self.lfd.lfdShowAnim:Play()
-		end
+	if self.LFDRole then 
+		if self.LFDTimer then self.LFDTimer:Cancel() end
+		self.LFDRole:PlayReveal()
 	end
 	self.Highlight:Show()
 end
 
 local OnLeave = function(self)
 	UnitFrame_OnLeave(self)
-	if self.lfd then
-		if self.lfd.lfdHideAnim then
-			self.lfd.lfdShowAnim:Stop()
-			self.lfd.lfdHideAnim:Play()
-		end
+	if self.LFDRole then 
+		self.LFDTimer = C_Timer.NewTimer(1, function() self.LFDRole:PlayHide() end)
 	end
 	self.Highlight:Hide()
 end
@@ -529,38 +522,20 @@ local Health = function(self)
 end
 
 local LFD = function(self)
-	local lfd = E:FontString({parent=self.Health, layer='OVERLAY', font=C.uf.symbol})
-	lfd:SetPoint('LEFT', self.Name, 'RIGHT', 0, 0)
-	lfd:SetJustifyH'LEFT'
+	local LFDRole = self.Health:CreateTexture(nil, 'OVERLAY')
+	LFDRole:SetSize(16, 16)
+	LFDRole:SetPoint('RIGHT', -5, 0)
 
-	lfd.lfdShowAnim = lfd:CreateAnimationGroup()
-	lfd.lfdShowAnim.alpha = lfd.lfdShowAnim:CreateAnimation("ALPHA")
-	lfd.lfdShowAnim.alpha:SetFromAlpha(0)
-	lfd.lfdShowAnim.alpha:SetToAlpha(1)
-	lfd.lfdShowAnim.alpha:SetDuration(0.2)
-	lfd.lfdShowAnim.alpha:HookScript("OnPlay", function()
-		lfd:Show()
-	end)
-		
-	lfd.lfdHideAnim = lfd:CreateAnimationGroup()
-	lfd.lfdHideAnim.alpha = lfd.lfdHideAnim:CreateAnimation("ALPHA")
-	lfd.lfdHideAnim.alpha:SetStartDelay(2)
-	lfd.lfdHideAnim.alpha:SetFromAlpha(lfd:GetAlpha())
-	lfd.lfdHideAnim.alpha:SetToAlpha(0)
-	lfd.lfdHideAnim.alpha:SetDuration(0.2)
-	lfd.lfdHideAnim.alpha:HookScript("OnFinished", function()
-		lfd:Hide()
-	end)
+	E:RegisterAlphaAnimation(LFDRole)
+	LFDRole:PlayHide()
 
-	lfd:Hide()
-	self.lfd = lfd
-	self:Tag(lfd, '[LFD]')
+	self.LFDRole = LFDRole
 end
 
 local Power = function(self)
 	local p = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
-	p:SetPoint'LEFT'
-	p:SetPoint'RIGHT'
+	p:SetPoint('LEFT')
+	p:SetPoint('RIGHT')
 	p:SetPoint('TOP', self.Health, 'BOTTOM', 0, -1)
 	p:SetHeight(C.uf.size[self.unitSize].power)
 
@@ -618,9 +593,9 @@ local Shared = function(self, unit)
 	E:ShadowedBorder(self)
 
 	local ricon = self.Health:CreateTexture(nil, 'OVERLAY')
-	ricon:SetTexture(C.uf.raidicons)
-	ricon:SetSize(20, 20)
-	ricon:SetPoint('TOP', 0, 10)
+	local riconsize = self.Health:GetHeight()-2
+	ricon:SetSize(riconsize, riconsize)
+	ricon:SetPoint('RIGHT', -5, 0)
 	self.RaidIcon = ricon
 
 	local hl = self.Health:CreateTexture(nil, 'OVERLAY')
@@ -998,6 +973,7 @@ local UnitSpecific = {
 		name:SetJustifyH'LEFT'
 		self:Tag(name, '[color][threat][short:name]')
 		self.Name = name
+
 
 		local rc = self.Health:CreateTexture(nil, 'OVERLAY')
 		rc:SetPoint('CENTER')

@@ -40,7 +40,9 @@ function E:RegisterAlphaAnimation(frame)
 		local enableMouse = toAlpha ~= 0 and true or false
 
 		if self.alphaAnimation:IsPlaying() then self.alphaAnimation:Stop() end
-		self:EnableMouse(enableMouse)
+		if self.EnableMouse then
+			self:EnableMouse(enableMouse)
+		end
 		self.alphaAnimation.alpha:SetStartDelay(startDelay)
 		self.alphaAnimation.alpha:SetFromAlpha(self:GetAlpha())
 		self.alphaAnimation.alpha:SetToAlpha(toAlpha)

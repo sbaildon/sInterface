@@ -177,8 +177,9 @@ local Auras = function(self)
 		end
 
 		local b = CreateFrame('Frame', nil, self)
-		b.spacing = floor((self:GetWidth() - config.size * config.num) / (config.num-1))
+		b.spacing = (self:GetWidth() - config.size * config.num) / (config.num-1)
 		b:SetSize(self:GetWidth(), config.size)
+		b.size = config.size
 		b:SetPoint('BOTTOMLEFT', self.Experience or self.Reputation or self, 'TOPLEFT', 0, 9)
 		b.initialAnchor = 'TOPLEFT'
 		b['growth-y'] = 'UP'

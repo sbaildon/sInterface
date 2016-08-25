@@ -50,7 +50,7 @@ C["uf"].aura = {
 	target = {
 		enable = true,
 		mode = 'aura',
-		size = 15,
+		size = 16,
 		num = 8,
 		gap = false,
 	},

@@ -38,6 +38,7 @@ end
 
 GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 	local unit = select(2, self:GetUnit()) or (GetMouseFocus() and GetMouseFocus():GetAttribute("unit")) or (UnitExists("mouseover") and "mouseover")
+	if not unit then return end
 	local line = 1
 	if UnitIsPlayer(unit) then
 		local name, realm = UnitName(unit)

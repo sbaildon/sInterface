@@ -394,15 +394,10 @@ local PostCastStop = function(self, unit)
 end
 
 local PostCastFailed = function(self, event, unit)
-	self:SetStatusBarColor(1, 1, 0, 1)
 end
 
 local Castbar = function(self, unit)
 	local cb = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
-	local cbbg = cb:CreateTexture(nil, 'BACKGROUND')
-	cbbg:SetAllPoints(cb)
-	cbbg:SetTexture(C.general.texture)
-	cbbg:SetVertexColor(1, 1, 1, 0.2)
 	cb.Time = E:FontString({parent=cb, layer='OVERLAY', justify='RIGHT'}) 
 	cb.Time:SetPoint('RIGHT', cb, -2, 4)
 	cb.Text = E:FontString({parent=cb, layer='OVERLAY', justify='LEFT'})
@@ -431,7 +426,6 @@ local Castbar = function(self, unit)
 	cb.PostChannelStop = PostCastStop
 	cb.PostCastFailed = PostCastFailed
 	cb.PostCastInterrupted = PostCastFailed
-	cb.bg = cbbg
 
 	E:ShadowedBorder(cb)
 	E:ShadowedBorder(cb.Icon)

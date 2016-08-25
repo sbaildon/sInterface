@@ -6,7 +6,6 @@ local _, class = UnitClass('player')
 local mediaPath = 'Interface\\AddOns\\sInterface\\media\\'
 
 C["uf"] = { 
-	symbol = mediaPath..'symbol.ttf',
 	raidicons = mediaPath..'raidicons',
 }
 

@@ -5,9 +5,7 @@ local _, class = UnitClass('player')
 
 local mediaPath = 'Interface\\AddOns\\sInterface\\media\\'
 
-C["uf"] = { 
-	raidicons = mediaPath..'raidicons',
-}
+C["uf"] = {}
 
 C["uf"].size = {
 	primary = {

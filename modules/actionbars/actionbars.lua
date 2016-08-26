@@ -65,6 +65,19 @@ local bar3 = {
 }
 rActionBar:CreateActionBar3(A, bar3)
 
+local bar4 = {
+	framePoint = { "TOP", A.."Bar3", "BOTTOM", 0, -10 },
+	frameScale = 1,
+	framePadding = 5,
+	frameVisibility = "[modifier:ctrl,modifier:shift,modifier:alt][cursor] show; hide",
+	buttonWidth = 32,
+	buttonHeight = 32,
+	buttonMargin = 5,
+	numCols = 6,
+	startPoint = "TOPLEFT",
+	fader = fader,
+}
+rActionBar:CreateActionBar4(A, bar4)
 local petbar = {
 	framePoint = { "BOTTOM", A.."Bar1", "TOP", 0, 0 },
 	frameScale = 1,

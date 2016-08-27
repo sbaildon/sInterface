@@ -126,16 +126,4 @@ C['filter'].filters = {
 			not_found = 1
 		}
 	},
-	{
-		spellId = 1715,
-		size = size,
-		pos = { 'CENTER', UIParent, 'CENTER', 70, 0 },
-		unit = 'target',
-		filter = 'HARMFUL',
-		spec = 3,
-		alpha = {
-			found = 1,
-			not_found = 1
-		}
-	},
 }

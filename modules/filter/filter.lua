@@ -98,7 +98,7 @@ local function createFilter(filter)
 		self[event](this, ...)
 	end)
 
-	filters[filter.spellId] = f
+	table.insert(filters, f)
 	filterCount = filterCount + 1
 end
 

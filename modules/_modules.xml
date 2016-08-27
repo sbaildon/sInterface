@@ -5,6 +5,7 @@
 	<Include file="chat\_chat.xml" />
 	<Include file="coolbar\_coolbar.xml" />
 	<Include file="errors\_errors.xml" />
+	<Include file="filter\_filter.xml" />
 	<Include file="minimap\_minimap.xml" />
 	<Include file="nameplates\_nameplates.xml" />
 	<Include file="objectivetracker\_objectivetracker.xml" />

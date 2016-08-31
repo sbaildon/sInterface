@@ -10,7 +10,6 @@ local position1 = {'TOPLEFT', anchorFrame, 'BOTTOMLEFT', 0, yOffset}
 local position2 = {'TOPLEFT', anchorFrame, 'BOTTOMLEFT', spacing + size, yOffset}
 local position3 = {'TOPLEFT', anchorFrame, 'BOTTOMLEFT', (size + spacing)*2, yOffset}
 local position4 = {'TOPLEFT', anchorFrame, 'BOTTOMLEFT', (size + spacing)*3, yOffset}
-
 local position5 = {'TOPLEFT', anchorFrame, 'BOTTOMLEFT', (size+spacing)/2, yOffset*2}
 local position6 = {'TOPLEFT', anchorFrame, 'BOTTOMLEFT', (size+spacing)/2 + (spacing+size), yOffset*2}
 local position7 = {'TOPLEFT', anchorFrame, 'BOTTOMLEFT', (size+spacing)/2 + (spacing+size)*2, yOffset*2}

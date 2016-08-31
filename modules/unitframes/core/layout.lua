@@ -359,8 +359,8 @@ local PostCastStart = function(self, unit)
 		self.cast = false
 	end
 	if unit == 'vehicle' then
-		self.SafeZone:Hide()
-		self.Lag:Hide()
+		if self.SafeZone then self.SafeZone:Hide() end
+		if self.Lag then self.Lag:Hide() end
 	elseif unit == 'player' then
 		local sf = self.SafeZone
 		if not sf then return end

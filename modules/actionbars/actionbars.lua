@@ -82,7 +82,7 @@ local petbar = {
 	framePoint = { "BOTTOM", A.."Bar1", "TOP", 0, 0 },
 	frameScale = 1,
 	framePadding = 5,
-	frameVisibility = "[cursor,pet] show; hide",
+	frameVisibility = "[cursor][pet] show; hide",
 	buttonWidth = 32,
 	buttonHeight = 32,
 	buttonMargin = 5,
@@ -105,3 +105,17 @@ local vehicleexitbar = {
 	fader = fader,
 }
 rActionBar:CreateVehicleExitBar(A, vehicleexitbar)
+
+local extrabar = {
+  framePoint      = { "BOTTOM", UIParent, "BOTTOM", 0, 85 },
+  frameScale      = 1,
+  framePadding    = 5,
+  buttonWidth     = 36,
+  buttonHeight    = 36,
+  buttonMargin    = 5,
+  numCols         = 1,
+  startPoint      = "BOTTOMLEFT",
+  fader           = nil,
+}
+--create
+rActionBar:CreateExtraBar(A, extrabar)

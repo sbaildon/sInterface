@@ -24,12 +24,12 @@ local colours = {
 
 local sValue = function(val)
 	if (val >= 1e6) then
-        return ('%.fm'):format(val / 1e6)
-    elseif (val >= 1e3) then
-        return ('%.fk'):format(val / 1e3)
-    else
-        return ('%d'):format(val)
-    end
+		return ('%.2gm'):format(val / 1e6)
+	elseif (val >= 1e3) then
+		return ('%.fk'):format(val / 1e3)
+	else
+		return ('%d'):format(val)
+	end
 end
 
 local function hex(r, g, b)

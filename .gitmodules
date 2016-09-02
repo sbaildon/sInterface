@@ -30,3 +30,11 @@
 	path = embeds/rLib
 	url = https://github.com/sBaildon/rLib.git
 	branch = master
+[submodule "embeds/LibBossIDs-1.0"]
+	path = embeds/LibBossIDs-1.0
+	url = https://github.com/sBaildon/LibBossIDs-1.0.git
+	branch = master
+[submodule "embeds/LibStub"]
+	path = embeds/LibStub
+	url = https://github.com/sBaildon/LibStub.git
+	branch = master

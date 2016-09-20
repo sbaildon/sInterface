@@ -23,8 +23,8 @@ if classIndex == 1 then -- warrior
 		-- Prot Warrior
 		{ spellId = 190456,	size = size,	pos = position1,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- ignore pain
 		{ spellId = 2565,	size = size,	pos = position2,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- shield block
-		{ spellId = 204488,	size = size,	pos = position3,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- ignore focused rage
-		{ spellId = 6343,	size = size,	pos = position4,	unit = 'target',	filter = 'HARMFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- thunderclap
+		{ spellId = 6343,	size = size,	pos = position3,	unit = 'target',	filter = 'HARMFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- thunderclap
+		{ spellId = 204488,	size = size,	pos = position4,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- focused rage
 		{ spellId = 1719,	size = size,	pos = position5,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- battleshout
 		{ spellId = 107574,	size = size,	pos = position6,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- avatar
 
@@ -33,7 +33,7 @@ if classIndex == 1 then -- warrior
 		{ spellId = 60503,	size = size,	pos = position2,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- overpower
 		{ spellId = 167105,	size = size,	pos = position3,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- colossus smash
 		{ spellId = 204488,	size = size,	pos = position4,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- focused rage
-		{ spellId = 845,	size = size,	pos = position5,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- cleave
+		{ spellId = 1715,	size = size,	pos = position5,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- hamstring
 		{ spellId = 1719,	size = size,	pos = position6,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- battleshout
 		{ spellId = 107574,	size = size,	pos = position7,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- avatar
 	}

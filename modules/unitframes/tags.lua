@@ -23,10 +23,15 @@ local colours = {
 }
 
 local sValue = function(val)
-	if (val >= 1e6) then
-		return ('%.2gm'):format(val / 1e6)
-	elseif (val >= 1e3) then
-		return ('%.fk'):format(val / 1e3)
+	local placeValue = ("%%.%df"):format(1)
+	if (val >= 1e12) then
+		return placeValue:format(val/1e12).."t"
+	elseif (val >= 1e9) then
+		return placeValue:format(val/1e9).."b"
+	elseif (val >= 1e6) then
+		return placeValue:format(val/1e6).."m"
+	elseif (val >= 1e4) then
+		return placeValue:format(val/1e4).."k"
 	else
 		return ('%d'):format(val)
 	end

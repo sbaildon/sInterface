@@ -38,3 +38,7 @@
 	path = embeds/LibStub
 	url = https://github.com/sBaildon/LibStub.git
 	branch = master
+[submodule "embeds/HereBeDragons-1.0"]
+	path = embeds/HereBeDragons-1.0
+	url = git://git.wowace.com/wow/herebedragons/mainline.git
+	branch = master

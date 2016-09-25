@@ -382,7 +382,7 @@ local PostCastStart = function(self, unit)
 		end
 	end
 	if unit ~= 'player' and self.interrupt and UnitCanAttack('player', unit) then
-		self:SetStatusBarColor(1, .9, .4)
+		self:SetStatusBarColor(0.65, 0.65, 0.65)
 	end
 end
 
@@ -412,8 +412,8 @@ local Castbar = function(self, unit)
 	cb.Icon:SetTexCoord(.1, .9, .1, .9)
 
 	cb.Shield = cb:CreateTexture(nil, 'ARTWORK')
-	cb.Shield:SetSize(self:GetHeight(), self:GetHeight())
-	cb.Shield:SetPoint('BOTTOMRIGHT', cb, 'BOTTOMLEFT', -6, 0)
+	cb.Shield:SetTexture[[Interface\CastingBar\UI-CastingBar-Arena-Shield]]
+	cb.Shield:SetPoint('CENTER', cb.Icon, 'CENTER', 7, 0)
 
 	cb.Spark = cb:CreateTexture(nil,'OVERLAY')
 	cb.Spark:SetBlendMode('Add')
@@ -435,6 +435,7 @@ local Castbar = function(self, unit)
 	local height = self.Health:GetHeight() - self.Power:GetHeight()
 	cb:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -15)
 	cb.Icon:SetSize(height*2, height*2)
+	cb.Shield:SetSize(height*5.25, height*5.25)
 	cb:SetSize(self:GetWidth()-(height*2)-6, height)
 	self.Castbar = cb
 end

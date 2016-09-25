@@ -995,7 +995,7 @@ oUF:Factory(function(self)
 
 	spawnHelper(self, 'boss1', C.uf.positions.Boss)
 	for i = 2, MAX_BOSS_FRAMES do
-		local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceBoss'..i-1, 'TOPLEFT', 0, 20 }
+		local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceBoss'..i-1, 'TOPLEFT', 0, 30 }
 		spawnHelper(self, 'boss' .. i, pos)
 	end
 

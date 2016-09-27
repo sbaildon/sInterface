@@ -891,7 +891,7 @@ local UnitSpecific = {
 		self:Tag(htext, '[primary:health]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFTLEFT', 2, 4)
+		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
 		self:Tag(name, '[lvl][color][threat][limit:name]')

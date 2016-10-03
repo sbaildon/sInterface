@@ -68,8 +68,8 @@ C["uf"].aura = {
 	tank = {
 		enable = true,
 		mode = 'debuff',
-		size = 18,
-		num = 9,
+		size = 20,
+		num = 5,
 		gap = false,
 	},
 	boss = {

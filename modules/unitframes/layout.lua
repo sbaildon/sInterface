@@ -1038,7 +1038,7 @@ oUF:Factory(function(self)
 	'showRaid', true,
 	'showSolo', false,
 	'groupFilter', 'MAINTANK',
-	'yOffset', -23,
+	'yOffset', -35,
 	'oUF-initialConfigFunction',
 		([[
 			self:SetHeight(%d)

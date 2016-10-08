@@ -24,9 +24,10 @@ if classIndex == 1 then -- warrior
 		{ spellId = 190456,	size = size,	pos = position1,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- ignore pain
 		{ spellId = 2565,	size = size,	pos = position2,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- shield block
 		{ spellId = 6343,	size = size,	pos = position3,	unit = 'target',	filter = 'HARMFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- thunderclap
-		{ spellId = 204488,	size = size,	pos = position4,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- focused rage
+		{ spellId = 203576,	size = size,	pos = position4,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- dragon scales
 		{ spellId = 1719,	size = size,	pos = position5,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- battleshout
 		{ spellId = 107574,	size = size,	pos = position6,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- avatar
+		{ spellId = 204488,	size = size,	pos = position7,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- focused rage
 
 		-- Arms Warrior
 		{ spellId = 115804,	size = size,	pos = position1,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- mortal strike

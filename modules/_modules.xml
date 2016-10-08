@@ -10,5 +10,6 @@
 	<Include file="nameplates\_nameplates.xml" />
 	<Include file="objectivetracker\_objectivetracker.xml" />
 	<Include file="orderhall\_orderhall.xml" />
+	<Include file="talkinghead\_talkinghead.xml" />
 	<Include file="tooltips\_tooltips.xml" />
 </Ui>

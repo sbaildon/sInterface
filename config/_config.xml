@@ -9,5 +9,6 @@
 	<Script file="minimap.lua"/>
 	<Script file="nameplates.lua"/>
 	<Script file="objectivetracker.lua"/>
+	<Script file="talkinghead.lua"/>
 	<Script file="tooltips.lua"/>
 </Ui>

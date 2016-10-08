@@ -66,5 +66,13 @@ function E:FontString(options)
 	return string
 end
 
+function E:HeightPercentage(percentage)
+	return C["gameinfo"].screen_height * (percentage/100)
+end
+
+function E:WidthPercentage(percentage)
+	return C["gameinfo"].screen_width * (percentage/100)
+end
+
 SLASH_RELOADUI1 = '/rl'
 SlashCmdList.RELOADUI = ReloadUI

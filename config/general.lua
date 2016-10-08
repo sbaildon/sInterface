@@ -11,3 +11,8 @@ C["general"] = {
 	fontFlag = 'OUTLINE',
 	oocAlpha = 0.3
 }
+
+C["gameinfo"] = {
+	screen_width = GetScreenWidth() * UIParent:GetEffectiveScale(),
+	screen_height = GetScreenHeight() * UIParent:GetEffectiveScale()
+}

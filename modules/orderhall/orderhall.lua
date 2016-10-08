@@ -1,13 +1,14 @@
-local orderhall = CreateFrame('Frame', 'OrderHall')
+local addon, ns = ...
 
-orderhall:RegisterEvent('ZONE_CHANGED_NEW_AREA')
-orderhall:RegisterEvent('PLAYER_ENTERING_WORLD')
+local orderhall = CreateFrame('Frame', addon..'OrderHall')
+
+orderhall:RegisterEvent('ADDON_LOADED')
 orderhall:SetScript('OnEvent', function(self, event, ...)
-	local b = OrderHallCommandBar
-
-	if not b then return end
-
-	b:UnregisterAllEvents()
-	b:SetScript("OnShow", b.Hide)
-	b:Hide()
+	local addonname = ...
+	if (addonname == "Blizzard_OrderHallUI") then
+		local b = OrderHallCommandBar
+		b:UnregisterAllEvents()
+		b:SetScript("OnShow", b.Hide)
+		b:Hide()
+	end
 end)

@@ -96,7 +96,7 @@ local vehicleexitbar = {
 	framePoint = { "TOPLEFT", A.."Bar1", "TOPRIGHT", 0, 0 },
 	frameScale = 1,
 	framePadding = 5,
-	frameVisibility = "[cursor][vehicleui][possessbar] show; hide",
+	frameVisibility = "[vehicleui][possessbar] show; hide",
 	buttonWidth = 32,
 	buttonHeight = 32,
 	buttonMargin = 5,
@@ -105,6 +105,19 @@ local vehicleexitbar = {
 	fader = fader,
 }
 rActionBar:CreateVehicleExitBar(A, vehicleexitbar)
+
+local possessexitbar = {
+	framePoint = { "TOPLEFT", A.."Bar1", "TOPRIGHT", 0, 0 },
+	frameScale = 1,
+	framePadding = 5,
+	buttonWidth = 32,
+	buttonHeight = 32,
+	buttonMargin = 5,
+	numCols = 1,
+	startPoint = "BOTTOMLEFT",
+	fader = fader,
+}
+rActionBar:CreatePossessExitBar(A, possessexitbar)
 
 local extrabar = {
   framePoint      = { "BOTTOM", UIParent, "BOTTOM", 0, 85 },

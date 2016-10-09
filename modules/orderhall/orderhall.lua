@@ -10,5 +10,6 @@ orderhall:SetScript('OnEvent', function(self, event, ...)
 		b:UnregisterAllEvents()
 		b:SetScript("OnShow", b.Hide)
 		b:Hide()
+		self:UnregisterAllEvents()
 	end
 end)

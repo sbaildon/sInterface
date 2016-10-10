@@ -67,11 +67,11 @@ function E:FontString(options)
 end
 
 function E:HeightPercentage(percentage)
-	return C["gameinfo"].screen_height * (percentage/100)
+	return (GetScreenHeight() / UIParent:GetEffectiveScale()) * (percentage / 100)
 end
 
 function E:WidthPercentage(percentage)
-	return C["gameinfo"].screen_width * (percentage/100)
+	return (GetScreenWidth() / UIParent:GetEffectiveScale()) * (percentage / 100)
 end
 
 SLASH_RELOADUI1 = '/rl'

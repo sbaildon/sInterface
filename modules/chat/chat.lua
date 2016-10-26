@@ -21,8 +21,8 @@ TypeInfo = { "SYSTEM", "SAY", "PARTY", "RAID", "GUILD", "OFFICER", "YELL", "WHIS
 ChatFrameMenuButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
 ChatFrameMenuButton:Hide()
 
-FriendsMicroButton:HookScript("OnShoW", FriendsMicroButton.Hide)
-FriendsMicroButton:Hide()
+QuickJoinToastButton:HookScript("OnShoW", QuickJoinToastButton.Hide)
+QuickJoinToastButton:Hide()
 
 ChatFontNormal:SetFont(STANDARD_TEXT_FONT, 12)
 

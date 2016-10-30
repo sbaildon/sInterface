@@ -5,6 +5,7 @@
 	<Script file="chat.lua"/>
 	<Script file="coolbar.lua"/>
 	<Script file="errors.lua"/>
+	<Script file="junkseller.lua"/>
 	<Script file="filter.lua"/>
 	<Script file="minimap.lua"/>
 	<Script file="nameplates.lua"/>

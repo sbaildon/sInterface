@@ -629,7 +629,7 @@ local UnitSpecific = {
 		local ptext = E:FontString({parent=self.Health})
 		ptext:SetPoint('TOPLEFT', 2, 4)
 		ptext.frequentUpdates = .1
-		self:Tag(ptext, '[player:power]')
+		self:Tag(ptext, '[powercolor][player:power]')
 
 		local ClassIconBar = CreateFrame('Frame', nil, self)
 		ClassIconBar:SetWidth(self:GetWidth())
@@ -894,7 +894,7 @@ local UnitSpecific = {
 		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[lvl][color][threat][limit:name]')
+		self:Tag(name, '[lvl][color][threatcolor][limit:name]')
 	end,
 
 	tank = function(self, ...)
@@ -942,7 +942,6 @@ local UnitSpecific = {
 		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[arenaspec]')
 
 		local t = CreateFrame('Frame', nil, self)
 		t:SetSize(C.uf.size.secondary.health+C.uf.size.secondary.power+1, C.uf.size.secondary.health+C.uf.size.secondary.power+1)
@@ -963,7 +962,7 @@ local UnitSpecific = {
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
-		self:Tag(name, '[color][threat][short:name]')
+		self:Tag(name, '[color][threatcolor][short:name]')
 	end,
 }
 

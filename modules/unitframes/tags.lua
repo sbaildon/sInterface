@@ -63,15 +63,6 @@ oUF.Tags.Methods['color'] = function(u, r)
 end
 oUF.Tags.Events['color'] = 'UNIT_REACTION UNIT_HEALTH'
 
-oUF.Tags.Methods['threat'] = function(u, r)
-	local s = UnitThreatSituation(u)
-	if s and s > 0 then
-		local r, g, b = GetThreatStatusColor(s)
-		return hex(r, g, b)
-	end
-end
-oUF.Tags.Events['threat'] = 'UNIT_THREAT_SITUATION_UPDATE'
-
 oUF.Tags.Methods['long:name'] = function(u, r)
     local name = UnitName(realUnit or u or r)
     if string.len(name) > 18 then
@@ -137,16 +128,8 @@ end
 oUF.Tags.Events['primary:health'] = 'UNIT_HEALTH UNIT_POWER UNIT_CONNECTION'
 
 oUF.Tags.Methods['player:power'] = function(u)
-    local power = UnitPower(u)
-    local _, str, r, g, b = UnitPowerType(u)
-    local t = oUF.colors.power[str]
-    if t then
-        r, g, b = t[1], t[2], t[3]
-    end
-
-    if (power > 0) then
-        return hex(r, g, b)..sValue(power)
-    end
+	local power = UnitPower(u)
+	return sValue(power)
 end
 oUF.Tags.Events['player:power'] = 'UNIT_POWER PLAYER_SPECIALIZATION_CHANGED PLAYER_TALENT_UPDATE UNIT_HEALTH UNIT_CONNECTION'
 

@@ -381,7 +381,7 @@ local PostCastStart = function(self, unit)
 			setBarTicks(self, self.channelingTicks)
 		end
 	end
-	if unit ~= 'player' and self.interrupt and UnitCanAttack('player', unit) then
+	if unit ~= 'player' and self.notInterruptible and UnitCanAttack('player', unit) then
 		self:SetStatusBarColor(0.65, 0.65, 0.65)
 	end
 end

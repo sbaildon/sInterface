@@ -122,7 +122,7 @@ local FormatTime = function(s)
 	return format('%d', fmod(s, minute))
 end
 
-local auraIcon = function(auras, button)
+local PostCreateIcon = function(auras, button)
 	local c = button.count
 	c:ClearAllPoints()
 	c:SetPoint('BOTTOMRIGHT', 3, -1)
@@ -130,6 +130,7 @@ local auraIcon = function(auras, button)
 	c:SetFont(C.general.font, C.general.fontSize, C.uf.aura.fontflag)
 	c:SetTextColor(1, 1, 1)
 
+	button.cd:SetReverse(true)
 	button.overlay:SetTexture(nil)
 	button.icon:SetTexCoord(.1, .9, .1, .9)
 	button:SetBackdrop(backdrop)
@@ -152,22 +153,8 @@ local PostUpdateIcon = function(icons, unit, icon, index, offset)
 end
 
 local Auras = function(self)
-		local config
-		if self.unit == 'player' then
-			config = C.uf.aura.player
-		elseif self.unit == 'target' then
-			config = C.uf.aura.target
-		elseif self.unit == 'party' then
-			config = C.uf.aura.party
-		elseif self.unit == 'focus' then
-			config = C.uf.aura.focus
-		elseif self.unit == 'tank' then
-			config = C.uf.aura.tank
-		elseif self.unit == 'boss' then
-			config = C.uf.aura.boss
-		else
-			return
-		end
+		local config = C.uf.aura[self.unit]
+		if not config then return end
 
 		local b = CreateFrame('Frame', nil, self)
 		b.spacing = (self:GetWidth() - config.size * config.num) / (config.num-1)
@@ -176,7 +163,7 @@ local Auras = function(self)
 		b:SetPoint('BOTTOMLEFT', self.Experience or self.Reputation or self, 'TOPLEFT', 0, 9)
 		b.initialAnchor = 'TOPLEFT'
 		b['growth-y'] = 'UP'
-		b.PostCreateIcon = auraIcon
+		b.PostCreateIcon = PostCreateIcon
 		b.PostUpdateIcon = PostUpdateIcon
 		if config.mode == 'aura' then
 			b.gap = config.gap

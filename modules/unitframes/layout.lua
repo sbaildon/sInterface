@@ -316,84 +316,32 @@ local setBarTicks = function(castBar, ticknum)
 	end
 end
 
-local OnCastbarUpdate = function(self, elapsed)
-	local currentTime = GetTime()
-	if self.casting or self.channeling then
-		local parent = self:GetParent()
-		local duration = self.casting and self.duration + elapsed or self.duration - elapsed
-		if (self.casting and duration >= self.max) or (self.channeling and duration <= 0) then
-			self.casting = nil
-			self.channeling = nil
-			return
-		end
-		if parent.unit == 'player' then
-			if self.delay ~= 0 then
-				self.Time:SetFormattedText('%.1f | %.1f |cffff0000|%.1f|r', duration, self.max, self.delay )
-			elseif self.Lag then
-				if self.SafeZone.timeDiff >= (self.max*.5) or self.SafeZone.timeDiff == 0 then
-					self.Time:SetFormattedText('%.1f | %.1f', duration, self.max)
-					self.Lag:SetFormattedText('')
-				else
-					self.Time:SetFormattedText('%.1f | %.1f', duration, self.max)
-					self.Lag:SetFormattedText('%d ms', self.SafeZone.timeDiff * 1000)
-				end
-			else
-				self.Time:SetFormattedText('%.1f | %.1f', duration, self.max)
-			end
-		else
-			self.Time:SetFormattedText('%.1f | %.1f', duration, self.casting and self.max + self.delay or self.max - self.delay)
-		end
-		self.duration = duration
-		self:SetValue(duration)
-		self.Spark:SetPoint('CENTER', self, 'LEFT', (duration / self.max) * self:GetWidth(), 0)
-	end
-end
-
 local PostCastStart = function(self, unit)
 	self:PlayReveal()
 	self.Spark:Show()
 	self:SetStatusBarColor(unpack(self.casting and self.CastingColor or self.ChannelingColor))
-	if self.casting then
-		self.cast = true
-	else
-		self.cast = false
-	end
-	if unit == 'vehicle' then
-		if self.SafeZone then self.SafeZone:Hide() end
-		if self.Lag then self.Lag:Hide() end
-	elseif unit == 'player' then
-		local sf = self.SafeZone
-		if not sf then return end
-		if not sf.sendTime then sf.sendTime = GetTime() end
-		sf.timeDiff = GetTime() - sf.sendTime
-		sf.timeDiff = sf.timeDiff > self.max and self.max or sf.timeDiff
-		if sf.timeDiff >= (self.max*.5) or sf.timeDiff == 0 then
-			sf:SetWidth(0.01)
-		else
-			sf:SetWidth(self:GetWidth() * sf.timeDiff / self.max)
-		end
-		if not UnitInVehicle('player') then sf:Show() else sf:Hide() end
-		if self.casting then
-			setBarTicks(self, 0)
-		else
-			local spell = UnitChannelInfo(unit)
-			self.channelingTicks = channelingTicks[spell] or 0
-			setBarTicks(self, self.channelingTicks)
-		end
-	end
 	if unit ~= 'player' and self.notInterruptible and UnitCanAttack('player', unit) then
 		self:SetStatusBarColor(0.65, 0.65, 0.65)
 	end
 end
 
 local PostCastStop = function(self, unit)
-	self:Show()
+	if (self.holdTime ~= 0) then return end
 	self:SetStatusBarColor(unpack(self.CompleteColor))
-	self:SetValue(self.cast and self.max or 0)
-	self:PlayAlpha(0, 0)
+	self:PlayAlpha(0, 0.1)
 end
 
 local PostCastFailed = function(self, event, unit)
+	self:SetStatusBarColor(unpack(self.FailColor))
+	self:PlayAlpha(0, 0.1)
+end
+
+local CustomTimeText = function(self, duration)
+	if self.delay == 0 then
+		self.Time:SetFormattedText("%.1f | %.1f", duration, self.max)
+	else
+		self.Time:SetFormattedText("%.1f | %.1f |cffff0000-%.1f", duration, self.max, self.delay)
+	end
 end
 
 local Castbar = function(self, unit)
@@ -410,6 +358,7 @@ local Castbar = function(self, unit)
 	cb.Icon = cb:CreateTexture(nil, 'ARTWORK')
 	cb.Icon:SetPoint('BOTTOMRIGHT', cb, 'BOTTOMLEFT', -6, 0)
 	cb.Icon:SetTexCoord(.1, .9, .1, .9)
+	cb.timeToHold = 0.75
 
 	cb.Shield = cb:CreateTexture(nil, 'ARTWORK')
 	cb.Shield:SetTexture[[Interface\CastingBar\UI-CastingBar-Arena-Shield]]
@@ -419,13 +368,13 @@ local Castbar = function(self, unit)
 	cb.Spark:SetBlendMode('Add')
 	cb.Spark:SetSize(10, cb:GetHeight())
 
-	cb.OnUpdate = OnCastbarUpdate
 	cb.PostCastStart = PostCastStart
 	cb.PostChannelStart = PostCastStart
 	cb.PostCastStop = PostCastStop
 	cb.PostChannelStop = PostCastStop
 	cb.PostCastFailed = PostCastFailed
 	cb.PostCastInterrupted = PostCastFailed
+	cb.CustomTimeText = CustomTimeText
 
 	E:ShadowedBorder(cb)
 	E:ShadowedBorder(cb.Icon)

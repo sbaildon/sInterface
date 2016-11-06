@@ -578,7 +578,7 @@ local UnitSpecific = {
 		local ptext = E:FontString({parent=self.Health})
 		ptext:SetPoint('TOPLEFT', 2, 4)
 		ptext.frequentUpdates = .1
-		self:Tag(ptext, '[powercolor][player:power]')
+		self:Tag(ptext, '[sInterface:power]')
 
 		local ClassIconBar = CreateFrame('Frame', nil, self)
 		ClassIconBar:SetWidth(self:GetWidth())
@@ -719,11 +719,16 @@ local UnitSpecific = {
 		htext.frequentUpdates = .1
 		self:Tag(htext, '[primary:health]')
 
+		local level = E:FontString({parent=self.Health, justify='LEFT'})
+		level:SetPoint('TOPLEFT', self, 2, 4)
+		level:SetHeight(10)
+		self:Tag(level, '[sInterface:level]')
+
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('LEFT', level, 'RIGHT', 0, 0)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[lvl][color][long:name]')
+		self:Tag(name, '[sInterface:name]')
 	end,
 
 	focus = function(self, ...)
@@ -743,11 +748,16 @@ local UnitSpecific = {
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
 		self:Tag(htext, '[primary:health]')
 
+		local level = E:FontString({parent=self.Health, justify='LEFT'})
+		level:SetPoint('TOPLEFT', self, 2, 4)
+		level:SetHeight(10)
+		self:Tag(level, '[sInterface:level]')
+
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('LEFT', level, 'RIGHT', 0, 0)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[lvl][color][long:name]')
+		self:Tag(name, '[sInterface:name]')
 	end,
 
 	boss = function(self, ...)
@@ -768,7 +778,7 @@ local UnitSpecific = {
 		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[color][long:name]')
+		self:Tag(name, '[sInterface:name]')
 
 		local altp = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), self:GetWidth(), 1, 1, 1, 1)
 		altp:SetPoint('BOTTOM', self, 'TOP', 0, 5)
@@ -794,7 +804,7 @@ local UnitSpecific = {
 
 		local name = E:FontString({parent=self.Health})
 		name:SetPoint('CENTER', self.Health, 0, 3)
-		self:Tag(name, '[color][long:name]')
+		self:Tag(name, '[sInterface:name]')
 		self.Name = name;
 		self.Name:Hide();
 
@@ -809,7 +819,7 @@ local UnitSpecific = {
 
 		local name = E:FontString({parent=self.Health})
 		name:SetPoint('CENTER', self.Health)
-		self:Tag(name, '[color][long:name]')
+		self:Tag(name, '[sInterface:name]')
 	end,
 
 	targettarget = function(self, ...)
@@ -819,7 +829,7 @@ local UnitSpecific = {
 		
 		local name = E:FontString({parent=self.Health})
 		name:SetPoint('CENTER', 0, 3)
-		self:Tag(name, '[color][short:name]')
+		self:Tag(name, '[sInterface:shortname]')
 	end,
 
 	party = function(self, ...)
@@ -839,11 +849,16 @@ local UnitSpecific = {
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
 		self:Tag(htext, '[primary:health]')
 
+		local level = E:FontString({parent=self.Health, justify='LEFT'})
+		level:SetPoint('TOPLEFT', self, 2, 4)
+		level:SetHeight(10)
+		self:Tag(level, '[sInterface:level]')
+
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('LEFT', level, 'RIGHT', 0, 0)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[lvl][color][threatcolor][limit:name]')
+		self:Tag(name, '[sInterface:level][sInterface:name]')
 	end,
 
 	tank = function(self, ...)
@@ -866,7 +881,7 @@ local UnitSpecific = {
 		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[lvl][color][limit:name]')
+		self:Tag(name, '[sInterface:level][sInterface:name]')
 
 		local rc = self.Health:CreateTexture(nil, 'OVERLAY')
 		rc:SetPoint('CENTER')
@@ -911,7 +926,7 @@ local UnitSpecific = {
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
-		self:Tag(name, '[color][threatcolor][short:name]')
+		self:Tag(name, '[sInterface:shortname]')
 	end,
 }
 

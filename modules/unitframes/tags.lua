@@ -30,8 +30,8 @@ local sValue = function(val)
 		return placeValue:format(val/1e9).."b"
 	elseif (val >= 1e6) then
 		return placeValue:format(val/1e6).."m"
-	elseif (val >= 1e4) then
-		return placeValue:format(val/1e4).."k"
+	elseif (val >= 1e3) then
+		return placeValue:format(val/1e3).."k"
 	else
 		return ('%d'):format(val)
 	end

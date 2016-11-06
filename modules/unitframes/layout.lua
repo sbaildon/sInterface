@@ -396,6 +396,7 @@ local Healcomm = function(self)
 	myBar:SetFrameStrata(self.Health:GetFrameStrata())
 	myBar:SetFrameLevel(self.Health:GetFrameLevel())
 	myBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
+	myBar:SetWidth(self:GetWidth())
 
 	local otherBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	otherBar:SetPoint('TOP')
@@ -403,6 +404,7 @@ local Healcomm = function(self)
 	otherBar:SetFrameStrata(self.Health:GetFrameStrata())
 	otherBar:SetFrameLevel(self.Health:GetFrameLevel())
 	otherBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
+	otherBar:SetWidth(self:GetWidth())
 
 	local absorbBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	absorbBar:SetPoint('TOP')
@@ -410,6 +412,7 @@ local Healcomm = function(self)
 	absorbBar:SetFrameStrata(self.Health:GetFrameStrata())
 	absorbBar:SetFrameLevel(self.Health:GetFrameLevel())
 	absorbBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
+	absorbBar:SetWidth(self:GetWidth())
 
 	local healAbsorbBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	healAbsorbBar:SetPoint('TOP')
@@ -417,15 +420,16 @@ local Healcomm = function(self)
 	healAbsorbBar:SetFrameStrata(self.Health:GetFrameStrata())
 	healAbsorbBar:SetFrameLevel(self.Health:GetFrameLevel())
 	healAbsorbBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
+	healAbsorbBar:SetWidth(self:GetWidth())
 
-   self.HealPrediction = {
-	  myBar = myBar,
-	  otherBar = otherBar,
-	  absorbBar = absorbBar,
-	  healAbsorbBar = healAbsorbBar,
-	  maxOverflow = 1.1,
-	  frequentUpdates = true,
-   }
+	self.HealPrediction = {
+		myBar = myBar,
+		otherBar = otherBar,
+		absorbBar = absorbBar,
+		healAbsorbBar = healAbsorbBar,
+		maxOverflow = 1.1,
+		frequentUpdates = true,
+	}
 end
 
 local Health = function(self)

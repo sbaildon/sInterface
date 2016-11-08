@@ -90,6 +90,8 @@ hooksecurefunc("DebuffButton_UpdateAnchors", updateDebuffAnchors)
 Minimap:HookScript("OnHide", updateBuffFrameAnchor)
 Minimap:HookScript("OnShow", updateBuffFrameAnchor)
 
--- Find a better solution than a timer
--- Tried ADDON_LOADED, but nothing seems worthwhile
-C_Timer.After(0.01, updateBuffFrameAnchor)
+local BuffFrameMover = CreateFrame('Frame')
+BuffFrameMover:RegisterEvent('PLAYER_ENTERING_WORLD')
+BuffFrameMover:SetScript('OnEvent', function(self, event, ...)
+	C_Timer.After(0.01, updateBuffFrameAnchor)
+end)

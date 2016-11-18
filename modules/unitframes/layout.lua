@@ -849,7 +849,7 @@ local UnitSpecific = {
 		name:SetPoint('LEFT', level, 'RIGHT', 0, 0)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[sInterface:level][sInterface:name]')
+		self:Tag(name, '[sInterface:name]')
 	end,
 
 	tank = function(self, ...)

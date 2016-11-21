@@ -664,7 +664,7 @@ local UnitSpecific = {
 		else
 			exp_rep_bar.bg:SetVertexColor(0, 1, 0.4, 0.2)
 			exp_rep_bar.colorStanding = true
-			self:Tag(exp_rep_bar.text, '[reputation] [currep] / [maxrep] ([perrep]%)')
+			self:Tag(exp_rep_bar.text, '[reputation:faction] [reputation:cur] / [reputation:max] ([reputation:per]%)')
 			self.Reputation = exp_rep_bar
 		end
 

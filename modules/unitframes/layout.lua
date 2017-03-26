@@ -259,7 +259,7 @@ end
 
 local channelingTicks = {
 	-- warlock
-	[GetSpellInfo(689)] = 6, -- drain life
+	[GetSpellInfo(234153)] = 6, -- drain life
 	[GetSpellInfo(193440)] = 3, -- demonwrath
 	[GetSpellInfo(198590)] = 6, -- drain soul
 	-- druid
@@ -267,7 +267,6 @@ local channelingTicks = {
 	-- priest
 	[GetSpellInfo(64843)] = 4, -- divine hymn
 	[GetSpellInfo(15407)] = 4, -- mind flay
-	[GetSpellInfo(48045)] = 5, -- mind sear
 	[GetSpellInfo(47540)] = 2, -- penance
 	[GetSpellInfo(205065)] = 4, -- void torrent
 	-- mage

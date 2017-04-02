@@ -37,5 +37,11 @@ if classIndex == 1 then -- warrior
 		{ spellId = 1715,	size = size,	pos = position5,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- hamstring
 		{ spellId = 1719,	size = size,	pos = position6,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- battleshout
 		{ spellId = 107574,	size = size,	pos = position7,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- avatar
+
+		-- Fury Warrior
+		{ spellId = 184362,	size = size,	pos = position1,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0.5 } }, -- enrage
+		{ spellId = 200872,	size = size,	pos = position2,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0.5 } }, -- odyn's champion
+		{ spellId = 1719,	size = size,	pos = position5,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0.5 } }, -- battleshout
+		{ spellId = 206333,	size = size,	pos = position7,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0.5 } }, -- taste for blood
 	}
 end

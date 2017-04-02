@@ -1,5 +1,20 @@
-local _, ns = ...
+local addon, ns = ...
 local E, C = ns.E, ns.C
+
+local sInterfaceBuffFrame = CreateFrame('Frame', addon..'BuffFrame')
+sInterfaceBuffFrame:SetSize((C.auras.size*4) + (C.auras.spacing*3), C.auras.size)
+
+local function updateBuffFrameAnchor()
+	if (Minimap:IsShown()) then
+		sInterfaceBuffFrame:SetPoint("TOPRIGHT", Minimap, "TOPLEFT", C.auras.spacing, 0);
+	else
+		sInterfaceBuffFrame:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -C.general.edgeSpacing, -C.general.edgeSpacing);
+	end
+end
+updateBuffFrameAnchor()
+
+Minimap:HookScript("OnHide", updateBuffFrameAnchor)
+Minimap:HookScript("OnShow", updateBuffFrameAnchor)
 
 local function style(aura)
 	if not aura or (aura and aura.styled) then return end
@@ -20,7 +35,7 @@ local function style(aura)
 	aura.duration:SetFont(font, C.auras.durationHeight, "OUTLINE")
 
 	E:ShadowedBorder(aura)
-	
+
 	aura.styled = true
 end
 
@@ -34,14 +49,14 @@ local function updateBuffAnchors()
 			buff:SetPoint("TOPRIGHT", aboveBuff, "BOTTOMRIGHT", 0, C.auras.spacing*2)
 			aboveBuff = buff
 		elseif i == 1 then
-			buff:SetPoint("TOPRIGHT", BuffFrame, "TOPRIGHT", 0, 0)
+			buff:SetPoint("TOPRIGHT", sInterfaceBuffFrame, "TOPRIGHT", 0, 0)
 			aboveBuff = buff
 		else
 			buff:SetPoint("RIGHT", previousBuff, "LEFT", C.auras.spacing, 0)
 		end
 		previousBuff = buff
 	end
-	
+
 end
 
 local function updateDebuffAnchors()
@@ -56,7 +71,7 @@ local function updateDebuffAnchors()
 			aboveDebuff = debuff
 		elseif i ==1 then
 			if BUFF_ACTUAL_DISPLAY == 0 then
-				debuff:SetPoint("TOPRIGHT", BuffFrame, "TOPRIGHT", 0, 0)
+				debuff:SetPoint("TOPRIGHT", sInterfaceBuffFrame, "TOPRIGHT", 0, 0)
 			else
 				local anchorIndex, anchor, modulo, ab
 				modulo = BUFF_ACTUAL_DISPLAY % C.auras.max_per_row
@@ -74,24 +89,5 @@ local function updateDebuffAnchors()
 	end
 end
 
-
-local function updateBuffFrameAnchor()
-	local BuffFrame = BuffFrame
-	if (Minimap:IsShown()) then
-		BuffFrame:SetPoint("TOPRIGHT", Minimap, "TOPLEFT", C.auras.spacing, 0);
-	else
-		BuffFrame:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -C.general.edgeSpacing, -C.general.edgeSpacing);
-	end
-end
-
-
 hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", updateBuffAnchors)
 hooksecurefunc("DebuffButton_UpdateAnchors", updateDebuffAnchors)
-Minimap:HookScript("OnHide", updateBuffFrameAnchor)
-Minimap:HookScript("OnShow", updateBuffFrameAnchor)
-
-local BuffFrameMover = CreateFrame('Frame')
-BuffFrameMover:RegisterEvent('PLAYER_ENTERING_WORLD')
-BuffFrameMover:SetScript('OnEvent', function(self, event, ...)
-	C_Timer.After(0.01, updateBuffFrameAnchor)
-end)

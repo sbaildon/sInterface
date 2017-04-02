@@ -1,23 +1,6 @@
 local _, ns = ...
 local E, C = ns.E, ns.C
 
-TypeInfo = { "SYSTEM", "SAY", "PARTY", "RAID", "GUILD", "OFFICER", "YELL", "WHISPER",
-	"SMART_WHISPER", "WHISPER_INFORM", "REPLY", "EMOTE", "TEXT_EMOTE", "MONSTER_SAY",
-	"MONSTER_PARTY", "MONSTER_YELL", "MONSTER_WHISPER", "MONSTER_EMOTE", "CHANNEL",
-	"CHANNEL_JOIN", "CHANNEL_LEAVE", "CHANNEL_LIST", "CHANNEL_NOTICE", "CHANNEL_NOTICE_USER",
-	"TARGETICONS", "AFK", "DND", "IGNORED", "SKILL", "LOOT", "CURRENCY", "MONEY",
-	"OPENING", "TRADESKILLS", "PET_INFO", "COMBAT_MISC_INFO", "COMBAT_XP_GAIN", 
-	"COMBAT_HONOR_GAIN", "COMBAT_FACTION_CHANGE", "BG_SYSTEM_NEUTRAL",
-	"BG_SYSTEM_HORDE", "RAID_LEADER", "RAID_WARNING", "RAID_BOSS_WHISPER",
-	"RAID_BOSS_EMOTE", "QUEST_BOSS_EMOTE", "FILTERED", "INSTANCE_CHAT",
-	"INSTANCE_CHAT_LEADER", "RESTRICTED", "CHANNEL1", "CHANNEL2", "CHANNEL3",  
-	"CHANNEL4", "CHANNEL5", "CHANNEL6", "CHANNEL7", "CHANNEL8", "CHANNEL9", "CHANNEL10",
-	"ACHIEVEMENT", "GUILD_ACHIEVEMENT", "PARTY_LEADER", "BN_WHISPER", "BN_WHISPER_INFORM",
-	"BN_ALERT", "BN_BROADCAST", "BN_BROADCAST_INFORM", "BN_INLINE_TOAST_ALERT", 
-	"BN_INLINE_TOAST_BROADCAST", "BN_INLINE_TOAST_BROADCAST_INFORM", "BN_WHISPER_PLAYER_OFFLINE",
-	"COMBAT_GUILD_XP_GAIN", "PET_BATTLE_COMBAT_LOG", "PET_BATTLE_INFO", "GUILD_ITEM_LOOTED"
-} -- why on earth does iterating over ChatTypeInfo not work?
-
 ChatFrameMenuButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
 ChatFrameMenuButton:Hide()
 
@@ -110,13 +93,12 @@ hooksecurefunc("FloatingChatFrame_Update", function()
 end)
 
 local function ColourByClass()
-	for i = 1,#TypeInfo do
-		local info = ChatTypeInfo[TypeInfo[i]]
-		info.colorNameByClass = true
+	local cti = getmetatable(ChatTypeInfo).__index
+	for k,v in pairs(cti) do
+		v.colorNameByClass = true
 	end
 end
 
 local ChatLogin = CreateFrame('Frame', nil)
 ChatLogin:RegisterEvent('PLAYER_LOGIN')
 ChatLogin:SetScript('OnEvent', ColourByClass)
-

@@ -1,8 +1,10 @@
 local addon, ns = ...
 local E, C = ns.E, ns.C
 
-local sInterfaceBuffFrame = CreateFrame('Frame', addon..'BuffFrame')
-sInterfaceBuffFrame:SetSize((C.auras.size*4) + (C.auras.spacing*3), C.auras.size)
+local sInterfaceBuffFrame = CreateFrame('Frame', addon..'BuffFrame', UIParent)
+local sInterfaceBuffFrameWidth = (C.auras.size * C.auras.max_per_row) + ((-C.auras.spacing - 1) * C.auras.max_per_row)
+local sInterfaceBuffFrameHeight  = C.auras.size
+sInterfaceBuffFrame:SetSize(sInterfaceBuffFrameWidth, sInterfaceBuffFrameHeight)
 
 local function updateBuffFrameAnchor()
 	if (Minimap:IsShown()) then

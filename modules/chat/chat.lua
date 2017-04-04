@@ -87,7 +87,7 @@ hooksecurefunc("FloatingChatFrame_Update", function()
 	ChatFrame1:ClearAllPoints()
 	ChatFrame1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", C.general.edgeSpacing, C.general.edgeSpacing)
 	ChatFrame1:SetUserPlaced(true)
-	ChatFrame1:SetHeight(110)
+	ChatFrame1:SetHeight(115)
 
 	FCF_SetLocked(ChatFrame1, true)
 end)

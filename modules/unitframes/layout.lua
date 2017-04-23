@@ -639,53 +639,36 @@ local UnitSpecific = {
 		self.GCD.Spark:SetWidth(9)
 		self.GCD.Spark:SetPoint('LEFT', self.Health, 'LEFT', 0, 0)
 
-		local Experience = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), C.uf.size.primary.width, 1, 0, 1, 1)
-		Experience:SetPoint('BOTTOM', self, 'TOP', 0, 5)
-
-		Experience.text = E:FontString({parent=Experience})
-		Experience.text:SetPoint("CENTER", 0, 10)
-		Experience.text:Hide()
-
-		Experience.Rested = createStatusbar(Experience, C.general.texture, nil, nil, nil, 0, 1, 0, 1)
-		Experience.Rested:SetAllPoints(Experience)
-
-		Experience.bg = Experience.Rested:CreateTexture(nil, "BACKGROUND")
-		Experience.bg:SetAllPoints(Experience)
-		Experience.bg:SetTexture(C.general.texture)
-
-		Experience:SetScript('OnEnter', function(self)UIFrameFadeIn(Experience.text, 0.3, 0, 1)end)
-		Experience:SetScript('OnLeave', function(self)UIFrameFadeOut(Experience.text, 0.3, 1, 0)end)
-
-		E:ShadowedBorder(Experience)
+		local exp_rep_bar = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), C.uf.size.primary.width, 1, 0, 1, 1)
+		exp_rep_bar:SetPoint('BOTTOM', self, 'TOP', 0, 5)
+		exp_rep_bar.bg = exp_rep_bar:CreateTexture(nil, 'BORDER')
+		exp_rep_bar.bg:SetAllPoints(exp_rep_bar)
+		exp_rep_bar.bg:SetTexture(C.general.texture)
+		exp_rep_bar.text = E:FontString({parent=exp_rep_bar})
+		exp_rep_bar.text:SetPoint("CENTER", 0, 10)
+		exp_rep_bar.text:Hide()
+		exp_rep_bar:SetScript('OnEnter', function(self)UIFrameFadeIn(exp_rep_bar.text, 0.3, 0, 1)end)
+		exp_rep_bar:SetScript('OnLeave', function(self)UIFrameFadeOut(exp_rep_bar.text, 0.3, 1, 0)end)
+		E:ShadowedBorder(exp_rep_bar)
 
 		if UnitLevel('player') < MAX_PLAYER_LEVEL and not IsXPUserDisabled() then
-			local showHonor = IsWatchingHonorAsXP()
-			Experience.OverrideUpdateColor = function(Experience, showHonor)
-				if (showHonor) then
-					Experience:SetStatusBarColor(1, 1/4, 0)
-					
-					if (Experience.Rested) then
-						Experience.Rested:SetStatusBarColor(1, 0.75, 0)
-					end
-				else
-					Experience:SetStatusBarColor(1, 0, 1, 1)
-					Experience.bg:SetVertexColor(0.4, 0, 0.4, 1)
-
-					if (Experience.Rested) then
-						Experience.Rested:SetStatusBarColor(0, 0.4, 1)
-					end
-				end
+			self.OverrideUpdateColor = function(element, honor)
+				element:SetStatusBarColor(1, 0, 1, 1)
 			end
-			self:Tag(Experience.text, '[experience:cur] / [experience:max] ([experience:per]%) [experience:currested]')
-			self.Experience = Experience
+			exp_rep_bar.bg:SetVertexColor(1, 0.3, 1, 0.3)
+			exp_rep_bar.Rested = createStatusbar(exp_rep_bar, C.general.texture, nil, nil, nil, 0, .4, 1, .6)
+			exp_rep_bar.Rested:SetAllPoints(exp_rep_bar)
+			self:Tag(exp_rep_bar.text, '[curxp] / [maxxp] ([perxp]%)')
+			self.Experience = exp_rep_bar
 		else
-			Experience.colorStanding = true
-			self:Tag(Experience.text, '[reputation:faction] [reputation:cur] / [reputation:max] ([reputation:per]%)')
-			self.Reputation = Experience
+			exp_rep_bar.bg:SetVertexColor(0, 1, 0.4, 0.2)
+			exp_rep_bar.colorStanding = true
+			self:Tag(exp_rep_bar.text, '[reputation:faction] [reputation:cur] / [reputation:max] ([reputation:per]%)')
+			self.Reputation = exp_rep_bar
 		end
 
 		local altp = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), self:GetWidth(), 1, 1, 1, 1)
-		altp:SetPoint("BOTTOM", Experience, "TOP", 0, 5)
+		altp:SetPoint("BOTTOM", exp_rep_bar, "TOP", 0, 5)
 		altp.bg = altp:CreateTexture(nil, 'BORDER')
 		altp.bg:SetAllPoints(altp)
 		altp.bg:SetTexture(C.general.texture)

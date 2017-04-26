@@ -174,16 +174,15 @@ function CoolBar:CreateCooldown(spellId)
 	end)
 end
 
-function CoolBar:UNIT_SPELLCAST_SUCCEEDED(unitId, spell, _, _, spellId)
-	if (unitId == "player" or unitId == "vehicle") and not C.coolbar.disabled[spell] then
+function CoolBar:UNIT_SPELLCAST_SUCCEEDED(_, spell, _, _, spellId)
+	if not (C.coolbar.disabled[spell]) then
 		local timer = C_Timer.After(0.1, function()
 			CoolBar:CreateCooldown(spellId)
 		end)
 	end
 end
 
-function CoolBar:UNIT_SPELLCAST_FAILED(unitId, _, _, _, spellId)
-	if not (unitId == "player") then return end
+function CoolBar:UNIT_SPELLCAST_FAILED(_, _, _, _, spellId)
 	local f
 	for index, frame in pairs(cooldowns) do
 		if frame.spellId == spellId then
@@ -216,6 +215,10 @@ CoolBar:SetScript("OnEvent", function(this, event, ...)
 end)
 for k, v in pairs(CoolBar) do
 	if (k  == string.upper(k)) then
-		CoolBar:RegisterEvent(k)
+		if (string.find(k, "UNIT_")) then 
+			CoolBar:RegisterUnitEvent(k, "player", "vehicle")
+		else
+			CoolBar:RegisterEvent(k)
+		end
 	end
 end

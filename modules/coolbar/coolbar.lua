@@ -6,6 +6,10 @@ local CoolBar = CreateFrame("Frame", "CoolBar", UIParent)
 local tick0, tick1, tick2, tick3, tick4, tick5, tick6 = 0, 1, 3, 10, 30, 120, 360
 local segment
 local cooldowns = {}
+local noCooldowns = {}
+
+local THROTTLE_THRESHHOLD = 0.5
+lastUpdate = 0
 
 local function fs(frame, text, offset, just)
 	local fs = E:FontString({parent=frame, justify=just})
@@ -47,9 +51,17 @@ function CoolBar:PLAYER_LOGIN()
 	CoolBar:PlayHide()
 end
 
-function CoolBar:CreateCooldown(spellId)
+function CoolBar:CreateCooldown(spell, spellId)
+	if ((GetTime() - lastUpdate) < THROTTLE_THRESHHOLD) then return end
+	lastUpdate = GetTime()
 	local start, dur, enabled = GetSpellCooldown(spellId)
-	if (dur < 2) then return end --probably GCD
+
+	_, maxCharges = GetSpellCharges(spellId)
+
+	if (dur < 2) and (maxCharges == nil) then 
+		noCooldowns[spellId] = true
+		return
+	end --probably GCD
 
 	local f
 
@@ -64,6 +76,7 @@ function CoolBar:CreateCooldown(spellId)
 		local _, _, icon, _ = GetSpellInfo(spellId)
 		f = CreateFrame("Frame", nil, CoolBar)
 		f.spellId = spellId
+		f.spell = spell
 		f.icon = f:CreateTexture(nil, "ARTWORK")
 		f.icon:SetTexture(icon)
 		f.icon:SetAllPoints(f)
@@ -117,7 +130,7 @@ function CoolBar:CreateCooldown(spellId)
 	f:SetAlpha(1)
 	CoolBar.active = CoolBar.active + 1
 
-	if CoolBar:GetAlpha() < C.general.oocAlpha then
+	if (CoolBar.active == 1) then
 		if UnitAffectingCombat('player') then
 			CoolBar:PlayReveal()
 		else
@@ -169,27 +182,33 @@ function CoolBar:CreateCooldown(spellId)
 	end, dur/0.01)
 	
 
-	C_Timer.After(0.01, function(self)
+	C_Timer.After(0.03, function(self)
 		f:Show()
 	end)
 end
 
 function CoolBar:UNIT_SPELLCAST_SUCCEEDED(_, spell, _, _, spellId)
+	if noCooldowns[spellId] then return end
+
 	if not (C.coolbar.disabled[spell]) then
 		local timer = C_Timer.After(0.1, function()
-			CoolBar:CreateCooldown(spellId)
+			CoolBar:CreateCooldown(spell, spellId)
 		end)
 	end
 end
 
-function CoolBar:UNIT_SPELLCAST_FAILED(_, _, _, _, spellId)
+function CoolBar:UNIT_SPELLCAST_FAILED(_, spell, _, _, spellId)
+	if noCooldowns[spellId] then return end
+
 	local f
 	for index, frame in pairs(cooldowns) do
-		if frame.spellId == spellId then
+
+		if (frame.spell == spell or frame.spellId == spellId) and frame:IsShown() then
 			f = frame
 			break
 		end
 	end
+
 	if not f then return end
 
 	if not f.finishAnimation:IsPlaying() then

@@ -9,9 +9,9 @@ C["uf"] = {}
 
 C["uf"].size = {
 	primary = {
-		width = 160,
-		health = 10,
-		power = 2,
+		width = 155,
+		health = 9,
+		power = 3,
 		specific_power = 2,
 	},
 	secondary = {
@@ -28,6 +28,10 @@ C["uf"].size = {
 		health = 12
 	}
 }
+
+-- Setting this to true will ignore the player frame position,
+-- instead, anchoring the player frame to the Personal Resource Display
+C["uf"].emulatePersonalResourceDisplay = true
 
 C["uf"].positions = {
 	Player = { 'CENTER', UIParent, 'CENTER', 0, -275 },

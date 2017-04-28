@@ -983,7 +983,18 @@ local spawnHelper = function(self, unit, pos)
 end
 
 oUF:Factory(function(self)
-	spawnHelper(self, 'player', C.uf.positions.Player)
+	if (C.uf.emulatePersonalResourceDisplay) then
+		SetCVar("nameplateShowSelf", 1)
+		SetCVar("NameplatePersonalShowAlways", 1)
+		SetCVar("nameplateSelfAlpha", 0)
+		spawnHelper(self, 'player', {
+			"CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50
+		})
+	else
+		SetCVar("nameplateSelfAlpha", 0.75)
+		SetCVar("NameplatePersonalShowAlways", 0)
+		spawnHelper(self, 'player', C.uf.positions.Player)
+	end
 	spawnHelper(self, 'target', C.uf.positions.Target)
 	spawnHelper(self, 'targettarget', C.uf.positions.Targettarget)
 	spawnHelper(self, 'focus', C.uf.positions.Focus)

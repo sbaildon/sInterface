@@ -62,7 +62,10 @@ local function StatusColor(unit)
 			return hex(oUF.colors.disconnected)
 		end
 
-		if IsPlayerEffectivelyTank() and UnitIsFriend("player", unit) and not (UnitName("player") == UnitName(unit)) then
+		if IsPlayerEffectivelyTank() 
+			and UnitIsFriend("player", unit) 
+			and not (UnitName("player") == UnitName(unit)) 
+			and (UnitInRaid(unit) or UnitInParty(unit)) then
 			local status = UnitThreatSituation(unit)
 			if status and status > 0 then
 				return hex(GetThreatStatusColor(status))

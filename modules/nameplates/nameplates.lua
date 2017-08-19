@@ -48,10 +48,10 @@ end)
 
 hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	if namePlate.styled then return end
-	namePlate.healthBar:SetStatusBarTexture("Interface\\AddOns\\sInterface\\media\\bar")
+	namePlate.healthBar:SetStatusBarTexture(C.general.texture)
 	namePlate.healthBar.border:Hide()
 
-	namePlate.castBar:SetStatusBarTexture("Interface\\AddOns\\sInterface\\media\\bar")
+	namePlate.castBar:SetStatusBarTexture(C.general.texture)
 	namePlate.castBar:SetHeight(4)
 
 	namePlate.castBar.Icon:ClearAllPoints()

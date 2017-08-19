@@ -38,6 +38,7 @@ hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
 end)
 
 hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+	if frame:IsForbidden() then return end
 	if UnitIsPlayer(frame.unit) then
 		frame.name:SetText(UnitName(frame.unit))
 	end
@@ -47,7 +48,7 @@ hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
 end)
 
 hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
-	if namePlate.styled then return end
+	if namePlate.styled or namePlate:IsForbidden() then return end
 	namePlate.healthBar:SetStatusBarTexture(C.general.texture)
 	namePlate.healthBar.border:Hide()
 

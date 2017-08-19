@@ -47,6 +47,7 @@ hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
 end)
 
 hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
+	if namePlate.styled then return end
 	namePlate.healthBar:SetStatusBarTexture("Interface\\AddOns\\sInterface\\media\\bar")
 	namePlate.healthBar.border:Hide()
 
@@ -62,18 +63,9 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	namePlate.name:SetPoint("BOTTOM", namePlate.healthBar, "TOP", 0, -2)
 	namePlate.name:SetTextColor(1,1,1,1)
 
-	if not (namePlate.healthBar.shadowFrame) then
-		local shadowFrame = CreateFrame("Frame", nil, namePlate.healthBar)
-		shadowFrame:SetFrameStrata("BACKGROUND")
-		shadowFrame:SetPoint("TOPLEFT", namePlate.healthBar, "TOPLEFT", -3, 3)
-		shadowFrame:SetPoint("BOTTOMRIGHT", namePlate.healthBar, "BOTTOMRIGHT", 3, -3)
-		shadowFrame:SetBackdrop({
-			edgeFile = "Interface\\AddOns\\sInterface\\media\\shadow_border",
-			edgeSize = 5,
-		})
-		shadowFrame:SetBackdropBorderColor(0, 0, 0, 0.7)
-		namePlate.healthBar.shadowFrame = shadowFrame
-	end
+	E:ShadowedBorder(namePlate.healthBar)
+
+	namePlate.styled = true
 end)
 --end
 

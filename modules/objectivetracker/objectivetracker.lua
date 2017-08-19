@@ -1,5 +1,7 @@
 local _, ns = ...
-local C = ns.C
+local E, C = ns.E, ns.C
+
+if not C.objectivetracker.enabled then return end
 
 local ObjectiveTrackerFrame = ObjectiveTrackerFrame
 

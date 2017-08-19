@@ -1,4 +1,7 @@
-local _, addon = ...
+local addon, ns = ...
+local E, C = ns.E, ns.C
+
+if not C.errors.enabled then return end;
 
 local functionality_enabled = true;
 

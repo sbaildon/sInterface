@@ -1,7 +1,7 @@
 local _, ns = ...
 local E, C = ns.E, ns.C
 
-if not C.filter.filters then return end
+if not C.filter.enabled or not C.filter.filters then return end
 
 local filterParent = CreateFrame('Frame', 'sInterfaceFilter', UIParent)
 
@@ -34,7 +34,7 @@ local function createFilter(filter)
 	local f = CreateFrame('Frame', 'sInterfaceFilter'..filterCount, filterParent)
 	f:SetPoint(unpack(filter.pos))
 	f:SetSize(filter.size, filter.size)
-	
+
 	local icon = f:CreateTexture(nil, 'ARTWORK')
 	icon:SetTexture(gsi_icon)
 	icon:SetAllPoints(f)
@@ -56,17 +56,17 @@ local function createFilter(filter)
 
 	function f:CheckAvailability(force)
 		local name, _, _, count, _, duration, expires = UnitAura(filter.unit, gsi_name, nil, filter.filter)
-		if name then 
+		if name then
 			if f.expires == expires and not force then return end
 			if count and count > 1 then
 				f.count:SetText(count)
 			end
 			local gameTime = GetTime()
 			f.expires = expires
-			f:PlayAlpha(filter.alpha.found) 
+			f:PlayAlpha(filter.alpha.found)
 			f.icon:SetDesaturated(nil)
 			f.cooldown:SetCooldown(expires - duration, duration)
-		else 
+		else
 			f.count:SetText("")
 			f:PlayAlpha(filter.alpha.not_found)
 			f.icon:SetDesaturated(1)
@@ -84,7 +84,7 @@ local function createFilter(filter)
 			f:CheckAvailability(true)
 		end
 	end
-	
+
 	function f:UNIT_AURA(unitId)
 		f:CheckAvailability()
 	end

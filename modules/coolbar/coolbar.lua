@@ -1,6 +1,8 @@
 local _, ns = ...
 local E, C = ns.E, ns.C
 
+if not C.coolbar.enabled then return end;
+
 local CoolBar = CreateFrame("Frame", "CoolBar", UIParent)
 
 local tick0, tick1, tick2, tick3, tick4, tick5, tick6 = 0, 1, 3, 10, 30, 120, 360
@@ -58,7 +60,7 @@ function CoolBar:CreateCooldown(spell, spellId)
 
 	_, maxCharges = GetSpellCharges(spellId)
 
-	if (dur < 2) and (maxCharges == nil) then 
+	if (dur < 2) and (maxCharges == nil) then
 		noCooldowns[spellId] = true
 		return
 	end --probably GCD
@@ -93,7 +95,7 @@ function CoolBar:CreateCooldown(spell, spellId)
 		f.finishAnimation.alphaOut:SetFromAlpha(1)
 		f.finishAnimation.alphaOut:SetToAlpha(0)
 		f.finishAnimation.alphaOut:SetDuration(0.6)
-		f.finishAnimation:HookScript("OnFinished", function() 
+		f.finishAnimation:HookScript("OnFinished", function()
 			f:Hide()
 		end)
 
@@ -154,7 +156,7 @@ function CoolBar:CreateCooldown(spell, spellId)
 				CoolBar:PlayHide()
 			end
 			return
-		end	
+		end
 
 		if remain < tick1 then
 			f:SetPoint("CENTER", CoolBar, "LEFT", segment * remain, 0)
@@ -180,7 +182,7 @@ function CoolBar:CreateCooldown(spell, spellId)
 			f:SetFrameLevel(random(1,5) * 2 + 2)
 		end
 	end, dur/0.01)
-	
+
 
 	C_Timer.After(0.03, function(self)
 		f:Show()
@@ -234,7 +236,7 @@ CoolBar:SetScript("OnEvent", function(this, event, ...)
 end)
 for k, v in pairs(CoolBar) do
 	if (k  == string.upper(k)) then
-		if (string.find(k, "UNIT_")) then 
+		if (string.find(k, "UNIT_")) then
 			CoolBar:RegisterUnitEvent(k, "player", "vehicle")
 		else
 			CoolBar:RegisterEvent(k)

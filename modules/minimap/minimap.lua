@@ -1,6 +1,8 @@
 local addon, ns = ...
 local E, C = ns.E, ns.C
 
+if not C.minimap.enabled then return end
+
 -- Position
 Minimap:ClearAllPoints()
 Minimap:SetPoint(unpack(C.minimap.position))
@@ -127,7 +129,7 @@ local micromenu = {
 			if not IsAddOnLoaded("Blizzard_PVPUI") then
 				LoadAddOn("Blizzard_PVPUI")
 			end
-			ToggleFrame(PVPUIFrame) 
+			ToggleFrame(PVPUIFrame)
 		else
 			print("|cffffff00"..format(FEATURE_BECOMES_AVAILABLE_AT_LEVEL, SHOW_PVP_LEVEL).."|r")
 		end
@@ -168,7 +170,7 @@ local micromenu = {
 
 Minimap:SetScript("OnMouseUp", function(self, btn)
 	if btn == "RightButton" then
-		EasyMenu(micromenu, menuFrame, "cursor", 0, 0, "MENU", 2)	
+		EasyMenu(micromenu, menuFrame, "cursor", 0, 0, "MENU", 2)
 	else
 		Minimap_OnClick(self)
 	end

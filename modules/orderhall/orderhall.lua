@@ -1,4 +1,7 @@
 local addon, ns = ...
+local E, C = ns.E, ns.C
+
+if not C.orderhall.enabled then return end
 
 local orderhall = CreateFrame('Frame', addon..'OrderHall')
 

@@ -2,6 +2,7 @@ local _, ns = ...
 local C = ns.C
 
 C["coolbar"] = {
+	enabled = true,
 	width = 160,
 	height = 15,
 	oocTransparency = 0.3,

@@ -1,5 +1,7 @@
 local addon, ns = ...
-local C = ns.C
+local E, C = ns.E, ns.C
+
+if not C.np.enabled then return end;
 
 local colours = {
 	secure = { 0, 255, 0 },

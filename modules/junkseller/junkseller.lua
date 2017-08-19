@@ -1,3 +1,8 @@
+local addon, ns = ...
+local E, C = ns.E, ns.C
+
+if not C.junkseller.enabled then return end;
+
 local function GreySell()
 	for bag=0,4 do
 		for slot=0,GetContainerNumSlots(bag) do

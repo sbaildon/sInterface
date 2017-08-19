@@ -1,6 +1,6 @@
 local _, ns = ...
 local C = ns.C
 
-C["errors"] = {
+C["orderhall"] = {
 	enabled = true
 }

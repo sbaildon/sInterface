@@ -1,6 +1,8 @@
 local addon, ns = ...
 local E, C = ns.E, ns.C
 
+if not C.auras.enabled then return end;
+
 local sInterfaceBuffFrame = CreateFrame('Frame', addon..'BuffFrame', UIParent)
 local sInterfaceBuffFrameWidth = (C.auras.size * C.auras.max_per_row) + ((-C.auras.spacing - 1) * C.auras.max_per_row)
 local sInterfaceBuffFrameHeight  = C.auras.size
@@ -10,7 +12,7 @@ local function updateBuffFrameAnchor()
 	if (Minimap:IsShown()) then
 		sInterfaceBuffFrame:SetPoint("TOPRIGHT", Minimap, "TOPLEFT", C.auras.spacing, 0);
 	else
-		sInterfaceBuffFrame:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", -C.general.edgeSpacing, -C.general.edgeSpacing);
+		sInterfaceBuffFrame:SetPoint("TOPRIGHT", sInterfaceFrame, "TOPRIGHT", -C.general.edgeSpacing, -C.general.edgeSpacing);
 	end
 end
 updateBuffFrameAnchor()

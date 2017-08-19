@@ -16,7 +16,9 @@ local position7 = {'TOPLEFT', anchorFrame, 'BOTTOMLEFT', (size+spacing)/2 + (spa
 
 local _, _, classIndex = UnitClass('player')
 
-C['filter'] = {}
+C['filter'] = {
+	enabled = true
+}
 
 if classIndex == 1 then -- warrior
 	C['filter'].filters = {

@@ -1,4 +1,8 @@
 local name, ns = ...
+local E, C = ns.E, ns.C
+
+if not C.uf.enabled then return end
+
 local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 local class_color = RAID_CLASS_COLORS[class]

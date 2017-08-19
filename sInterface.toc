@@ -7,4 +7,3 @@ embeds\_embeds.xml
 core\_core.xml
 config\_config.xml
 modules\_modules.xml
-init.lua

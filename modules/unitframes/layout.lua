@@ -399,7 +399,7 @@ local Healcomm = function(self)
 end
 
 local Health = function(self)
-	local h = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
+	local h = createStatusbar(self, C.general.texture)
 	h:SetPoint'TOP'
 	h:SetPoint'LEFT'
 	h:SetPoint'RIGHT'
@@ -571,7 +571,7 @@ local Shared = function(self, unit)
 	ricon:SetPoint('RIGHT', -5, 0)
 	self.RaidIcon = ricon
 
-	local hl = self.Health:CreateTexture(nil, 'OVERLAY', nil, 7)
+	local hl = self.Health:CreateTexture(nil, nil, nil, 1)
 	hl:SetAllPoints(self)
 	hl:SetTexture([=[Interface\Buttons\WHITE8x8]=])
 	hl:SetVertexColor(1,1,1,.1)

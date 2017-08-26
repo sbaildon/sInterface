@@ -3,15 +3,14 @@ local name, ns = ...
 local C = ns.C
 
 createStatusbar = function(parent, tex, layer, height, width, r, g, b, alpha)
-    local bar = CreateFrame'StatusBar'
-    bar:SetParent(parent)
+    local bar = CreateFrame("StatusBar", nil, parent)
     if height then
         bar:SetHeight(height)
     end
     if width then
         bar:SetWidth(width)
     end
-    bar:SetStatusBarTexture(tex, layer)
+    bar:SetStatusBarTexture(tex, layer or "ARTWORK")
     bar:SetStatusBarColor(r, g, b, alpha)
     return bar
 end

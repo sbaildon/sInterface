@@ -7,7 +7,10 @@ local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 local class_color = RAID_CLASS_COLORS[class]
 
-local E, C = ns.E, ns.C
+
+-- Override some oUF.colors.power
+-- is there a nicer way?
+oUF.colors.power["COMBO_POINTS"] = {0.6, 0.1, 0.1}
 
 local backdrop = {
 	bgFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
@@ -53,7 +56,7 @@ end
 
 local OnEnter = function(self)
 	UnitFrame_OnEnter(self)
-	if self.LFDRole then 
+	if self.LFDRole then
 		if self.LFDTimer then self.LFDTimer:Cancel() end
 		self.LFDRole:PlayReveal()
 	end
@@ -62,7 +65,7 @@ end
 
 local OnLeave = function(self)
 	UnitFrame_OnLeave(self)
-	if self.LFDRole then 
+	if self.LFDRole then
 		self.LFDTimer = C_Timer.NewTimer(1, function() self.LFDRole:PlayHide() end)
 	end
 	self.Highlight:Hide()
@@ -199,64 +202,37 @@ local PostUpdatePower = function(Power, unit, min, max)
 	end
 end
 
-local function UpdateClassIconTexture(element)
-	local r, g, b = 1, 1, 2/5
-	if not UnitHasVehicleUI('player') then
-		if playerClass == 'MONK' then
-			r, g, b = 0, 4/5, 3/5
-		elseif playerClass == 'WARLOCK' then
-			r, g, b = 2/3, 1/3, 2/3
-		elseif playerClass == 'PRIEST' then
-			r, g, b = 2/3, 1/4, 2/3
-		elseif playerClass == 'PALADIN' then
-			r, g, b = 1, 1, 2/5
-		elseif playerClass == 'MAGE' then
-			r, g, b = 5/6, 1/2, 5/6
-		end
-	end
-
-	for index = 1, 8 do
-		local ClassIcon = element[index]
-		ClassIcon.Texture:SetColorTexture(r, g, b)
-	end
-end
-
 local function PostUpdateClassIcon(element, cur, max, diff, powerType, event)
-	if event == 'ClassPowerDisable' and class ~= 'DEATHKNIGHT' then
+	if event == "ClassPowerDisable" and class ~= "DEATHKNIGHT" then
 		local ClassIcon = element[1]
 		ClassIcon:GetParent():Hide()
 		return
 	end
-	if(diff or event == 'ClassPowerEnable') then
-		element:UpdateTexture()
 
-		local width 
-		width = max == 8 and (C.uf.size.primary.width / 5) or (C.uf.size.primary.width / max)
-		width = width - 1
-			
+	if(diff or event == 'ClassPowerEnable') then
+		local classIconSpacing = C.uf.classIconSpacing
+		local multiplier = 0.4
+
+		local width
+		width = max >= 5 and (C.uf.size.primary.width / 5) or (C.uf.size.primary.width / max)
+		width = max >= 5 and (width - ((classIconSpacing * 4) / 5)) or (width - ((classIconSpacing * (max - 1) / max)))
+
+		local color = oUF.colors.power[powerType or "COMBO_POINTS"]
+
 		for index = 1, max do
 			local ClassIcon = element[index]
 			ClassIcon:SetWidth(width)
 
-			if index == 1 then
-				ClassIcon:GetParent():Show()
-			end
-
-			if max == 8 then
-				if index == 6 then
-					ClassIcon:ClearAllPoints()
-					ClassIcon:SetPoint("LEFT", element[index-5])
-				end
-
-				if index > 5 then
-					ClassIcon.Texture:SetColorTexture(0.8, 0.1, 0.1)
-				end
+			if index <= 5 then
+				ClassIcon.Texture:SetColorTexture(color[1], color[2], color[3])
 			else
-				if index > 1 then
-					ClassIcon:ClearAllPoints()
-					ClassIcon:SetPoint('LEFT', element[index-1], 'RIGHT', 1, 0)
-				end
+				ClassIcon.Texture:SetColorTexture(color[1] * multiplier, color[2] * multiplier, color[3] * multiplier)
 			end
+		end
+
+		for index = max+1, 10 do
+			local ClassIcon = element[index]
+			ClassIcon:Hide()
 		end
 	end
 end
@@ -336,7 +312,7 @@ end
 
 local Castbar = function(self, unit)
 	local cb = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
-	cb.Time = E:FontString({parent=cb, layer='OVERLAY', justify='RIGHT'}) 
+	cb.Time = E:FontString({parent=cb, layer='OVERLAY', justify='RIGHT'})
 	cb.Time:SetPoint('RIGHT', cb, -2, 4)
 	cb.Text = E:FontString({parent=cb, layer='OVERLAY', justify='LEFT'})
 	cb.Text:SetPoint('LEFT', cb, 2, 4)
@@ -567,7 +543,7 @@ local Reputation = function(self)
 	self.Reputation = bar
 end
 
-	
+
 
 local Shared = function(self, unit)
 	self.menu = menu
@@ -595,7 +571,7 @@ local Shared = function(self, unit)
 	ricon:SetPoint('RIGHT', -5, 0)
 	self.RaidIcon = ricon
 
-	local hl = self.Health:CreateTexture(nil, 'OVERLAY')
+	local hl = self.Health:CreateTexture(nil, 'OVERLAY', nil, 7)
 	hl:SetAllPoints(self)
 	hl:SetTexture([=[Interface\Buttons\WHITE8x8]=])
 	hl:SetVertexColor(1,1,1,.1)
@@ -637,52 +613,56 @@ local UnitSpecific = {
 		ptext.frequentUpdates = .1
 		self:Tag(ptext, '[sInterface:power]')
 
-		local ClassIconBar = CreateFrame('Frame', nil, self)
+		local ClassIconBar = CreateFrame('Frame', "ClassIconBar", self)
 		ClassIconBar:SetWidth(self:GetWidth())
 		ClassIconBar:SetHeight(self.Power:GetHeight())
-		ClassIconBar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -4)
-		E:ShadowedBorder(ClassIconBar)
+		ClassIconBar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -6)
 
 		local ClassIcons = {}
-		ClassIcons.UpdateTexture = UpdateClassIconTexture
 		ClassIcons.PostUpdate = PostUpdateClassIcon
-		for index = 1, 8 do
-			local ClassIcon = CreateFrame('Frame', nil, ClassIconBar)
+
+		for index = 1, 10 do
+			local ClassIcon = CreateFrame('Frame', "ClassIcon"..index, self)
 			ClassIcon:SetBackdrop(backdrop)
 			ClassIcon:SetBackdropColor(0, 0, 0)
-			ClassIcon:SetHeight(self.Power:GetHeight())
+			ClassIcon:SetHeight(ClassIconBar:GetHeight())
+			E:ShadowedBorder(ClassIcon)
 
-			if index > 1 then
-				ClassIcon:SetPoint('LEFT', ClassIcons[index-1], 'RIGHT', 1, 0)
+			local Texture = ClassIcon:CreateTexture("ClassIcon"..index.."Texture", 'BORDER', nil, index > 5 and 1 or 0)
+			Texture:SetAllPoints()
+			ClassIcon.Texture = Texture
+
+			if index > 5 then
+				ClassIcon:SetPoint("LEFT", ClassIcons[index-5], "LEFT", 0, 0)
+			elseif index > 1 then
+				ClassIcon:SetPoint('LEFT', ClassIcons[index-1], 'RIGHT', C.uf.classIconSpacing, 0)
 			else
 				ClassIcon:SetPoint('LEFT', ClassIconBar, 'LEFT', 0, 0)
 			end
 
-			local Texture = ClassIcon:CreateTexture(nil, 'BORDER', nil, index > 5 and 1 or 0)
-			Texture:SetAllPoints()
-			ClassIcon.Texture = Texture
-
 			ClassIcons[index] = ClassIcon
 		end
+
 		self.ClassIcons = ClassIcons
 
 		if(class == 'DEATHKNIGHT') then
 			local Runes = {}
 			for index = 1, 6 do
 				local Rune = CreateFrame('StatusBar', nil, ClassIconBar)
-				local width = (self:GetWidth()/6)-1
-				Rune:SetSize(width, C.uf.size.primary.power)
+				local width = (C.uf.size.primary.width / 6) - (C.uf.classIconSpacing * (6 - 1) / 6)
+				Rune:SetSize(width, ClassIconBar:GetHeight())
 				Rune:SetStatusBarTexture(C.general.texture)
 				Rune:SetStatusBarColor(0.9, 0, 0.7)
+				E:ShadowedBorder(Rune)
 
 				if index > 1 then
-					Rune:SetPoint('LEFT', Runes[index - 1], 'RIGHT', 1, 0)
+					Rune:SetPoint('LEFT', Runes[index - 1], 'RIGHT', C.uf.classIconSpacing, 0)
 				else
 					Rune:SetPoint('LEFT', ClassIconBar, 'LEFT', 0, 0)
 				end
 
 				if index == 6 then
-					Rune:SetWidth(width+1)
+					Rune:SetWidth(width-1)
 				end
 
 				local RuneBG = Rune:CreateTexture(nil, 'BORDER')
@@ -861,7 +841,7 @@ local UnitSpecific = {
 		self.unitSize = 'tertiary'
 
 		Shared(self, ...)
-		
+
 		local name = E:FontString({parent=self.Health})
 		name:SetPoint('CENTER', 0, 3)
 		self:Tag(name, '[sInterface:shortname]')
@@ -1062,7 +1042,7 @@ oUF:Factory(function(self)
 	end
 
 	self:SetActiveStyle'sInterface - Raid'
-	local raid = oUF:SpawnHeader(nil, nil, 'raid', 
+	local raid = oUF:SpawnHeader(nil, nil, 'raid',
 	'showPlayer', true,
 	'showSolo', false,
 	'showParty', false,

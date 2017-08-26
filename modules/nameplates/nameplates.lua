@@ -51,6 +51,7 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	if namePlate.styled or namePlate:IsForbidden() then return end
 	namePlate.healthBar:SetStatusBarTexture(C.general.texture)
 	namePlate.healthBar.border:Hide()
+	E:ShadowedBorder(namePlate.healthBar)
 
 	namePlate.castBar:SetStatusBarTexture(C.general.texture)
 	namePlate.castBar:SetHeight(4)
@@ -63,8 +64,6 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	namePlate.name:SetParent(namePlate.healthBar)
 	namePlate.name:SetPoint("BOTTOM", namePlate.healthBar, "TOP", 0, -3)
 	namePlate.name:SetTextColor(1,1,1,1)
-
-	E:ShadowedBorder(namePlate.healthBar)
 
 	namePlate.styled = true
 end)

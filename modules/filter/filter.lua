@@ -41,12 +41,15 @@ local function createFilter(filter)
 	icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	icon:SetDesaturated(1)
 
-	local count = E:FontString({parent = f})
-	count:SetPoint('BOTTOMRIGHT', 2, -5)
-
 	local cooldown = CreateFrame('CoolDown', 'sInterfaceFilter'..filterCount..'Cooldown', f, 'CooldownFrameTemplate')
 	cooldown:SetAllPoints()
 	cooldown:SetReverse(true)
+
+	local countFrame = CreateFrame("Frame", 'sInterfaceFilter'..filterCount..'TextFrame', f)
+	countFrame:SetAllPoints(f)
+
+	local count = E:FontString({parent = countFrame})
+	count:SetPoint('BOTTOMRIGHT', 2, -5)
 
 	f.icon = icon
 	f.cooldown = cooldown

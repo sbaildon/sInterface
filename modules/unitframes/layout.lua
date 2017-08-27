@@ -54,6 +54,14 @@ function SpellFinish(self)
 	end
 end
 
+local function UpdatePlayerCastBarAnchor()
+	if oUF_sInterfacePlayer.ClassPowerBar:IsShown() then
+		oUF_sInterfacePlayer.Castbar:SetPoint("TOPRIGHT", oUF_sInterfacePlayer.ClassPowerBar, "BOTTOMRIGHT", 0, -10)
+	else
+		oUF_sInterfacePlayer.Castbar:SetPoint("TOPRIGHT", oUF_sInterfacePlayer, "BOTTOMRIGHT", 0, -15)
+	end
+end
+
 local OnEnter = function(self)
 	UnitFrame_OnEnter(self)
 	if self.GroupRoleIndicator then
@@ -202,9 +210,9 @@ local PostUpdatePower = function(Power, unit, cur, min, max)
 end
 
 local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
-	if event == "ClassPowerDisable" and class ~= "DEATHKNIGHT" then
-		local ClassIcon = element[1]
-		ClassIcon:GetParent():Hide()
+	if max == nil and class ~= "DEATHKNIGHT" then
+		local ClassPowerPip = element[1]
+		ClassPowerPip:GetParent():Hide()
 		return
 	end
 
@@ -221,7 +229,6 @@ local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
 		for index = 1, max do
 			local ClassPowerPip = element[index]
 			ClassPowerPip:SetWidth(width)
-			ClassPowerPip:Show()
 
 			if index <= 5 then
 				ClassPowerPip:SetStatusBarColor(color[1], color[2], color[3])
@@ -348,7 +355,7 @@ local Castbar = function(self, unit)
 	E:RegisterAlphaAnimation(cb)
 
 	local height = self.Health:GetHeight() - self.Power:GetHeight()
-	cb:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -15)
+	cb:SetPoint("TOPRIGHT", self.ClassPowerBar, "BOTTOMRIGHT", 0, -10)
 	cb.Icon:SetSize(height*2, height*2)
 	cb.Shield:SetSize(height*5.25, height*5.25)
 	cb:SetSize(self:GetWidth()-(height*2)-6, height)
@@ -588,7 +595,6 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
-		Castbar(self)
 
 		local fcf = CreateFrame("Frame", nil, self.Health)
 		fcf:SetSize(32, 32)
@@ -617,7 +623,10 @@ local UnitSpecific = {
 		ClassPowerBar:SetWidth(self:GetWidth())
 		ClassPowerBar:SetHeight(self.Power:GetHeight())
 		ClassPowerBar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -6)
+		ClassPowerBar:HookScript("OnShow", UpdatePlayerCastBarAnchor)
+		ClassPowerBar:HookScript("OnHide", UpdatePlayerCastBarAnchor)
 		self.ClassPowerBar = ClassPowerBar
+
 
 		local ClassPower = {}
 		ClassPower.PostUpdate = PostUpdateClassPower
@@ -637,7 +646,6 @@ local UnitSpecific = {
 			else
 				ClassPowerPip:SetPoint('LEFT', ClassPowerBar, 'LEFT', 0, 0)
 			end
-
 
 			ClassPower[index] = ClassPowerPip
 		end
@@ -668,6 +676,8 @@ local UnitSpecific = {
 			Runes.colorSpec = true
 			self.Runes = Runes
 		end
+
+		Castbar(self)
 
 		self.GCD = CreateFrame('Frame', nil, self.Health)
 		self.GCD:SetPoint('LEFT', self.Health, 'LEFT')

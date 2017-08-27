@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="unitframes.lua"/>
 	<Script file="general.lua"/>
+	<Script file="actionbars.lua"/>
 	<Script file="auras.lua"/>
 	<Script file="chat.lua"/>
 	<Script file="coolbar.lua"/>

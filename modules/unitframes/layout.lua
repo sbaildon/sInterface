@@ -219,19 +219,20 @@ local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
 		local color = oUF.colors.power[powerType or "COMBO_POINTS"]
 
 		for index = 1, max do
-			local ClassIcon = element[index]
-			ClassIcon:SetWidth(width)
+			local ClassPowerPip = element[index]
+			ClassPowerPip:SetWidth(width)
+			ClassPowerPip:Show()
 
 			if index <= 5 then
-				ClassIcon:SetStatusBarColor(color[1], color[2], color[3])
+				ClassPowerPip:SetStatusBarColor(color[1], color[2], color[3])
 			else
-				ClassIcon:SetStatusBarColor(color[1] * multiplier, color[2] * multiplier, color[3] * multiplier)
+				ClassPowerPip:SetStatusBarColor(color[1] * multiplier, color[2] * multiplier, color[3] * multiplier)
 			end
 		end
 
 		for index = max+1, 10 do
-			local ClassIcon = element[index]
-			ClassIcon:Hide()
+			local ClassPowerPip = element[index]
+			ClassPowerPip:Hide()
 		end
 	end
 end
@@ -612,18 +613,19 @@ local UnitSpecific = {
 		ptext.frequentUpdates = .1
 		self:Tag(ptext, '[sInterface:power]')
 
-		local ClassIconBar = CreateFrame('Frame', "ClassIconBar", self)
-		ClassIconBar:SetWidth(self:GetWidth())
-		ClassIconBar:SetHeight(self.Power:GetHeight())
-		ClassIconBar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -6)
+		local ClassPowerBar = CreateFrame('Frame', "ClassPowerBar", self)
+		ClassPowerBar:SetWidth(self:GetWidth())
+		ClassPowerBar:SetHeight(self.Power:GetHeight())
+		ClassPowerBar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -6)
+		self.ClassPowerBar = ClassPowerBar
 
 		local ClassPower = {}
 		ClassPower.PostUpdate = PostUpdateClassPower
 
 		for index = 1, 11 do
-			local ClassPowerPip = CreateFrame("StatusBar", "ClassPowerPip"..index, ClassIconBar)
+			local ClassPowerPip = CreateFrame("StatusBar", "ClassPowerPip"..index, ClassPowerBar)
 			ClassPowerPip:SetStatusBarTexture(C.general.texture)
-			ClassPowerPip:SetHeight(ClassIconBar:GetHeight())
+			ClassPowerPip:SetHeight(ClassPowerBar:GetHeight())
 			ClassPowerPip:SetWidth(16)
 			E:ShadowedBorder(ClassPowerPip)
 
@@ -633,7 +635,7 @@ local UnitSpecific = {
 			elseif index > 1 then
 				ClassPowerPip:SetPoint('LEFT', ClassPower[index-1], 'RIGHT', C.uf.classIconSpacing, 0)
 			else
-				ClassPowerPip:SetPoint('LEFT', ClassIconBar, 'LEFT', 0, 0)
+				ClassPowerPip:SetPoint('LEFT', ClassPowerBar, 'LEFT', 0, 0)
 			end
 
 
@@ -645,16 +647,16 @@ local UnitSpecific = {
 		if(class == 'DEATHKNIGHT') then
 			local Runes = {}
 			for index = 1, 6 do
-				local Rune = CreateFrame('StatusBar', "Rune"..index, ClassIconBar)
+				local Rune = CreateFrame('StatusBar', "Rune"..index, ClassPowerBar)
 				local width = (C.uf.size.primary.width / 6) - (C.uf.classIconSpacing * (6 - 1) / 6)
-				Rune:SetSize(width, ClassIconBar:GetHeight())
+				Rune:SetSize(width, ClassPowerBar:GetHeight())
 				Rune:SetStatusBarTexture(C.general.texture)
 				E:ShadowedBorder(Rune)
 
 				if index > 1 then
 					Rune:SetPoint('LEFT', Runes[index - 1], 'RIGHT', C.uf.classIconSpacing, 0)
 				else
-					Rune:SetPoint('LEFT', ClassIconBar, 'LEFT', 0, 0)
+					Rune:SetPoint('LEFT', ClassPowerBar, 'LEFT', 0, 0)
 				end
 
 				if index == 6 then

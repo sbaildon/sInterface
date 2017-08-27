@@ -189,7 +189,7 @@ local PostUpdateHealth = function(health, unit)
 	end
 end
 
-local PostUpdatePower = function(Power, unit, min, max)
+local PostUpdatePower = function(Power, unit, cur, min, max)
 	local parent = Power:GetParent()
 	local h = parent.Health
 	if max == 0 then

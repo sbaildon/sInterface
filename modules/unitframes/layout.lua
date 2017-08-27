@@ -10,7 +10,7 @@ local class_color = RAID_CLASS_COLORS[class]
 
 -- Override some oUF.colors.power
 -- is there a nicer way?
-oUF.colors.power["COMBO_POINTS"] = {0.6, 0.1, 0.1}
+oUF.colors.power["COMBO_POINTS"] = {1, 0.1, 0.1}
 
 local backdrop = {
 	bgFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
@@ -201,16 +201,16 @@ local PostUpdatePower = function(Power, unit, cur, min, max)
 	end
 end
 
-local function PostUpdateClassIcon(element, cur, max, diff, powerType, event)
+local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
 	if event == "ClassPowerDisable" and class ~= "DEATHKNIGHT" then
 		local ClassIcon = element[1]
 		ClassIcon:GetParent():Hide()
 		return
 	end
 
-	if(diff or event == 'ClassPowerEnable') then
+	if(hasMxChanged) then
 		local classIconSpacing = C.uf.classIconSpacing
-		local multiplier = 0.4
+		local multiplier = 0.7
 
 		local width
 		width = max >= 5 and (C.uf.size.primary.width / 5) or (C.uf.size.primary.width / max)
@@ -223,9 +223,9 @@ local function PostUpdateClassIcon(element, cur, max, diff, powerType, event)
 			ClassIcon:SetWidth(width)
 
 			if index <= 5 then
-				ClassIcon.Texture:SetColorTexture(color[1], color[2], color[3])
+				ClassIcon:SetStatusBarColor(color[1], color[2], color[3])
 			else
-				ClassIcon.Texture:SetColorTexture(color[1] * multiplier, color[2] * multiplier, color[3] * multiplier)
+				ClassIcon:SetStatusBarColor(color[1] * multiplier, color[2] * multiplier, color[3] * multiplier)
 			end
 		end
 
@@ -617,41 +617,38 @@ local UnitSpecific = {
 		ClassIconBar:SetHeight(self.Power:GetHeight())
 		ClassIconBar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -6)
 
-		local ClassIcons = {}
-		ClassIcons.PostUpdate = PostUpdateClassIcon
+		local ClassPower = {}
+		ClassPower.PostUpdate = PostUpdateClassPower
 
-		for index = 1, 10 do
-			local ClassIcon = CreateFrame('Frame', "ClassIcon"..index, self)
-			ClassIcon:SetBackdrop(backdrop)
-			ClassIcon:SetBackdropColor(0, 0, 0)
-			ClassIcon:SetHeight(ClassIconBar:GetHeight())
-			E:ShadowedBorder(ClassIcon)
-
-			local Texture = ClassIcon:CreateTexture("ClassIcon"..index.."Texture", 'BORDER', nil, index > 5 and 1 or 0)
-			Texture:SetAllPoints()
-			ClassIcon.Texture = Texture
+		for index = 1, 11 do
+			local ClassPowerPip = CreateFrame("StatusBar", "ClassPowerPip"..index, ClassIconBar)
+			ClassPowerPip:SetStatusBarTexture(C.general.texture)
+			ClassPowerPip:SetHeight(ClassIconBar:GetHeight())
+			ClassPowerPip:SetWidth(16)
+			E:ShadowedBorder(ClassPowerPip)
 
 			if index > 5 then
-				ClassIcon:SetPoint("LEFT", ClassIcons[index-5], "LEFT", 0, 0)
+				ClassPowerPip:SetPoint("LEFT", ClassPower[index-5], "LEFT", 0, 0)
+				ClassPowerPip:SetFrameLevel(ClassPower[1]:GetFrameLevel()+1)
 			elseif index > 1 then
-				ClassIcon:SetPoint('LEFT', ClassIcons[index-1], 'RIGHT', C.uf.classIconSpacing, 0)
+				ClassPowerPip:SetPoint('LEFT', ClassPower[index-1], 'RIGHT', C.uf.classIconSpacing, 0)
 			else
-				ClassIcon:SetPoint('LEFT', ClassIconBar, 'LEFT', 0, 0)
+				ClassPowerPip:SetPoint('LEFT', ClassIconBar, 'LEFT', 0, 0)
 			end
 
-			ClassIcons[index] = ClassIcon
+
+			ClassPower[index] = ClassPowerPip
 		end
 
-		self.ClassIcons = ClassIcons
+		self.ClassPower = ClassPower
 
 		if(class == 'DEATHKNIGHT') then
 			local Runes = {}
 			for index = 1, 6 do
-				local Rune = CreateFrame('StatusBar', nil, ClassIconBar)
+				local Rune = CreateFrame('StatusBar', "Rune"..index, ClassIconBar)
 				local width = (C.uf.size.primary.width / 6) - (C.uf.classIconSpacing * (6 - 1) / 6)
 				Rune:SetSize(width, ClassIconBar:GetHeight())
 				Rune:SetStatusBarTexture(C.general.texture)
-				Rune:SetStatusBarColor(0.9, 0, 0.7)
 				E:ShadowedBorder(Rune)
 
 				if index > 1 then
@@ -664,12 +661,9 @@ local UnitSpecific = {
 					Rune:SetWidth(width-1)
 				end
 
-				local RuneBG = Rune:CreateTexture(nil, 'BORDER')
-				RuneBG:SetAllPoints()
-				RuneBG:SetColorTexture(1/6, 1/9, 1/3)
-
 				Runes[index] = Rune
 			end
+			Runes.colorSpec = true
 			self.Runes = Runes
 		end
 
@@ -712,8 +706,6 @@ local UnitSpecific = {
 		self:RegisterEvent("UNIT_HEALTH", HealthUpdate)
 		self:RegisterEvent("UNIT_SPELLCAST_START", SpellStart)
 		self:RegisterEvent("UNIT_SPELLCAST_STOP", SpellFinish)
-
-		self:PlayHide()
 	end,
 
 	target = function(self, ...)

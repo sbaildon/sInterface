@@ -174,8 +174,7 @@ local Auras = function(self)
 		b.PostUpdateIcon = PostUpdateIcon
 		if config.mode == 'aura' then
 			b.gap = config.gap
-			b.numBuffs = config.num
-			b.numDebuffs = config.num
+			b.numTotal = config.num
 			self.Auras = b
 		elseif config.mode == 'debuff' then
 			self.Debuffs = b

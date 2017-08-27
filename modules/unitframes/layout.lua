@@ -465,11 +465,11 @@ local Power = function(self)
 	self.Power = p
 end
 
-local PhaseIcon = function(self)
-	local PhaseIcon = self:CreateTexture(nil, "OVERLAY")
-	PhaseIcon:SetPoint("LEFT", -20, 0)
-	PhaseIcon:SetSize(16, 16)
-	self.PhaseIcon = PhaseIcon
+local PhaseIndicator = function(self)
+	local PhaseIndicator = self:CreateTexture(nil, "OVERLAY")
+	PhaseIndicator:SetPoint("LEFT", -20, 0)
+	PhaseIndicator:SetSize(16, 16)
+	self.PhaseIndicator = PhaseIndicator
 end
 
 local Size = function(self)
@@ -718,7 +718,7 @@ local UnitSpecific = {
 
 		Power(self)
 		Castbar(self)
-		PhaseIcon(self)
+		PhaseIndicator(self)
 
 		if C.uf.aura.target.enable then Auras(self) end
 
@@ -747,7 +747,7 @@ local UnitSpecific = {
 
 		Power(self)
 		Castbar(self)
-		PhaseIcon(self)
+		PhaseIndicator(self)
 
 		if C.uf.aura.focus.enable then Auras(self) end
 
@@ -776,7 +776,7 @@ local UnitSpecific = {
 
 		Power(self)
 		Castbar(self)
-		PhaseIcon(self)
+		PhaseIndicator(self)
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
@@ -808,7 +808,7 @@ local UnitSpecific = {
 
 		Shared(self, ...)
 
-		PhaseIcon(self)
+		PhaseIndicator(self)
 
 		local name = E:FontString({parent=self.Health})
 		name:SetPoint('CENTER', self.Health, 0, 3)
@@ -847,7 +847,7 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
-		PhaseIcon(self)
+		PhaseIndicator(self)
 		LFD(self)
 		ReadyCheck(self)
 
@@ -876,7 +876,7 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
-		PhaseIcon(self)
+		PhaseIndicator(self)
 		LFD(self)
 
 		if C.uf.aura.tank.enable then Auras(self) end

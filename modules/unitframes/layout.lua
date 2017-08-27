@@ -208,7 +208,7 @@ local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
 		return
 	end
 
-	if(hasMxChanged) then
+	if(hasMaxChanged) then
 		local classIconSpacing = C.uf.classIconSpacing
 		local multiplier = 0.7
 
@@ -706,6 +706,8 @@ local UnitSpecific = {
 		self:RegisterEvent("UNIT_HEALTH", HealthUpdate)
 		self:RegisterEvent("UNIT_SPELLCAST_START", SpellStart)
 		self:RegisterEvent("UNIT_SPELLCAST_STOP", SpellFinish)
+
+		self:PlayHide()
 	end,
 
 	target = function(self, ...)

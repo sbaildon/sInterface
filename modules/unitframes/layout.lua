@@ -56,17 +56,17 @@ end
 
 local OnEnter = function(self)
 	UnitFrame_OnEnter(self)
-	if self.LFDRole then
+	if self.GroupRoleIndicator then
 		if self.LFDTimer then self.LFDTimer:Cancel() end
-		self.LFDRole:PlayReveal()
+		self.GroupRoleIndicator:PlayReveal()
 	end
 	self.Highlight:Show()
 end
 
 local OnLeave = function(self)
 	UnitFrame_OnLeave(self)
-	if self.LFDRole then
-		self.LFDTimer = C_Timer.NewTimer(1, function() self.LFDRole:PlayHide() end)
+	if self.GroupRoleIndicator then
+		self.LFDTimer = C_Timer.NewTimer(1, function() self.GroupRoleIndicator:PlayHide() end)
 	end
 	self.Highlight:Hide()
 end
@@ -423,14 +423,14 @@ local Health = function(self)
 end
 
 local LFD = function(self)
-	local LFDRole = self.Health:CreateTexture(nil, 'OVERLAY')
-	LFDRole:SetSize(16, 16)
-	LFDRole:SetPoint('RIGHT', -5, 0)
+	local GroupRoleIndicator = self.Health:CreateTexture(nil, 'OVERLAY')
+	GroupRoleIndicator:SetSize(16, 16)
+	GroupRoleIndicator:SetPoint('RIGHT', -5, 0)
 
-	E:RegisterAlphaAnimation(LFDRole)
-	LFDRole:PlayHide()
+	E:RegisterAlphaAnimation(GroupRoleIndicator)
+	GroupRoleIndicator:PlayHide()
 
-	self.LFDRole = LFDRole
+	self.GroupRoleIndicator = GroupRoleIndicator
 end
 
 local ReadyCheck = function(self)

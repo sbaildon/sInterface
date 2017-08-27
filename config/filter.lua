@@ -42,7 +42,8 @@ if classIndex == 1 then -- warrior
 
 		-- Fury Warrior
 		{ spellId = 184362,	size = size,	pos = position1,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0 } }, -- enrage
-		{ spellId = 200872,	size = size,	pos = position2,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0 } }, -- odyn's champion
+		{ spellId = 215571,	size = size,	pos = position2,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0 } }, -- frothing berserker
+		{ spellId = 200872,	size = size,	pos = position3,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0 } }, -- odyn's champion
 		{ spellId = 1719,	size = size,	pos = position5,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0 } }, -- battleshout
 		{ spellId = 206333,	size = size,	pos = position7,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0 } }, -- taste for blood
 	}

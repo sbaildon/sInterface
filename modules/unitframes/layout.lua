@@ -388,7 +388,7 @@ local Healcomm = function(self)
 	healAbsorbBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
 	healAbsorbBar:SetWidth(self:GetWidth())
 
-	self.HealPrediction = {
+	self.HealthPrediction = {
 		myBar = myBar,
 		otherBar = otherBar,
 		absorbBar = absorbBar,

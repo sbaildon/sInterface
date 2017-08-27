@@ -355,7 +355,7 @@ local Castbar = function(self, unit)
 	self.Castbar = cb
 end
 
-local Healcomm = function(self)
+local HealthPrediction = function(self)
 	local myBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	myBar:SetPoint('TOP')
 	myBar:SetPoint('BOTTOM')
@@ -561,7 +561,7 @@ local Shared = function(self, unit)
 
 	Size(self)
 	Health(self)
-	Healcomm(self)
+	HealthPrediction(self)
 
 	E:ShadowedBorder(self)
 

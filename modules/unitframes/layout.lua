@@ -568,7 +568,7 @@ local Shared = function(self, unit)
 	local riconsize = self.Health:GetHeight()-2
 	ricon:SetSize(riconsize, riconsize)
 	ricon:SetPoint('RIGHT', -5, 0)
-	self.RaidIcon = ricon
+	self.RaidTargetIndicator = ricon
 
 	local hl = self.Health:CreateTexture(nil, nil, nil, 1)
 	hl:SetAllPoints(self)

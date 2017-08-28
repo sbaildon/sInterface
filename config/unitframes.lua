@@ -6,7 +6,15 @@ local _, class = UnitClass('player')
 local mediaPath = 'Interface\\AddOns\\sInterface\\media\\'
 
 C["uf"] = {
-	enabled = true
+	enabled = true,
+	hidePlayerFrameOoc = true,
+
+	-- Setting emulatePersonalResourceDisplay to true will ignore the player frame position,
+	-- instead, anchoring the player frame to the Personal Resource Display
+	emulatePersonalResourceDisplay = true,
+
+	-- Spacing between icons like combo points, arcane orbs, soul shards, etc.
+	classIconSpacing = 6
 }
 
 C["uf"].size = {
@@ -30,15 +38,8 @@ C["uf"].size = {
 	}
 }
 
--- Setting emulatePersonalResourceDisplay to true will ignore the player frame position,
--- instead, anchoring the player frame to the Personal Resource Display
-C["uf"].emulatePersonalResourceDisplay = true
-
--- Spacing between icons like combo points, arcane orbs, soul shards, etc.
-C["uf"].classIconSpacing = 6
-
 C["uf"].positions = {
-	Player = { 'CENTER', UIParent, 'CENTER', 0, -275 },
+	Player = { 'CENTER', UIParent, 'CENTER', 0, -275 }, -- Unused if emulatePersonalResourceDisplay is set
 	Target = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 55, 130 },
 	Targettarget = { 'TOPLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 7, 0 },
 	Focus = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 56, -100 },

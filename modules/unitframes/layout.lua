@@ -697,19 +697,19 @@ local UnitSpecific = {
 			Reputation(self)
 		end
 
-		local altp = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), self:GetWidth(), 1, 1, 1, 1)
-		altp:SetPoint("BOTTOM", exp_rep_bar, "TOP", 0, 5)
+
+		local altp = createStatusbar(self, C.general.texture, nil, C.uf.size[self.unitSize].power, self:GetWidth(), 1, 1, 1, 1)
+		altp:SetPoint("BOTTOM", self.Experience or self.Reputation, "TOP", 0, 3)
 		altp.bg = altp:CreateTexture(nil, 'BORDER')
 		altp.bg:SetAllPoints(altp)
 		altp.bg:SetTexture(C.general.texture)
 		altp.bg:SetVertexColor(1, 1, 1, 0.3)
 		altp.Text = E:FontString({parent=altp})
-		altp.Text:SetPoint("BOTTOM", 0, 5)
+		altp.Text:SetPoint("BOTTOM", altp, "TOP", 0, -2)
 		self:Tag(altp.Text, '[altpower]')
 		altp:EnableMouse(true)
-		altp.colorTexture = true
 		E:ShadowedBorder(altp)
-		self.AltPowerBar = altp
+		self.AlternativePower = altp
 
 		E:RegisterAlphaAnimation(self)
 

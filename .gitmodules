@@ -30,3 +30,6 @@
 	path = embeds/rLib
 	url = https://github.com/sBaildon/rLib.git
 	branch = master
+[submodule "embeds/oUF_ArtifactPower"]
+	path = embeds/oUF_ArtifactPower
+	url = https://github.com/sBaildon/oUF_ArtifactPower.git

@@ -550,6 +550,15 @@ local Reputation = function(self)
 	self.Reputation = bar
 end
 
+local ArtifactPower = function(self)
+	local bar = ExperienceReputationShared(self)
+
+	bar.colorArtifactQuality = true
+
+	self:Tag(bar.Text, "Level [artifactpower:traits_learned], [artifactpower:until_next] [(>artifactpower:until_next_per<%)]")
+
+	self.ArtifactPower = bar
+end
 
 
 local Shared = function(self, unit)
@@ -627,7 +636,6 @@ local UnitSpecific = {
 		ClassPowerBar:HookScript("OnHide", UpdatePlayerCastBarAnchor)
 		self.ClassPowerBar = ClassPowerBar
 
-
 		local ClassPower = {}
 		ClassPower.PostUpdate = PostUpdateClassPower
 
@@ -691,12 +699,13 @@ local UnitSpecific = {
 		self.GCD.Spark:SetWidth(9)
 		self.GCD.Spark:SetPoint('LEFT', self.Health, 'LEFT', 0, 0)
 
+		ArtifactPower(self)
+
 		if UnitLevel('player') < MAX_PLAYER_LEVEL and not IsXPUserDisabled() then
 			Experience(self)
-		else
-			Reputation(self)
 		end
 
+		Reputation(self)
 
 		local altp = createStatusbar(self, C.general.texture, nil, C.uf.size[self.unitSize].power, self:GetWidth(), 1, 1, 1, 1)
 		altp:SetPoint("BOTTOM", self.Experience or self.Reputation, "TOP", 0, 3)

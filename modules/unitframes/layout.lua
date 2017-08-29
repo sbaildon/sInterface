@@ -699,7 +699,9 @@ local UnitSpecific = {
 		self.GCD.Spark:SetWidth(9)
 		self.GCD.Spark:SetPoint('LEFT', self.Health, 'LEFT', 0, 0)
 
-		ArtifactPower(self)
+		if C.uf.artifactPower then
+			ArtifactPower(self)
+		end
 
 		if UnitLevel('player') < MAX_PLAYER_LEVEL and not IsXPUserDisabled() then
 			Experience(self)

@@ -490,7 +490,7 @@ local Size = function(self)
 end
 
 local ExperienceReputationShared = function(self)
-	local bar = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), C.uf.size.primary.width, 0, 0, 0, 1)
+	local bar = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), C.uf.size.primary.width)
 	bar:SetPoint("BOTTOM", self, "TOP", 0, 3)
 
 	bar.Text = E:FontString({parent=bar})
@@ -552,6 +552,8 @@ end
 
 local ArtifactPower = function(self)
 	local bar = ExperienceReputationShared(self)
+
+	bar:SetStatusBarColor(GetItemQualityColor(6))
 
 	self:Tag(bar.Text, "Level [artifactpower:traits_learned], [artifactpower:until_next] [(>artifactpower:until_next_per<%)]")
 

@@ -11,7 +11,9 @@ createStatusbar = function(parent, tex, layer, height, width, r, g, b, alpha)
         bar:SetWidth(width)
     end
     bar:SetStatusBarTexture(tex, layer or "ARTWORK")
-    bar:SetStatusBarColor(r, g, b, alpha)
+    if (r and b and g and alpha) then
+	    bar:SetStatusBarColor(r, g, b, alpha)
+    end
     return bar
 end
 

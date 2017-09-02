@@ -32,4 +32,4 @@
 	branch = master
 [submodule "embeds/oUF_ArtifactPower"]
 	path = embeds/oUF_ArtifactPower
-	url = https://github.com/sBaildon/oUF_ArtifactPower.git
+	url = https://github.com/Rainrider/oUF_ArtifactPower.git

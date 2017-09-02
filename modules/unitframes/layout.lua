@@ -355,7 +355,7 @@ local Castbar = function(self, unit)
 	E:RegisterAlphaAnimation(cb)
 
 	local height = self.Health:GetHeight() - self.Power:GetHeight()
-	cb:SetPoint("TOPRIGHT", self.ClassPowerBar, "BOTTOMRIGHT", 0, -10)
+	cb:SetPoint("TOPRIGHT", self.ClassPowerBar or self, "BOTTOMRIGHT", 0, -15)
 	cb.Icon:SetSize(height*2, height*2)
 	cb.Shield:SetSize(height*5.25, height*5.25)
 	cb:SetSize(self:GetWidth()-(height*2)-6, height)

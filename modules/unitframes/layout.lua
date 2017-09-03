@@ -553,8 +553,6 @@ end
 local ArtifactPower = function(self)
 	local bar = ExperienceReputationShared(self)
 
-	bar:SetStatusBarColor(GetItemQualityColor(6))
-
 	self:Tag(bar.Text, "Level [artifactpower:traits_learned], [artifactpower:until_next] [(>artifactpower:until_next_per<%)]")
 
 	self.ArtifactPower = bar

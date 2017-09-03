@@ -751,16 +751,11 @@ local UnitSpecific = {
 		htext.frequentUpdates = .1
 		self:Tag(htext, '[primary:health]')
 
-		local level = E:FontString({parent=self.Health, justify='LEFT'})
-		level:SetPoint('TOPLEFT', self, 2, 4)
-		level:SetHeight(10)
-		self:Tag(level, '[sInterface:level]')
-
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('LEFT', level, 'RIGHT', 0, 0)
+		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
-		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[sInterface:name]')
+		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
+		self:Tag(name, '[sInterface:level< ][sInterface:name]')
 	end,
 
 	focus = function(self, ...)
@@ -780,16 +775,11 @@ local UnitSpecific = {
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
 		self:Tag(htext, '[primary:health]')
 
-		local level = E:FontString({parent=self.Health, justify='LEFT'})
-		level:SetPoint('TOPLEFT', self, 2, 4)
-		level:SetHeight(10)
-		self:Tag(level, '[sInterface:level]')
-
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('LEFT', level, 'RIGHT', 0, 0)
+		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
-		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[sInterface:name]')
+		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
+		self:Tag(name, '[sInterface:level< ][sInterface:name]')
 	end,
 
 	boss = function(self, ...)
@@ -881,16 +871,11 @@ local UnitSpecific = {
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
 		self:Tag(htext, '[primary:health]')
 
-		local level = E:FontString({parent=self.Health, justify='LEFT'})
-		level:SetPoint('TOPLEFT', self, 2, 4)
-		level:SetHeight(10)
-		self:Tag(level, '[sInterface:level]')
-
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('LEFT', level, 'RIGHT', 0, 0)
+		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
-		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[sInterface:name]')
+		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
+		self:Tag(name, '[sInterface:level< ][sInterface:name]')
 	end,
 
 	tank = function(self, ...)
@@ -912,8 +897,8 @@ local UnitSpecific = {
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
-		name:SetPoint('RIGHT', htext, 'LEFT')
-		self:Tag(name, '[sInterface:level][sInterface:name]')
+		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
+		self:Tag(name, '[sInterface:level< ][sInterface:name]')
 
 		local rc = self.Health:CreateTexture(nil, 'OVERLAY')
 		rc:SetPoint('CENTER')

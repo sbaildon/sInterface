@@ -22,14 +22,6 @@
 	path = embeds/oUF_GCD
 	url = https://github.com/sBaildon/oUF_GCD.git
 	branch = master
-[submodule "embeds/rActionBar"]
-	path = embeds/rActionBar
-	url = https://github.com/sBaildon/rActionBar.git
-	branch = master
-[submodule "embeds/rLib"]
-	path = embeds/rLib
-	url = https://github.com/sBaildon/rLib.git
-	branch = master
 [submodule "embeds/oUF_ArtifactPower"]
 	path = embeds/oUF_ArtifactPower
 	url = https://github.com/Rainrider/oUF_ArtifactPower.git

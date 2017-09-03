@@ -43,8 +43,7 @@ hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
 		frame.name:SetText(UnitName(frame.unit))
 	end
 	frame.name:SetTextColor(1, 1, 1, 1)
-	local font, _ = frame.name:GetFont()
-	frame.name:SetFont(font, C.general.fontSize-2, "OUTLINE")
+	frame.name:SetFont(C.general.font, C.general.fontSize-4, "OUTLINE")
 end)
 
 hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)

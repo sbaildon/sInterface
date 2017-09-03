@@ -23,7 +23,7 @@ end
 
 function LeaveCombat(self)
 	local min, max = UnitHealth('player'), UnitHealthMax('player')
-	if min ~= max then return end
+	if min ~= max or UnitCastingInfo("player") then return end
 	self:PlayHide()
 end
 

@@ -1,6 +1,8 @@
 local _, ns = ...
 local E, C = ns.E, ns.C
 
+if not C.chat.enabled then return end
+
 ChatFrameMenuButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
 ChatFrameMenuButton:Hide()
 
@@ -18,13 +20,15 @@ FCFTab_UpdateColors = function(self, selected)
 end
 
 local function style(self)
-	if not self or (self and self.styled) then return end
+	if not self or self.styled then return end
 
 	local name = self:GetName()
 
 	self:SetClampRectInsets(0, 0, 0, 0)
 	self:SetMaxResize(UIParent:GetWidth(), UIParent:GetHeight())
 	self:SetMinResize(100, 50)
+
+	self:SetFont(C.chat.font, C.chat.fontSize)
 
 	local tab = _G[name.."Tab"]
 	tab:SetScript("OnEnter", function(self)
@@ -39,7 +43,7 @@ local function style(self)
 	local bframe = _G[name.."ButtonFrame"]
 	bframe:Hide()
 	bframe:HookScript("OnShow", bframe.Hide)
-	
+
 	_G[name.."EditBoxLeft"]:Hide()
 	_G[name.."EditBoxMid"]:Hide()
 	_G[name.."EditBoxRight"]:Hide()

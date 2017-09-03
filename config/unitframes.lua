@@ -1,10 +1,6 @@
 local name, ns = ...
 local C = ns.C
 
-local _, class = UnitClass('player')
-
-local mediaPath = 'Interface\\AddOns\\sInterface\\media\\'
-
 C["uf"] = {
 	enabled = true,
 	hidePlayerFrameOoc = true,

@@ -812,7 +812,7 @@ local UnitSpecific = {
 		altp.colorTexture = true
 		self:Tag(altp.Text, '[altpower]')
 		E:ShadowedBorder(altp)
-		self.AltPowerBar = altp
+		self.AlternativePower = altp
 	end,
 
 	pet = function(self, ...)

@@ -36,7 +36,12 @@ local function createFilter(filter)
 	f:SetSize(filter.size, filter.size)
 
 	local icon = f:CreateTexture(nil, 'ARTWORK')
-	icon:SetTexture(gsi_icon)
+	if filter.icon then
+		local _, _, _icon = GetSpellInfo(filter.icon)
+		icon:SetTexture(_icon)
+	else
+		icon:SetTexture(gsi_icon)
+	end
 	icon:SetAllPoints(f)
 	icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	icon:SetDesaturated(1)

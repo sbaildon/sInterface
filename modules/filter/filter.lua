@@ -28,7 +28,7 @@ end
 local function createFilter(filter)
 	if not filter.spellId then print('Missing spellId in filter') return end
 
-	local gsi_name, gsi_rank, gsi_icon, gsi_powerCost, gsi_isFunnel, gsi_powerType, gsi_castingTime, gsi_minRange, gsi_maxRange = GetSpellInfo(filter.spellId)
+	local gsi_name, _, gsi_icon = GetSpellInfo(filter.spellId)
 	if not gsi_name then print('No spell for id '..filter.spellId) return end
 
 	local f = CreateFrame('Frame', 'sInterfaceFilter'..filterCount, filterParent)
@@ -36,7 +36,12 @@ local function createFilter(filter)
 	f:SetSize(filter.size, filter.size)
 
 	local icon = f:CreateTexture(nil, 'ARTWORK')
-	icon:SetTexture(gsi_icon)
+	if filter.icon then
+		local _, _, _icon = GetSpellInfo(filter.icon)
+		icon:SetTexture(_icon)
+	else
+		icon:SetTexture(gsi_icon)
+	end
 	icon:SetAllPoints(f)
 	icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	icon:SetDesaturated(1)

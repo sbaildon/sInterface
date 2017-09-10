@@ -153,7 +153,7 @@ local PostCreateIcon = function(auras, button)
 	local c = button.count
 	c:ClearAllPoints()
 	c:SetPoint('BOTTOMRIGHT', 4, -4)
-	c:SetFont(C.general.font, C.general.fontSize, button.fontFlag)
+	c:SetFont(C.general.font, C.general.fontSize, auras.fontFlag)
 	c:SetTextColor(1, 1, 1)
 
 	button.cd:SetReverse(true)

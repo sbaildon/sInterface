@@ -1,6 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="bags.lua"/>
 	<Script file="blizzard.lua"/>
-	<Script file="micromenu.lua"/>
-	<Script file="actionbars.lua"/>
+	<Script file="bars/actionbars.lua"/>
+	<Script file="bars/bags.lua"/>
+	<Script file="bars/extra.lua"/>
+	<Script file="bars/micromenu.lua"/>
+	<Script file="bars/override.lua"/>
+	<Script file="bars/pet.lua"/>
 </Ui>

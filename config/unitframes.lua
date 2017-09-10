@@ -56,6 +56,7 @@ C["uf"].aura = {
 		size = 16,
 		num = 8,
 		gap = false,
+		fontFlag = "OUTLINE"
 	},
 	party = {
 		enable = false,
@@ -63,6 +64,7 @@ C["uf"].aura = {
 		size = 18,
 		num = 9,
 		gap = false,
+		fontFlag = "OUTLINE"
 	},
 	focus = {
 		enable = true,
@@ -70,6 +72,7 @@ C["uf"].aura = {
 		size = 16,
 		num = 8,
 		gap = false,
+		fontFlag = "OUTLINE"
 	},
 	tank = {
 		enable = true,
@@ -77,6 +80,7 @@ C["uf"].aura = {
 		size = 20,
 		num = 5,
 		gap = false,
+		fontFlag = "OUTLINE"
 	},
 	boss = {
 		enable = false,
@@ -84,7 +88,8 @@ C["uf"].aura = {
 		size = 18,
 		num = 9,
 		gap = false,
-	},
+		fontFlag = "OUTLINE"
+	}
 }
 
 C["uf"].Color = {

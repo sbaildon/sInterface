@@ -140,9 +140,8 @@ end
 local PostCreateIcon = function(auras, button)
 	local c = button.count
 	c:ClearAllPoints()
-	c:SetPoint('BOTTOMRIGHT', 3, -1)
-	c:SetFontObject(nil)
-	c:SetFont(C.general.font, C.general.fontSize, C.uf.aura.fontflag)
+	c:SetPoint('BOTTOMRIGHT', 4, -4)
+	c:SetFont(C.general.font, C.general.fontSize, button.fontFlag)
 	c:SetTextColor(1, 1, 1)
 
 	button.cd:SetReverse(true)
@@ -178,6 +177,7 @@ local Auras = function(self)
 		b:SetPoint('BOTTOMLEFT', self.Experience or self.Reputation or self, 'TOPLEFT', 0, 9)
 		b.initialAnchor = 'TOPLEFT'
 		b['growth-y'] = 'UP'
+		b.fontFlag = config.fontFlag or "OUTLINE" --used to apply fontFlag in PostCreateIcon
 		b.PostCreateIcon = PostCreateIcon
 		b.PostUpdateIcon = PostUpdateIcon
 		if config.mode == 'aura' then

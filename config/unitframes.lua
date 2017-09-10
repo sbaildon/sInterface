@@ -91,10 +91,3 @@ C["uf"].aura = {
 		fontFlag = "OUTLINE"
 	}
 }
-
-C["uf"].Color = {
-	Health = {r =  0.33,	g =  0.33, 	b =  0.33 },
-	Health_bg = {r =  0.33,	g =  0.33, 	b =  0.33, a = 0.5},
-	Castbar = {r =  0,	g =  0.7, 	b =  1},
-	CPoints = {r =  .96,	g =  0.37, 	b =  0.34},
-}

@@ -324,7 +324,7 @@ local Castbar = function(self, unit)
 	cb.Text = E:FontString({parent=cb, layer='OVERLAY', justify='LEFT'})
 	cb.Text:SetPoint('LEFT', cb, 2, 4)
 	cb.Text:SetPoint('RIGHT', cb.Time, 'LEFT')
-	cb.CastingColor = {C.uf.Color.Castbar.r, C.uf.Color.Castbar.g, C.uf.Color.Castbar.b}
+	cb.CastingColor = {0, 0.7, 1}
 	cb.CompleteColor = {0.12, 0.86, 0.15}
 	cb.FailColor = {1.0, 0.09, 0}
 	cb.ChannelingColor = {0.32, 0.3, 1}

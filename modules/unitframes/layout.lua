@@ -7,7 +7,6 @@ local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 local class_color = RAID_CLASS_COLORS[class]
 
-
 -- Override some oUF.colors.power
 -- is there a nicer way?
 oUF.colors.power["COMBO_POINTS"] = {1, 0.1, 0.1}
@@ -17,38 +16,51 @@ local backdrop = {
 	insets = {top = -1, left = -1, bottom = -1, right = -1},
 }
 
-function EnterCombat(self)
+local function EnterCombat(self)
 	self:PlayReveal()
+	oUF_sInterfacePet:PlayReveal()
 end
 
-function LeaveCombat(self)
+local function LeaveCombat(self)
 	local min, max = UnitHealth('player'), UnitHealthMax('player')
 	if min ~= max or UnitCastingInfo("player") then return end
 	self:PlayHide()
+	oUF_sInterfacePet:PlayHide()
 end
 
-function HealthUpdate(self)
+local function HealthUpdate(self)
 	if UnitAffectingCombat('player') and self:GetAlpha() == 1 then return end
 
 	local min, max = UnitHealth('player'), UnitHealthMax('player')
 
 	if UnitAffectingCombat('player') then
 		self:PlayReveal()
+		oUF_sInterfacePet:PlayReveal()
 	elseif min ~= max then
 		self:PlayAlpha(C.general.oocAlpha)
+		oUF_sInterfacePet:PlayAlpha(C.general.oocAlpha)
 	else
 		self:PlayHide()
+		oUF_sInterfacePet:PlayHide()
 	end
-
 end
 
-function SpellStart(self)
+local function EnterVehicle(self)
+	self:PlayAlpha(C.general.oocAlpha)
+	oUF_sInterfacePet:PlayAlpha(C.general.oocAlpha)
+end
+
+local function ExitVehicle(self)
+	HealthUpdate(self)
+end
+
+local function SpellStart(self)
 	if not UnitAffectingCombat('player') or self:GetAlpha() == 0 then
 		self:PlayAlpha(C.general.oocAlpha)
 	end
 end
 
-function SpellFinish(self)
+local function SpellFinish(self)
 	if not UnitAffectingCombat('player') then
 		self:PlayHide()
 	end
@@ -728,6 +740,8 @@ local UnitSpecific = {
 			self:RegisterEvent("UNIT_HEALTH", HealthUpdate)
 			self:RegisterEvent("UNIT_SPELLCAST_START", SpellStart)
 			self:RegisterEvent("UNIT_SPELLCAST_STOP", SpellFinish)
+			self:RegisterEvent("UNIT_ENTERED_VEHICLE", EnterVehicle)
+			self:RegisterEvent("UNIT_EXITED_VEHICLE", ExitVehicle)
 			self:PlayHide()
 		end
 	end,
@@ -830,6 +844,11 @@ local UnitSpecific = {
 
 		self:SetScript('OnEnter', function(self)UIFrameFadeIn(self.Name, 0.3, 0, 1)end)
 		self:SetScript('OnLeave', function(self)UIFrameFadeOut(self.Name, 0.3, 1, 0)end)
+
+		if C.uf.hidePlayerFrameOoc then
+			E:RegisterAlphaAnimation(self)
+			self:PlayHide()
+		end
 	end,
 
 	partytarget = function(self, ...)
@@ -1064,4 +1083,3 @@ oUF:Factory(function(self)
 	)
 	raid:SetPoint(unpack(C.uf.positions.Raid))
 end)
-

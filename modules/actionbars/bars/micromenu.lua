@@ -3,7 +3,7 @@ local E, C = ns.E, ns.C
 
 if not C.actionbars.enabled then return end
 
-local ICON_WIDTH = 26
+local ICON_WIDTH = 27
 local ICON_HEIGHT = 33
 local MICRO_BUTTONS = MICRO_BUTTONS
 

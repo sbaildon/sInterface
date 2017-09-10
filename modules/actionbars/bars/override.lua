@@ -7,7 +7,8 @@ local NUM_OVERRIDE_BUTTONS = NUM_OVERRIDE_BUTTONS
 local BUTTON_SPACING = 6
 local BUTTON_SIZE = ActionButton1:GetHeight()
 
-local overridebar = CreateFrame("Frame", "sInterfaceOverrideBar", UIParent, "SecureHandlerStateTemplate")
+local overridebar = ns.sInterfaceBars.overridebar
+
 overridebar:SetSize((BUTTON_SIZE*NUM_OVERRIDE_BUTTONS) + (BUTTON_SPACING*(NUM_OVERRIDE_BUTTONS-1)), BUTTON_SIZE)
 overridebar:SetPoint(unpack(C.actionbars.overridebar.position))
 

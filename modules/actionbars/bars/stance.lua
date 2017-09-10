@@ -3,12 +3,11 @@ local E, C = ns.E, ns.C
 
 if not C.actionbars.enabled then return end
 
-local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 local NUM_OVERRIDE_BUTTONS = NUM_OVERRIDE_BUTTONS
 local BUTTON_SPACING = 6
 local BUTTON_SIZE = ActionButton1:GetHeight()
 
-local stancebar = CreateFrame("Frame", "sInterfaceStanceBar", UIParent, "SecureHandlerStateTemplate")
+local stancebar = ns.sInterfaceBars.stancebar
 
 stancebar:SetSize(BUTTON_SIZE, BUTTON_SIZE)
 stancebar:SetPoint(unpack(C.actionbars.stancebar.position))

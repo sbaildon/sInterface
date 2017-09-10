@@ -7,7 +7,7 @@ local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local BUTTON_SPACING = 6
 local BUTTON_SIZE = PetActionButton1:GetHeight()
 
-local petbar = CreateFrame("Frame", "sInterfacePetBar", UIParent, "SecureHandlerStateTemplate")
+local petbar = ns.sInterfaceBars.petbar
 
 petbar:SetSize((BUTTON_SIZE * NUM_PET_ACTION_SLOTS) + (BUTTON_SPACING * (NUM_PET_ACTION_SLOTS-1)), BUTTON_SIZE)
 petbar:SetPoint(unpack(C.actionbars.petbar.position))

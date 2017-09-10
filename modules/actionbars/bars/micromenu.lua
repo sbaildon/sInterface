@@ -7,7 +7,8 @@ local ICON_WIDTH = 26
 local ICON_HEIGHT = 33
 local MICRO_BUTTONS = MICRO_BUTTONS
 
-local micromenu = CreateFrame("Frame", "sInterfaceMicromenu", UIParent)
+local micromenu = ns.sInterfaceBars.micromenu
+
 micromenu:SetSize(ICON_WIDTH * #MICRO_BUTTONS, ICON_HEIGHT)
 
 RegisterStateDriver(micromenu, "visibility", C.actionbars.micromenu.visibility or "show")

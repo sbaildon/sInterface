@@ -5,7 +5,8 @@ if not C.actionbars.enabled then return end
 
 local ICON_SIZE = MainMenuBarBackpackButton:GetHeight()
 
-local bags = CreateFrame("Frame", "sInterfaceBagsBar", UIParent)
+local bags = ns.sInterfaceBars.bags
+
 bags:SetSize(ICON_SIZE*5, ICON_SIZE)
 RegisterStateDriver(bags, "visibility", C.actionbars.bags.visibility or  "show")
 

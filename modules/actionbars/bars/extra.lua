@@ -5,7 +5,8 @@ if not C.actionbars.enabled then return end
 
 local BUTTON_SIZE = ActionButton1:GetHeight()
 
-local extrabar = CreateFrame("Frame", "sInterfaceExtraBar", UIParent, "SecureHandlerStateTemplate")
+local extrabar = ns.sInterfaceBars.extrabar
+
 extrabar:SetSize(BUTTON_SIZE, BUTTON_SIZE)
 extrabar:SetPoint(unpack(C.actionbars.extrabar.position))
 

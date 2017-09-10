@@ -8,12 +8,11 @@ local NUM_OVERRIDE_BUTTONS = NUM_OVERRIDE_BUTTONS
 local BUTTON_SPACING = 6
 local BUTTON_SIZE = ActionButton1:GetHeight()
 
-local bar1 = CreateFrame("Frame", "sInterfaceBar1", UIParent, "SecureHandlerStateTemplate")
-local bar2 = CreateFrame("Frame", "sInterfaceBar2", UIParent, "SecureHandlerStateTemplate")
-local bar3 = CreateFrame("Frame", "sInterfaceBar3", UIParent, "SecureHandlerStateTemplate")
-local bar4 = CreateFrame("Frame", "sInterfaceBar4", UIParent, "SecureHandlerStateTemplate")
-local bar5 = CreateFrame("Frame", "sInterfaceBar5", UIParent, "SecureHandlerStateTemplate")
-
+local bar1 = ns.sInterfaceBars.bar1
+local bar2 = ns.sInterfaceBars.bar2
+local bar3 = ns.sInterfaceBars.bar3
+local bar4 = ns.sInterfaceBars.bar4
+local bar5 = ns.sInterfaceBars.bar5
 
 for _, bar in next, {bar1, bar2, bar3, bar4, bar5} do
 	bar:SetSize(BUTTON_SIZE*NUM_ACTIONBAR_BUTTONS, BUTTON_SIZE)

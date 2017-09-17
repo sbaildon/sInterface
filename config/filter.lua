@@ -26,19 +26,20 @@ if classIndex == 1 then -- warrior
 		{ spellId = 190456,	size = size,	pos = position1,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- ignore pain
 		{ spellId = 2565,	size = size,	pos = position2,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- shield block
 		{ spellId = 5302,	size = size,	pos = position3,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- revenge!
-		{ spellId = 6343,	size = size,	pos = position4,	unit = 'target',	filter = 'HARMFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- thunderclap
+		{ spellId = 238149,	size = size,	pos = position4,	unit = 'target',	filter = 'HARMFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- neltharian's thunder
 		{ spellId = 1719,	size = size,	pos = position5,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- battleshout
 		{ spellId = 107574,	size = size,	pos = position6,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- avatar
 		{ spellId = 203576,	size = size,	pos = position7,	unit = 'player',	filter = 'HELPFUL',	spec = 3,	alpha = { found = 1,	not_found = 0 } }, -- dragon scales
 
 		-- Arms Warrior
-		{ spellId = 115804,	size = size,	pos = position1,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- mortal strike
-		{ spellId = 60503,	size = size,	pos = position2,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- overpower
-		{ spellId = 167105,	size = size,	pos = position3,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- colossus smash
-		{ spellId = 204488,	size = size,	pos = position4,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- focused rage
-		{ spellId = 1715,	size = size,	pos = position5,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- hamstring
-		{ spellId = 1719,	size = size,	pos = position6,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- battleshout
-		{ spellId = 107574,	size = size,	pos = position7,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- avatar
+		{ spellId = 167105,	size = size,	pos = position1,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 }, caster = 'player' }, -- colossus smash
+		{ spellId = 772,	size = size,	pos = position2,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 }, caster = 'player' }, -- rend
+		{ spellId = 115804,	size = size,	pos = position3,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- mortal strike
+		{ spellId = 225947,	size = size,	pos = position4,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- focused rage
+		{ spellId = 1719,	size = size,	pos = position5,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- battleshout
+		--{ spellId = 1715,	size = size,	pos = position6,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- hamstring
+		{ spellId = 238147,	size = size,	pos = position6,	unit = 'target',	filter = 'HARMFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- executioner's precision
+		{ spellId = 248625,	size = size,	pos = position7,	unit = 'player',	filter = 'HELPFUL',	spec = 1,	alpha = { found = 1,	not_found = 0 } }, -- shattered defenses
 
 		-- Fury Warrior
 		{ spellId = 184362,	size = size,	pos = position1,	unit = 'player',	filter = 'HELPFUL',	spec = 2,	alpha = { found = 1,	not_found = 0 } }, -- enrage

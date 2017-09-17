@@ -61,10 +61,16 @@ local function createFilter(filter)
 	f.count = count
 	f.spec = filter.spec
 	f.unit = filter.unit
+	f.caster = filter.caster
 
 	function f:CheckAvailability(force)
-		local name, _, _, count, _, duration, expires = UnitAura(filter.unit, gsi_name, nil, filter.filter)
-		if name then
+		local name, _, _, count, _, duration, expires, caster = UnitAura(filter.unit, gsi_name, nil, filter.filter)
+		if not name or (f.caster and f.caster ~= caster)then
+			f.count:SetText("")
+			f:PlayAlpha(filter.alpha.not_found)
+			f.icon:SetDesaturated(1)
+			f.cooldown:SetCooldown(0, 0)
+		else
 			if f.expires == expires and not force then return end
 			if count and count > 1 then
 				f.count:SetText(count)
@@ -74,11 +80,6 @@ local function createFilter(filter)
 			f:PlayAlpha(filter.alpha.found)
 			f.icon:SetDesaturated(nil)
 			f.cooldown:SetCooldown(expires - duration, duration)
-		else
-			f.count:SetText("")
-			f:PlayAlpha(filter.alpha.not_found)
-			f.icon:SetDesaturated(1)
-			f.cooldown:SetCooldown(0, 0)
 		end
 	end
 

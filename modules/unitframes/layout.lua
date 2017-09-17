@@ -989,13 +989,16 @@ oUF:Factory(function(self)
 	if (C.uf.emulatePersonalResourceDisplay) then
 		SetCVar("nameplateShowSelf", 1)
 		SetCVar("NameplatePersonalShowAlways", 1)
+		C_NamePlate.SetNamePlateSelfClickThrough(true)
 		SetCVar("nameplateSelfAlpha", 0)
+
 		spawnHelper(self, 'player', {
 			"CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50
 		})
 	else
 		SetCVar("nameplateSelfAlpha", 0.75)
 		SetCVar("NameplatePersonalShowAlways", 0)
+		C_NamePlate.SetNamePlateSelfClickThrough(false)
 		spawnHelper(self, 'player', C.uf.positions.Player)
 	end
 	spawnHelper(self, 'target', C.uf.positions.Target)

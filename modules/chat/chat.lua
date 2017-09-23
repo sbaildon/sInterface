@@ -47,10 +47,11 @@ local function style(self)
 	_G[name.."EditBoxLeft"]:Hide()
 	_G[name.."EditBoxMid"]:Hide()
 	_G[name.."EditBoxRight"]:Hide()
+	local tab = _G[name.."Tab"]
 	local eb = _G[name.."EditBox"]
 	eb:SetAltArrowKeyMode(false)
 	eb:ClearAllPoints()
-	eb:SetPoint("BOTTOM", self, "TOP", 0, 22)
+	eb:SetPoint("BOTTOM", tab, "TOP", 0, -10)
 	eb:SetPoint("LEFT", self, -5, 0)
 	eb:SetPoint("RIGHT", self, 10, 0)
 

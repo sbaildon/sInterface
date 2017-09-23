@@ -11,13 +11,13 @@ QuickJoinToastButton:Hide()
 
 ChatFontNormal:SetFont(STANDARD_TEXT_FONT, 12)
 
-FCFTab_UpdateColors = function(self, selected)
+hooksecurefunc("FCFTab_UpdateColors", function(self, selected)
 	if selected then
 		self:GetFontString():SetTextColor(1, 0.75, 0, 1)
 	else
 		self:GetFontString():SetTextColor(0.5, 0.5, 0.5, 1)
 	end
-end
+end)
 
 local function style(self)
 	if not self or self.styled then return end

@@ -55,10 +55,10 @@ end
 
 function CoolBar:CreateCooldown(spell, spellId)
 	if ((GetTime() - lastUpdate) < THROTTLE_THRESHHOLD) then return end
-	lastUpdate = GetTime()
+	local lastUpdate = GetTime()
 	local start, dur, enabled = GetSpellCooldown(spellId)
 
-	_, maxCharges = GetSpellCharges(spellId)
+	local _, maxCharges = GetSpellCharges(spellId)
 
 	if (dur < 2) and (maxCharges == nil) then
 		noCooldowns[spellId] = true

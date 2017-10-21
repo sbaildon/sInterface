@@ -992,9 +992,9 @@ oUF:Factory(function(self)
 		C_NamePlate.SetNamePlateSelfClickThrough(true)
 		SetCVar("nameplateSelfAlpha", 0)
 
-		spawnHelper(self, 'player', {
-			"CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50
-		})
+		local emulatePosition = { "CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50 }
+
+		spawnHelper(self, 'player', emulatePosition)
 
 		NamePlatePlayerResourceFrame:HookScript("OnHide", function()
 			oUF_sInterfacePlayer:ClearAllPoints()
@@ -1003,7 +1003,7 @@ oUF:Factory(function(self)
 
 		NamePlatePlayerResourceFrame:HookScript("OnShow", function()
 			oUF_sInterfacePlayer:ClearAllPoints()
-			oUF_sInterfacePlayer:SetPoint("CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50)
+			oUF_sInterfacePlayer:SetPoint(unpack(emulatePosition))
 		end)
 	else
 		SetCVar("nameplateSelfAlpha", GetCVarDefault("nameplateSelfAlpha"))

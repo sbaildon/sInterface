@@ -995,6 +995,16 @@ oUF:Factory(function(self)
 		spawnHelper(self, 'player', {
 			"CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50
 		})
+
+		NamePlatePlayerResourceFrame:HookScript("OnHide", function()
+			oUF_sInterfacePlayer:ClearAllPoints()
+			oUF_sInterfacePlayer:SetPoint(unpack(C.uf.positions.Player))
+		end)
+
+		NamePlatePlayerResourceFrame:HookScript("OnShow", function()
+			oUF_sInterfacePlayer:ClearAllPoints()
+			oUF_sInterfacePlayer:SetPoint("CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50)
+		end)
 	else
 		SetCVar("nameplateSelfAlpha", GetCVarDefault("nameplateSelfAlpha"))
 		SetCVar("NameplatePersonalShowAlways", GetCVarDefault("NameplatePersonalShowAlways"))

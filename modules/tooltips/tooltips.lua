@@ -1,6 +1,8 @@
 local _, ns = ...
 local C = ns.C
 
+if not C.tooltips.enabled then return end
+
 local unpack, type = unpack, type
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local FACTION_BAR_COLORS = FACTION_BAR_COLORS

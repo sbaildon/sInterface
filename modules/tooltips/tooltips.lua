@@ -15,9 +15,13 @@ GameTooltipStatusBar:ClearAllPoints()
 GameTooltipStatusBar:Hide()
 
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-	tooltip:SetOwner(parent, "ANCHOR_NONE")
-	tooltip:ClearAllPoints()
-	tooltip:SetPoint(unpack(C.tooltips.pos))
+	if C.tooltips.anchor_cursor then
+		tooltip:SetOwner(parent, "ANCHOR_CURSOR")
+	else
+		tooltip:SetOwner(parent, "ANCHOR_NONE")
+		tooltip:ClearAllPoints()
+		tooltip:SetPoint(unpack(C.tooltips.pos))
+	end
 end)
 
 local left = setmetatable({}, { __index = function(left, i)
@@ -71,7 +75,7 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 		for i = line, GameTooltip:NumLines() do
 			left[i]:SetText(nil)
 		end
-	else	
+	else
 		local name = UnitName(unit)
 		left[line]:SetText(name)
 		line = line + 1
@@ -79,7 +83,7 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 		local info = left[line]:GetText()
 		if not info then return GameTooltip:Show() end
 
-		if not strmatch(info, "Level") and not strmatch(info, "Pet Level") then 
+		if not strmatch(info, "Level") and not strmatch(info, "Pet Level") then
 			line = line + 1
 		end
 
@@ -96,7 +100,7 @@ local function TooltipOnShow(self,...)
 	self:SetBackdropColor(unpack(C.tooltips.bgColor))
 	self:SetBackdropBorderColor(0, 0, 0, 0)
 end
-  
+
 local function TooltipOnHide(self,...)
 	self:SetBackdropColor(unpack(C.tooltips.bgColor))
 end

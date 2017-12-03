@@ -10,7 +10,7 @@ oUF.colors.power['RUNIC_POWER']  = {0, 0.81, 1}
 oUF.colors.power['AMMOSLOT'] = {0.78, 1, 0.78}
 oUF.colors.power['FUEL'] = {0.9,  0.3,  0.23}
 oUF.colors.power['POWER_TYPE_STEAM'] = {0.55, 0.57, 0.61}
-oUF.colors.power['POWER_TYPE_PYRITE'] = {0.60, 0.09, 0.17}	
+oUF.colors.power['POWER_TYPE_PYRITE'] = {0.60, 0.09, 0.17}
 oUF.colors.power['POWER_TYPE_HEAT'] = {0.55, 0.57, 0.61}
 oUF.colors.power['POWER_TYPE_OOZE'] = {0.76, 1, 0}
 oUF.colors.power['POWER_TYPE_BLOOD_POWER'] = {0.7, 0, 1}
@@ -54,7 +54,7 @@ local function StatusColor(unit)
 	if (UnitIsTapDenied(unit)) then
 		return hex(oUF.colors.tapped)
 	end
-	
+
 	if UnitIsPlayer(unit) then
 		if UnitIsGhost(unit) then
 			return hex(oUF.colors.ghost)
@@ -62,9 +62,9 @@ local function StatusColor(unit)
 			return hex(oUF.colors.disconnected)
 		end
 
-		if IsPlayerEffectivelyTank() 
-			and UnitIsFriend("player", unit) 
-			and not (UnitName("player") == UnitName(unit)) 
+		if IsPlayerEffectivelyTank()
+			and UnitIsFriend("player", unit)
+			and not (UnitName("player") == UnitName(unit))
 			and (UnitInRaid(unit) or UnitInParty(unit)) then
 			local status = UnitThreatSituation(unit)
 			if status and status > 0 then
@@ -126,7 +126,7 @@ oUF.Tags.Methods['sInterface:power'] = function(u)
 end
 oUF.Tags.Events['sInterface:power'] = 'UNIT_POWER PLAYER_SPECIALIZATION_CHANGED PLAYER_TALENT_UPDATE UNIT_CONNECTION'
 
-oUF.Tags.Methods['percent:health']  = function(u) 
+oUF.Tags.Methods['percent:health']  = function(u)
 	if UnitIsDead(u) then
 		return hex(oUF.colors.dead).."Dead"
 	end

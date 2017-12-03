@@ -139,6 +139,7 @@ oUF.Tags.Events['percent:health'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_TA
 oUF.Tags.Methods['altpower'] = function(u)
 	local cur = UnitPower(u, ALTERNATE_POWER_INDEX)
 	local max = UnitPowerMax(u, ALTERNATE_POWER_INDEX)
+	if max == 0 then return end
 	local per = math.floor(cur/max*100+.5)
 	return ('|cffCDC5C2'..sValue(cur))..('|cffCDC5C2 / ')..sValue(max)
 end

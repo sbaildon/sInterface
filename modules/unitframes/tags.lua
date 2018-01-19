@@ -46,7 +46,7 @@ local function StatusColor(unit)
 		return hex(oUF.colors.tapped)
 	end
 
-	if E:IsPlayerTank()
+	if E:PlayerIsTank()
 		and UnitIsFriend("player", unit)
 		and not (UnitName("player") == UnitName(unit))
 		and (UnitInRaid(unit) or UnitInParty(unit)) then

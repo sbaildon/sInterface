@@ -30,7 +30,7 @@ end
 
 hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
 	if UnitIsPlayer(frame.unit) or not UnitAffectingCombat("player") then return end
-	if not (C.np.tankMode and E:IsPlayerTank())  then return end
+	if not (C.np.tankMode and E:PlayerIsTank())  then return end
 
 	local status = UnitThreatSituation("player", frame.unit)
 	if status == nil then return end

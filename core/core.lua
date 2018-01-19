@@ -74,7 +74,7 @@ function E:WidthPercentage(percentage)
 	return (GetScreenWidth() / UIParent:GetEffectiveScale()) * (percentage / 100)
 end
 
-function E:IsPlayerTank()
+function E:PlayerIsTank()
 	local assignedRole = UnitGroupRolesAssigned("player")
 	if (assignedRole == "NONE") then
 		local spec = GetSpecialization()

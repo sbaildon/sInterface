@@ -46,26 +46,14 @@ local function StatusColor(unit)
 		return hex(oUF.colors.tapped)
 	end
 
-	if UnitIsPlayer(unit) then
-		if UnitIsGhost(unit) then
-			return hex(oUF.colors.ghost)
-		elseif not UnitIsConnected(unit) then
-			return hex(oUF.colors.disconnected)
+	if E:IsPlayerTank()
+		and UnitIsFriend("player", unit)
+		and not (UnitName("player") == UnitName(unit))
+		and (UnitInRaid(unit) or UnitInParty(unit)) then
+		local status = UnitThreatSituation(unit)
+		if status and status > 0 then
+			return hex(GetThreatStatusColor(status))
 		end
-
-		if E:IsPlayerTank()
-			and UnitIsFriend("player", unit)
-			and not (UnitName("player") == UnitName(unit))
-			and (UnitInRaid(unit) or UnitInParty(unit)) then
-			local status = UnitThreatSituation(unit)
-			if status and status > 0 then
-				return hex(GetThreatStatusColor(status))
-			end
-		end
-	end
-
-	if UnitIsDead(unit) then
-		return hex(oUF.colors.dead)
 	end
 
 	return hex(1, 1, 1)
@@ -76,10 +64,20 @@ oUF.Tags.Methods['sInterface:name'] = function(u, r)
 end
 oUF.Tags.Events['sInterface:name'] = 'UNIT_CONNECTION UNIT_NAME_UPDATE UNIT_THREAT_SITUATION_UPDATE'
 
+
 oUF.Tags.Methods['sInterface:shortname'] = function(u, r)
-	return StatusColor(u)..string.sub(oUF.Tags.Methods['name'](u), 1, 7)
+	if UnitIsDead(u) then
+		return hex(oUF.colors.health)..string.sub(oUF.Tags.Methods['name'](u), 1, 7).."|r"
+	elseif UnitIsGhost(u) then
+		return hex(oUF.colors.ghost)..string.sub(oUF.Tags.Methods['name'](u), 1, 7).."|r"
+	elseif not UnitIsConnected(u) then
+		return hex(oUF.colors.disconnected)..string.sub(oUF.Tags.Methods['name'](u), 1, 7).."|r"
+	end
+
+	return StatusColor(u)..string.sub(oUF.Tags.Methods['name'](u), 1, 7).."|r"
 end
-oUF.Tags.Events['sInterface:shortname'] = 'UNIT_NAME_UPDATE UNIT_CONNECTION'
+oUF.Tags.Events['sInterface:shortname'] = 'UNIT_NAME_UPDATE UNIT_CONNECTION UNIT_THREAT_SITUATION_UPDATE'
+
 
 oUF.Tags.Methods['sInterface:level'] = function(u)
 	local level = UnitLevel(u)
@@ -95,36 +93,52 @@ oUF.Tags.Methods['sInterface:level'] = function(u)
 end
 oUF.Tags.Events['sInterface:level'] = 'UNIT_LEVEL UNIT_CONNECTION'
 
-oUF.Tags.Methods['primary:health'] = function(u)
+
+oUF.Tags.Methods['sInterface:status'] = function(u)
 	if UnitIsDead(u) then
-		return hex(oUF.colors.health).."Dead"
+		return hex(oUF.colors.health).."Dead".."|r"
 	elseif UnitIsGhost(u) then
-		return hex(oUF.colors.ghost).."Ghost"
+		return hex(oUF.colors.ghost).."Ghost".."|r"
+	elseif not UnitIsConnected(u) then
+		return hex(oUF.colors.disconnected).."Disconnected".."|r"
 	end
 
-	local min, max = UnitHealth(u), UnitHealthMax(u)
-	if (min < max) then
-		return (hex(oUF.colors.health)..sValue(min))..' | '..math.floor(min/max*100+.5)..'%'
+	return nil
+end
+oUF.Tags.Events['sInterface:status'] = 'UNIT_HEALTH UNIT_CONNECTION'
+
+
+oUF.Tags.Methods['sInterface:health'] = function(u)
+	if UnitIsDead(u) or UnitIsGhost(u) then return end
+	local cur, max = UnitHealth(u), UnitHealthMax(u)
+	if (cur == 0) then
+		return nil
+	elseif (cur < max) then
+		return (hex(oUF.colors.health)..sValue(cur))
 	else
-		return (hex(0.33, 0.58, 0.33)..sValue(min))
+		return (hex(0.33, 0.58, 0.33)..sValue(cur)).."|r"
 	end
 end
-oUF.Tags.Events['primary:health'] = 'UNIT_HEALTH_FREQUENT UNIT_POWER UNIT_CONNECTION'
+oUF.Tags.Events['sInterface:health'] = 'UNIT_HEALTH_FREQUENT UNIT_CONNECTION'
+
+
+oUF.Tags.Methods['sInterface:healthper'] = function(u)
+	if UnitIsDead(u) or UnitIsGhost(u) then return end
+	local cur, max = UnitHealth(u), UnitHealthMax(u)
+	if (cur < max) and (cur ~= 0) then
+		return math.floor(cur/max*100+.5).."%|r"
+	end
+
+	return nil
+end
+oUF.Tags.Events['sInterface:healthper'] = 'UNIT_HEALTH_FREQUENT UNIT_CONNECTION'
+
 
 oUF.Tags.Methods['sInterface:power'] = function(u)
 	return oUF.Tags.Methods['powercolor'](u)..sValue(UnitPower(u))
 end
 oUF.Tags.Events['sInterface:power'] = 'UNIT_POWER PLAYER_SPECIALIZATION_CHANGED PLAYER_TALENT_UPDATE UNIT_CONNECTION'
 
-oUF.Tags.Methods['percent:health']  = function(u)
-	if UnitIsDead(u) then
-		return hex(oUF.colors.dead).."Dead"
-	end
-
-	local min, max = UnitHealth(u), UnitHealthMax(u)
-	return hex(oUF.colors.health)..math.floor(min/max*100+.5)..'%'
-end
-oUF.Tags.Events['percent:health'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_TARGETABLE_CHANGED'
 
 oUF.Tags.Methods['sInterface:altpower'] = function(u)
 	local cur = UnitPower(u, ALTERNATE_POWER_INDEX)

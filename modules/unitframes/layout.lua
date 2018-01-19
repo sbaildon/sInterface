@@ -632,7 +632,7 @@ local UnitSpecific = {
 		local htext = E:FontString({parent=self.Health})
 		htext:SetPoint('TOPRIGHT', -2, 4)
 		htext.frequentUpdates = .1
-		self:Tag(htext, '[primary:health]')
+		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local ptext = E:FontString({parent=self.Health})
 		ptext:SetPoint('TOPLEFT', 2, 4)
@@ -762,7 +762,7 @@ local UnitSpecific = {
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
 		htext.frequentUpdates = .1
-		self:Tag(htext, '[primary:health]')
+		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
@@ -786,7 +786,7 @@ local UnitSpecific = {
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
-		self:Tag(htext, '[primary:health]')
+		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
@@ -807,7 +807,7 @@ local UnitSpecific = {
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
-		self:Tag(htext, '[percent:health]')
+		self:Tag(htext, '[sInterface:status][sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
@@ -887,7 +887,7 @@ local UnitSpecific = {
 
 		local htext= E:FontString({parent=self.Health, justify='RIGHT'})
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
-		self:Tag(htext, '[primary:health]')
+		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
@@ -910,7 +910,7 @@ local UnitSpecific = {
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
-		self:Tag(htext, '[primary:health]')
+		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
@@ -935,7 +935,7 @@ local UnitSpecific = {
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
-		self:Tag(htext, '[primary:health]')
+		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)

@@ -92,7 +92,6 @@ oUF.Tags.Methods['sInterface:level'] = function(u)
 	end
 
 	return difficulty..level.."|r"
-
 end
 oUF.Tags.Events['sInterface:level'] = 'UNIT_LEVEL UNIT_CONNECTION'
 
@@ -127,14 +126,14 @@ oUF.Tags.Methods['percent:health']  = function(u)
 end
 oUF.Tags.Events['percent:health'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_TARGETABLE_CHANGED'
 
-oUF.Tags.Methods['altpower'] = function(u)
+oUF.Tags.Methods['sInterface:altpower'] = function(u)
 	local cur = UnitPower(u, ALTERNATE_POWER_INDEX)
 	local max = UnitPowerMax(u, ALTERNATE_POWER_INDEX)
 	if max == 0 then return end
 	local per = math.floor(cur/max*100+.5)
 	return ('|cffCDC5C2'..sValue(cur))..('|cffCDC5C2 / ')..sValue(max)
 end
-oUF.Tags.Events['altpower'] = 'UNIT_POWER UNIT_MAXPOWER'
+oUF.Tags.Events['sInterface:altpower'] = 'UNIT_POWER UNIT_MAXPOWER'
 
 oUF.Tags.Methods['LFD'] = function(u)
 	local role = UnitGroupRolesAssigned(u)

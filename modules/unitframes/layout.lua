@@ -728,7 +728,7 @@ local UnitSpecific = {
 		altp.bg:SetVertexColor(1, 1, 1, 0.3)
 		altp.Text = E:FontString({parent=altp})
 		altp.Text:SetPoint("BOTTOM", altp, "TOP", 0, -2)
-		self:Tag(altp.Text, '[altpower]')
+		self:Tag(altp.Text, '[sInterface:altpower]')
 		altp:EnableMouse(true)
 		E:ShadowedBorder(altp)
 		self.AlternativePower = altp
@@ -825,7 +825,7 @@ local UnitSpecific = {
 		altp.Text:SetPoint('CENTER')
 		altp:EnableMouse(true)
 		altp.colorTexture = true
-		self:Tag(altp.Text, '[altpower]')
+		self:Tag(altp.Text, '[sInterface:altpower]')
 		E:ShadowedBorder(altp)
 		self.AlternativePower = altp
 	end,

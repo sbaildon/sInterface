@@ -1,6 +1,7 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
 local cfg = ns.cfg
+local E, C = ns.E, ns.C
 local class = select(2, UnitClass('player'))
 
 oUF.colors.power['MANA'] = {0.37, 0.6, 1}
@@ -40,16 +41,6 @@ local function hex(r, g, b)
     return ('|cff%02x%02x%02x'):format(r * 255, g * 255, b * 255)
 end
 
-local function IsPlayerEffectivelyTank()
-	local assignedRole = UnitGroupRolesAssigned("player")
-	if (assignedRole == "NONE") then
-		local spec = GetSpecialization()
-		return spec and GetSpecializationRole(spec) == "TANK"
-	end
-
-	return assignedRole == "TANK"
-end
-
 local function StatusColor(unit)
 	if (UnitIsTapDenied(unit)) then
 		return hex(oUF.colors.tapped)
@@ -62,7 +53,7 @@ local function StatusColor(unit)
 			return hex(oUF.colors.disconnected)
 		end
 
-		if IsPlayerEffectivelyTank()
+		if E:IsPlayerTank()
 			and UnitIsFriend("player", unit)
 			and not (UnitName("player") == UnitName(unit))
 			and (UnitInRaid(unit) or UnitInParty(unit)) then

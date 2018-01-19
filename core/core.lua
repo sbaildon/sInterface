@@ -74,5 +74,15 @@ function E:WidthPercentage(percentage)
 	return (GetScreenWidth() / UIParent:GetEffectiveScale()) * (percentage / 100)
 end
 
+function E:IsPlayerTank()
+	local assignedRole = UnitGroupRolesAssigned("player")
+	if (assignedRole == "NONE") then
+		local spec = GetSpecialization()
+		return spec and GetSpecializationRole(spec) == "TANK"
+	end
+
+	return assignedRole == "TANK"
+end
+
 SLASH_RELOADUI1 = '/rl'
 SlashCmdList.RELOADUI = ReloadUI

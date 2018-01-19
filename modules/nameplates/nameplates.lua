@@ -28,19 +28,9 @@ function sPlates:NAME_PLATE_UNIT_ADDED(...)
 	healthBar:SetPoint("BOTTOMRIGHT", castBar, "TOPRIGHT", 0, 3)
 end
 
-local function IsPlayerEffectivelyTank()
-	local assignedRole = UnitGroupRolesAssigned("player");
-	if ( assignedRole == "NONE" ) then
-		local spec = GetSpecialization();
-		return spec and GetSpecializationRole(spec) == "TANK";
-	end
-
-	return assignedRole == "TANK";
-end
-
 hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
 	if UnitIsPlayer(frame.unit) or not UnitAffectingCombat("player") then return end
-	if not (C.np.tankMode and IsPlayerEffectivelyTank())  then return end
+	if not (C.np.tankMode and E:IsPlayerTank())  then return end
 
 	local status = UnitThreatSituation("player", frame.unit)
 	if status == nil then return end

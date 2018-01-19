@@ -134,15 +134,3 @@ oUF.Tags.Methods['sInterface:altpower'] = function(u)
 	return ('|cffCDC5C2'..sValue(cur))..('|cffCDC5C2 / ')..sValue(max)
 end
 oUF.Tags.Events['sInterface:altpower'] = 'UNIT_POWER UNIT_MAXPOWER'
-
-oUF.Tags.Methods['LFD'] = function(u)
-	local role = UnitGroupRolesAssigned(u)
-	if role == 'HEALER' then
-		return '|cff8AFF30H|r'
-	elseif role == 'TANK' then
-		return '|cff5F9BFFT|r'
-	elseif role == 'DAMAGER' then
-		return '|cffFF6161D|r'
-	end
-end
-oUF.Tags.Events['LFD'] = 'PLAYER_ROLES_ASSIGNED PARTY_MEMBERS_CHANGED'

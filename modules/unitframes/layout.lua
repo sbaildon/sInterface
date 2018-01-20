@@ -940,7 +940,7 @@ local UnitSpecific = {
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
-		name:SetPoint('RIGHT', htext, 'LEFT')
+		self:Tag(name, '[sInterface:name]')
 
 		local t = CreateFrame('Frame', nil, self)
 		t:SetSize(C.uf.size.secondary.health+C.uf.size.secondary.power+1, C.uf.size.secondary.health+C.uf.size.secondary.power+1)

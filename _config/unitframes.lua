@@ -11,7 +11,7 @@ C["uf"] = {
 	emulatePersonalResourceDisplay = true,
 
 	-- Spacing between icons like combo points, arcane orbs, soul shards, etc.
-	classIconSpacing = 6
+	classIconSpacing = 4
 }
 
 C["uf"].size = {

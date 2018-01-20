@@ -109,7 +109,7 @@ oUF.Tags.Events['sInterface:status'] = 'UNIT_HEALTH UNIT_CONNECTION'
 
 
 oUF.Tags.Methods['sInterface:health'] = function(u)
-	if UnitIsDead(u) or UnitIsGhost(u) then return end
+	if UnitIsDead(u) or UnitIsGhost(u) or not UnitIsConnected(u) then return end
 	local cur, max = UnitHealth(u), UnitHealthMax(u)
 	if (cur == 0) then
 		return nil
@@ -123,7 +123,7 @@ oUF.Tags.Events['sInterface:health'] = 'UNIT_HEALTH_FREQUENT UNIT_CONNECTION'
 
 
 oUF.Tags.Methods['sInterface:healthper'] = function(u)
-	if UnitIsDead(u) or UnitIsGhost(u) then return end
+	if UnitIsDead(u) or UnitIsGhost(u) or not UnitIsConnected(u) then return end
 	local cur, max = UnitHealth(u), UnitHealthMax(u)
 	if (cur < max) and (cur ~= 0) then
 		return math.floor(cur/max*100+.5).."%|r"

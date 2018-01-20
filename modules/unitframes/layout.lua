@@ -1042,7 +1042,7 @@ oUF:Factory(function(self)
 		_G[pet..'HealthBar']:UnregisterAllEvents()
 	end
 	self:SetActiveStyle'sInterface - Party'
-	local party = self:SpawnHeader('oUF_Party', nil, 'custom [group:party,nogroup:raid] show; hide',
+	local party = self:SpawnHeader('oUF_Party', nil, 'custom [@arena1,exists][@arena2,exists][@arena3,exists][group:party,nogroup:raid] show; hide',
 	'showPlayer', false,
 	'showSolo', false,
 	'showParty', true,

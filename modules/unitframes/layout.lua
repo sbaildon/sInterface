@@ -461,7 +461,6 @@ local ReadyCheck = function(self)
 	self.ReadyCheck = rc
 end
 
-
 local Power = function(self)
 	local p = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	p:SetPoint('LEFT')
@@ -588,7 +587,6 @@ local Shared = function(self, unit)
 
 	Size(self)
 	Health(self)
-	HealthPrediction(self)
 
 	E:ShadowedBorder(self)
 
@@ -614,6 +612,7 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
+		HealthPrediction(self)
 
 		local fcf = CreateFrame("Frame", nil, self.Health)
 		fcf:SetSize(32, 32)
@@ -752,6 +751,7 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
+		HealthPrediction(self)
 		Castbar(self)
 		PhaseIndicator(self)
 
@@ -775,11 +775,11 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
+		HealthPrediction(self)
 		Castbar(self)
 		PhaseIndicator(self)
 
 		if C.uf.aura.focus.enable then Auras(self) end
-
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
 		htext:SetPoint('TOPRIGHT', self, -2, 4)
@@ -831,6 +831,7 @@ local UnitSpecific = {
 
 		Shared(self, ...)
 
+		HealthPrediction(self)
 		PhaseIndicator(self)
 
 		local name = E:FontString({parent=self.Health})
@@ -864,6 +865,7 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
+		HealthPrediction(self)
 		PhaseIndicator(self)
 		LFD(self)
 		ReadyCheck(self)
@@ -887,6 +889,7 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
+		HealthPrediction(self)
 		PhaseIndicator(self)
 		LFD(self)
 
@@ -923,7 +926,8 @@ local UnitSpecific = {
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
 		name:SetPoint('TOPLEFT', self, 2, 4)
 		name:SetHeight(10)
-		self:Tag(name, '[sInterface:name]')
+		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
+		self:Tag(name, '[arenaspec]')
 
 		local t = CreateFrame('Frame', nil, self)
 		t:SetSize(C.uf.size.secondary.health+C.uf.size.secondary.power+1, C.uf.size.secondary.health+C.uf.size.secondary.power+1)
@@ -937,6 +941,7 @@ local UnitSpecific = {
 
 		Shared(self, ...)
 
+		HealthPrediction(self)
 		LFD(self)
 		ReadyCheck(self)
 

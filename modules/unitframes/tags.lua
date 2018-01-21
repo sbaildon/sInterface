@@ -76,7 +76,7 @@ oUF.Tags.Methods['sInterface:shortname'] = function(u, r)
 
 	return StatusColor(u)..string.sub(oUF.Tags.Methods['name'](u), 1, 7).."|r"
 end
-oUF.Tags.Events['sInterface:shortname'] = 'UNIT_NAME_UPDATE UNIT_CONNECTION UNIT_THREAT_SITUATION_UPDATE'
+oUF.Tags.Events['sInterface:shortname'] = 'UNIT_NAME_UPDATE UNIT_HEALTH UNIT_CONNECTION UNIT_THREAT_SITUATION_UPDATE'
 
 
 oUF.Tags.Methods['sInterface:level'] = function(u)

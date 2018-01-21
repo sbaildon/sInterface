@@ -26,7 +26,6 @@ bar5:SetPoint(unpack(C.actionbars.bar5.position))
 
 -- BAR 1
 for i = 1, NUM_ACTIONBAR_BUTTONS do
-	_G["ActionButton"..i]:SetParent(bar1)
 	RegisterStateDriver(_G["ActionButton"..i], "visibility", C.actionbars.bar1.visibility or "show")
 end
 ActionButton1:ClearAllPoints()

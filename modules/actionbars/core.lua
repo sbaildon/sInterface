@@ -9,6 +9,7 @@ local bar3 = CreateFrame("Frame", "sInterfaceActionBar3", UIParent, "SecureHandl
 local bar4 = CreateFrame("Frame", "sInterfaceActionBar4", UIParent, "SecureHandlerStateTemplate")
 local bar5 = CreateFrame("Frame", "sInterfaceActionBar5", UIParent, "SecureHandlerStateTemplate")
 
+local possessbar = CreateFrame("Frame", "sInterfacePossessBar", UIParent, "SecureHandlerStateTemplate")
 local extrabar = CreateFrame("Frame", "sInterfaceExtraBar", UIParent, "SecureHandlerStateTemplate")
 local bags = CreateFrame("Frame", "sInterfaceBagsBar", UIParent)
 local micromenu = CreateFrame("Frame", "sInterfaceMicromenu", UIParent)
@@ -22,6 +23,7 @@ bars.bar2 = bar2
 bars.bar3 = bar3
 bars.bar4 = bar4
 bars.bar5 = bar5
+bars.possessbar = possessbar
 bars.extrabar = extrabar
 bars.bags = bags
 bars.micromenu = micromenu

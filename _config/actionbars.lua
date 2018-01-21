@@ -6,7 +6,7 @@ C["actionbars"] = {
 
 	bar1 = { -- sInterfaceActionBar1
 		position = { "TOPLEFT", UIParent, "TOPLEFT", C.general.edgeSpacing, -(C.general.edgeSpacing*15)},
-		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
+		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor][possessbar] show; hide",
 		two_rows = true
 	},
 
@@ -33,6 +33,11 @@ C["actionbars"] = {
 		position = { "TOPLEFT", "sInterfaceActionBar4", "BOTTOMLEFT", 0, -20},
 		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
 		two_rows = true
+	},
+
+	possessbar = { --sInterfacePossessBar
+		position = { "BOTTOMLEFT", "sInterfaceActionBar1", "TOPLEFT", 0, 20},
+		visibility = "[possessbar] show; hide",
 	},
 
 	petbar = { --sInterfacePetBar

@@ -37,7 +37,7 @@ function E:RegisterAlphaAnimation(frame)
 		local startDelay = startDelay or 0.0
 		local enableMouse = toAlpha ~= 0 and true or false
 
-		if self.EnableMouse then
+		if self.EnableMouse and not UnitAffectingCombat("player") then
 			self:EnableMouse(enableMouse)
 		end
 		self.alphaAnimation.alpha:SetStartDelay(startDelay)

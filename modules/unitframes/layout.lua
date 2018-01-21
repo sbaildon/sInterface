@@ -609,7 +609,6 @@ end
 
 local UnitSpecific = {
 	player = function(self, ...)
-		self.unit = 'player'
 		self.unitSize = 'primary'
 
 		Shared(self, ...)
@@ -748,7 +747,6 @@ local UnitSpecific = {
 	end,
 
 	target = function(self, ...)
-		self.unit = 'target'
 		self.unitSize = 'primary'
 
 		Shared(self, ...)
@@ -772,7 +770,6 @@ local UnitSpecific = {
 	end,
 
 	focus = function(self, ...)
-		self.unit = 'focus'
 		self.unitSize = 'primary'
 
 		Shared(self, ...)
@@ -796,7 +793,6 @@ local UnitSpecific = {
 	end,
 
 	boss = function(self, ...)
-		self.unit = 'boss'
 		self.unitSize = 'secondary'
 
 		Shared(self, ...)
@@ -863,7 +859,6 @@ local UnitSpecific = {
 	end,
 
 	party = function(self, ...)
-		self.unit = 'party'
 		self.unitSize = 'secondary'
 
 		Shared(self, ...)
@@ -887,7 +882,6 @@ local UnitSpecific = {
 	end,
 
 	tank = function(self, ...)
-		self.unit = 'tank'
 		self.unitSize = 'secondary'
 
 		Shared(self, ...)
@@ -915,7 +909,6 @@ local UnitSpecific = {
 	end,
 
 	arena = function(self, ...)
-		self.unit = 'arena'
 		self.unitSize = 'secondary'
 
 		Shared(self, ...)

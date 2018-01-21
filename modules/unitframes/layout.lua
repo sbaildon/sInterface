@@ -928,8 +928,6 @@ local UnitSpecific = {
 		local t = CreateFrame('Frame', nil, self)
 		t:SetSize(C.uf.size.secondary.health+C.uf.size.secondary.power+1, C.uf.size.secondary.health+C.uf.size.secondary.power+1)
 		t:SetPoint('TOPRIGHT', self, 'TOPLEFT', -4, 0)
-		t.trinketUseAnnounce = true
-		t.trinketAnnounce = "SAY"
 		E:ShadowedBorder(t)
 		self.Trinket = t
 	end,

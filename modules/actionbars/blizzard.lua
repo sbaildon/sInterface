@@ -11,7 +11,8 @@ for _, frame in next, {
 	MainMenuXPBarTextureLeftCap,MainMenuXPBarTextureRightCap,MainMenuXPBarTextureMid,
 	StanceBarLeft, StanceBarMiddle, StanceBarRight,
 	MainMenuExpBar,MainMenuBarMaxLevelBar, MainMenuBarLeftEndCap, MainMenuBarRightEndCap,
-	ReputationWatchBar,ReputationWatchBar.StatusBar,
+	OverrideActionBarExpBar, OverrideActionBarExpBarXpL, OverrideActionBarExpBarXpR,
+	OverrideActionBarExpBarXpMid, ReputationWatchBar,ReputationWatchBar.StatusBar,
 	HonorWatchBar,HonorWatchBar.StatusBar,
 	ArtifactWatchBar,ArtifactWatchBar.StatusBar }
 do	frame:SetParent(HiddenBlizzardArt) end

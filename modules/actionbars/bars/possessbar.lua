@@ -17,7 +17,7 @@ PossessBarFrame:SetParent(possessbar)
 PossessBarFrame:ClearAllPoints()
 PossessBarFrame:SetPoint("TOPLEFT", possessbar, "TOPLEFT")
 PossessBarFrame:SetSize(ActionButton1:GetHeight()*4+(BUTTON_SPACING*3), ActionButton1:GetHeight())
-RegisterStateDriver(StanceBarFrame, "visibility", C.actionbars.stancebar.visibility or "show")
+RegisterStateDriver(PossessBarFrame, "visibility", C.actionbars.possessbar.visibility or "show")
 
 PossessButton1:ClearAllPoints()
 PossessButton1:SetPoint("TOPLEFT", PossessBarFrame, "TOPLEFT", 0, 0)

@@ -984,11 +984,13 @@ oUF:Factory(function(self)
 		spawnHelper(self, 'player', emulatePosition)
 
 		NamePlatePlayerResourceFrame:HookScript("OnHide", function()
+			if UnitAffectingCombat("player") then return end
 			oUF_sInterfacePlayer:ClearAllPoints()
 			oUF_sInterfacePlayer:SetPoint(unpack(C.uf.positions.Player))
 		end)
 
 		NamePlatePlayerResourceFrame:HookScript("OnShow", function()
+			if UnitAffectingCombat("player") then return end
 			oUF_sInterfacePlayer:ClearAllPoints()
 			oUF_sInterfacePlayer:SetPoint(unpack(emulatePosition))
 		end)

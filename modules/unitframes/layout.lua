@@ -852,16 +852,6 @@ local UnitSpecific = {
 		end
 	end,
 
-	partytarget = function(self, ...)
-		self.unitSize = 'tertiary'
-
-		Shared(self, ...)
-
-		local name = E:FontString({parent=self.Health})
-		name:SetPoint('CENTER', self.Health)
-		self:Tag(name, '[sInterface:name]')
-	end,
-
 	targettarget = function(self, ...)
 		self.unitSize = 'tertiary'
 

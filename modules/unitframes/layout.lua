@@ -134,21 +134,6 @@ end
 
 UIDropDownMenu_Initialize(dropdown, init, 'MENU')
 
-local GetTime = GetTime
-local floor, fmod = floor, math.fmod
-local day, hour, minute = 86400, 3600, 60
-
-local FormatTime = function(s)
-	if s >= day then
-		return format('%dd', floor(s/day + 0.5))
-	elseif s >= hour then
-		return format('%dh', floor(s/hour + 0.5))
-	elseif s >= minute then
-		return format('%dm', floor(s/minute + 0.5))
-	end
-	return format('%d', fmod(s, minute))
-end
-
 local PostCreateIcon = function(auras, button)
 	local c = button.count
 	c:ClearAllPoints()

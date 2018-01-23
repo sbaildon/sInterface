@@ -164,28 +164,28 @@ local PostUpdateIcon = function(icons, unit, icon, index, offset)
 end
 
 local Auras = function(self)
-		local config = C.uf.aura[self.unit]
-		if not config then return end
+	local config = C.uf.aura[self.unit]
+	if not config then return end
 
-		local b = CreateFrame('Frame', nil, self)
-		b.spacing = (self:GetWidth() - config.size * config.num) / (config.num-1)
-		b:SetSize(self:GetWidth(), config.size)
-		b.size = config.size
-		b:SetPoint('BOTTOMLEFT', self.Experience or self.Reputation or self, 'TOPLEFT', 0, 9)
-		b.initialAnchor = 'TOPLEFT'
-		b['growth-y'] = 'UP'
-		b.fontFlag = config.fontFlag or "OUTLINE" --used to apply fontFlag in PostCreateIcon
-		b.PostCreateIcon = PostCreateIcon
-		b.PostUpdateIcon = PostUpdateIcon
-		if config.mode == 'aura' then
-			b.gap = config.gap
-			b.numTotal = config.num
-			self.Auras = b
-		elseif config.mode == 'debuff' then
-			self.Debuffs = b
-		else
-			self.Buffs = b
-		end
+	local b = CreateFrame('Frame', nil, self)
+	b.spacing = (self:GetWidth() - config.size * config.num) / (config.num-1)
+	b:SetSize(self:GetWidth(), config.size)
+	b.size = config.size
+	b:SetPoint('BOTTOMLEFT', self.Experience or self.Reputation or self, 'TOPLEFT', 0, 9)
+	b.initialAnchor = 'TOPLEFT'
+	b['growth-y'] = 'UP'
+	b.fontFlag = config.fontFlag or "OUTLINE" --used to apply fontFlag in PostCreateIcon
+	b.PostCreateIcon = PostCreateIcon
+	b.PostUpdateIcon = PostUpdateIcon
+	if config.mode == 'aura' then
+		b.gap = config.gap
+		b.numTotal = config.num
+		self.Auras = b
+	elseif config.mode == 'debuff' then
+		self.Debuffs = b
+	else
+		self.Buffs = b
+	end
 end
 
 local PostUpdateHealth = function(health, unit)

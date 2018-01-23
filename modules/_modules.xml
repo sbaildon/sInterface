@@ -13,4 +13,5 @@
 	<Include file="orderhall\_orderhall.xml" />
 	<Include file="talkinghead\_talkinghead.xml" />
 	<Include file="tooltips\_tooltips.xml" />
+	<Include file="skins\_skins.xml" />
 </Ui>

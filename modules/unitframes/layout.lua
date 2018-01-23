@@ -151,7 +151,7 @@ local PostCreateIcon = function(auras, button)
 end
 
 local PostUpdateIcon = function(icons, unit, icon, index, offset)
-	local name, _, _, _, dtype, duration, expirationTime, unitCaster = UnitAura(unit, index, icon.filter)
+	local _, _, _, _, _, duration, expirationTime = UnitAura(unit, index, icon.filter)
 	local texture = icon.icon
 	if icon.isPlayer or UnitIsFriend('player', unit) or not icon.isDebuff then
 		texture:SetDesaturated(false)

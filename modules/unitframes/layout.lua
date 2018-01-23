@@ -415,6 +415,7 @@ local Health = function(self)
 	hbg:SetAllPoints(h)
 	hbg:SetTexture(C.general.texture)
 
+	h.colorTapping = true
 	h.colorClass = true
 	h.colorReaction = true
 	hbg.multiplier = .4

@@ -42,10 +42,6 @@ local function hex(r, g, b)
 end
 
 local function StatusColor(unit)
-	if (UnitIsTapDenied(unit)) then
-		return hex(oUF.colors.tapped)
-	end
-
 	if E:PlayerIsTank()
 		and (UnitInRaid(unit) or UnitInParty(unit))
 		and not (UnitName("player") == UnitName(unit)) then

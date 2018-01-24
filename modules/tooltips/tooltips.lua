@@ -16,6 +16,14 @@ Tooltip_Small:SetFont(C.tooltips.font, 12)
 GameTooltipStatusBar:ClearAllPoints()
 GameTooltipStatusBar:Hide()
 
+local bgColor = { 0.03, 0.03, 0.03, 0.8 }
+local backdrop = { bgFile = "Interface\\Buttons\\WHITE8x8",
+	edgeFile = "Interface\\Buttons\\WHITE8x8",
+	tiled = false, edgeSize = 1,
+	insets = { left = 0, right = 0, top = 0, bottom = 0 },
+}
+
+
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	if C.tooltips.anchor_cursor then
 		tooltip:SetOwner(parent, "ANCHOR_CURSOR")
@@ -34,7 +42,7 @@ end })
 
 GameTooltip:HookScript("OnUpdate", function(self, elapsed)
 	if not self.currentItem and not self.currentUnit then
-		self:SetBackdropColor(unpack(C.tooltips.bgColor))
+		self:SetBackdropColor(unpack(bgColor))
 	end
 end)
 
@@ -99,19 +107,20 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 end)
 
 local function TooltipOnShow(self,...)
-	self:SetBackdropColor(unpack(C.tooltips.bgColor))
+	self:SetBackdropColor(unpack(bgColor))
 	self:SetBackdropBorderColor(0, 0, 0, 0)
 end
 
 local function TooltipOnHide(self,...)
-	self:SetBackdropColor(unpack(C.tooltips.bgColor))
+	self:SetBackdropColor(unpack(bgColor))
 end
+
 
 local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip }
 local tt = { GameTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, ItemRefTooltip, ItemRefShoppingTooltip1, ItemRefShoppingTooltip2, ItemRefShoppingTooltip3, WorldMapTooltip, WorldMapCompareTooltip1, WorldMapCompareTooltip2, WorldMapCompareTooltip3, AtlasLootTooltip, QuestHelperTooltip, QuestGuru_QuestWatchTooltip }
 for idx, tooltip in ipairs(tooltips) do
-	tooltip:SetBackdrop(C.tooltips.backdrop)
-	tooltip:SetBackdropColor(unpack(C.tooltips.bgColor))
+	tooltip:SetBackdrop(backdrop)
+	tooltip:SetBackdropColor(unpack(bgColor))
 	tooltip:HookScript("OnShow", TooltipOnShow)
 	tooltip:HookScript("OnHide", TooltipOnHide)
 end

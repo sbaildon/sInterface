@@ -217,9 +217,8 @@ local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
 		local classIconSpacing = C.uf.classIconSpacing
 		local multiplier = 0.7
 
-		local width
-		width = max >= 5 and (C.uf.size.primary.width / 5) or (C.uf.size.primary.width / max)
-		width = max >= 5 and (width - ((classIconSpacing * 4) / 5)) or (width - ((classIconSpacing * (max - 1) / max)))
+		local newMax = (max > 5) and 5 or max
+		local width = (C.uf.size.primary.width - (C.uf.classIconSpacing * (newMax - 1))) / newMax
 
 		local color = oUF.colors.power[powerType or "COMBO_POINTS"]
 
@@ -657,9 +656,10 @@ local UnitSpecific = {
 
 		if(class == 'DEATHKNIGHT') then
 			local Runes = {}
-			for index = 1, 6 do
+			local totalRunes = 6
+			local width = (C.uf.size.primary.width - (C.uf.classIconSpacing * (totalRunes - 1))) / totalRunes
+			for index = 1, totalRunes do
 				local Rune = CreateFrame('StatusBar', "Rune"..index, ClassPowerBar)
-				local width = (C.uf.size.primary.width / 6) - (C.uf.classIconSpacing * (6 - 1) / 6)
 				Rune:SetSize(width, ClassPowerBar:GetHeight())
 				Rune:SetStatusBarTexture(C.general.texture)
 				E:ShadowedBorder(Rune)
@@ -668,10 +668,6 @@ local UnitSpecific = {
 					Rune:SetPoint('LEFT', Runes[index - 1], 'RIGHT', C.uf.classIconSpacing, 0)
 				else
 					Rune:SetPoint('LEFT', ClassPowerBar, 'LEFT', 0, 0)
-				end
-
-				if index == 6 then
-					Rune:SetWidth(width-1)
 				end
 
 				Runes[index] = Rune

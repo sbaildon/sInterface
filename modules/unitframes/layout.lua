@@ -151,16 +151,12 @@ local PostCreateIcon = function(auras, button)
 end
 
 local PostUpdateIcon = function(icons, unit, icon, index, offset)
-	local _, _, _, _, _, duration, expirationTime = UnitAura(unit, index, icon.filter)
 	local texture = icon.icon
 	if icon.isPlayer or UnitIsFriend('player', unit) or not icon.isDebuff then
 		texture:SetDesaturated(false)
 	else
 		texture:SetDesaturated(true)
 	end
-
-	icon.duration = duration
-	icon.expires = expirationTime
 end
 
 local Auras = function(self)

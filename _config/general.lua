@@ -6,10 +6,20 @@ local media = "Interface\\AddOns\\sInterface\\media\\"
 C["general"] = {
 	texture = media..'bar',
 	edgeSpacing = 20,
-	font = media.."francois.ttf",
-	fontSize = 11,
-	fontFlag = 'OUTLINE',
 	oocAlpha = 0.3
+
+	displayFont = {
+		typeface = media.."AlegreyaSans-Bold.otf",
+		size = 12,
+		flag = "OUTLINE"
+	},
+
+	bodyFont= {
+		typeface = media.."AlegreyaSans-Medium.otf",
+		size = 12,
+		flag = "NONE"
+	},
+
 }
 
 C["gameinfo"] = {

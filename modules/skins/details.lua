@@ -17,7 +17,7 @@ local function skinInstance(instance)
 
 	instance:SetBarSettings(C.skins.details.barHeight, nil, true, nil, nil, false, {0, 0, 0, 0}, 1, nil, true, C.skins.details.barSpacing, string.sub(C.general.texture, 11))	
 	instance:SetBarBackdropSettings(true, 0, {1, 1, 1, 0}, nil)
-	instance:SetBarTextSettings(C.general.fontSize, nil, {1, 1, 1}, nil, nil, nil, nil, nil, nil, 1, false)
+	instance:SetBarTextSettings(C.general.bodyFont.size, nil, {1, 1, 1}, nil, nil, nil, nil, nil, nil, 1, false)
 	instance:SetBarFollowPlayer(true)
 	instance:SetBarGrowDirection(1)
 
@@ -77,7 +77,7 @@ local function skin()
 
 
 	local function postSetFontFace(fontString, fontFace, ...)
-		fontString:SetFont(C.general.font, C.general.fontSize)
+		fontString:SetFont(C.general.bodyFont.typeface, C.general.bodyFont.size, C.general.bodyFont.flag)
 		return ...
 	end
 

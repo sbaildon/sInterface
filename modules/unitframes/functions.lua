@@ -19,7 +19,7 @@ end
 
 fs = function(parent, layer, font, fontsiz, outline, r, g, b, justify)
     local string = parent:CreateFontString(nil, layer)
-    string:SetFont(font, fontsiz, outline)
+    string:SetFont(C.general.secondarFont, fontsiz, outline)
     string:SetTextColor(r, g, b)
     if justify then
         string:SetJustifyH(justify)

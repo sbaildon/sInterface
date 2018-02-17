@@ -9,9 +9,9 @@ local FACTION_BAR_COLORS = FACTION_BAR_COLORS
 local WorldFrame = WorldFrame
 local GameTooltip = GameTooltip
 
-GameTooltipHeaderText:SetFont(C.tooltips.font, 15)
-GameTooltipText:SetFont(C.tooltips.font, 13)
-Tooltip_Small:SetFont(C.tooltips.font, 12)
+GameTooltipHeaderText:SetFont(C.general.displayFont.typeface, C.general.displayFont.size*1.1)
+GameTooltipText:SetFont(C.general.displayFont.typeface, C.general.displayFont.size)
+Tooltip_Small:SetFont(C.general.displayFont.typeface, C.general.displayFont.size)
 
 GameTooltipStatusBar:ClearAllPoints()
 GameTooltipStatusBar:Hide()

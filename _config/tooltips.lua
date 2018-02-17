@@ -6,5 +6,4 @@ C["tooltips"] = {
 	anchor_cursor = false,
 	-- pos will be unused if anchor_cursor is set
 	pos  = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -E:WidthPercentage(7), E:HeightPercentage(8) },
-	font = STANDARD_TEXT_FONT
 }

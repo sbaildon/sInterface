@@ -59,7 +59,7 @@ function E:FontString(options)
 	if not o.parent then return end
 
 	local string = o.parent:CreateFontString(nil, o.layer or "ARTWORK")
-	string:SetFont(o.font or C.general.font, o.fontSize or C.general.fontSize, o.fontFlag or C.general.fontFlag)
+	string:SetFont(o.font or C.general.displayFont.typeface, o.fontSize or C.general.displayFont.size, o.fontFlag or C.general.displayFont.flag)
 	string:SetTextColor(o.r or 1, o.g or 1, o.b or 1)
 	string:SetJustifyH(o.justify or 'LEFT')
 

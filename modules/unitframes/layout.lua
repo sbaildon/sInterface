@@ -7,6 +7,9 @@ local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 local class_color = RAID_CLASS_COLORS[class]
 
+local TEXT_Y_OFFSET = 5
+local TEXT_X_OFFSET = 2
+
 -- Override some oUF.colors.power
 -- is there a nicer way?
 oUF.colors.power["COMBO_POINTS"] = {1, 0.1, 0.1}
@@ -138,7 +141,7 @@ local PostCreateIcon = function(auras, button)
 	local c = button.count
 	c:ClearAllPoints()
 	c:SetPoint('BOTTOMRIGHT', 4, -4)
-	c:SetFont(C.general.font, C.general.fontSize, auras.fontFlag)
+	c:SetFont(C.general.displayFont.typeface, C.general.displayFont.size, auras.fontFlag)
 	c:SetTextColor(1, 1, 1)
 
 	button.cd:SetReverse(true)
@@ -609,12 +612,12 @@ local UnitSpecific = {
 		PetCastingBarFrame:Hide()
 
 		local htext = E:FontString({parent=self.Health})
-		htext:SetPoint('TOPRIGHT', -2, 4)
+		htext:SetPoint('TOPRIGHT', -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		htext.frequentUpdates = .1
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local ptext = E:FontString({parent=self.Health})
-		ptext:SetPoint('TOPLEFT', 2, 4)
+		ptext:SetPoint('TOPLEFT', TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		ptext.frequentUpdates = .1
 		self:Tag(ptext, '[sInterface:power]')
 
@@ -736,12 +739,12 @@ local UnitSpecific = {
 		if C.uf.aura.target.enable then Auras(self) end
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
-		htext:SetPoint('TOPRIGHT', self, -2, 4)
+		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		htext.frequentUpdates = .1
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
 		self:Tag(name, '[sInterface:level< ][sInterface:name]')
@@ -760,11 +763,11 @@ local UnitSpecific = {
 		if C.uf.aura.focus.enable then Auras(self) end
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
-		htext:SetPoint('TOPRIGHT', self, -2, 4)
+		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
 		self:Tag(name, '[sInterface:level< ][sInterface:name]')
@@ -780,11 +783,11 @@ local UnitSpecific = {
 		PhaseIndicator(self)
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
-		htext:SetPoint('TOPRIGHT', self, -2, 4)
+		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
 		self:Tag(name, '[sInterface:name]')
@@ -833,7 +836,7 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		local name = E:FontString({parent=self.Health})
-		name:SetPoint('CENTER', 0, 3)
+		name:SetPoint('CENTER', 0, TEXT_Y_OFFSET)
 		self:Tag(name, '[sInterface:shortname]')
 	end,
 
@@ -851,11 +854,11 @@ local UnitSpecific = {
 		if C.uf.aura.party.enable then Auras(self) end
 
 		local htext= E:FontString({parent=self.Health, justify='RIGHT'})
-		htext:SetPoint('TOPRIGHT', self, -2, 4)
+		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
 		self:Tag(name, '[sInterface:level< ][sInterface:name]')
@@ -874,11 +877,11 @@ local UnitSpecific = {
 		if C.uf.aura.tank.enable then Auras(self) end
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
-		htext:SetPoint('TOPRIGHT', self, -2, 4)
+		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
 		self:Tag(name, '[sInterface:level< ][sInterface:name]')
@@ -898,11 +901,11 @@ local UnitSpecific = {
 		Castbar(self)
 
 		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
-		htext:SetPoint('TOPRIGHT', self, -2, 4)
+		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
 		self:Tag(name, '[arenaspec]')
@@ -924,7 +927,7 @@ local UnitSpecific = {
 		ReadyCheck(self)
 
 		local name = E:FontString({parent=self.Health, justify='LEFT'})
-		name:SetPoint('TOPLEFT', self, 2, 4)
+		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(name, '[sInterface:shortname]')
 	end,
 }

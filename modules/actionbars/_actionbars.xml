@@ -8,4 +8,5 @@
 	<Script file="bars/override.lua"/>
 	<Script file="bars/pet.lua"/>
 	<Script file="bars/possessbar.lua"/>
+	<Script file="bars/stance.lua"/>
 </Ui>

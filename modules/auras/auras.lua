@@ -32,11 +32,10 @@ local function style(aura)
 
 	aura:SetSize(C.auras.size, C.auras.size)
 
-	local font, _ = aura.duration:GetFont()
 	aura.duration:SetParent(aura)
-	aura.duration:SetPoint("TOP", aura, "BOTTOM", 0, 5)
+	aura.duration:SetPoint("TOP", aura, "BOTTOM", 0, 6)
 	aura.duration:SetJustifyH("CENTER")
-	aura.duration:SetFont(font, C.auras.durationHeight, "OUTLINE")
+	aura.duration:SetFont(C.general.displayFont.typeface, C.general.displayFont.size, C.general.displayFont.flag)
 
 	E:ShadowedBorder(aura)
 

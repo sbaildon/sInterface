@@ -29,7 +29,7 @@ function E:ShadowedBorder(anchor)
 	shadow:SetPoint('TOPLEFT', anchor, 'TOPLEFT', -SHADOW_OFFSET, SHADOW_OFFSET)
 	shadow:SetPoint('BOTTOMRIGHT', anchor, 'BOTTOMRIGHT', SHADOW_OFFSET, -SHADOW_OFFSET)
 	shadow:SetBackdrop({
-		edgeFile = shadowTex, edgeSize = SHADOW_EDGE,
+		edgeFile = shadowTex, edgeSize = SHADOW_EDGESIZE,
 	})
 	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
 end

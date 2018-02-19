@@ -12,9 +12,9 @@ for _, frame in next, {
 	StanceBarLeft, StanceBarMiddle, StanceBarRight,
 	MainMenuExpBar,MainMenuBarMaxLevelBar, MainMenuBarLeftEndCap, MainMenuBarRightEndCap,
 	OverrideActionBarExpBar, OverrideActionBarExpBarXpL, OverrideActionBarExpBarXpR,
-	OverrideActionBarExpBarXpMid, ReputationWatchBar,ReputationWatchBar.StatusBar,
-	HonorWatchBar,HonorWatchBar.StatusBar,
-	ArtifactWatchBar,ArtifactWatchBar.StatusBar }
+	OverrideActionBarExpBarXpMid, OverrideActionBarPowerBar, OverrideActionBarHealthBar,
+	ReputationWatchBar,ReputationWatchBar.StatusBar, HonorWatchBar,HonorWatchBar.StatusBar,
+	ArtifactWatchBar, ArtifactWatchBar.StatusBar }
 do	frame:SetParent(HiddenBlizzardArt) end
 
 for i = 0,3  do _G["MainMenuBarTexture"..i]:SetParent(HiddenBlizzardArt) end

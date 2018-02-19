@@ -7,23 +7,29 @@ local shadowTex = "Interface\\AddOns\\sInterface\\media\\shadow_border"
 function E:ShadowedBorder(anchor)
 	local frame = anchor.GetTexture and anchor:GetParent() or anchor
 
-	local border = CreateFrame('Frame', nil, frame)
-	border:SetFrameStrata('BACKGROUND')
-	border:SetFrameLevel(0)
-	border:SetPoint('TOPLEFT', anchor, 'TOPLEFT', -1, 1)
-	border:SetPoint('BOTTOMRIGHT', anchor, 'BOTTOMRIGHT', 1, -1)
-	border:SetBackdrop({
+	BACKDROP_OFFSET = 3
+	BACKDROP_INSET  = 2
+
+	local backdrop = CreateFrame('Frame', nil, frame)
+	backdrop:SetFrameStrata('BACKGROUND')
+	backdrop:SetFrameLevel(0)
+	backdrop:SetPoint('TOPLEFT', anchor, 'TOPLEFT', -BACKDROP_OFFSET, BACKDROP_OFFSET)
+	backdrop:SetPoint('BOTTOMRIGHT', anchor, 'BOTTOMRIGHT', BACKDROP_OFFSET, -BACKDROP_OFFSET)
+	backdrop:SetBackdrop({
 		bgFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
-		insets = {left = 0, right = 0, top = 0, bottom = 0}
+		insets = {left = BACKDROP_INSET, right = BACKDROP_INSET, top = BACKDROP_INSET, bottom = BACKDROP_INSET}
 	})
-	border:SetBackdropColor(0, 0, 0, 0.6)
+	backdrop:SetBackdropColor(0, 0, 0, 0.6)
+
+	SHADOW_OFFSET   = 5
+	SHADOW_EDGESIZE = 5
 
 	local shadow = CreateFrame('Frame', nil, frame)
 	shadow:SetFrameStrata('BACKGROUND')
-	shadow:SetPoint('TOPLEFT', anchor, 'TOPLEFT', -4, 4)
-	shadow:SetPoint('BOTTOMRIGHT', anchor, 'BOTTOMRIGHT', 4, -4)
+	shadow:SetPoint('TOPLEFT', anchor, 'TOPLEFT', -SHADOW_OFFSET, SHADOW_OFFSET)
+	shadow:SetPoint('BOTTOMRIGHT', anchor, 'BOTTOMRIGHT', SHADOW_OFFSET, -SHADOW_OFFSET)
 	shadow:SetBackdrop({
-		edgeFile = shadowTex, edgeSize = 5,
+		edgeFile = shadowTex, edgeSize = SHADOW_EDGE,
 	})
 	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
 end

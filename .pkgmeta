@@ -1,0 +1,7 @@
+package-as: sInterface
+wowi-archive-previous: yes
+
+ignore:
+  - .travis.yml
+  - README.md
+  - .luacheckrc

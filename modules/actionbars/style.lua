@@ -3,7 +3,7 @@ local E = ns.E
 
 local function StyleActionButton(button)
 	if not button or button.__styled then return end
-    
+
 	local buttonName = button:GetName()
 
 	local icon = _G[buttonName.."Icon"]

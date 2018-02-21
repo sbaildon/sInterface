@@ -1,8 +1,6 @@
 local _, ns = ...
 local oUF = ns.oUF or oUF
-local cfg = ns.cfg
-local E, C = ns.E, ns.C
-local class = select(2, UnitClass('player'))
+local E = ns.E
 
 oUF.colors.power['MANA'] = {0.37, 0.6, 1}
 oUF.colors.power['RAGE']  = {0.9, 0.3, 0.23}
@@ -54,13 +52,13 @@ local function StatusColor(unit)
 	return hex(1, 1, 1)
 end
 
-oUF.Tags.Methods['sInterface:name'] = function(u, r)
+oUF.Tags.Methods['sInterface:name'] = function(u)
 	return StatusColor(u)..oUF.Tags.Methods['name'](u)
 end
 oUF.Tags.Events['sInterface:name'] = 'UNIT_CONNECTION UNIT_NAME_UPDATE UNIT_THREAT_SITUATION_UPDATE'
 
 
-oUF.Tags.Methods['sInterface:shortname'] = function(u, r)
+oUF.Tags.Methods['sInterface:shortname'] = function(u)
 	if UnitIsDead(u) then
 		return hex(oUF.colors.health)..string.sub(oUF.Tags.Methods['name'](u), 1, 7).."|r"
 	elseif UnitIsGhost(u) then
@@ -139,7 +137,6 @@ oUF.Tags.Methods['sInterface:altpower'] = function(u)
 	local cur = UnitPower(u, ALTERNATE_POWER_INDEX)
 	local max = UnitPowerMax(u, ALTERNATE_POWER_INDEX)
 	if max == 0 then return end
-	local per = math.floor(cur/max*100+.5)
 	return ('|cffCDC5C2'..sValue(cur))..('|cffCDC5C2 / ')..sValue(max)
 end
 oUF.Tags.Events['sInterface:altpower'] = 'UNIT_POWER UNIT_MAXPOWER'

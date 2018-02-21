@@ -11,7 +11,7 @@ local cooldowns = {}
 local noCooldowns = {}
 
 local THROTTLE_THRESHHOLD = 0.5
-lastUpdate = 0
+local lastUpdate = 0
 
 local function fs(frame, text, offset, just)
 	local fs = E:FontString({parent=frame, justify=just})
@@ -55,8 +55,8 @@ end
 
 function CoolBar:CreateCooldown(spell, spellId)
 	if ((GetTime() - lastUpdate) < THROTTLE_THRESHHOLD) then return end
-	local lastUpdate = GetTime()
-	local start, dur, enabled = GetSpellCooldown(spellId)
+	lastUpdate = GetTime()
+	local start, dur = GetSpellCooldown(spellId)
 
 	local _, maxCharges = GetSpellCharges(spellId)
 
@@ -67,7 +67,7 @@ function CoolBar:CreateCooldown(spell, spellId)
 
 	local f
 
-	for index, frame in pairs(cooldowns) do
+	for _, frame in pairs(cooldowns) do
 		if frame.spellId == spellId then
 			f = frame
 			break
@@ -141,7 +141,7 @@ function CoolBar:CreateCooldown(spell, spellId)
 	end
 
 	f.ticker = C_Timer.NewTicker(0.01, function(self)
-		local start, dur, enabled = GetSpellCooldown(f.spellId)
+		local start, dur = GetSpellCooldown(f.spellId)
 		if f.endTime > start + dur then
 			f.endTime = start + dur
 		end
@@ -193,7 +193,7 @@ function CoolBar:UNIT_SPELLCAST_SUCCEEDED(_, spell, _, _, spellId)
 	if noCooldowns[spellId] then return end
 
 	if not (C.coolbar.disabled[spell]) then
-		local timer = C_Timer.After(0.1, function()
+		C_Timer.After(0.1, function()
 			CoolBar:CreateCooldown(spell, spellId)
 		end)
 	end
@@ -203,7 +203,7 @@ function CoolBar:UNIT_SPELLCAST_FAILED(_, spell, _, _, spellId)
 	if noCooldowns[spellId] then return end
 
 	local f
-	for index, frame in pairs(cooldowns) do
+	for _, frame in pairs(cooldowns) do
 
 		if (frame.spell == spell or frame.spellId == spellId) and frame:IsShown() then
 			f = frame
@@ -234,7 +234,7 @@ end
 CoolBar:SetScript("OnEvent", function(this, event, ...)
 	this[event](this, ...)
 end)
-for k, v in pairs(CoolBar) do
+for k, _ in pairs(CoolBar) do
 	if (k  == string.upper(k)) then
 		if (string.find(k, "UNIT_")) then
 			CoolBar:RegisterUnitEvent(k, "player", "vehicle")

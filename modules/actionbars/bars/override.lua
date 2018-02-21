@@ -17,16 +17,15 @@ OverrideActionBar:SetParent(overridebar)
 OverrideActionBar:ClearAllPoints()
 OverrideActionBar:SetAllPoints()
 for i = 1, NUM_OVERRIDE_BUTTONS do
-local button = _G["OverrideActionBarButton"..i]
+	local button = _G["OverrideActionBarButton"..i]
 	if not button then break end
 	button:SetSize(BUTTON_SIZE, BUTTON_SIZE)
-	button:ClearAllPoints()
 	if i == 1 then
 		button:SetPoint("TOPLEFT", overridebar, "TOPLEFT")
-		button:SetPoint("BOTTOMLEFT", overridebar, "BOTTOMLEFT")
 	else
 		button:SetPoint("TOPLEFT", _G["OverrideActionBarButton"..i-1], "TOPRIGHT", 6, 0)
 	end
+
 end
 RegisterStateDriver(overridebar, "visibility", C.actionbars.overridebar.visibility or "[overridebar][vehicleui][possessbar,@vehicle,exists] show; hide")
 RegisterStateDriver(OverrideActionBar, "visibility", C.actionbars.overridebar.visibility or "[overridebar][vehicleui][possessbar,@vehicle,exists] show; hide")

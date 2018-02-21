@@ -2,7 +2,7 @@ local _, ns = ...
 local E = ns.E
 
 local function StyleActionButton(button)
-    if not button or button.__styled then return end
+	if not button or button.__styled then return end
     
 	local buttonName = button:GetName()
 
@@ -22,7 +22,7 @@ local function StyleActionButton(button)
 	shadowFrame:SetAllPoints(button)
 	E:ShadowedBorder(shadowFrame)
 
-    button.__styled = true
+	button.__styled = true
 end
 
 local function StyleAllActionButtons()

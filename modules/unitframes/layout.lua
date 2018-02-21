@@ -239,51 +239,6 @@ local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
 	end
 end
 
-local channelingTicks = {
-	-- warlock
-	[GetSpellInfo(234153)] = 6, -- drain life
-	[GetSpellInfo(193440)] = 3, -- demonwrath
-	[GetSpellInfo(198590)] = 6, -- drain soul
-	-- druid
-	[GetSpellInfo(740)] = 4, -- tranquility
-	-- priest
-	[GetSpellInfo(64843)] = 4, -- divine hymn
-	[GetSpellInfo(15407)] = 4, -- mind flay
-	[GetSpellInfo(47540)] = 2, -- penance
-	[GetSpellInfo(205065)] = 4, -- void torrent
-	-- mage
-	[GetSpellInfo(5143)] = 5, -- arcane missiles
-	[GetSpellInfo(12051)] = 3, -- evocation
-	[GetSpellInfo(205021)] = 10, -- ray of frost
-	-- monk
-	[GetSpellInfo(117952)] = 4, -- crackling jade lightning
-	[GetSpellInfo(191837)] = 3, -- essence font
-}
-
-local ticks = {}
-
-local setBarTicks = function(castBar, ticknum)
-	if ticknum and ticknum > 0 then
-		local delta = castBar:GetWidth() / ticknum
-		for k = 1, ticknum do
-			if not ticks[k] then
-				ticks[k] = castBar:CreateTexture(nil, 'OVERLAY')
-				ticks[k]:SetTexture(C.general.texture)
-				ticks[k]:SetVertexColor(0.6, 0.6, 0.6)
-				ticks[k]:SetWidth(2)
-				ticks[k]:SetHeight(castBar:GetHeight())
-			end
-			ticks[k]:ClearAllPoints()
-			ticks[k]:SetPoint('CENTER', castBar, 'LEFT', delta * k, 0 )
-			ticks[k]:Show()
-		end
-	else
-		for k, v in pairs(ticks) do
-			v:Hide()
-		end
-	end
-end
-
 local PostCastStart = function(self, unit)
 	self:PlayReveal()
 	self.Spark:Show()

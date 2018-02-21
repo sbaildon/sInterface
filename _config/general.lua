@@ -6,7 +6,7 @@ local media = "Interface\\AddOns\\sInterface\\media\\"
 C["general"] = {
 	texture = media..'bar',
 	edgeSpacing = 20,
-	oocAlpha = 0.3
+	oocAlpha = 0.3,
 
 	displayFont = {
 		typeface = media.."AlegreyaSans-Bold.otf",

@@ -1,4 +1,4 @@
-local addon, ns = ...
+local _, ns = ...
 local E, C = ns.E, ns.C
 
 if not C.np.enabled then return end;
@@ -9,7 +9,7 @@ local colours = {
 	na = { 255, 0, 0 }
 }
 
-local sPlates, events = CreateFrame("FRAME"), {};
+local sPlates = CreateFrame("FRAME")
 
 function sPlates:NAME_PLATE_UNIT_ADDED(...)
 	local namePlateUnitToken = ...
@@ -33,6 +33,7 @@ hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
 	if not (C.np.tankMode and E:PlayerIsTank())  then return end
 
 	local status = UnitThreatSituation("player", frame.unit)
+	local r, g, b
 	if status == nil then return end
 	if status == 3 then
 		r, g, b = unpack(colours.secure)
@@ -73,6 +74,6 @@ end)
 sPlates:SetScript("OnEvent", function(self, event, ...)
 	self[event](self, ...); -- call one of the functions above
 end);
-for k, v in pairs(sPlates) do
+for k, _ in pairs(sPlates) do
 	sPlates:RegisterEvent(k); -- Register all events for which handlers have been defined
 end

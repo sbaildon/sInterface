@@ -15,7 +15,7 @@ local function skinInstance(instance)
 	instance:ToolbarMenuSetButtons(true, true, true, true, true, true)
 	instance:ToolbarMenuSetButtonsOptions(4, true)
 
-	instance:SetBarSettings(C.skins.details.barHeight, nil, true, nil, nil, false, {0, 0, 0, 0}, 1, nil, true, C.skins.details.barSpacing, string.sub(C.general.texture, 11))	
+	instance:SetBarSettings(C.skins.details.barHeight, nil, true, nil, nil, false, {0, 0, 0, 0}, 1, nil, true, C.skins.details.barSpacing, string.sub(C.general.texture, 11))
 	instance:SetBarBackdropSettings(true, 0, {1, 1, 1, 0}, nil)
 	instance:SetBarTextSettings(C.general.bodyFont.size, nil, {1, 1, 1}, nil, nil, nil, nil, nil, nil, 1, false)
 	instance:SetBarFollowPlayer(true)
@@ -38,7 +38,7 @@ local function resizeInstance(instance)
 	if (numGroupMembers >= C.skins.details.barsToDisplayMax) then
 		barsToDisplay = C.skins.details.barsToDisplayMax
 	elseif (numGroupMembers > 0) then
-		barsToDisplay = numGroupMembers		
+		barsToDisplay = numGroupMembers
 	else
 		barsToDisplay = 1
 	end
@@ -58,11 +58,11 @@ local function skin()
 	Details:SelectNumericalSystem(1)
 	Details:SetUseAnimations(true)
 	Details:SetWindowUpdateSpeed(0.05)
-	
+
 	--[[
 		Overwrite a func that moves instance 1
 		to the details welcome screen after 12 seconds
-		Why this func exists I don't know 
+		Why this func exists I don't know
 	]]
 	Details.WelcomeSetLoc = function() end
 
@@ -87,11 +87,10 @@ local function skin()
 		return postSetFontFace(fontString, fontFace, oldSetFontFace(...))
 	end
 
-	
 	local function postInstanceRefreshRows(...)
 		local instance = ...
 		if not instance.barras then return end
-		for _, row in ipairs (instance.barras) do 
+		for _, row in ipairs (instance.barras) do
 			row.texto_esquerdo:SetPoint("LEFT", row.statusbar, "LEFT", 3, 0)
 			row.texto_direita:SetPoint("RIGHT", row.statusbar, "RIGHT", -2, 0)
 		end
@@ -102,7 +101,6 @@ local function skin()
 		return postInstanceRefreshRows(..., oldInstanceRefreshRows(...))
 	end
 
-	
 	for _, instance in Details:ListInstances() do
 		skinInstance(instance)
 	end
@@ -114,14 +112,14 @@ sInterfaceDetailsSkin:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 if IsAddOnLoaded("Details") then
 	skin()
-else 
+else
 	sInterfaceDetailsSkin:RegisterEvent('ADDON_LOADED')
 end
 
 sInterfaceDetailsSkin:SetScript("OnEvent", function(self, event, ...)
 	if  event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
 		resizeInstance(Details:GetInstance(1))
-	elseif event == "ADDON_LOADED" then				
+	elseif event == "ADDON_LOADED" then
 		local addonname = ...
 		if (addonname == "Details") then
 			skin()

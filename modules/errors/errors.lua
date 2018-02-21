@@ -1,5 +1,5 @@
-local addon, ns = ...
-local E, C = ns.E, ns.C
+local _, ns = ...
+local C = ns.C
 
 if not C.errors.enabled then return end;
 

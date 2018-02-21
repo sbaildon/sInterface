@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local C = ns.C
 
 if not C.actionbars.enabled then return end
 
@@ -7,7 +7,7 @@ local HiddenBlizzardArt = CreateFrame("Frame")
 HiddenBlizzardArt:Hide()
 
 for _, frame in next, {
-	MainMenuBarPageNumber,ActionBarUpButton,ActionBarDownButton, 
+	MainMenuBarPageNumber,ActionBarUpButton,ActionBarDownButton,
 	MainMenuXPBarTextureLeftCap,MainMenuXPBarTextureRightCap,MainMenuXPBarTextureMid,
 	StanceBarLeft, StanceBarMiddle, StanceBarRight,
 	MainMenuExpBar,MainMenuBarMaxLevelBar, MainMenuBarLeftEndCap, MainMenuBarRightEndCap,

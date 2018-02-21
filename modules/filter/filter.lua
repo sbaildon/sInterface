@@ -11,7 +11,7 @@ local filterCount = 0  -- #filters doesn't work as expected?
 local function reregisterFilterEvents()
 	local spec = GetSpecialization()
 
-	for k,v in pairs(filters) do
+	for _, v in pairs(filters) do
 		if v.spec == spec then
 			if v.unit == 'target' then
 				v:RegisterEvent('PLAYER_TARGET_CHANGED')
@@ -75,7 +75,6 @@ local function createFilter(filter)
 			if count and count > 1 then
 				f.count:SetText(count)
 			end
-			local gameTime = GetTime()
 			f.expires = expires
 			f:PlayAlpha(filter.alpha.found)
 			f.icon:SetDesaturated(nil)
@@ -104,7 +103,7 @@ local function createFilter(filter)
 	f:PlayAlpha(filter.alpha.not_found)
 
 	f:SetScript('OnEvent', function(self, event, ...)
-		self[event](this, ...)
+		self[event](self, ...)
 	end)
 
 	table.insert(filters, f)

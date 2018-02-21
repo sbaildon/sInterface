@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local C = ns.C
 
 if not C.objectivetracker.enabled then return end
 
@@ -9,10 +9,10 @@ local frame = CreateFrame("Frame")
 
 local gettingSet
 local function AdjustSetPoint(self,...)
-	if gettingSet then return end
- 	gettingSet = true
- 	local raidindex = UnitInRaid("player")
- 	local pos = (raidindex == nil) and C.objectivetracker.pos or C.objectivetracker.pos_raid
+  if gettingSet then return end
+  gettingSet = true
+  local raidindex = UnitInRaid("player")
+  local pos = (raidindex == nil) and C.objectivetracker.pos or C.objectivetracker.pos_raid
 
 	self:SetPoint(unpack(pos))
 	gettingSet = false

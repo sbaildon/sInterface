@@ -1,4 +1,4 @@
-local AddOn, ns = ...
+local _, ns = ...
 local E, C = CreateFrame('Frame', 'sEngine'), {}
 ns.E, ns.C = E, C
 
@@ -7,8 +7,8 @@ local shadowTex = "Interface\\AddOns\\sInterface\\media\\shadow_border"
 function E:ShadowedBorder(anchor)
 	local frame = anchor.GetTexture and anchor:GetParent() or anchor
 
-	BACKDROP_OFFSET = 3
-	BACKDROP_INSET  = 2
+	local BACKDROP_OFFSET = 3
+	local BACKDROP_INSET  = 2
 
 	local backdrop = CreateFrame('Frame', nil, frame)
 	backdrop:SetFrameStrata('BACKGROUND')
@@ -21,8 +21,8 @@ function E:ShadowedBorder(anchor)
 	})
 	backdrop:SetBackdropColor(0, 0, 0, 0.6)
 
-	SHADOW_OFFSET   = 5
-	SHADOW_EDGESIZE = 5
+	local SHADOW_OFFSET   = 5
+	local SHADOW_EDGESIZE = 5
 
 	local shadow = CreateFrame('Frame', nil, frame)
 	shadow:SetFrameStrata('BACKGROUND')
@@ -40,13 +40,13 @@ function E:RegisterAlphaAnimation(frame)
 	frame.alphaAnimation.alpha:SetDuration(0.2)
 	frame.alphaAnimation.alpha:SetSmoothing("OUT")
 	function frame:PlayAlpha(toAlpha, startDelay)
-		local startDelay = startDelay or 0.0
+		local delay = startDelay or 0.0
 		local enableMouse = toAlpha ~= 0 and true or false
 
 		if self.EnableMouse and not InCombatLockdown() then
 			self:EnableMouse(enableMouse)
 		end
-		self.alphaAnimation.alpha:SetStartDelay(startDelay)
+		self.alphaAnimation.alpha:SetStartDelay(delay)
 		self.alphaAnimation.alpha:SetFromAlpha(self:GetAlpha())
 		self.alphaAnimation.alpha:SetToAlpha(toAlpha)
 		self.alphaAnimation:SetToFinalAlpha(toAlpha)

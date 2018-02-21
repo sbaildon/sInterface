@@ -5,7 +5,6 @@ if not C.uf.enabled then return end
 
 local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
-local class_color = RAID_CLASS_COLORS[class]
 
 local TEXT_Y_OFFSET = 5
 local TEXT_X_OFFSET = 2
@@ -153,7 +152,7 @@ local PostCreateIcon = function(auras, button)
 	E:ShadowedBorder(button)
 end
 
-local PostUpdateIcon = function(icons, unit, icon, index, offset)
+local PostUpdateIcon = function(_, unit, icon)
 	local texture = icon.icon
 	if icon.isPlayer or UnitIsFriend('player', unit) or not icon.isDebuff then
 		texture:SetDesaturated(false)
@@ -193,7 +192,7 @@ local PostUpdateHealth = function(health, unit)
 	end
 end
 
-local PostUpdatePower = function(Power, unit, cur, min, max)
+local PostUpdatePower = function(Power, _, _, _, max)
 	local parent = Power:GetParent()
 	local h = parent.Health
 	if max == 0 then
@@ -205,7 +204,7 @@ local PostUpdatePower = function(Power, unit, cur, min, max)
 	end
 end
 
-local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
+local function PostUpdateClassPower(element, _, max, hasMaxChanged, powerType)
 	if max == nil and class ~= "DEATHKNIGHT" then
 		local ClassPowerPip = element[1]
 		ClassPowerPip:GetParent():Hide()
@@ -213,7 +212,6 @@ local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
 	end
 
 	if(hasMaxChanged) then
-		local classIconSpacing = C.uf.classIconSpacing
 		local multiplier = 0.7
 
 		local newMax = (max > 5) and 5 or max
@@ -239,51 +237,6 @@ local function PostUpdateClassPower(element, cur, max, hasMaxChanged, powerType)
 	end
 end
 
-local channelingTicks = {
-	-- warlock
-	[GetSpellInfo(234153)] = 6, -- drain life
-	[GetSpellInfo(193440)] = 3, -- demonwrath
-	[GetSpellInfo(198590)] = 6, -- drain soul
-	-- druid
-	[GetSpellInfo(740)] = 4, -- tranquility
-	-- priest
-	[GetSpellInfo(64843)] = 4, -- divine hymn
-	[GetSpellInfo(15407)] = 4, -- mind flay
-	[GetSpellInfo(47540)] = 2, -- penance
-	[GetSpellInfo(205065)] = 4, -- void torrent
-	-- mage
-	[GetSpellInfo(5143)] = 5, -- arcane missiles
-	[GetSpellInfo(12051)] = 3, -- evocation
-	[GetSpellInfo(205021)] = 10, -- ray of frost
-	-- monk
-	[GetSpellInfo(117952)] = 4, -- crackling jade lightning
-	[GetSpellInfo(191837)] = 3, -- essence font
-}
-
-local ticks = {}
-
-local setBarTicks = function(castBar, ticknum)
-	if ticknum and ticknum > 0 then
-		local delta = castBar:GetWidth() / ticknum
-		for k = 1, ticknum do
-			if not ticks[k] then
-				ticks[k] = castBar:CreateTexture(nil, 'OVERLAY')
-				ticks[k]:SetTexture(C.general.texture)
-				ticks[k]:SetVertexColor(0.6, 0.6, 0.6)
-				ticks[k]:SetWidth(2)
-				ticks[k]:SetHeight(castBar:GetHeight())
-			end
-			ticks[k]:ClearAllPoints()
-			ticks[k]:SetPoint('CENTER', castBar, 'LEFT', delta * k, 0 )
-			ticks[k]:Show()
-		end
-	else
-		for k, v in pairs(ticks) do
-			v:Hide()
-		end
-	end
-end
-
 local PostCastStart = function(self, unit)
 	self:PlayReveal()
 	self.Spark:Show()
@@ -293,7 +246,7 @@ local PostCastStart = function(self, unit)
 	end
 end
 
-local PostCastStop = function(self, unit)
+local PostCastStop = function(self)
 	if (self.holdTime ~= 0) then return end
 	self:SetStatusBarColor(unpack(self.CompleteColor))
 	self:PlayAlpha(0, 0.1)
@@ -934,6 +887,9 @@ local UnitSpecific = {
 
 UnitSpecific.focustarget = UnitSpecific.targettarget
 
+local hider = CreateFrame("Frame", "Hider", UIParent)
+hider:Hide()
+
 oUF:RegisterStyle('sInterface', Shared)
 
 for unit,layout in next, UnitSpecific do
@@ -1007,7 +963,7 @@ oUF:Factory(function(self)
 
 	for i = 1, MAX_PARTY_MEMBERS do
 		local pet = 'PartyMemberFrame'..i..'PetFrame'
-		_G[pet]:SetParent(Hider)
+		_G[pet]:SetParent(hider)
 		_G[pet..'HealthBar']:UnregisterAllEvents()
 	end
 	self:SetActiveStyle'sInterface - Party'
@@ -1039,7 +995,7 @@ oUF:Factory(function(self)
 	maintank:SetPoint(unpack(C.uf.positions.Tank))
 
 	if IsAddOnLoaded('Blizzard_CompactRaidFrames') then
-		CompactRaidFrameManager:SetParent(Hider)
+		CompactRaidFrameManager:SetParent(hider)
 		CompactUnitFrameProfiles:UnregisterAllEvents()
 	end
 

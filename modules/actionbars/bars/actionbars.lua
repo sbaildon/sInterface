@@ -1,10 +1,9 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local C = ns.C
 
 if not C.actionbars.enabled then return end
 
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
-local NUM_OVERRIDE_BUTTONS = NUM_OVERRIDE_BUTTONS
 local BUTTON_SPACING = 6
 local BUTTON_SIZE = ActionButton1:GetHeight()
 

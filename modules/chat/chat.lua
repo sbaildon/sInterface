@@ -1,5 +1,5 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local C = ns.C
 
 if not C.chat.enabled then return end
 
@@ -47,7 +47,6 @@ local function style(self)
 	_G[name.."EditBoxLeft"]:Hide()
 	_G[name.."EditBoxMid"]:Hide()
 	_G[name.."EditBoxRight"]:Hide()
-	local tab = _G[name.."Tab"]
 	local eb = _G[name.."EditBox"]
 	eb:SetAltArrowKeyMode(false)
 	eb:ClearAllPoints()
@@ -100,7 +99,7 @@ end)
 
 local function ColourByClass()
 	local cti = getmetatable(ChatTypeInfo).__index
-	for k,v in pairs(cti) do
+	for _, v in pairs(cti) do
 		v.colorNameByClass = true
 	end
 end

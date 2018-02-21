@@ -16,7 +16,7 @@ CHAT_PARTY_GUIDE_GET =  "|Hchannel:PARTY|hPG|h %s "
 CHAT_INSTANCE_CHAT_GET = "|Hchannel:Battleground|hI|h %s: "
 CHAT_INSTANCE_CHAT_LEADER_GET = "|Hchannel:Battleground|hI|h %s: "
 
---whisper  
+--whisper
 CHAT_WHISPER_INFORM_GET = "to %s "
 CHAT_WHISPER_GET = "from %s "
 CHAT_BN_WHISPER_INFORM_GET = "to %s "
@@ -31,8 +31,6 @@ CHAT_FLAG_AFK = "[AFK] "
 CHAT_FLAG_DND = "[DND] "
 CHAT_FLAG_GM = "[GM] "
 
-local gsub = _G.string.gsub
-
 for i = 1, NUM_CHAT_WINDOWS do
 	if ( i ~= 2 ) then
 		local f = _G["ChatFrame"..i]
@@ -41,4 +39,4 @@ for i = 1, NUM_CHAT_WINDOWS do
 			return am(frame, text:gsub('|h%[(%d+)%. .-%]|h', '|h%1|h'), ...)
 		end
 	end
-end 
+end

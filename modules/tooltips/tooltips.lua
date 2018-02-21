@@ -5,8 +5,6 @@ if not C.tooltips.enabled then return end
 
 local unpack, type = unpack, type
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-local FACTION_BAR_COLORS = FACTION_BAR_COLORS
-local WorldFrame = WorldFrame
 local GameTooltip = GameTooltip
 
 GameTooltipHeaderText:SetFont(C.general.displayFont.typeface, C.general.displayFont.size*1.1)
@@ -46,10 +44,6 @@ GameTooltip:HookScript("OnUpdate", function(self, elapsed)
 	end
 end)
 
-local function GetHexColor(color)
-	return ("%.2x%.2x%.2x"):format(color.r*255, color.g*255, color.b*255)
-end
-
 GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 	local unit = select(2, self:GetUnit()) or (GetMouseFocus() and GetMouseFocus():GetAttribute("unit")) or (UnitExists("mouseover") and "mouseover")
 	if not unit then return end
@@ -57,11 +51,11 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 	if UnitIsPlayer(unit) then
 		local name, realm = UnitName(unit)
 		local _, unitClass = UnitClass(unit)
-		local color = RAID_CLASS_COLORS[unitClass]
+		local classColor = RAID_CLASS_COLORS[unitClass]
 		if realm then
-			left[line]:SetFormattedText("|cff%02x%02x%02x%s %s %s|r", color.r*255, color.g*255, color.b*255, name, 'of', realm)
+			left[line]:SetFormattedText("|cff%02x%02x%02x%s %s %s|r", classColor.r*255, classColor.g*255, classColor.b*255, name, 'of', realm)
 		else
-			left[line]:SetFormattedText("|cff%02x%02x%02x%s|r", color.r*255, color.g*255, color.b*255, name)
+			left[line]:SetFormattedText("|cff%02x%02x%02x%s|r", classColor.r*255, classColor.g*255, classColor.b*255, name)
 		end
 		line = line + 1
 
@@ -72,14 +66,14 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 		end
 
 		local level, race = UnitLevel(unit), UnitRace(unit)
+		local difficultyColor
 		level = level > 0 and level or '??'
 		if level == '??' then
-			local color = { r = 0.69, g = 0.69, b = 0.69 }
-			left[line]:SetFormattedText('|cff%02x%02x%02x%s|r %s', color.r*255, color.g*255, color.b*255, level, race)
+			difficultyColor = { r = 0.69, g = 0.69, b = 0.69 }
 		else
-			local color = GetQuestDifficultyColor(level)
-			left[line]:SetFormattedText('|cff%02x%02x%02x%d|r %s', color.r*255, color.g*255, color.b*255, level, race)
+			difficultyColor = GetQuestDifficultyColor(level)
 		end
+		left[line]:SetFormattedText('|cff%02x%02x%02x%s|r %s', difficultyColor.r*255, difficultyColor.g*255, difficultyColor.b*255, level, race)
 		line = line + 1
 
 		for i = line, GameTooltip:NumLines() do
@@ -117,8 +111,7 @@ end
 
 
 local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip }
-local tt = { GameTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, ItemRefTooltip, ItemRefShoppingTooltip1, ItemRefShoppingTooltip2, ItemRefShoppingTooltip3, WorldMapTooltip, WorldMapCompareTooltip1, WorldMapCompareTooltip2, WorldMapCompareTooltip3, AtlasLootTooltip, QuestHelperTooltip, QuestGuru_QuestWatchTooltip }
-for idx, tooltip in ipairs(tooltips) do
+for _, tooltip in ipairs(tooltips) do
 	tooltip:SetBackdrop(backdrop)
 	tooltip:SetBackdropColor(unpack(bgColor))
 	tooltip:HookScript("OnShow", TooltipOnShow)

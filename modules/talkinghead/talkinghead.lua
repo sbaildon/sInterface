@@ -1,5 +1,5 @@
 local addon, ns = ...
-local E, C = ns.E, ns.C
+local C = ns.C
 
 if not C.talkinghead.enabled then return end
 

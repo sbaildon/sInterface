@@ -62,7 +62,10 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 
 	namePlate.castBar.Flash:SetTexture(nil)
 	namePlate.castBar.background:SetAlpha(0.3)
+	namePlate.castBar.Text:SetFont(C.general.displayFont.typeface, C.general.displayFont.size*0.63, C.general.displayFont.flag)
+	namePlate.castBar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	E:ShadowedBorder(namePlate.castBar)
+	E:ShadowedBorder(namePlate.castBar.Icon)
 
 	namePlate.name:SetParent(namePlate.healthBar)
 	namePlate.name:SetPoint("BOTTOM", namePlate.healthBar, "TOP", 0, -3)

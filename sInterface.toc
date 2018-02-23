@@ -1,5 +1,5 @@
 ## Interface: 70300
-## Version: 70300.1
+## Version: @project-version@
 ## Author: sBaildon
 ## Title: sInterface
 ## Notes: Interface things

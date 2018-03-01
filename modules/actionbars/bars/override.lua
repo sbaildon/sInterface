@@ -22,6 +22,7 @@ for i = 1, NUM_OVERRIDE_BUTTONS do
 	button:SetSize(BUTTON_SIZE, BUTTON_SIZE)
 	if i == 1 then
 		button:SetPoint("TOPLEFT", overridebar, "TOPLEFT")
+		button:SetPoint("BOTTOMLEFT", overridebar, "BOTTOMLEFT")
 	else
 		button:SetPoint("TOPLEFT", _G["OverrideActionBarButton"..i-1], "TOPRIGHT", 6, 0)
 	end

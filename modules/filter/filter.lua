@@ -74,6 +74,8 @@ local function createFilter(filter)
 			if f.expires == expires and not force then return end
 			if count and count > 1 then
 				f.count:SetText(count)
+			else
+				f.count:SetText("")
 			end
 			f.expires = expires
 			f:PlayAlpha(filter.alpha.found)

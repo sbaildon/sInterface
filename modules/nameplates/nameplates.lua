@@ -70,6 +70,9 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	namePlate.name:SetParent(namePlate.healthBar)
 	namePlate.name:SetPoint("BOTTOM", namePlate.healthBar, "TOP", 0, -3)
 
+	local layer, sublayer = namePlate.selectionHighlight:GetDrawLayer()
+	namePlate.name:SetDrawLayer(layer, sublayer+1)
+
 	namePlate.styled = true
 end)
 --end

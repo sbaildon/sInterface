@@ -4,7 +4,9 @@
 ## Title: sInterface
 ## Notes: Interface things
 
+init.lua
 embeds\_embeds.xml
+default.config\_config.xml
+user.config\_config.xml
 core\_core.xml
-config\_config.xml
 modules\_modules.xml

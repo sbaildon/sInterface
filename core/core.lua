@@ -1,6 +1,5 @@
 local _, ns = ...
-local E, C = CreateFrame('Frame', 'sEngine'), {}
-ns.E, ns.C = E, C
+local E, C, U_C = ns.E, ns.C, ns.U_C
 
 local shadowTex = "Interface\\AddOns\\sInterface\\media\\shadow_border"
 
@@ -72,14 +71,6 @@ function E:FontString(options)
 	return string
 end
 
-function E:HeightPercentage(percentage)
-	return (GetScreenHeight() / UIParent:GetEffectiveScale()) * (percentage / 100)
-end
-
-function E:WidthPercentage(percentage)
-	return (GetScreenWidth() / UIParent:GetEffectiveScale()) * (percentage / 100)
-end
-
 function E:PlayerIsTank()
 	local assignedRole = UnitGroupRolesAssigned("player")
 	if (assignedRole == "NONE") then
@@ -88,6 +79,21 @@ function E:PlayerIsTank()
 	end
 
 	return assignedRole == "TANK"
+end
+
+function merge(t1, t2)
+	for k, v in pairs(t2) do
+		if (type(v) == "table") and (type(t1[k] or false) == "table") then
+			merge(t1[k], t2[k])
+		else
+			t1[k] = v
+		end
+	end
+	return t1
+end
+
+if (U_C) then
+	C = merge(C, U_C)
 end
 
 SLASH_RELOADUI1 = '/rl'

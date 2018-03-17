@@ -3,7 +3,7 @@ local U_C = {}
 ns.U_C = U_C
 
 -- Remove the leading underscore (_) from this file name
--- to override configuration values 
+-- to override configuration values
 
 -- U_C["actionbars"] = {
 -- 	bar1 = {

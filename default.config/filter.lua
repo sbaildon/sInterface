@@ -54,7 +54,7 @@ if classIndex == 2 then -- Paladin
 	C["filter"].filters = {}
 end
 
-if classIndex == 3 then -- Hunter 
+if classIndex == 3 then -- Hunter
 	C["filter"].filters = {}
 end
 if classIndex == 4 then -- Rogue

@@ -17,5 +17,6 @@ ns.U_C = U_C
 -- }
 
 -- U_C["minimap"] = {
---	size = 200
+	-- width = 250,
+	-- height = 250
 -- }

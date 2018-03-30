@@ -98,3 +98,22 @@ if C.actionbars.bar5.two_rows then
 	bar5:SetHeight((BUTTON_SIZE*2) + BUTTON_SPACING)
 end
 RegisterStateDriver(bar5, "visibility", C.actionbars.bar5.visibility or "show")
+
+SHOW_MULTI_ACTIONBAR_1=true
+SHOW_MULTI_ACTIONBAR_2=true
+SHOW_MULTI_ACTIONBAR_3=true
+SHOW_MULTI_ACTIONBAR_4=true
+if (C.actionbars.bar2.enabled ~= nil) then
+	SHOW_MULTI_ACTIONBAR_1 = C.actionbars.bar2.enabled
+end
+if (C.actionbars.bar3.enabled ~= nil) then
+	SHOW_MULTI_ACTIONBAR_2 = C.actionbars.bar3.enabled
+end
+if (C.actionbars.bar4.enabled ~= nil) then
+	SHOW_MULTI_ACTIONBAR_3 = C.actionbars.bar4.enabled
+end
+if (C.actionbars.bar5.enabled ~= nil) then
+	SHOW_MULTI_ACTIONBAR_4 = C.actionbars.bar5.enabled
+end
+InterfaceOptions_UpdateMultiActionBars()
+MultiActionBar_Update(true)

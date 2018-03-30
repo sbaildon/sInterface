@@ -13,26 +13,29 @@ C["actionbars"] = {
 	bar2 = { --sInterfaceActionBar2
 		position = { "TOPLEFT", "sInterfaceActionBar1", "BOTTOMLEFT", 0, -20},
 		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
-		two_rows = true
-
+		two_rows = true,
+		enabled = true,
 	},
 
 	bar3 = { --sInterfaceActionBar3
 		position = { "TOPLEFT", "sInterfaceActionBar2", "BOTTOMLEFT", 0, -20},
 		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
-		two_rows = true
+		two_rows = true,
+		enabled = true,
 	},
 
 	bar4 = { --sInterfaceActionBar4
 		position = { "TOPLEFT", "sInterfaceActionBar3", "BOTTOMLEFT", 0, -20},
 		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
-		two_rows = true
+		two_rows = true,
+		enabled = true,
 	},
 
 	bar5 = { --sInterfaceActionBar5
 		position = { "TOPLEFT", "sInterfaceActionBar4", "BOTTOMLEFT", 0, -20},
 		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
-		two_rows = true
+		two_rows = true,
+		enabled = true,
 	},
 
 	possessbar = { --sInterfacePossessBar

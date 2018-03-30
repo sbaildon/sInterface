@@ -319,6 +319,7 @@ local HealthPrediction = function(self)
 	myBar:SetFrameLevel(self.Health:GetFrameLevel())
 	myBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
 	myBar:SetWidth(self:GetWidth())
+	myBar.Smooth = true
 
 	local otherBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	otherBar:SetPoint('TOP')
@@ -327,6 +328,7 @@ local HealthPrediction = function(self)
 	otherBar:SetFrameLevel(self.Health:GetFrameLevel())
 	otherBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
 	otherBar:SetWidth(self:GetWidth())
+	otherBar.Smooth = true
 
 	local absorbBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	absorbBar:SetPoint('TOP')
@@ -335,6 +337,7 @@ local HealthPrediction = function(self)
 	absorbBar:SetFrameLevel(self.Health:GetFrameLevel())
 	absorbBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
 	absorbBar:SetWidth(self:GetWidth())
+	otherBar.Smooth = true
 
 	local healAbsorbBar = createStatusbar(self.Health, C.general.texture, nil, nil, 200, 0.33, 0.59, 0.33, 0.6)
 	healAbsorbBar:SetPoint('TOP')
@@ -343,6 +346,7 @@ local HealthPrediction = function(self)
 	healAbsorbBar:SetFrameLevel(self.Health:GetFrameLevel())
 	healAbsorbBar:SetPoint('LEFT', self.Health:GetStatusBarTexture(), 'RIGHT')
 	healAbsorbBar:SetWidth(self:GetWidth())
+	otherBar.Smooth = true
 
 	self.HealthPrediction = {
 		myBar = myBar,

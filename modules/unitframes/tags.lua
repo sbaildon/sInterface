@@ -119,7 +119,7 @@ oUF.Tags.Methods['sInterface:healthper'] = function(u)
 	if UnitIsDead(u) or UnitIsGhost(u) or not UnitIsConnected(u) then return end
 	local cur, max = UnitHealth(u), UnitHealthMax(u)
 	if (cur < max) and (cur ~= 0) then
-		return math.floor(cur/max*100+.5).."%|r"
+		return (hex(oUF.colors.health))..math.floor(cur/max*100+.5).."%|r"
 	end
 
 	return nil

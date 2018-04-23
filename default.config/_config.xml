@@ -12,6 +12,7 @@
 	<Script file="nameplates.lua"/>
 	<Script file="objectivetracker.lua"/>
 	<Script file="orderhall.lua"/>
+	<Script file="progressbar.lua"/>
 	<Script file="talkinghead.lua"/>
 	<Script file="tooltips.lua"/>
 	<Include file="skins\_skins.xml"/>

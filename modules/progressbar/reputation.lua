@@ -65,8 +65,8 @@ local function GetReputation()
 end
 
 local function reputationUpdate(self)
-	local cur, max, name, factionID, standingID, standingText, pendingReward = GetReputation()
-	if(name) then
+	local cur, max, name, _, standingID = GetReputation()
+	if (name) then
 		self:SetMinMaxValues(0, max)
 		self:SetValue(cur)
 		local colors = reactions[standingID]

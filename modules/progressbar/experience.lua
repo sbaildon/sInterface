@@ -17,9 +17,9 @@ local function getExperienceMax()
 	return (IsWatchingHonorAsXP() and UnitHonorMax or UnitXPMax)("player")
 end
 
-local function getExperiencePercent()
-	return math.floor(getCurrentExpereience() / getExperienceMax() * 100 + 0.5)
-end
+-- local function getExperiencePercent()
+-- 	return math.floor(getCurrentExpereience() / getExperienceMax() * 100 + 0.5)
+-- end
 
 local function getRested()
 	return (IsWatchingHonorAsXP() and GetHonorExhaustion or GetXPExhaustion)() or 0

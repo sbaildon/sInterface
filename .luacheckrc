@@ -38,7 +38,8 @@ globals = {
 	"SHOW_MULTI_ACTIONBAR_1",
 	"SHOW_MULTI_ACTIONBAR_2",
 	"SHOW_MULTI_ACTIONBAR_3",
-	"SHOW_MULTI_ACTIONBAR_4"
+	"SHOW_MULTI_ACTIONBAR_4",
+	"SLASH_ALIGN1"
 }
 read_globals = {
 	"AtlasLootTooltip",
@@ -256,5 +257,8 @@ read_globals = {
 	"HasArtifactEquipped",
 	"UnitHasVehicleUI",
 	"MainMenuBar_GetNumArtifactTraitsPurchasableFromXP",
-	"GetItemQualityColor"
+	"GetItemQualityColor",
+	"PARAGON",
+	"InterfaceOptions_UpdateMultiActionBars",
+	"MultiActionBar_Update"
 }

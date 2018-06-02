@@ -13,41 +13,40 @@ end
 -- Paragon
 reactions[MAX_REPUTATION_REACTION + 1] = {0, 0.5, 0.9}
 
-local function getReputationCurrent()
-	local _, _, _, _, cur = GetWatchedFactionInfo()
+-- local function getReputationCurrent()
+-- 	local _, _, _, _, cur = GetWatchedFactionInfo()
 
-	return cur
-end
+-- 	return cur
+-- end
 
-local function getReputationMax()
-	local _, _, _, max = GetWatchedFactionInfo()
+-- local function getReputationMax()
+-- 	local _, _, _, max = GetWatchedFactionInfo()
 
-	return max
-end
+-- 	return max
+-- end
 
-local function getReputationFaction()
-	local _, _, _, _, _, factionID = GetWatchedFactionInfo()
+-- local function getReputationFaction()
+-- 	local _, _, _, _, _, factionID = GetWatchedFactionInfo()
 
-	return factionID
-end
+-- 	return factionID
+-- end
 
 local function GetReputation()
 	local pendingReward
 	local name, standingID, min, max, cur, factionID = GetWatchedFactionInfo()
 
-	local friendID = GetFriendshipReputation(factionID)
+	local friendID, _, _, _, _, _, standingText, _, nextThreshold = GetFriendshipReputation(factionID)
 	if (friendID) then
-		local _, _, _, _, _, _, standingText, _, nextThreshold = GetFriendshipReputation(factionID)
 		if (not nextThreshold) then
 			min, max, cur = 0, 1, 1 -- force a full bar when maxed out
 		end
 		standingID = 5 -- force friends' color
 	else
-		local value, nextThreshold, _, hasRewardPending = C_Reputation.GetFactionParagonInfo(factionID)
-		if(value) then
-			cur = value % nextThreshold
+		local value, paragonNextThreshold, _, hasRewardPending = C_Reputation.GetFactionParagonInfo(factionID)
+		if (value) then
+			cur = value % paragonNextThreshold
 			min = 0
-			max = nextThreshold
+			max = paragonNextThreshold
 			pendingReward = hasRewardPending
 			standingID = MAX_REPUTATION_REACTION + 1 -- force paragon's color
 			standingText = PARAGON

@@ -34,7 +34,11 @@ globals = {
 	"SLASH_TOGGLE1",
 	"SLASH_RELOADUI1",
 	"SlashCmdList",
-	"PetCastingBarFrame"
+	"PetCastingBarFrame",
+	"SHOW_MULTI_ACTIONBAR_1",
+	"SHOW_MULTI_ACTIONBAR_2",
+	"SHOW_MULTI_ACTIONBAR_3",
+	"SHOW_MULTI_ACTIONBAR_4"
 }
 read_globals = {
 	"AtlasLootTooltip",

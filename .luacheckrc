@@ -242,7 +242,7 @@ read_globals = {
 	"GetText",
 	"UnitSex",
 	"GetNumFactions",
-	"GetWatchedFactionInfo"
+	"GetWatchedFactionInfo",
 	"GetRestrictedAccountData",
 	"IsWatchingHonorAsXP",
 	"UnitHonor",

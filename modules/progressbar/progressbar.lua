@@ -1,9 +1,8 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local C = ns.C
 
 if not C.progressBars.enabled then return end;
 
-local visibleBars = 0
 local bars = {}
 
 local priority = {

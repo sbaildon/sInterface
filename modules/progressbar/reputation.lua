@@ -3,6 +3,8 @@ local E, C = ns.E, ns.C
 
 if not C.progressBars.enabled then return end;
 
+local PARAGON = PARAGON
+
 local reactions = {}
 
 for eclass, color in next, FACTION_BAR_COLORS do
@@ -33,9 +35,10 @@ local function GetReputation()
 	local pendingReward
 	local name, standingID, min, max, cur, factionID = GetWatchedFactionInfo()
 
-	local friendID, _, _, _, _, _, standingText, _, nextThreshold = GetFriendshipReputation(factionID)
-	if(friendID) then
-		if(not nextThreshold) then
+	local friendID = GetFriendshipReputation(factionID)
+	if (friendID) then
+		local _, _, _, _, _, _, standingText, _, nextThreshold = GetFriendshipReputation(factionID)
+		if (not nextThreshold) then
 			min, max, cur = 0, 1, 1 -- force a full bar when maxed out
 		end
 		standingID = 5 -- force friends' color

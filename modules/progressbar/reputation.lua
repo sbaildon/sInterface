@@ -5,13 +5,16 @@ if not C.progressBars.enabled then return end;
 
 local PARAGON = PARAGON
 
-local reactions = {}
+local barName = "reputation"
+local ProgressBars = ns.sInterfaceProgressBars
 
+ProgressBars:RegisterBar(barName)
+
+local reactions = {}
 for eclass, color in next, FACTION_BAR_COLORS do
 	reactions[eclass] = {color.r, color.g, color.b}
 end
--- Paragon
-reactions[MAX_REPUTATION_REACTION + 1] = {0, 0.5, 0.9}
+reactions[MAX_REPUTATION_REACTION + 1] = {0, 0.5, 0.9} -- Paragon
 
 -- local function getReputationCurrent()
 -- 	local _, _, _, _, cur = GetWatchedFactionInfo()
@@ -64,29 +67,20 @@ local function GetReputation()
 	return cur, max, name, factionID, standingID, standingText, pendingReward
 end
 
-local function reputationUpdate(self)
+local function reputationUpdate()
 	local cur, max, name, _, standingID = GetReputation()
 	if (name) then
-		self:SetMinMaxValues(0, max)
-		self:SetValue(cur)
+		ProgressBars:SetBarValues(barName, 0, max, cur)
+
 		local colors = reactions[standingID]
-		self:SetStatusBarColor(colors[1], colors[2], colors[3])
+		ProgressBars:SetBarColor(barName, colors[1], colors[2], colors[3])
 	end
 end
 
-local function reputationDisable(self)
-	self:UnregisterEvent("UPDATE_FACTION")
-end
-
-local function reputationEnable(self)
-	self:RegisterEvent("UPDATE_FACTION")
-	reputationUpdate(self)
-end
-
 local function reputationVisibility(self, selectedFactionIndex)
-	local shouldEnable
+	local shouldEnable = false
 	if (selectedFactionIndex ~= nil) then
-		if (selectedFactionIndex > 0) and (selectedFactionIndex < GetNumFactions()) then
+		if (selectedFactionIndex > 0) and (selectedFactionIndex <= GetNumFactions()) then
 			shouldEnable = true
 		end
 	elseif (not not (GetWatchedFactionInfo())) then
@@ -94,29 +88,18 @@ local function reputationVisibility(self, selectedFactionIndex)
 	end
 
 	if (shouldEnable) then
-		reputationEnable(self.Reputation)
-		ns.ProgressBars.Insert(self)
-		self:Show()
+		ProgressBars:EnableBar(barName)
+		reputationUpdate()
+		self:RegisterEvent("UPDATE_FACTION")
 	else
-		reputationDisable(self.Reputation)
-		ns.ProgressBars.Remove(self)
-		self:Hide()
+		ProgressBars:DisableBar(barName)
+		self:UnregisterEvent("UPDATE_FACTION")
 	end
 end
 
-local reputationHolder = CreateFrame("Frame", "reputationHolder", UIParent)
-reputationHolder:SetHeight(C.progressBars.reputation.height)
-reputationHolder:SetPoint("LEFT", ns.ProgressBars, "LEFT")
-reputationHolder:SetPoint("RIGHT", ns.ProgressBars, "RIGHT")
-reputationHolder:SetScript("OnEvent", reputationVisibility)
+local eventFrame = CreateFrame("Frame", "eventHolder", UIParent)
 hooksecurefunc('SetWatchedFactionIndex', function(selectedFactionIndex)
-	reputationVisibility(reputationHolder, selectedFactionIndex or 0)
+	reputationVisibility(eventFrame, selectedFactionIndex or 0)
 end)
-E:ShadowedBorder(reputationHolder)
-
-local reputation = CreateFrame("StatusBar", "ProgressBar", reputationHolder)
-reputation:SetAllPoints(reputationHolder)
-reputation:SetStatusBarTexture(C.general.texture, "ARTWORK")
-reputation:SetScript("OnEvent", reputationUpdate)
-reputationHolder.Reputation = reputation
-reputationVisibility(reputationHolder, nil)
+eventFrame:SetScript("OnEvent", reputationUpdate)
+reputationVisibility(eventFrame, nil)

@@ -1,6 +1,8 @@
 local _, ns = ...
 local E, C = ns.E, ns.C
 
+if true then return end
+
 if not C.progressBars.enabled then return end;
 
 -- local function getArtifactName()

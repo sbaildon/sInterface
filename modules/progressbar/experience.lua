@@ -3,6 +3,9 @@ local E, C = ns.E, ns.C
 
 if not C.progressBars.enabled then return end;
 
+local ProgressBars = ns.sInterfaceProgressBars
+local barName = "experience"
+
 local function playerMaxLevel()
 	local levelRestriction = GetRestrictedAccountData()
 
@@ -74,20 +77,15 @@ local function xpVisibility(self)
 	if (shouldEnable) then
 		xpEnable(self.Experience)
 		xpUpdateColor(self.Experience)
-		ns.ProgressBars.Insert(self)
-		self:Show()
+		ProgressBars:EnableBar(barName)
 	else
 		xpDisable(self.Experience)
-		self:Hide()
-		ns.ProgressBars.Remove(self)
+		ProgressBars:DisableBar(barName)
 	end
 end
 
-
-local experienceHolder = CreateFrame("Frame", "experienceHolder", UIParent)
+local experienceHolder = ProgressBars:CreateBar(barName)
 experienceHolder:SetHeight(C.progressBars.experience.height)
-experienceHolder:SetPoint("LEFT", ns.ProgressBars, "LEFT")
-experienceHolder:SetPoint("RIGHT", ns.ProgressBars, "RIGHT")
 experienceHolder:RegisterEvent('PLAYER_LEVEL_UP')
 experienceHolder:RegisterEvent('DISABLE_XP_GAIN')
 experienceHolder:RegisterEvent('ENABLE_XP_GAIN')
@@ -96,16 +94,15 @@ experienceHolder:SetScript("OnEvent", xpVisibility)
 hooksecurefunc('SetWatchingHonorAsXP', function(...)
 	xpVisibility(experienceHolder)
 end)
-E:ShadowedBorder(experienceHolder)
 
-local experience = CreateFrame("StatusBar", "ProgressBar", experienceHolder)
+local experience = CreateFrame("StatusBar", "Experience", experienceHolder)
 experience:SetAllPoints(experienceHolder)
 experience:SetStatusBarTexture(C.general.texture, "ARTWORK")
 experience:SetFrameLevel(2)
 experience:SetScript("OnEvent", xpUpdate)
 experienceHolder.Experience = experience
 
-local rested = CreateFrame("StatusBar", "ProgressBarRested", experience)
+local rested = CreateFrame("StatusBar", "ExperienceRested", experience)
 rested:SetStatusBarTexture(C.general.texture, "ARTWORK")
 rested:SetAllPoints(experience)
 rested:SetStatusBarColor(0, 2/5, 1)

@@ -3,6 +3,9 @@ local E, C = ns.E, ns.C
 
 if not C.progressBars.enabled then return end;
 
+local ProgressBars = ns.sInterfaceProgressBars
+local barName = "artifactPower"
+
 -- local function getArtifactName()
 -- 	return C_ArtifactUI.GetEquippedArtifactInfo()
 -- end
@@ -84,36 +87,28 @@ end
 local function artifactVisibility(self)
 	if (not HasArtifactEquipped()) then
 		artifactXpDisable(self.ArtifactPower)
-		ns.ProgressBars.Remove(self)
-		self:Hide()
+		ProgressBars:DisableBar(barName)
 		return
-
 	end
 
 	local learnable = getArtifactLearnableTraits()
 	self.learnableTraits:SetText((learnable > 0) and learnable or "")
 
 	artifactXpEnable(self.ArtifactPower)
-	ns.ProgressBars.Insert(self)
-	self:Show()
+	ProgressBars:EnableBar(barName)
 end
 
-local artifactHolder = CreateFrame("Frame", "artifactHolder", UIParent)
+local artifactHolder = ProgressBars:CreateBar(barName)
 artifactHolder:SetHeight(C.progressBars.artifactPower.height)
-artifactHolder:SetPoint("LEFT", ns.ProgressBars, "LEFT")
-artifactHolder:SetPoint("RIGHT", ns.ProgressBars, "RIGHT")
 artifactHolder:RegisterEvent("UNIT_INVENTORY_CHANGED")
 artifactHolder:RegisterEvent("ARTIFACT_XP_UPDATE")
 artifactHolder:RegisterEvent("PLAYER_ENTERING_WORLD")
+artifactHolder:SetScript("OnEvent", artifactVisibility)
 
 local learnableTraits = artifactHolder:CreateFontString("learnableTraits")
 learnableTraits:SetFont(C.general.displayFont.typeface, C.general.displayFont.size, C.general.displayFont.flag)
 learnableTraits:SetPoint("LEFT", artifactHolder, "RIGHT")
 artifactHolder.learnableTraits = learnableTraits
-
-artifactHolder:SetScript("OnEvent", artifactVisibility)
-E:ShadowedBorder(artifactHolder)
-
 
 local artifact = CreateFrame("StatusBar", "ProgressBar", artifactHolder)
 artifact:SetAllPoints(artifactHolder)

@@ -3,6 +3,9 @@ local E, C = ns.E, ns.C
 
 if not C.progressBars.enabled then return end;
 
+local ProgressBars = ns.sInterfaceProgressBars
+local barName = "reputation"
+
 local PARAGON = PARAGON
 
 local reactions = {}
@@ -69,6 +72,7 @@ local function reputationUpdate(self)
 	if (name) then
 		self:SetMinMaxValues(0, max)
 		self:SetValue(cur)
+
 		local colors = reactions[standingID]
 		self:SetStatusBarColor(colors[1], colors[2], colors[3])
 	end
@@ -86,7 +90,7 @@ end
 local function reputationVisibility(self, selectedFactionIndex)
 	local shouldEnable
 	if (selectedFactionIndex ~= nil) then
-		if (selectedFactionIndex > 0) and (selectedFactionIndex < GetNumFactions()) then
+		if (selectedFactionIndex > 0) and (selectedFactionIndex <= GetNumFactions()) then
 			shouldEnable = true
 		end
 	elseif (not not (GetWatchedFactionInfo())) then
@@ -95,28 +99,25 @@ local function reputationVisibility(self, selectedFactionIndex)
 
 	if (shouldEnable) then
 		reputationEnable(self.Reputation)
-		ns.ProgressBars.Insert(self)
-		self:Show()
+		ProgressBars:EnableBar(barName)
 	else
 		reputationDisable(self.Reputation)
-		ns.ProgressBars.Remove(self)
-		self:Hide()
+		ProgressBars:DisableBar(barName)
 	end
 end
 
-local reputationHolder = CreateFrame("Frame", "reputationHolder", UIParent)
+local reputationHolder = ProgressBars:CreateBar(barName)
 reputationHolder:SetHeight(C.progressBars.reputation.height)
-reputationHolder:SetPoint("LEFT", ns.ProgressBars, "LEFT")
-reputationHolder:SetPoint("RIGHT", ns.ProgressBars, "RIGHT")
 reputationHolder:SetScript("OnEvent", reputationVisibility)
 hooksecurefunc('SetWatchedFactionIndex', function(selectedFactionIndex)
 	reputationVisibility(reputationHolder, selectedFactionIndex or 0)
 end)
-E:ShadowedBorder(reputationHolder)
 
 local reputation = CreateFrame("StatusBar", "ProgressBar", reputationHolder)
 reputation:SetAllPoints(reputationHolder)
 reputation:SetStatusBarTexture(C.general.texture, "ARTWORK")
 reputation:SetScript("OnEvent", reputationUpdate)
 reputationHolder.Reputation = reputation
-reputationVisibility(reputationHolder, nil)
+C_Timer.After(1, function()
+	reputationVisibility(reputationHolder, nil)
+end)

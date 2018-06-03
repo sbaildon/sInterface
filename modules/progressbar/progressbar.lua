@@ -1,86 +1,89 @@
 local _, ns = ...
-local C = ns.C
+local E, C = ns.E, ns.C
 
 if not C.progressBars.enabled then return end;
 
 local bars = {}
 
-local priority = {
-	experienceHolder = 1,
-	reputationHolder = 2,
-	artifactHolder = 3
-}
+local ProgressBars = CreateFrame("Frame", "sInterfaceProgressBars", Minimap)
+ProgressBars:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", 0, -10)
+ProgressBars:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 0, -10)
+ProgressBars:SetHeight(200)
 
-local progressBars = CreateFrame("Frame", "sInterfaceProgressBars", UIParent)
-
-progressBars:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", 0, -10)
-progressBars:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 0, -10)
-
-local height = (C.progressBars.experience.enabled and C.progressBars.experience.height or 0)
-	+ (C.progressBars.reputation.enabled and C.progressBars.reputation.height or 0)
-	+ (C.progressBars.artifactPower.enabled and C.progressBars.artifactPower.height or 0)
-height = ((height > 0) and height or 1)
-
-local enabledCount = 0
-for _, element in pairs(C.progressBars) do
-	if (type(element) == "table") and (element.enabled ~= nil) then
-		if element.enabled then
-			enabledCount = enabledCount + 1
+local function getObject(barName)
+	for key, value in pairs(bars) do
+		if key == barName then
+			return value
 		end
 	end
+
+	return false
+end
+
+local function getBar(barName)
+	local obj = getObject(barName)
+	return obj and obj.bar or false
+end
+
+local function getEnabled(barName)
+	local obj = getObject(barName)
+	return obj and obj.enabled or false
 end
 
 local function reposition()
 	local prevElement
-	for _, element in pairs(bars) do
-		if (prevElement == nil) then
-			element:SetPoint("TOP", progressBars, "TOP")
-		else
-			element:SetPoint("TOP", prevElement, "BOTTOM", 0, -C.progressBars.spacing)
+	local enabledCount = 0
+	local totalHeight = 0
+	for key, element in pairs(bars) do
+		if element.enabled then
+			enabledCount = enabledCount + 1
+			local something = element.bar
+			totalHeight = totalHeight + something:GetHeight()
+			if (prevElement == nil) then
+				something:SetPoint("TOP", ProgressBars, "TOP")
+			else
+				something:SetPoint("TOP", prevElement, "BOTTOM", 0, -C.progressBars.spacing)
+			end
+
+			prevElement = something
 		end
-
-		prevElement = element
 	end
+
+	ProgressBars:SetHeight(totalHeight + (C.progressBars.spacing * (enabledCount-1)))
 end
 
-local function insert(element)
-	local position = priority[element:GetName()]
+function ProgressBars:CreateBar(barName)
+	if not barName then return end
+	local barHolder = CreateFrame("Frame", "sInterfaceProgressBars_"..barName, UIParent)
+	barHolder:SetPoint("LEFT", ProgressBars, "LEFT")
+	barHolder:SetPoint("RIGHT", ProgressBars, "RIGHT")
+	E:ShadowedBorder(barHolder)
 
-	for _, ele in pairs(bars) do
-		-- Check if element already exists in our table
-		if (element:GetName() == ele:GetName()) then return end
-	end
+	bars[barName] = {
+		enabled = false,
+		bar = barHolder
+	}
 
-	table.insert(bars, position, element)
+	return barHolder
+end
 
+function ProgressBars:EnableBar(barName)
+	local obj = getObject(barName)
+	if not obj then return end
+
+	obj.enabled = true
+	obj.bar:Show()
 	reposition()
 end
 
-local function remove(element)
-	local position = priority[element:GetName()]
+function ProgressBars:DisableBar(barName, element)
+	local obj = getObject(barName)
+	if not obj then return end
 
-	if position > #bars then return end
-
-	if (bars[position]:GetName() == element:GetName()) then
-		-- Only remove a bar from a position if it's the same bar
-		-- that we actually want to remove
-		-- eg dont remove rep bar at pos 2 if artifact calls remove
-		table.remove(bars, position)
-	end
-
+	obj.enabled = false
+	obj.bar:Hide()
 	reposition()
+
 end
 
-progressBars.Insert = insert
-progressBars.Remove = remove
-
-local adjustForSpacing
-if (enabledCount > 0) then
-	adjustForSpacing = (enabledCount-1) * C.progressBars.spacing
-end
-
-height = height + adjustForSpacing
-
-progressBars:SetHeight(height)
-
-ns.ProgressBars = progressBars
+ns.sInterfaceProgressBars = ProgressBars

@@ -6,9 +6,9 @@ if not C.progressBars.enabled then return end;
 local ProgressBars = ns.sInterfaceProgressBars
 local barName = "artifactPower"
 
--- local function getArtifactName()
--- 	return C_ArtifactUI.GetEquippedArtifactInfo()
--- end
+local function getArtifactName()
+	return C_ArtifactUI.GetEquippedArtifactInfo()
+end
 
 local function getArtifactCurrent()
 	if (not HasArtifactEquipped() or UnitHasVehicleUI('player')) then return 0 end
@@ -17,18 +17,18 @@ local function getArtifactCurrent()
 	return power
 end
 
--- local function getArtifactMax()
--- 	if (not HasArtifactEquipped() or UnitHasVehicleUI('player')) then return 0 end
--- 	local _, _, _, _, totalPower = C_ArtifactUI.GetEquippedArtifactInfo()
--- 	return totalPower
--- end
+local function getArtifactMax()
+	if (not HasArtifactEquipped() or UnitHasVehicleUI('player')) then return 0 end
+	local _, _, _, _, totalPower = C_ArtifactUI.GetEquippedArtifactInfo()
+	return totalPower
+end
 
--- local function getArtifactUntilNext()
--- 	if (not HasArtifactEquipped() or UnitHasVehicleUI('player')) then return 0 end
--- 	local _, _, _, _, totalPower, traitsLearned, _, _, _, _, _, _, tier = C_ArtifactUI.GetEquippedArtifactInfo()
--- 	local _, power, powerForNextTrait = MainMenuBar_GetNumArtifactTraitsPurchasableFromXP(traitsLearned, totalPower, tier)
--- 	return powerForNextTrait - power
--- end
+local function getArtifactUntilNext()
+	if (not HasArtifactEquipped() or UnitHasVehicleUI('player')) then return 0 end
+	local _, _, _, _, totalPower, traitsLearned, _, _, _, _, _, _, tier = C_ArtifactUI.GetEquippedArtifactInfo()
+	local _, power, powerForNextTrait = MainMenuBar_GetNumArtifactTraitsPurchasableFromXP(traitsLearned, totalPower, tier)
+	return powerForNextTrait - power
+end
 
 -- local function getArtifactUntilNextPercent()
 -- 	if (not HasArtifactEquipped() or UnitHasVehicleUI('player')) then return end
@@ -116,3 +116,23 @@ artifact:SetStatusBarTexture(C.general.texture, "ARTWORK")
 artifact:SetStatusBarColor(GetItemQualityColor(6))
 artifact:SetScript("OnEvent", artifactXpUpdate)
 artifactHolder.ArtifactPower = artifact
+
+local tooltip = GameTooltip
+artifactHolder:SetScript("OnEnter", function(self)
+	tooltip:SetOwner(self, "ANCHOR_CURSOR")
+	tooltip:ClearLines()
+	tooltip:AddLine(getArtifactName())
+	tooltip:AddDoubleLine("Current", E:CommaValue(getArtifactCurrent()), 1, 1, 1)
+	tooltip:AddDoubleLine("Required", E:CommaValue(getArtifactNextTraitCost()), 1, 1, 1)
+	tooltip:AddDoubleLine("To next trait", E:CommaValue(getArtifactUntilNext()), 1, 1, 1)
+
+	local learnableTraits = getArtifactLearnableTraits()
+	if learnableTraits > 0 then
+		tooltip:AddDoubleLine("Learnable traits", E:CommaValue(getArtifactUntilNext()), 1, 1, 1)
+	end
+
+	tooltip:Show()
+end)
+artifactHolder:SetScript("OnLeave", function(self)
+	tooltip:Hide()
+end)

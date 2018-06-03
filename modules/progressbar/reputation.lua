@@ -16,23 +16,22 @@ end
 -- Paragon
 reactions[MAX_REPUTATION_REACTION + 1] = {0, 0.5, 0.9}
 
--- local function getReputationCurrent()
--- 	local _, _, _, _, cur = GetWatchedFactionInfo()
+local function getReputationCurrent()
+	local _, _, _, _, cur = GetWatchedFactionInfo()
 
--- 	return cur
--- end
+	return cur
+end
 
--- local function getReputationMax()
--- 	local _, _, _, max = GetWatchedFactionInfo()
+local function getReputationMax()
+	local _, _, _, max = GetWatchedFactionInfo()
 
--- 	return max
--- end
+	return max
+end
 
--- local function getReputationFaction()
--- 	local _, _, _, _, _, factionID = GetWatchedFactionInfo()
-
--- 	return factionID
--- end
+local function getReputationName()
+	local name = GetWatchedFactionInfo()
+	return name
+end
 
 local function GetReputation()
 	local pendingReward
@@ -120,4 +119,19 @@ reputation:SetScript("OnEvent", reputationUpdate)
 reputationHolder.Reputation = reputation
 C_Timer.After(1, function()
 	reputationVisibility(reputationHolder, nil)
+end)
+
+local tooltip = GameTooltip
+reputationHolder:SetScript("OnEnter", function(self)
+	tooltip:SetOwner(self, "ANCHOR_CURSOR")
+	tooltip:ClearLines()
+	tooltip:AddLine(getReputationName())
+	tooltip:AddDoubleLine("Current", E:CommaValue(getReputationCurrent()), 1, 1, 1)
+	tooltip:AddDoubleLine("Required", E:CommaValue(getReputationMax()), 1, 1, 1)
+	tooltip:AddDoubleLine("To level", E:CommaValue((getReputationMax()-getReputationCurrent())), 1, 1, 1)
+
+	tooltip:Show()
+end)
+reputationHolder:SetScript("OnLeave", function(self)
+	tooltip:Hide()
 end)

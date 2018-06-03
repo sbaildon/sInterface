@@ -81,6 +81,13 @@ function E:PlayerIsTank()
 	return assignedRole == "TANK"
 end
 
+function E:CommaValue(number)  -- credit http://richard.warburton.it
+	if not number then return end
+
+	local left ,num, right = string.match(number,'^([^%d]*%d)(%d*)(.-)$')
+	return left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right
+end
+
 local function merge(t1, t2)
 	for k, v in pairs(t2) do
 		if (type(v) == "table") and (type(t1[k] or false) == "table") then

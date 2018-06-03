@@ -108,3 +108,23 @@ rested:SetAllPoints(experience)
 rested:SetStatusBarColor(0, 2/5, 1)
 rested:SetFrameLevel(1)
 experience.Rested = rested
+
+local tooltip = GameTooltip
+experienceHolder:SetScript("OnEnter", function(self)
+	tooltip:SetOwner(self, "ANCHOR_CURSOR")
+	tooltip:ClearLines()
+	tooltip:AddLine(barName:sub(1,1):upper()..barName:sub(2))
+	tooltip:AddDoubleLine("Current", E:CommaValue(getExperienceCurrent()), 1, 1, 1)
+	tooltip:AddDoubleLine("Required", E:CommaValue(getExperienceMax()), 1, 1, 1)
+	tooltip:AddDoubleLine("To level", E:CommaValue((getExperienceMax()-getExperienceCurrent())), 1, 1, 1)
+
+	local rested = getRested()
+	if rested > 0 then
+		tooltip:AddDoubleLine("Rested", E:CommaValue(rested), 1, 1, 1)
+	end
+
+	tooltip:Show()
+end)
+experienceHolder:SetScript("OnLeave", function(self)
+	tooltip:Hide()
+end)

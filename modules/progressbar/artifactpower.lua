@@ -17,11 +17,11 @@ local function getArtifactCurrent()
 	return power
 end
 
-local function getArtifactMax()
-	if (not HasArtifactEquipped() or UnitHasVehicleUI('player')) then return 0 end
-	local _, _, _, _, totalPower = C_ArtifactUI.GetEquippedArtifactInfo()
-	return totalPower
-end
+-- local function getArtifactMax()
+-- 	if (not HasArtifactEquipped() or UnitHasVehicleUI('player')) then return 0 end
+-- 	local _, _, _, _, totalPower = C_ArtifactUI.GetEquippedArtifactInfo()
+-- 	return totalPower
+-- end
 
 local function getArtifactUntilNext()
 	if (not HasArtifactEquipped() or UnitHasVehicleUI('player')) then return 0 end

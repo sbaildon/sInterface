@@ -20,21 +20,21 @@ local function getObject(barName)
 	return false
 end
 
-local function getBar(barName)
-	local obj = getObject(barName)
-	return obj and obj.bar or false
-end
+-- local function getBar(barName)
+-- 	local obj = getObject(barName)
+-- 	return obj and obj.bar or false
+-- end
 
-local function getEnabled(barName)
-	local obj = getObject(barName)
-	return obj and obj.enabled or false
-end
+-- local function getEnabled(barName)
+-- 	local obj = getObject(barName)
+-- 	return obj and obj.enabled or false
+-- end
 
 local function reposition()
 	local prevElement
 	local enabledCount = 0
 	local totalHeight = 0
-	for key, element in pairs(bars) do
+	for _, element in pairs(bars) do
 		if element.enabled then
 			enabledCount = enabledCount + 1
 			local something = element.bar

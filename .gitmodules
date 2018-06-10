@@ -6,14 +6,6 @@
 	path = embeds/oUF_FloatingCombatFeedback
 	url = https://github.com/ls-/oUF_FloatingCombatFeedback.git
 	branch = master
-[submodule "embeds/oUF_Reputation"]
-	path = embeds/oUF_Reputation
-	url = https://github.com/p3lim-wow/oUF_Reputation.git
-	branch = master
-[submodule "embeds/oUF_Experience"]
-	path = embeds/oUF_Experience
-	url = https://github.com/p3lim-wow/oUF_Experience.git
-	branch = master
 [submodule "embeds/oUF_Smooth"]
 	path = embeds/oUF_Smooth
 	url = https://github.com/sBaildon/oUF_Smooth.git
@@ -22,6 +14,3 @@
 	path = embeds/oUF_GCD
 	url = https://github.com/sBaildon/oUF_GCD.git
 	branch = master
-[submodule "embeds/oUF_ArtifactPower"]
-	path = embeds/oUF_ArtifactPower
-	url = https://github.com/Rainrider/oUF_ArtifactPower.git

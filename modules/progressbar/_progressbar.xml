@@ -1,0 +1,7 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="progressbar.lua"/>
+	<Script file="experience.lua"/>
+	<Script file="reputation.lua"/>
+	<Script file="artifactpower.lua"/>
+
+</Ui>

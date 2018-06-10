@@ -442,76 +442,6 @@ local Size = function(self)
 	self:SetSize(uf_cfg.width, height)
 end
 
-local ExperienceReputationShared = function(self)
-	local bar = createStatusbar(self, C.general.texture, nil, self.Power:GetHeight(), C.uf.size.primary.width)
-	bar:SetPoint("BOTTOM", self, "TOP", 0, 3)
-
-	bar.Text = E:FontString({parent=bar})
-	bar.Text:SetPoint("CENTER", 0, 10)
-	bar.Text:Hide()
-
-	bar:SetScript("OnEnter", function(self)
-		UIFrameFadeIn(self.Text, 0.3, 0, 1)
-	end)
-
-	bar:SetScript("OnLeave", function(self)
-		UIFrameFadeOut(self.Text, 0.3, 1, 0)
-	end)
-
-	E:ShadowedBorder(bar)
-
-	return bar
-end
-
-local Experience = function(self)
-	local bar = ExperienceReputationShared(self)
-
-	bar.Rested = createStatusbar(bar, C.general.texture, nil, nil, nil, 0, 1, 0, 1)
-	bar.Rested:SetAllPoints(bar)
-
-	bar.bg = bar.Rested:CreateTexture(nil, "BACKGROUND")
-	bar.bg:SetAllPoints(bar)
-	bar.bg:SetTexture(C.general.texture)
-
-	bar.OverrideUpdateColor = function(element, showHonor)
-		if (showHonor) then
-			element:SetStatusBarcolor(1, 0.25, 0)
-
-			if (element.Rested) then
-				element.Rested:setStatusBarColor(1, 0.75, 0)
-			end
-		else
-			element:SetStatusBarColor(1, 0, 1, 1)
-			element.bg:SetVertexColor(0.4, 0, 0.4, 1)
-
-			if (element.Rested) then
-				element.Rested:SetStatusBarColor(0, 0.4, 1)
-			end
-		end
-	end
-
-	self:Tag(bar.Text, "[experience:cur] / [experience:max] ([experience:per]%) [experience:currested]")
-	self.Experience = bar
-end
-
-local Reputation = function(self)
-	local bar = ExperienceReputationShared(self)
-
-	bar.colorStanding = true
-
-	self:Tag(bar.Text, "[reputation:faction] [reputation:cur] / [reputation:max] ([reputation:per]%)")
-	self.Reputation = bar
-end
-
-local ArtifactPower = function(self)
-	local bar = ExperienceReputationShared(self)
-
-	self:Tag(bar.Text, "Level [artifactpower:traits_learned], [artifactpower:until_next] [(>artifactpower:until_next_per<%)]")
-
-	self.ArtifactPower = bar
-end
-
-
 local Shared = function(self, unit)
 	self.menu = menu
 
@@ -646,18 +576,8 @@ local UnitSpecific = {
 		self.GCD.Spark:SetWidth(9)
 		self.GCD.Spark:SetPoint('LEFT', self.Health, 'LEFT', 0, 0)
 
-		if C.uf.artifactPower then
-			ArtifactPower(self)
-		end
-
-		if UnitLevel('player') < MAX_PLAYER_LEVEL and not IsXPUserDisabled() then
-			Experience(self)
-		end
-
-		Reputation(self)
-
 		local altp = createStatusbar(self, C.general.texture, nil, C.uf.size[self.unitSize].power, self:GetWidth(), 1, 1, 1, 1)
-		altp:SetPoint("BOTTOM", self.AlternativePower or self.Experience or self.Reputation, "TOP", 0, 3)
+		altp:SetPoint("BOTTOM", self, "TOP", 0, 3)
 		altp.bg = altp:CreateTexture(nil, 'BORDER')
 		altp.bg:SetAllPoints(altp)
 		altp.bg:SetTexture(C.general.texture)

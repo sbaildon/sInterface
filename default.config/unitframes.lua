@@ -4,7 +4,6 @@ local C = ns.C
 C["uf"] = {
 	enabled = true,
 	hidePlayerFrameOoc = true,
-	artifactPower = false,
 
 	-- Setting emulatePersonalResourceDisplay to true will ignore the player frame position,
 	-- instead, anchoring the player frame to the Personal Resource Display

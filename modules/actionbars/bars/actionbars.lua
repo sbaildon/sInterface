@@ -99,10 +99,6 @@ if C.actionbars.bar5.two_rows then
 end
 RegisterStateDriver(bar5, "visibility", C.actionbars.bar5.visibility or "show")
 
-SHOW_MULTI_ACTIONBAR_1=true
-SHOW_MULTI_ACTIONBAR_2=true
-SHOW_MULTI_ACTIONBAR_3=true
-SHOW_MULTI_ACTIONBAR_4=true
 if (C.actionbars.bar2.enabled ~= nil) then
 	SHOW_MULTI_ACTIONBAR_1 = C.actionbars.bar2.enabled
 end

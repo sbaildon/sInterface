@@ -6,7 +6,7 @@
 
 init.lua
 embeds\_embeds.xml
-default.config\_config.xml
-user.config\_config.xml
+config.default\_config.xml
+config.user\_config.xml
 core\_core.xml
 modules\_modules.xml

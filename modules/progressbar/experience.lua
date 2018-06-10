@@ -20,6 +20,10 @@ local function getExperienceMax()
 	return (IsWatchingHonorAsXP() and UnitHonorMax or UnitXPMax)("player")
 end
 
+local function getLevel()
+	return (IsWatchingHonorAsXP() and UnitHonorLevel or UnitLevel)("player")
+end
+
 -- local function getExperiencePercent()
 -- 	return math.floor(getCurrentExpereience() / getExperienceMax() * 100 + 0.5)
 -- end
@@ -114,7 +118,7 @@ experienceHolder:SetScript("OnEnter", function(self)
 	tooltip:SetOwner(self, "ANCHOR_CURSOR")
 	tooltip:ClearLines()
 	tooltip:AddLine(barName:sub(1,1):upper()..barName:sub(2))
-	tooltip:AddDoubleLine("Level", UnitLevel("player"), 1, 1, 1)
+	tooltip:AddDoubleLine("Level", getLevel(), 1, 1, 1)
 	tooltip:AddDoubleLine("Current", E:CommaValue(getExperienceCurrent()), 1, 1, 1)
 	tooltip:AddDoubleLine("Required", E:CommaValue(getExperienceMax()), 1, 1, 1)
 	tooltip:AddDoubleLine("To level", E:CommaValue((getExperienceMax()-getExperienceCurrent())), 1, 1, 1)

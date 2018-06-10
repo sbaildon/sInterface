@@ -260,5 +260,6 @@ read_globals = {
 	"GetItemQualityColor",
 	"PARAGON",
 	"InterfaceOptions_UpdateMultiActionBars",
-	"MultiActionBar_Update"
+	"MultiActionBar_Update",
+	"UnitHonorLevel"
 }

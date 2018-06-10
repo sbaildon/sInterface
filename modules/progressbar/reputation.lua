@@ -123,7 +123,7 @@ end)
 
 local tooltip = GameTooltip
 reputationHolder:SetScript("OnEnter", function(self)
-	local cur, max, name, factionID, standingID, standingText, pendingReward = GetReputation()
+	local cur, max, name, _, _, standingText = GetReputation()
 	tooltip:SetOwner(self, "ANCHOR_CURSOR")
 	tooltip:ClearLines()
 	tooltip:AddLine(name)

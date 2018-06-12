@@ -8,7 +8,7 @@ local bars = {}
 local ProgressBars = CreateFrame("Frame", "sInterfaceProgressBars", Minimap)
 ProgressBars:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", 0, -10)
 ProgressBars:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 0, -10)
-ProgressBars:SetHeight(200)
+ProgressBars:SetHeight(1)
 
 local function getObject(barName)
 	for key, value in pairs(bars) do
@@ -54,7 +54,7 @@ end
 
 function ProgressBars:CreateBar(barName)
 	if not barName then return end
-	local barHolder = CreateFrame("Frame", "sInterfaceProgressBars_"..barName, UIParent)
+	local barHolder = CreateFrame("Frame", "sInterfaceProgressBars_"..barName, ProgressBars)
 	barHolder:SetPoint("LEFT", ProgressBars, "LEFT")
 	barHolder:SetPoint("RIGHT", ProgressBars, "RIGHT")
 	E:ShadowedBorder(barHolder)

@@ -35,6 +35,13 @@ MinimapNorthTag:SetTexture(nil)
 
 -- Zone
 MinimapZoneTextButton:Hide()
+if (C.minimap.zoneText) then
+	MinimapZoneText:SetFont(C.general.displayFont.typeface, C.general.displayFont.size, C.general.displayFont.flag)
+	MinimapZoneText:SetPoint("LEFT", Minimap, "LEFT", 0, 0)
+	MinimapZoneText:SetPoint("RIGHT", Minimap, "RIGHT", 0, 0)
+	MinimapZoneText:SetPoint("BOTTOM", Minimap, "TOP", 0, -5)
+	MinimapZoneText:SetParent(Minimap)
+end
 
 -- Clock
 if not IsAddOnLoaded("Blizzard_TimeManager") then

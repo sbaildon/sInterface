@@ -73,6 +73,7 @@ read_globals = {
 	"MinimapBorder",
 	"MinimapBorderTop",
 	"MinimapNorthTag",
+	"MinimapZoneText",
 	"MinimapZoneTextButton",
 	"MinimapZoomIn",
 	"NamePlatePlayerResourceFrame",

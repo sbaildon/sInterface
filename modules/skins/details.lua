@@ -107,8 +107,6 @@ local function skin()
 end
 
 local sInterfaceDetailsSkin = CreateFrame("frame", addon.."DetailsSkin")
-sInterfaceDetailsSkin:RegisterEvent("GROUP_ROSTER_UPDATE")
-sInterfaceDetailsSkin:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 if IsAddOnLoaded("Details") then
 	skin()
@@ -117,12 +115,14 @@ else
 end
 
 sInterfaceDetailsSkin:SetScript("OnEvent", function(self, event, ...)
-	if  event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
+	if  event == "GROUP_ROSTER_UPDATE" then
 		resizeInstance(Details:GetInstance(1))
 	elseif event == "ADDON_LOADED" then
 		local addonname = ...
 		if (addonname == "Details") then
 			skin()
+			resizeInstance(Details:GetInstance(1))
+			sInterfaceDetailsSkin:RegisterEvent("GROUP_ROSTER_UPDATE")
 		end
 	end
 end)

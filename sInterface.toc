@@ -1,8 +1,10 @@
 ## Interface: 70300
-## Version: 70300.1
+## Version: @project-version@
 ## Author: sBaildon
 ## Title: sInterface
-## Notes: Interface things
+## Notes: An opinionated UI replacement
+
+## X-WoWI-ID: 24674
 
 init.lua
 embeds\_embeds.xml

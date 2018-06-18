@@ -24,6 +24,7 @@ function sPlates:NAME_PLATE_UNIT_ADDED(...)
 	castBar:SetHeight(3)
 
 	local healthBar = namePlate.healthBar
+	if healthBar == nil or healthBar:IsForbidden() or UnitAffectingCombat("player") then return end
 	healthBar:SetPoint("BOTTOMLEFT", castBar, "TOPLEFT", 0, 3)
 	healthBar:SetPoint("BOTTOMRIGHT", castBar, "TOPRIGHT", 0, 3)
 end

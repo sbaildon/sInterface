@@ -7,7 +7,8 @@ local ProgressBars = ns.sInterfaceProgressBars
 local barName = "artifactPower"
 
 local function getArtifactName()
-	return C_ArtifactUI.GetEquippedArtifactInfo()
+	local _, _, name = C_ArtifactUI.GetEquippedArtifactInfo()
+	return name
 end
 
 local function getArtifactCurrent()

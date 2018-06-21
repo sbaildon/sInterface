@@ -92,9 +92,6 @@ local function artifactVisibility(self)
 		return
 	end
 
-	local learnable = getArtifactLearnableTraits()
-	self.learnableTraits:SetText((learnable > 0) and learnable or "")
-
 	artifactXpEnable(self.ArtifactPower)
 	ProgressBars:EnableBar(barName)
 end
@@ -105,11 +102,6 @@ artifactHolder:RegisterEvent("UNIT_INVENTORY_CHANGED")
 artifactHolder:RegisterEvent("ARTIFACT_XP_UPDATE")
 artifactHolder:RegisterEvent("PLAYER_ENTERING_WORLD")
 artifactHolder:SetScript("OnEvent", artifactVisibility)
-
-local learnableTraits = artifactHolder:CreateFontString("learnableTraits")
-learnableTraits:SetFont(C.general.displayFont.typeface, C.general.displayFont.size, C.general.displayFont.flag)
-learnableTraits:SetPoint("LEFT", artifactHolder, "RIGHT")
-artifactHolder.learnableTraits = learnableTraits
 
 local artifact = CreateFrame("StatusBar", "ProgressBar", artifactHolder)
 artifact:SetAllPoints(artifactHolder)
@@ -129,7 +121,7 @@ artifactHolder:SetScript("OnEnter", function(self)
 
 	local learnableTraits = getArtifactLearnableTraits()
 	if learnableTraits > 0 then
-		tooltip:AddDoubleLine("Learnable traits", E:CommaValue(getArtifactUntilNext()), 1, 1, 1)
+		tooltip:AddDoubleLine("Learnable traits", E:CommaValue(learnableTraits), 1, 1, 1)
 	end
 
 	tooltip:Show()

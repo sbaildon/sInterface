@@ -110,6 +110,8 @@ local sInterfaceDetailsSkin = CreateFrame("frame", addon.."DetailsSkin")
 
 if IsAddOnLoaded("Details") then
 	skin()
+	resizeInstance(Details:GetInstance(1))
+	sInterfaceDetailsSkin:RegisterEvent("GROUP_ROSTER_UPDATE")
 else
 	sInterfaceDetailsSkin:RegisterEvent('ADDON_LOADED')
 end

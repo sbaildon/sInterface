@@ -117,7 +117,7 @@ local tooltip = GameTooltip
 experienceHolder:SetScript("OnEnter", function(self)
 	tooltip:SetOwner(self, "ANCHOR_CURSOR")
 	tooltip:ClearLines()
-	tooltip:AddLine(barName:sub(1,1):upper()..barName:sub(2))
+	tooltip:AddLine(IsWatchingHonorAsXP() and "Honor" or "Experience")
 	tooltip:AddDoubleLine("Level", getLevel(), 1, 1, 1)
 	tooltip:AddDoubleLine("Current", E:CommaValue(getExperienceCurrent()), 1, 1, 1)
 	tooltip:AddDoubleLine("Required", E:CommaValue(getExperienceMax()), 1, 1, 1)

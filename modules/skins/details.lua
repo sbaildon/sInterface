@@ -2,7 +2,7 @@ local addon, ns = ...
 local E, C = ns.E, ns.C
 
 local function skinInstance(instance)
-	if not instance or not instance:IsEnabled() then return end
+	if not instance or not instance:IsEnabled() or instance.styled then return end
 
 	instance:LockInstance(false)
 
@@ -28,6 +28,8 @@ local function skinInstance(instance)
 	instance:LockInstance(true)
 
 	E:ShadowedBorder(instance.baseframe)
+
+	instance.styled = true
 end
 
 local function resizeInstance(instance)
@@ -103,6 +105,16 @@ local function skin()
 
 	for _, instance in Details:ListInstances() do
 		skinInstance(instance)
+	end
+
+	local function postToggleWindow(index, ...)
+		skinInstance(Details:GetInstance(index))
+	end
+
+	local oldToggleWindow = Details.ToggleWindow
+	Details.ToggleWindow = function(...)
+		local _, index = ...
+		return postToggleWindow(index, oldToggleWindow(...))
 	end
 end
 

@@ -35,7 +35,7 @@ local function style(aura)
 	aura.duration:SetParent(aura)
 	aura.duration:SetPoint("TOP", aura, "BOTTOM", 0, 6)
 	aura.duration:SetJustifyH("CENTER")
-	aura.duration:SetFont(C.general.displayFont.typeface, C.general.displayFont.size, C.general.displayFont.flag)
+	aura.duration:SetFontObject("GameFontNormalOutline")
 
 	E:ShadowedBorder(aura)
 

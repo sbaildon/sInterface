@@ -53,7 +53,7 @@ local function createFilter(filter)
 	local countFrame = CreateFrame("Frame", 'sInterfaceFilter'..filterCount..'TextFrame', f)
 	countFrame:SetAllPoints(f)
 
-	local count = E:FontString({parent = countFrame})
+	local count = countFrame:CreateFontString("sIntefaceFilter_Cont"..filter.spellId, "ARTWORK", "GameFontNormalOutline")
 	count:SetPoint('BOTTOMRIGHT', 2, -5)
 
 	f.icon = icon

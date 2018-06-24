@@ -4,12 +4,14 @@ local E, C = ns.E, ns.C
 local function skinInstance(instance)
 	if not instance or not instance:IsEnabled() or instance.styled then return end
 
+	local _, size = GameFontNormal:GetFont()
+
 	instance:LockInstance(false)
 
 	instance:HideMainIcon(true)
 	instance:HideStatusBar()
 	instance:SetAutoHideMenu(true)
-	instance:AttributeMenu(true, -20, 6, nil, C.general.fontSize, {1, 0.75, 0, 1}, 1, true)
+	instance:AttributeMenu(true, -20, 6, nil, size, {1, 0.75, 0, 1}, 1, true)
 
 	instance:ToolbarSide(1)
 	instance:ToolbarMenuSetButtons(true, true, true, true, true, true)
@@ -17,7 +19,8 @@ local function skinInstance(instance)
 
 	instance:SetBarSettings(C.skins.details.barHeight, nil, true, nil, nil, false, {0, 0, 0, 0}, 1, nil, true, C.skins.details.barSpacing, string.sub(C.general.texture, 11))
 	instance:SetBarBackdropSettings(true, 0, {1, 1, 1, 0}, nil)
-	instance:SetBarTextSettings(C.general.bodyFont.size, nil, {1, 1, 1}, nil, nil, nil, nil, nil, nil, 1, false)
+
+	instance:SetBarTextSettings(size, nil, {1, 1, 1}, nil, nil, nil, nil, nil, nil, 1, false)
 	instance:SetBarFollowPlayer(true)
 	instance:SetBarGrowDirection(1)
 
@@ -79,7 +82,8 @@ local function skin()
 
 
 	local function postSetFontFace(fontString, fontFace, ...)
-		fontString:SetFont(C.general.bodyFont.typeface, C.general.bodyFont.size, C.general.bodyFont.flag)
+		local font, size, flags = GameFontNormal:GetFont()
+		fontString:SetFont(font, size, flags)
 		return ...
 	end
 
@@ -108,7 +112,9 @@ local function skin()
 	end
 
 	local function postToggleWindow(index, ...)
-		skinInstance(Details:GetInstance(index))
+		local instance = Details:GetInstance(index)
+		resizeInstance(instance)
+		skinInstance(instance)
 	end
 
 	local oldToggleWindow = Details.ToggleWindow

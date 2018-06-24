@@ -140,7 +140,7 @@ local PostCreateIcon = function(auras, button)
 	local c = button.count
 	c:ClearAllPoints()
 	c:SetPoint('BOTTOMRIGHT', 4, -4)
-	c:SetFont(C.general.displayFont.typeface, C.general.displayFont.size, auras.fontFlag)
+	c:SetFontObject("GameFontNormalOutline")
 	c:SetTextColor(1, 1, 1)
 
 	button.cd:SetReverse(true)
@@ -267,9 +267,11 @@ end
 
 local Castbar = function(self, unit)
 	local cb = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
-	cb.Time = E:FontString({parent=cb, layer='OVERLAY', justify='RIGHT'})
+	cb.Time = cb:CreateFontString("sInterface_CastBarTime", "ARTWORK", "GameFontHighlightOutline")
+	cb.Time:SetJustifyH("RIGHT")
 	cb.Time:SetPoint('RIGHT', cb, -2, 4)
-	cb.Text = E:FontString({parent=cb, layer='OVERLAY', justify='LEFT'})
+	cb.Text = cb:CreateFontString("sInterface_CastBarTime", "ARTWORK", "GameFontHighlightOutline")
+	cb.Text:SetJustifyH("LEFT")
 	cb.Text:SetPoint('LEFT', cb, 2, 4)
 	cb.Text:SetPoint('RIGHT', cb.Time, 'LEFT')
 	cb.Text:SetMaxLines(1)
@@ -489,6 +491,7 @@ local UnitSpecific = {
 		fcf:SetSize(32, 32)
 		fcf:SetPoint("CENTER")
 		fcf.mode = "Fountain"
+		fcf.fontHeight=16
 		for i = 1, 6 do
 			fcf[i] = fcf:CreateFontString(nil, "OVERLAY", "CombatTextFont")
 		end
@@ -498,12 +501,14 @@ local UnitSpecific = {
 		PetCastingBarFrame.Show = function() end
 		PetCastingBarFrame:Hide()
 
-		local htext = E:FontString({parent=self.Health})
+		local htext = self.Health:CreateFontString("sInterface_PlayerHealth", "ARTWORK", "GameFontNormalOutline")
+		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		htext.frequentUpdates = .1
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
-		local ptext = E:FontString({parent=self.Health})
+		local ptext = self.Health:CreateFontString("sInterface_TargetName", "ARTWORK", "GameFontNormalOutline")
+		ptext:SetJustifyH("LEFT")
 		ptext:SetPoint('TOPLEFT', TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		ptext.frequentUpdates = .1
 		self:Tag(ptext, '[sInterface:power]')
@@ -582,7 +587,8 @@ local UnitSpecific = {
 		altp.bg:SetAllPoints(altp)
 		altp.bg:SetTexture(C.general.texture)
 		altp.bg:SetVertexColor(1, 1, 1, 0.3)
-		altp.Text = E:FontString({parent=altp})
+		altp.Text = altp:CreateFontString("sInterface_AltPower", "ARTWORK", "GameFontNormalOutline")
+		altp.Text:SetJustifyH("LEFT")
 		altp.Text:SetPoint("BOTTOM", altp, "TOP", 0, -2)
 		self:Tag(altp.Text, '[sInterface:altpower]')
 		altp:EnableMouse(true)
@@ -615,15 +621,17 @@ local UnitSpecific = {
 
 		if C.uf.aura.target.enable then Auras(self) end
 
-		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
+		local htext = self.Health:CreateFontString("sInterface_TargetHealth", "ARTWORK", "GameFontNormalOutline")
+		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		htext.frequentUpdates = .1
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
-		local name = E:FontString({parent=self.Health, justify='LEFT'})
+		local name = self.Health:CreateFontString("sInterface_TargetName", "ARTWORK", "GameFontNormalOutline")
+		name:SetJustifyH("LEFT")
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
-		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
+		name:SetHeight(10)
 		self:Tag(name, '[sInterface:level< ][sInterface:name]')
 	end,
 
@@ -639,11 +647,13 @@ local UnitSpecific = {
 
 		if C.uf.aura.focus.enable then Auras(self) end
 
-		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
+		local htext = self.Health:CreateFontString("sInterface_FocusHealth", "ARTWORK", "GameFontNormalOutline")
+		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
-		local name = E:FontString({parent=self.Health, justify='LEFT'})
+		local name = self.Health:CreateFontString("sInterface_FocusName", "ARTWORK", "GameFontNormalOutline")
+		name:SetJustifyH("LEFT")
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
@@ -659,11 +669,13 @@ local UnitSpecific = {
 		Castbar(self)
 		PhaseIndicator(self)
 
-		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
+		local htext = self.Health:CreateFontString("sInterface_BossHealth", "ARTWORK", "GameFontNormalOutline")
+		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:healthper]')
 
-		local name = E:FontString({parent=self.Health, justify='LEFT'})
+		local name = self.Health:CreateFontString("sInterface_BossName", "ARTWORK", "GameFontNormalOutline")
+		name:SetJustifyH("LEFT")
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT')
@@ -675,7 +687,8 @@ local UnitSpecific = {
 		altp.bg:SetAllPoints(altp)
 		altp.bg:SetTexture(C.general.texture)
 		altp.bg:SetVertexColor(1, 1, 1, 0.3)
-		altp.Text = E:FontString({parent=altp})
+		altp.Text = altp:CreateFontString("sInterface_AltPower", "ARTWORK", "GameFontNormalOutline")
+		altp.Text:SetJustifyH("LEFT")
 		altp.Text:SetPoint('CENTER')
 		altp:EnableMouse(true)
 		altp.colorTexture = true
@@ -692,7 +705,8 @@ local UnitSpecific = {
 		HealthPrediction(self)
 		PhaseIndicator(self)
 
-		local name = E:FontString({parent=self.Health})
+		local name = self.Health:CreateFontString("sInterface_PetName", "ARTWORK", "GameFontNormalOutline")
+		name:SetJustifyH("LEFT")
 		name:SetPoint('CENTER', self.Health, 0, 3)
 		self:Tag(name, '[sInterface:name]')
 		self.Name = name;
@@ -712,7 +726,8 @@ local UnitSpecific = {
 
 		Shared(self, ...)
 
-		local name = E:FontString({parent=self.Health})
+		local name = self.Health:CreateFontString("sInterface_TargetTargetName", "ARTWORK", "GameFontNormalOutline")
+		name:SetJustifyH("LEFT")
 		name:SetPoint('CENTER', 0, TEXT_Y_OFFSET)
 		self:Tag(name, '[sInterface:shortname]')
 	end,
@@ -730,11 +745,13 @@ local UnitSpecific = {
 
 		if C.uf.aura.party.enable then Auras(self) end
 
-		local htext= E:FontString({parent=self.Health, justify='RIGHT'})
+		local htext = self.Health:CreateFontString("sInterface_PartyHealth", "ARTWORK", "GameFontNormalOutline")
+		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
-		local name = E:FontString({parent=self.Health, justify='LEFT'})
+		local name = self.Health:CreateFontString("sInterface_PartyName", "ARTWORK", "GameFontNormalOutline")
+		name:SetJustifyH("LEFT")
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
@@ -753,11 +770,13 @@ local UnitSpecific = {
 
 		if C.uf.aura.tank.enable then Auras(self) end
 
-		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
+		local htext = self.Health:CreateFontString("sInterface_TankHealth", "ARTWORK", "GameFontNormalOutline")
+		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
-		local name = E:FontString({parent=self.Health, justify='LEFT'})
+		local name = self.Health:CreateFontString("sInterface_TankName", "ARTWORK", "GameFontNormalOutline")
+		name:SetJustifyH("LEFT")
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
@@ -777,11 +796,13 @@ local UnitSpecific = {
 		Power(self)
 		Castbar(self)
 
-		local htext = E:FontString({parent=self.Health, justify='RIGHT'})
+		local htext = self.Health:CreateFontString("sInterface_ArenaHealth", "ARTWORK", "GameFontNormalOutline")
+		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
 
-		local name = E:FontString({parent=self.Health, justify='LEFT'})
+		local name = self.Health:CreateFontString("sInterface_ArenaName", "ARTWORK", "GameFontNormalOutline")
+		name:SetJustifyH("LEFT")
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
@@ -803,7 +824,8 @@ local UnitSpecific = {
 		LFD(self)
 		ReadyCheck(self)
 
-		local name = E:FontString({parent=self.Health, justify='LEFT'})
+		local name = self.Health:CreateFontString("sInterface_RaidName", "ARTWORK", "GameFontNormalOutline")
+		name:SetJustifyH("LEFT")
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(name, '[sInterface:shortname]')
 	end,

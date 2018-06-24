@@ -14,7 +14,7 @@ local THROTTLE_THRESHHOLD = 0.5
 local lastUpdate = 0
 
 local function fs(frame, text, offset, just)
-	local fs = E:FontString({parent=frame, justify=just})
+	local fs = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlightOutline")
 	if (text > 60) then text = (text/60).."m" end
 	fs:SetText(text)
 	fs:SetPoint("LEFT", offset, 0)
@@ -39,13 +39,13 @@ function CoolBar:PLAYER_LOGIN()
 	CoolBar.fontLayer:SetAllPoints(CoolBar)
 	CoolBar.fontLayer:SetFrameLevel(128)
 
-	fs(CoolBar.fontLayer, tick0, 4, "LEFT")
+	fs(CoolBar.fontLayer, tick0, 2, "LEFT")
 	fs(CoolBar.fontLayer, tick1, segment, "CENTER")
 	fs(CoolBar.fontLayer, tick2, segment* 2, "CENTER")
 	fs(CoolBar.fontLayer, tick3, segment * 3, "CENTER")
 	fs(CoolBar.fontLayer, tick4, segment * 4, "CENTER")
 	fs(CoolBar.fontLayer, tick5, segment * 5, "CENTER")
-	fs(CoolBar.fontLayer, tick6, (segment * 6) + 6, "RIGHT")
+	fs(CoolBar.fontLayer, tick6, (segment * 6)+4, "RIGHT")
 
 	CoolBar.active = 0
 

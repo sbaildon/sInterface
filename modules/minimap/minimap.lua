@@ -36,7 +36,7 @@ MinimapNorthTag:SetTexture(nil)
 -- Zone
 MinimapZoneTextButton:Hide()
 if (C.minimap.zoneText) then
-	MinimapZoneText:SetFont(C.general.displayFont.typeface, C.general.displayFont.size, C.general.displayFont.flag)
+	MinimapZoneText:SetFontObject("GameFontNormalOutline")
 	MinimapZoneText:SetPoint("LEFT", Minimap, "LEFT", 0, 0)
 	MinimapZoneText:SetPoint("RIGHT", Minimap, "RIGHT", 0, 0)
 	MinimapZoneText:SetPoint("BOTTOM", Minimap, "TOP", 0, -5)

@@ -9,8 +9,6 @@ ChatFrameMenuButton:Hide()
 QuickJoinToastButton:HookScript("OnShoW", QuickJoinToastButton.Hide)
 QuickJoinToastButton:Hide()
 
-ChatFontNormal:SetFont(C.general.bodyFont.typeface, C.general.bodyFont.size)
-
 hooksecurefunc("FCFTab_UpdateColors", function(self, selected)
 	if selected then
 		self:GetFontString():SetTextColor(1, 0.75, 0, 1)
@@ -27,8 +25,8 @@ local function style(self)
 	self:SetClampRectInsets(0, 0, 0, 0)
 	self:SetMaxResize(UIParent:GetWidth(), UIParent:GetHeight())
 	self:SetMinResize(100, 50)
-
-	self:SetFont(C.general.bodyFont.typeface, C.general.bodyFont.size)
+	local font, size, flags = ChatFontNormal:GetFont()
+	self:SetFont(font, C.chat.fontSize and C.chat.fontSize or size, flags)
 
 	local tab = _G[name.."Tab"]
 	tab:SetScript("OnEnter", function(self)
@@ -36,9 +34,10 @@ local function style(self)
 	end)
 	tab:SetScript("OnLeave", function(self)
 		self:SetAlpha(0.3)
+		self:GetFontString():SetFontObject("GameFontNormalOutline")
 	end)
 	local tabFs = tab:GetFontString()
-	tabFs:SetFont(C.general.displayFont.typeface, C.general.displayFont.size, C.general.displayFont.flag)
+	tabFs:SetFontObject("GameFontNormalOutline")
 
 	local bframe = _G[name.."ButtonFrame"]
 	bframe:Hide()

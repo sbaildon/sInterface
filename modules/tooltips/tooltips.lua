@@ -7,10 +7,6 @@ local unpack, type = unpack, type
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 local GameTooltip = GameTooltip
 
-GameTooltipHeaderText:SetFont(C.general.displayFont.typeface, C.general.displayFont.size*1.1)
-GameTooltipText:SetFont(C.general.displayFont.typeface, C.general.displayFont.size)
-Tooltip_Small:SetFont(C.general.displayFont.typeface, C.general.displayFont.size)
-
 GameTooltipStatusBar:ClearAllPoints()
 GameTooltipStatusBar:Hide()
 

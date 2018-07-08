@@ -88,7 +88,7 @@ local function merge(t1, t2)
 end
 
 if (U_C) then
-	C = merge(C, U_C)
+	ns.C = merge(C, U_C)
 end
 
 SLASH_RELOADUI1 = '/rl'

@@ -262,5 +262,7 @@ read_globals = {
 	"PARAGON",
 	"InterfaceOptions_UpdateMultiActionBars",
 	"MultiActionBar_Update",
-	"UnitHonorLevel"
+	"UnitHonorLevel",
+	"GameFontNormal",
+	"GameFontNormalOutline"
 }

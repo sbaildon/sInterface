@@ -6,7 +6,7 @@ if not C.uf.enabled then return end
 local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 
-local TEXT_Y_OFFSET = 5
+local TEXT_Y_OFFSET = 6
 local TEXT_X_OFFSET = 2
 
 -- Override some oUF.colors.power

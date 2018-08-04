@@ -1,5 +1,5 @@
 local _, ns = ...
-local C = ns.C
+local E, C = ns.E, ns.C
 
 if not C.progressBars.enabled then return end;
 

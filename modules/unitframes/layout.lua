@@ -857,7 +857,7 @@ end
 
 oUF:Factory(function(self)
 	if (C.uf.emulatePersonalResourceDisplay) then
-		print("[sInterface] C['uf'].emulatePersonalResourceDisplay is currently ignored because of a bug")
+		print("[sInterface] C['uf'].emulatePersonalResourceDisplay is currently ignored because of a bug regarding unit frame text display")
 		print("[sInterface] Consider updating sInterface now, or in the near future when a fix is available")
 
 		-- SetCVar("nameplateShowSelf", 1)

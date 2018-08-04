@@ -264,5 +264,9 @@ read_globals = {
 	"MultiActionBar_Update",
 	"UnitHonorLevel",
 	"GameFontNormal",
-	"GameFontNormalOutline"
+	"GameFontNormalOutline",
+	"MainMenuBarArtFrameBackground",
+	"MicroButtonAndBagsBar",
+	"StatusTrackingBarManager",
+	"AuraUtil"
 }

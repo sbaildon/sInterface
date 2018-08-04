@@ -24,7 +24,7 @@ hooksecurefunc("UpdateMicroButtons", function()
 	end
 	if C.actionbars.micromenu.two_rows then
 		local lastmicrobutton = math.floor((#MICRO_BUTTONS + 1 ) / 2)
-		_G[MICRO_BUTTONS[lastmicrobutton+1]]:SetPoint("TOPLEFT", _G[MICRO_BUTTONS[1]], "BOTTOMLEFT", 0, 21)
+		_G[MICRO_BUTTONS[lastmicrobutton+1]]:SetPoint("TOPLEFT", _G[MICRO_BUTTONS[1]], "BOTTOMLEFT", 0, 0)
 		micromenu:SetSize(ICON_WIDTH * lastmicrobutton, 70)
 	end
 end)

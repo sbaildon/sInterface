@@ -6,7 +6,7 @@ if not C.uf.enabled then return end
 local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 
-local TEXT_Y_OFFSET = 5
+local TEXT_Y_OFFSET = 6
 local TEXT_X_OFFSET = 2
 
 -- Override some oUF.colors.power
@@ -857,32 +857,38 @@ end
 
 oUF:Factory(function(self)
 	if (C.uf.emulatePersonalResourceDisplay) then
-		SetCVar("nameplateShowSelf", 1)
-		SetCVar("NameplatePersonalShowAlways", 1)
-		C_NamePlate.SetNamePlateSelfClickThrough(true)
-		SetCVar("nameplateSelfAlpha", 0)
+		print("[sInterface] C['uf'].emulatePersonalResourceDisplay is currently ignored because of a bug regarding unit frame text display")
+		print("[sInterface] Consider updating sInterface now, or in the near future when a fix is available")
 
-		local emulatePosition = { "CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50 }
+		-- SetCVar("nameplateShowSelf", 1)
+		-- SetCVar("NameplatePersonalShowAlways", 1)
+		-- C_NamePlate.SetNamePlateSelfClickThrough(true)
+		-- SetCVar("nameplateSelfAlpha", 0)
 
-		spawnHelper(self, 'player', emulatePosition)
+		-- local emulatePosition = { "CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50 }
 
-		NamePlatePlayerResourceFrame:HookScript("OnHide", function()
-			if InCombatLockdown() then return end
-			oUF_sInterfacePlayer:ClearAllPoints()
-			oUF_sInterfacePlayer:SetPoint(unpack(C.uf.positions.Player))
-		end)
+		-- spawnHelper(self, 'player', emulatePosition)
 
-		NamePlatePlayerResourceFrame:HookScript("OnShow", function()
-			if InCombatLockdown() then return end
-			oUF_sInterfacePlayer:ClearAllPoints()
-			oUF_sInterfacePlayer:SetPoint(unpack(emulatePosition))
-		end)
-	else
-		SetCVar("nameplateSelfAlpha", GetCVarDefault("nameplateSelfAlpha"))
-		SetCVar("NameplatePersonalShowAlways", GetCVarDefault("NameplatePersonalShowAlways"))
-		C_NamePlate.SetNamePlateSelfClickThrough(false)
-		spawnHelper(self, 'player', C.uf.positions.Player)
+		-- NamePlatePlayerResourceFrame:HookScript("OnHide", function()
+		-- 	if InCombatLockdown() then return end
+		-- 	oUF_sInterfacePlayer:ClearAllPoints()
+		-- 	oUF_sInterfacePlayer:SetPoint(unpack(C.uf.positions.Player))
+		-- end)
+
+		-- NamePlatePlayerResourceFrame:HookScript("OnShow", function()
+		-- 	if InCombatLockdown() then return end
+		-- 	oUF_sInterfacePlayer:ClearAllPoints()
+		-- 	oUF_sInterfacePlayer:SetPoint(unpack(emulatePosition))
+		-- end)
 	end
+	-- else
+	SetCVar("nameplateSelfAlpha", GetCVarDefault("nameplateSelfAlpha"))
+	SetCVar("NameplatePersonalShowAlways", GetCVarDefault("NameplatePersonalShowAlways"))
+	C_NamePlate.SetNamePlateSelfClickThrough(false)
+	spawnHelper(self, 'player', C.uf.positions.Player)
+	-- end
+
+
 	spawnHelper(self, 'target', C.uf.positions.Target)
 	spawnHelper(self, 'targettarget', C.uf.positions.Targettarget)
 	spawnHelper(self, 'focus', C.uf.positions.Focus)

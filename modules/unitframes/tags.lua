@@ -130,7 +130,7 @@ oUF.Tags.Events['sInterface:healthper'] = 'UNIT_HEALTH_FREQUENT UNIT_CONNECTION'
 oUF.Tags.Methods['sInterface:power'] = function(u)
 	return oUF.Tags.Methods['powercolor'](u)..sValue(UnitPower(u))
 end
-oUF.Tags.Events['sInterface:power'] = 'UNIT_POWER PLAYER_SPECIALIZATION_CHANGED PLAYER_TALENT_UPDATE UNIT_CONNECTION'
+oUF.Tags.Events['sInterface:power'] = 'UNIT_POWER_UPDATE PLAYER_SPECIALIZATION_CHANGED PLAYER_TALENT_UPDATE UNIT_CONNECTION'
 
 
 oUF.Tags.Methods['sInterface:altpower'] = function(u)
@@ -139,4 +139,4 @@ oUF.Tags.Methods['sInterface:altpower'] = function(u)
 	if max == 0 then return end
 	return ('|cffCDC5C2'..sValue(cur))..('|cffCDC5C2 / ')..sValue(max)
 end
-oUF.Tags.Events['sInterface:altpower'] = 'UNIT_POWER UNIT_MAXPOWER'
+oUF.Tags.Events['sInterface:altpower'] = 'UNIT_POWER_UPDATE UNIT_MAXPOWER'

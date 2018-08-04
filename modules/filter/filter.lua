@@ -64,7 +64,7 @@ local function createFilter(filter)
 	f.caster = filter.caster
 
 	function f:CheckAvailability(force)
-		local name, _, _, count, _, duration, expires, caster = UnitAura(filter.unit, gsi_name, nil, filter.filter)
+		local name, _, count, _, duration, expires, caster = AuraUtil.FindAuraByName(gsi_name, filter.unit, filter.filter)
 		if not name or (f.caster and f.caster ~= caster)then
 			f.count:SetText("")
 			f:PlayAlpha(filter.alpha.not_found)

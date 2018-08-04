@@ -83,6 +83,4 @@ end)
 sPlates:SetScript("OnEvent", function(self, event, ...)
 	self[event](self, ...); -- call one of the functions above
 end);
-for k, _ in pairs(sPlates) do
-	sPlates:RegisterEvent(k); -- Register all events for which handlers have been defined
-end
+sPlates:RegisterEvent("NAME_PLATE_UNIT_ADDED");

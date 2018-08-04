@@ -53,7 +53,10 @@ RegisterStateDriver(bar2, "visibility", C.actionbars.bar2.visibility or "show")
 MultiBarBottomRight:ClearAllPoints()
 MultiBarBottomRight:SetPoint("TOPLEFT", bar3, "TOPLEFT")
 MultiBarBottomRight:SetParent(bar3)
+MultiBarBottomRightButton1:ClearAllPoints()
+MultiBarBottomRightButton1:SetPoint("TOPLEFT", bar3, "TOPLEFT")
 if C.actionbars.bar3.two_rows then
+	MultiBarBottomRightButton7:ClearAllPoints()
 	MultiBarBottomRightButton7:SetPoint("TOPLEFT", MultiBarBottomRightButton1, "BOTTOMLEFT", 0, -BUTTON_SPACING)
 	bar3:SetWidth((BUTTON_SIZE*6) + (BUTTON_SPACING*5))
 	bar3:SetHeight((BUTTON_SIZE*2) + BUTTON_SPACING)
@@ -84,11 +87,11 @@ RegisterStateDriver(bar4, "visibility", C.actionbars.bar4.visibility or "show")
 -- BAR 5
 MultiBarLeft:SetSize(MultiBarBottomLeft:GetWidth(), MultiBarBottomLeft:GetHeight())
 MultiBarLeft:ClearAllPoints()
-MultiBarLeft:SetPoint("TOPLEFT", bar5, "TOPLEFT")
-MultiBarLeft:SetParent(bar4)
-
+MultiBarLeft:SetParent(bar5)
+MultiBarLeft:SetPoint("TOPLEFT", bar5, "TOPLEFT", 0, 0)
 MultiBarLeftButton1:ClearAllPoints()
-MultiBarLeftButton1:SetPoint("TOPLEFT", MultiBarLeft, "TOPLEFT", 0, 0)
+MultiBarLeftButton1:SetPoint("TOPLEFT", bar5, "TOPLEFT", 0, 0)
+MultiBarLeft:SetParent(bar5)
 for i = 2, NUM_ACTIONBAR_BUTTONS do
 	_G["MultiBarLeftButton"..i]:SetPoint("TOPLEFT", _G["MultiBarLeftButton"..i-1], "TOPRIGHT", BUTTON_SPACING, 0)
 end

@@ -7,7 +7,7 @@ C["uf"] = {
 
 	-- Setting emulatePersonalResourceDisplay to true will ignore the player frame position,
 	-- instead, anchoring the player frame to the Personal Resource Display
-	emulatePersonalResourceDisplay = false,
+	emulatePersonalResourceDisplay = true,
 
 	-- Spacing between icons like combo points, arcane orbs, soul shards, etc.
 	classIconSpacing = 4

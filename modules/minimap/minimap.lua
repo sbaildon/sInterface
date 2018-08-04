@@ -28,7 +28,7 @@ MinimapZoomIn:Hide()
 MinimapZoomOut:Hide()
 
 -- Voice
-MiniMapVoiceChatFrame:Hide()
+-- MiniMapVoiceChatFrame:Hide()
 
 -- Compass
 MinimapNorthTag:SetTexture(nil)

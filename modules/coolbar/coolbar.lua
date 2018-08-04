@@ -53,7 +53,7 @@ function CoolBar:PLAYER_LOGIN()
 	CoolBar:PlayHide()
 end
 
-function CoolBar:CreateCooldown(spell, spellId)
+function CoolBar:CreateCooldown(spellId)
 	if ((GetTime() - lastUpdate) < THROTTLE_THRESHHOLD) then return end
 	lastUpdate = GetTime()
 	local start, dur = GetSpellCooldown(spellId)
@@ -78,7 +78,6 @@ function CoolBar:CreateCooldown(spell, spellId)
 		local _, _, icon, _ = GetSpellInfo(spellId)
 		f = CreateFrame("Frame", nil, CoolBar)
 		f.spellId = spellId
-		f.spell = spell
 		f.icon = f:CreateTexture(nil, "ARTWORK")
 		f.icon:SetTexture(icon)
 		f.icon:SetAllPoints(f)
@@ -189,23 +188,23 @@ function CoolBar:CreateCooldown(spell, spellId)
 	end)
 end
 
-function CoolBar:UNIT_SPELLCAST_SUCCEEDED(_, spell, _, _, spellId)
-	if noCooldowns[spellId] then return end
+function CoolBar:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
+	if (spellId == nil) or (noCooldowns[spellId]) then return end
 
-	if not (C.coolbar.disabled[spell]) then
+	if not (C.coolbar.disabled[spellId]) then
 		C_Timer.After(0.1, function()
-			CoolBar:CreateCooldown(spell, spellId)
+			CoolBar:CreateCooldown(spellId)
 		end)
 	end
 end
 
-function CoolBar:UNIT_SPELLCAST_FAILED(_, spell, _, _, spellId)
+function CoolBar:UNIT_SPELLCAST_FAILED(_, _, spellId)
 	if noCooldowns[spellId] then return end
 
 	local f
 	for _, frame in pairs(cooldowns) do
 
-		if (frame.spell == spell or frame.spellId == spellId) and frame:IsShown() then
+		if (frame.spellId == spellId) and frame:IsShown() then
 			f = frame
 			break
 		end

@@ -55,7 +55,6 @@ local function xpDisable(self)
 	self:UnregisterEvent("PLAYER_XP_UPDATE")
 	self:UnregisterEvent("HONOR_LEVEL_UPDATE")
 	self:UnregisterEvent("HONOR_XP_UPDATE")
-	self:UnregisterEvent("HONOR_PRESTIGE_UPDATE")
 	self:UnregisterEvent("UPDATE_EXHAUSTION")
 end
 
@@ -63,7 +62,6 @@ local function xpEnable(self)
 	self:RegisterEvent("PLAYER_XP_UPDATE")
 	self:RegisterEvent("HONOR_LEVEL_UPDATE")
 	self:RegisterEvent("HONOR_XP_UPDATE")
-	self:RegisterEvent("HONOR_PRESTIGE_UPDATE")
 	self:RegisterEvent("UPDATE_EXHAUSTION")
 	xpUpdate(self)
 end

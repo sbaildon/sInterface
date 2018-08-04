@@ -3,6 +3,8 @@ local E, C = ns.E, ns.C
 
 if not C.progressBars.enabled then return end;
 
+if true then return end
+
 local ProgressBars = ns.sInterfaceProgressBars
 local barName = "artifactPower"
 

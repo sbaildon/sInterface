@@ -69,7 +69,7 @@ C["actionbars"] = {
 	},
 
 	bags = { --sInterfaceBagsBar
-		position = { "BOTTOMLEFT", "sInterfaceMicromenu", "BOTTOMRIGHT", -25, 0},
+		position = { "TOPLEFT", "sInterfaceMicromenu", "TOPRIGHT", 0, 0},
 		visibility = "[modifier:ctrl, modifier:alt, modifier:shift] show; hide",
 		show_all = false
 	},

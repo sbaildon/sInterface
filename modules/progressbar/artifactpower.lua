@@ -2,7 +2,12 @@ local _, ns = ...
 local E, C = ns.E, ns.C
 
 if not C.progressBars.enabled then return end;
+
+if (not HasArtifactEquipped()) then return end
 if (HasArtifactEquipped() and C_ArtifactUI.IsEquippedArtifactDisabled()) then return end
+
+-- Here be dragons
+-- This code does not work anymore, and artifacts are disabled in 8.0.1
 
 local ProgressBars = ns.sInterfaceProgressBars
 local barName = "artifactPower"

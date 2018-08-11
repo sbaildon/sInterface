@@ -857,36 +857,34 @@ end
 
 oUF:Factory(function(self)
 	if (C.uf.emulatePersonalResourceDisplay) then
-		print("[sInterface] C['uf'].emulatePersonalResourceDisplay is currently ignored because of a bug regarding unit frame text display")
-		print("[sInterface] Consider updating sInterface now, or in the near future when a fix is available")
+		SetCVar("nameplateShowSelf", 1)
+		SetCVar("NameplatePersonalShowAlways", 1)
+		C_NamePlate.SetNamePlateSelfClickThrough(true)
+		SetCVar("nameplateSelfAlpha", 0)
 
-		-- SetCVar("nameplateShowSelf", 1)
-		-- SetCVar("NameplatePersonalShowAlways", 1)
-		-- C_NamePlate.SetNamePlateSelfClickThrough(true)
-		-- SetCVar("nameplateSelfAlpha", 0)
+		spawnHelper(self, 'player', C.uf.positions.Player)
 
-		-- local emulatePosition = { "CENTER", "NamePlatePlayerResourceFrame", "CENTER", 0, -50 }
+		hooksecurefunc(NamePlateDriverFrame, "SetupClassNameplateBar", function(self, ontarget, bar)
+			if (not bar or InCombatLockdown() or ontarget) then return end
+			local localframe = C_NamePlate.GetNamePlateForUnit("player", issecure());
+			local namePlatePlayer = C_NamePlate.GetNamePlateForUnit("player", issecure());
+			if (namePlatePlayer) then
+				oUF_sInterfacePlayer:ClearAllPoints()
+				oUF_sInterfacePlayer:SetPoint("CENTER", namePlatePlayer, "CENTER", 0, -20)
+			end
+		end)
 
-		-- spawnHelper(self, 'player', emulatePosition)
-
-		-- NamePlatePlayerResourceFrame:HookScript("OnHide", function()
-		-- 	if InCombatLockdown() then return end
-		-- 	oUF_sInterfacePlayer:ClearAllPoints()
-		-- 	oUF_sInterfacePlayer:SetPoint(unpack(C.uf.positions.Player))
-		-- end)
-
-		-- NamePlatePlayerResourceFrame:HookScript("OnShow", function()
-		-- 	if InCombatLockdown() then return end
-		-- 	oUF_sInterfacePlayer:ClearAllPoints()
-		-- 	oUF_sInterfacePlayer:SetPoint(unpack(emulatePosition))
-		-- end)
+		NamePlatePlayerResourceFrame:HookScript("OnHide", function()
+			if InCombatLockdown() then return end
+			oUF_sInterfacePlayer:ClearAllPoints()
+			oUF_sInterfacePlayer:SetPoint(unpack(C.uf.positions.Player))
+		end)
+	else
+		SetCVar("nameplateSelfAlpha", GetCVarDefault("nameplateSelfAlpha"))
+		SetCVar("NameplatePersonalShowAlways", GetCVarDefault("NameplatePersonalShowAlways"))
+		C_NamePlate.SetNamePlateSelfClickThrough(false)
+		spawnHelper(self, 'player', C.uf.positions.Player)
 	end
-	-- else
-	SetCVar("nameplateSelfAlpha", GetCVarDefault("nameplateSelfAlpha"))
-	SetCVar("NameplatePersonalShowAlways", GetCVarDefault("NameplatePersonalShowAlways"))
-	C_NamePlate.SetNamePlateSelfClickThrough(false)
-	spawnHelper(self, 'player', C.uf.positions.Player)
-	-- end
 
 
 	spawnHelper(self, 'target', C.uf.positions.Target)

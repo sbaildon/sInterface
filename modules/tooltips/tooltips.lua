@@ -99,17 +99,14 @@ end)
 
 local function TooltipOnShow(self, ...)
 	SetBackdropStyle(self)
-	print("show")
 end
 
 local function TooltipOnHide(self, ...)
 	SetBackdropStyle(self)
-	print("hide")
 end
 
 local function OnTooltipCleared(self)
 	SetBackdropStyle(self)
-	print("cleared")
 end
 
 local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip, SmallTextTooltip }

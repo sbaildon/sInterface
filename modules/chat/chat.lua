@@ -6,14 +6,21 @@ if not C.chat.enabled then return end
 ChatFrameMenuButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
 ChatFrameMenuButton:Hide()
 
+ChatFrameChannelButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
+ChatFrameChannelButton:Hide()
+
 QuickJoinToastButton:HookScript("OnShoW", QuickJoinToastButton.Hide)
 QuickJoinToastButton:Hide()
 
 hooksecurefunc("FCFTab_UpdateColors", function(self, selected)
+	local string = self:GetFontString()
+	local font, size, flags = string:GetFont()
+	string:SetFont(font, size, "OUTLINE")
+
 	if selected then
-		self:GetFontString():SetTextColor(1, 0.75, 0, 1)
+		string:SetTextColor(1, 0.75, 0, 1)
 	else
-		self:GetFontString():SetTextColor(0.5, 0.5, 0.5, 1)
+		string:SetTextColor(0.5, 0.5, 0.5, 1)
 	end
 end)
 

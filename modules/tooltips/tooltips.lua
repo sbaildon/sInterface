@@ -17,6 +17,13 @@ local backdrop = { bgFile = "Interface\\Buttons\\WHITE8x8",
 	insets = { left = 0, right = 0, top = 0, bottom = 0 },
 }
 
+local function SetBackdropStyle(self)
+	self:SetBackdrop(backdrop)
+	self:SetBackdropColor(unpack(bgColor))
+	self:SetBackdropBorderColor(1, 1, 1, 0)
+end
+
+hooksecurefunc("GameTooltip_SetBackdropStyle", SetBackdropStyle)
 
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	if C.tooltips.anchor_cursor then
@@ -33,12 +40,6 @@ local left = setmetatable({}, { __index = function(left, i)
 	if line then rawset(left, i, line) end
 	return line
 end })
-
-GameTooltip:HookScript("OnUpdate", function(self, elapsed)
-	if not self.currentItem and not self.currentUnit then
-		self:SetBackdropColor(unpack(bgColor))
-	end
-end)
 
 GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 	local unit = select(2, self:GetUnit()) or (GetMouseFocus() and GetMouseFocus():GetAttribute("unit")) or (UnitExists("mouseover") and "mouseover")
@@ -96,20 +97,26 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 	end
 end)
 
-local function TooltipOnShow(self,...)
-	self:SetBackdropColor(unpack(bgColor))
-	self:SetBackdropBorderColor(0, 0, 0, 0)
+local function TooltipOnShow(self, ...)
+	SetBackdropStyle(self)
+	print("show")
 end
 
-local function TooltipOnHide(self,...)
-	self:SetBackdropColor(unpack(bgColor))
+local function TooltipOnHide(self, ...)
+	SetBackdropStyle(self)
+	print("hide")
 end
 
+local function OnTooltipCleared(self)
+	SetBackdropStyle(self)
+	print("cleared")
+end
 
-local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip }
+local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip, SmallTextTooltip }
 for _, tooltip in ipairs(tooltips) do
-	tooltip:SetBackdrop(backdrop)
-	tooltip:SetBackdropColor(unpack(bgColor))
 	tooltip:HookScript("OnShow", TooltipOnShow)
 	tooltip:HookScript("OnHide", TooltipOnHide)
+	if tooltip:HasScript("OnTooltipCleared") then
+		tooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
+	end
 end

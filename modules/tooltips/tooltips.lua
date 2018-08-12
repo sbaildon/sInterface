@@ -35,6 +35,10 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	end
 end)
 
+hooksecurefunc("EmbeddedItemTooltip_UpdateSize", function(self)
+	self.Tooltip:SetBackdrop(nil)
+end)
+
 local left = setmetatable({}, { __index = function(left, i)
 	local line = _G["GameTooltipTextLeft" .. i]
 	if line then rawset(left, i, line) end

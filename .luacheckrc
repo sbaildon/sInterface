@@ -268,5 +268,6 @@ read_globals = {
 	"MainMenuBarArtFrameBackground",
 	"MicroButtonAndBagsBar",
 	"StatusTrackingBarManager",
-	"AuraUtil"
+	"AuraUtil",
+	"NamePlateDriverFrame"
 }

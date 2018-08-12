@@ -866,7 +866,6 @@ oUF:Factory(function(self)
 
 		hooksecurefunc(NamePlateDriverFrame, "SetupClassNameplateBar", function(self, ontarget, bar)
 			if (not bar or InCombatLockdown() or ontarget) then return end
-			local localframe = C_NamePlate.GetNamePlateForUnit("player", issecure());
 			local namePlatePlayer = C_NamePlate.GetNamePlateForUnit("player", issecure());
 			if (namePlatePlayer) then
 				oUF_sInterfacePlayer:ClearAllPoints()

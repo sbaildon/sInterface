@@ -6,6 +6,12 @@ if not C.chat.enabled then return end
 ChatFrameMenuButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
 ChatFrameMenuButton:Hide()
 
+ChatFrameToggleVoiceDeafenButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
+ChatFrameToggleVoiceDeafenButton:Hide()
+
+ChatFrameToggleVoiceMuteButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
+ChatFrameToggleVoiceMuteButton:Hide()
+
 ChatFrameChannelButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
 ChatFrameChannelButton:Hide()
 

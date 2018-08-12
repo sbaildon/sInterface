@@ -101,23 +101,12 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 	end
 end)
 
-local function TooltipOnShow(self, ...)
-	SetBackdropStyle(self)
-end
-
-local function TooltipOnHide(self, ...)
-	SetBackdropStyle(self)
-end
-
-local function OnTooltipCleared(self)
-	SetBackdropStyle(self)
-end
-
 local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip, SmallTextTooltip }
 for _, tooltip in ipairs(tooltips) do
-	tooltip:HookScript("OnShow", TooltipOnShow)
-	tooltip:HookScript("OnHide", TooltipOnHide)
+	tooltip:HookScript("OnShow", SetBackdropStyle)
+	tooltip:HookScript("OnHide", SetBackdropStyle)
+	tooltip:HookScript("OnUpdate", SetBackdropStyle)
 	if tooltip:HasScript("OnTooltipCleared") then
-		tooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
+		tooltip:HookScript("OnTooltipCleared", SetBackdropStyle)
 	end
 end

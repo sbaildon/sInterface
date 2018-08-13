@@ -19,6 +19,7 @@ function E:ShadowedBorder(anchor)
 		insets = {left = BACKDROP_INSET, right = BACKDROP_INSET, top = BACKDROP_INSET, bottom = BACKDROP_INSET}
 	})
 	backdrop:SetBackdropColor(0, 0, 0, 0.6)
+	anchor.shadowedBackdrop = backdrop
 
 	local SHADOW_OFFSET   = 5
 	local SHADOW_EDGESIZE = 5
@@ -31,6 +32,8 @@ function E:ShadowedBorder(anchor)
 		edgeFile = shadowTex, edgeSize = SHADOW_EDGESIZE,
 	})
 	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
+	anchor.shadowedShadow = shadow
+
 end
 
 function E:RegisterAlphaAnimation(frame)

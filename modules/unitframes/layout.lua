@@ -72,7 +72,7 @@ local function UpdatePlayerCastBarAnchor()
 	if oUF_sInterfacePlayer.ClassPowerBar:IsShown() then
 		oUF_sInterfacePlayer.Castbar:SetPoint("TOPRIGHT", oUF_sInterfacePlayer.ClassPowerBar, "BOTTOMRIGHT", 0, -10)
 	else
-		oUF_sInterfacePlayer.Castbar:SetPoint("TOPRIGHT", oUF_sInterfacePlayer, "BOTTOMRIGHT", 0, -15)
+		oUF_sInterfacePlayer.Castbar:SetPoint("TOPRIGHT", oUF_sInterfacePlayer, "BOTTOMRIGHT", 0, -18)
 	end
 end
 
@@ -194,13 +194,17 @@ end
 
 local PostUpdatePower = function(Power, _, _, _, max)
 	local parent = Power:GetParent()
-	local h = parent.Health
-	if max == 0 then
+
+	if (max == 0) then
 		Power:Hide()
-		h:SetHeight(parent:GetHeight())
+		if parent.unit == "player" then
+			parent.ClassPowerBar:SetPoint("TOPLEFT", parent, "BOTTOMLEFT", 0, -6)
+		end
 	else
 		Power:Show()
-		h:SetHeight(parent:GetHeight() - Power:GetHeight() - 1)
+		if parent.unit == "player" then
+			parent.ClassPowerBar:SetPoint("TOPLEFT", parent, "BOTTOMLEFT", 0, -9)
+		end
 	end
 end
 
@@ -406,9 +410,9 @@ end
 
 local Power = function(self)
 	local p = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
-	p:SetPoint('LEFT')
-	p:SetPoint('RIGHT')
-	p:SetPoint('TOP', self.Health, 'BOTTOM', 0, -1)
+	p:SetPoint('LEFT', (self:GetWidth()/18), 0)
+	p:SetPoint('RIGHT', -(self:GetWidth()/18), 0)
+	p:SetPoint('TOP', self, 'BOTTOM', 0, 1)
 	p:SetHeight(C.uf.size[self.unitSize].power)
 
 	if self.unit == 'player' then p.frequentUpdates = true end
@@ -421,6 +425,13 @@ local Power = function(self)
 
 	p.colorPower = true
 	pbg.multiplier = .4
+	E:ShadowedBorder(p)
+	p:SetFrameLevel(201)
+	p:SetFrameStrata("TOOLTIP")
+	p.shadowedBackdrop:SetFrameLevel(200)
+	p.shadowedBackdrop:SetFrameStrata("TOOLTIP")
+	p.shadowedShadow:SetFrameLevel(200)
+	p.shadowedShadow:SetFrameStrata("TOOLTIP")
 
 	p.PostUpdate = PostUpdatePower
 
@@ -438,9 +449,6 @@ end
 local Size = function(self)
 	local uf_cfg = C.uf.size[self.unitSize]
 	local height = uf_cfg.health
-	if uf_cfg.power then
-		height = height + uf_cfg.power + 1
-	end
 	self:SetSize(uf_cfg.width, height)
 end
 

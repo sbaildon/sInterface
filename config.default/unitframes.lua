@@ -16,12 +16,12 @@ C["uf"] = {
 C["uf"].size = {
 	primary = {
 		width = 155,
-		health = 9,
+		health = 12,
 		power = 3,
 	},
 	secondary = {
 		width = 135,
-		health = 9,
+		health = 12,
 		power = 3,
 	},
 	tertiary = {

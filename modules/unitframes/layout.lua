@@ -6,6 +6,15 @@ if not C.uf.enabled then return end
 local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 
+local CASTBAR_X_OFFSET = 0
+local CASTBAR_Y_OFFSET = -17
+
+local POWER_X_OFFSET = -2
+local POWER_Y_OFFSET = 0
+
+local CLASSPOWER_X_OFFSET = 0
+local CLASSPOWER_Y_OFFSET = -8
+
 local TEXT_Y_OFFSET = 6
 local TEXT_X_OFFSET = 2
 
@@ -65,14 +74,6 @@ end
 local function SpellFinish(self)
 	if not UnitAffectingCombat('player') then
 		self:PlayHide()
-	end
-end
-
-local function UpdatePlayerCastBarAnchor()
-	if oUF_sInterfacePlayer.ClassPowerBar:IsShown() then
-		oUF_sInterfacePlayer.Castbar:SetPoint("TOPRIGHT", oUF_sInterfacePlayer.ClassPowerBar, "BOTTOMRIGHT", 0, -10)
-	else
-		oUF_sInterfacePlayer.Castbar:SetPoint("TOPRIGHT", oUF_sInterfacePlayer, "BOTTOMRIGHT", 0, -18)
 	end
 end
 
@@ -193,27 +194,35 @@ local PostUpdateHealth = function(health, unit)
 end
 
 local PostUpdatePower = function(Power, _, _, _, max)
-	local parent = Power:GetParent()
-
 	if (max == 0) then
 		Power:Hide()
-		if parent.unit == "player" then
-			parent.ClassPowerBar:SetPoint("TOPLEFT", parent, "BOTTOMLEFT", 0, -6)
-		end
 	else
 		Power:Show()
-		if parent.unit == "player" then
-			parent.ClassPowerBar:SetPoint("TOPLEFT", parent, "BOTTOMLEFT", 0, -9)
-		end
 	end
 end
 
 local function PostUpdateClassPower(element, _, max, hasMaxChanged, powerType)
-	if max == nil and class ~= "DEATHKNIGHT" then
-		local ClassPowerPip = element[1]
-		ClassPowerPip:GetParent():Hide()
+	local ClassPowerPip = element[1]
+	local classPowerBar = ClassPowerPip:GetParent()
+
+	if max == nil then
+		classPowerBar:Hide()
 		return
 	end
+
+	classPowerBar:Show()
+
+	local unitFrameParent = element[1]:GetParent():GetParent()
+	local anchor
+	if unitFrameParent.AdditionalPower and unitFrameParent.AdditionalPower:IsShown() then
+		anchor = unitFrameParent.AdditionalPower
+	elseif unitFrameParent.Power and unitFrameParent.Power:IsShown() then
+		anchor = unitFrameParent.Power
+	else
+		anchor = unitFrameParent
+	end
+
+	classPowerBar:SetPoint("TOP", anchor, "BOTTOM", CLASSPOWER_X_OFFSET, CLASSPOWER_Y_OFFSET)
 
 	if(hasMaxChanged) then
 		local multiplier = 0.7
@@ -248,6 +257,20 @@ local PostCastStart = function(self, unit)
 	if unit ~= 'player' and self.notInterruptible and UnitCanAttack('player', unit) then
 		self:SetStatusBarColor(0.65, 0.65, 0.65)
 	end
+
+	local parent = self:GetParent()
+	local anchor
+	if parent.ClassPowerBar and parent.ClassPowerBar:IsShown() then
+		anchor = parent.ClassPowerBar
+	elseif parent.AdditionalPower and parent.AdditionalPower:IsShown() then
+		anchor = parent.AdditionalPower
+	elseif parent.Power and parent.Power:IsShown() then
+		anchor = parent.Power
+	else
+		anchor = parent
+	end
+
+	self:SetPoint("TOP", anchor, "BOTTOM", CASTBAR_X_OFFSET, CASTBAR_Y_OFFSET)
 end
 
 local PostCastStop = function(self)
@@ -439,6 +462,33 @@ local Power = function(self)
 	self.Power = p
 end
 
+local AdditionalPower = function(self)
+	local p = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
+	p:SetPoint('LEFT', (self:GetWidth()/18), 0)
+	p:SetPoint('RIGHT', -(self:GetWidth()/18), 0)
+	p:SetPoint('TOP', self.Power, 'BOTTOM', 0, -4)
+	p:SetHeight(C.uf.size[self.unitSize].power)
+
+	p.Smooth = true
+
+	local pbg = p:CreateTexture(nil, 'BACKGROUND')
+	pbg:SetAllPoints(p)
+	pbg:SetTexture(C.general.texture)
+
+	p.colorPower = true
+	pbg.multiplier = .4
+	E:ShadowedBorder(p)
+	p:SetFrameLevel(201)
+	p:SetFrameStrata("TOOLTIP")
+	p.shadowedBackdrop:SetFrameLevel(200)
+	p.shadowedBackdrop:SetFrameStrata("TOOLTIP")
+	p.shadowedShadow:SetFrameLevel(200)
+	p.shadowedShadow:SetFrameStrata("TOOLTIP")
+
+	p.bg = pbg
+	self.AdditionalPower = p
+end
+
 local PhaseIndicator = function(self)
 	local PhaseIndicator = self:CreateTexture(nil, "OVERLAY")
 	PhaseIndicator:SetPoint("LEFT", -20, 0)
@@ -493,6 +543,7 @@ local UnitSpecific = {
 		Shared(self, ...)
 
 		Power(self)
+		AdditionalPower(self)
 		HealthPrediction(self)
 
 		local fcf = CreateFrame("Frame", nil, self.Health)
@@ -524,9 +575,7 @@ local UnitSpecific = {
 		local ClassPowerBar = CreateFrame('Frame', "ClassPowerBar", self)
 		ClassPowerBar:SetWidth(self:GetWidth())
 		ClassPowerBar:SetHeight(self.Power:GetHeight())
-		ClassPowerBar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -6)
-		ClassPowerBar:HookScript("OnShow", UpdatePlayerCastBarAnchor)
-		ClassPowerBar:HookScript("OnHide", UpdatePlayerCastBarAnchor)
+		ClassPowerBar:SetPoint("TOP", self.Power, "BOTTOM", CLASSPOWER_X_OFFSET, CLASSPOWER_Y_OFFSET)
 		self.ClassPowerBar = ClassPowerBar
 
 		local ClassPower = {}

@@ -202,6 +202,7 @@ local PostUpdatePower = function(Power, _, _, _, max)
 end
 
 local function PostUpdateClassPower(element, _, max, hasMaxChanged, powerType)
+	if class == "DEATHKNIGHT" then return end
 	local ClassPowerPip = element[1]
 	local classPowerBar = ClassPowerPip:GetParent()
 

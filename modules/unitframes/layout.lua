@@ -450,12 +450,12 @@ local Power = function(self)
 	p.colorPower = true
 	pbg.multiplier = .4
 	E:ShadowedBorder(p)
-	p:SetFrameLevel(201)
-	p:SetFrameStrata("TOOLTIP")
-	p.shadowedBackdrop:SetFrameLevel(200)
-	p.shadowedBackdrop:SetFrameStrata("TOOLTIP")
-	p.shadowedShadow:SetFrameLevel(200)
-	p.shadowedShadow:SetFrameStrata("TOOLTIP")
+	p:SetFrameStrata(self.Health:GetFrameStrata())
+	p:SetFrameLevel(self.Health:GetFrameLevel()+1)
+	p.shadowedBackdrop:SetFrameStrata(self.Health:GetFrameStrata())
+	p.shadowedBackdrop:SetFrameLevel(self.Health:GetFrameLevel()+1)
+	p.shadowedShadow:SetFrameStrata(self.Health:GetFrameStrata())
+	p.shadowedShadow:SetFrameLevel(self.Health:GetFrameLevel()+1)
 
 	p.PostUpdate = PostUpdatePower
 
@@ -479,12 +479,12 @@ local AdditionalPower = function(self)
 	p.colorPower = true
 	pbg.multiplier = .4
 	E:ShadowedBorder(p)
-	p:SetFrameLevel(201)
-	p:SetFrameStrata("TOOLTIP")
-	p.shadowedBackdrop:SetFrameLevel(200)
-	p.shadowedBackdrop:SetFrameStrata("TOOLTIP")
-	p.shadowedShadow:SetFrameLevel(200)
-	p.shadowedShadow:SetFrameStrata("TOOLTIP")
+	p:SetFrameStrata(self.Health:GetFrameStrata())
+	p:SetFrameLevel(self.Health:GetFrameLevel()+1)
+	p.shadowedBackdrop:SetFrameStrata(self.Health:GetFrameStrata())
+	p.shadowedBackdrop:SetFrameLevel(self.Health:GetFrameLevel()+1)
+	p.shadowedShadow:SetFrameStrata(self.Health:GetFrameStrata())
+	p.shadowedShadow:SetFrameLevel(self.Health:GetFrameLevel()+1)
 
 	p.bg = pbg
 	self.AdditionalPower = p

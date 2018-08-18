@@ -20,5 +20,10 @@ C["progressBars"] = {
 	artifactPower = {
 		enabled = true,
 		height = 3
+	},
+
+	azerite = {
+		enabled = true,
+		height = 3
 	}
 }

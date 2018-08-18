@@ -32,38 +32,38 @@ local function getRested()
 	return (IsWatchingHonorAsXP() and GetHonorExhaustion or GetXPExhaustion)() or 0
 end
 
-local function xpUpdate(self)
+local function Update(bar)
 	local cur = getExperienceCurrent()
 	local max = getExperienceMax()
 	local exhaustion = getRested()
+	local level = getLevel()
 
-	self:SetMinMaxValues(0, max)
-	self:SetValue(cur)
-	self.Rested:SetMinMaxValues(0, max)
-	self.Rested:SetValue(math.min(cur + exhaustion, max))
+	bar:SetAnimatedValues(cur, 0, max, level)
+	bar.Rested:SetMinMaxValues(0, max)
+	bar.Rested:SetValue(math.min(cur + exhaustion, max))
 end
 
-local function xpUpdateColor(self)
+local function UpdateColor(bar)
 	if (IsWatchingHonorAsXP()) then
-		self:SetStatusBarColor(1, 1/4, 0)
+		bar:SetStatusBarColor(1, 1/4, 0)
 	else
-		self:SetStatusBarColor(1, 0, 1, 1)
+		bar:SetStatusBarColor(1, 0, 1, 1)
 	end
 end
 
-local function xpDisable(self)
-	self:UnregisterEvent("PLAYER_XP_UPDATE")
-	self:UnregisterEvent("HONOR_LEVEL_UPDATE")
-	self:UnregisterEvent("HONOR_XP_UPDATE")
-	self:UnregisterEvent("UPDATE_EXHAUSTION")
+local function Disable(bar)
+	bar:UnregisterEvent("PLAYER_XP_UPDATE")
+	bar:UnregisterEvent("HONOR_LEVEL_UPDATE")
+	bar:UnregisterEvent("HONOR_XP_UPDATE")
+	bar:UnregisterEvent("UPDATE_EXHAUSTION")
 end
 
-local function xpEnable(self)
-	self:RegisterEvent("PLAYER_XP_UPDATE")
-	self:RegisterEvent("HONOR_LEVEL_UPDATE")
-	self:RegisterEvent("HONOR_XP_UPDATE")
-	self:RegisterEvent("UPDATE_EXHAUSTION")
-	xpUpdate(self)
+local function Enable(bar)
+	bar:RegisterEvent("PLAYER_XP_UPDATE")
+	bar:RegisterEvent("HONOR_LEVEL_UPDATE")
+	bar:RegisterEvent("HONOR_XP_UPDATE")
+	bar:RegisterEvent("UPDATE_EXHAUSTION")
+	Update(bar)
 end
 
 local function xpVisibility(self)
@@ -77,11 +77,11 @@ local function xpVisibility(self)
 	end
 
 	if (shouldEnable) then
-		xpEnable(self.Experience)
-		xpUpdateColor(self.Experience)
+		Enable(self.Experience)
+		UpdateColor(self.Experience)
 		ProgressBars:EnableBar(barName)
 	else
-		xpDisable(self.Experience)
+		Disable(self.Experience)
 		ProgressBars:DisableBar(barName)
 	end
 end
@@ -97,11 +97,12 @@ hooksecurefunc('SetWatchingHonorAsXP', function(...)
 	xpVisibility(experienceHolder)
 end)
 
-local experience = CreateFrame("StatusBar", "Experience", experienceHolder)
+local experience = CreateFrame("StatusBar", "Experience", experienceHolder, "AnimatedStatusBarTemplate")
+experience:SetMatchBarValueToAnimation(true)
 experience:SetAllPoints(experienceHolder)
 experience:SetStatusBarTexture(C.general.texture, "ARTWORK")
 experience:SetFrameLevel(2)
-experience:SetScript("OnEvent", xpUpdate)
+experience:SetScript("OnEvent", Update)
 experienceHolder.Experience = experience
 
 local rested = CreateFrame("StatusBar", "ExperienceRested", experience)

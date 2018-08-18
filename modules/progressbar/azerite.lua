@@ -21,9 +21,8 @@ local function GetAzerite()
 end
 
 local function Update(bar)
-	local _, xp, totalLevelXP = GetAzerite();
-	bar:SetMinMaxValues(0, totalLevelXP)
-	bar:SetValue(xp)
+	local level, cur, max = GetAzerite();
+	bar:SetAnimatedValues(cur, 0, max, level)
 end
 
 local function Disable(bar)
@@ -51,7 +50,8 @@ azeriteHolder:RegisterEvent("UNIT_INVENTORY_CHANGED")
 azeriteHolder:RegisterEvent("PLAYER_ENTERING_WORLD")
 azeriteHolder:SetScript("OnEvent", Visibility)
 
-local azerite = CreateFrame("StatusBar", "ProgressBar", azeriteHolder)
+local azerite = CreateFrame("StatusBar", "ProgressBar", azeriteHolder, "AnimatedStatusBarTemplate")
+azerite:SetMatchBarValueToAnimation(true)
 azerite:SetAllPoints(azeriteHolder)
 azerite:SetStatusBarTexture(C.general.texture, "ARTWORK")
 azerite:SetScript("OnEvent", Update)

@@ -66,24 +66,22 @@ local function GetReputation()
 	return cur, max, name, factionID, standingID, standingText, pendingReward
 end
 
-local function reputationUpdate(self)
+local function Update(bar)
 	local cur, max, name, _, standingID = GetReputation()
 	if (name) then
-		self:SetMinMaxValues(0, max)
-		self:SetValue(cur)
-
+		bar:SetAnimatedValues(cur, 0, max, standingID)
 		local colors = reactions[standingID]
-		self:SetStatusBarColor(colors[1], colors[2], colors[3])
+		bar:SetStatusBarColor(colors[1], colors[2], colors[3])
 	end
 end
 
-local function reputationDisable(self)
-	self:UnregisterEvent("UPDATE_FACTION")
+local function Disable(bar)
+	bar:UnregisterEvent("UPDATE_FACTION")
 end
 
-local function reputationEnable(self)
-	self:RegisterEvent("UPDATE_FACTION")
-	reputationUpdate(self)
+local function Enable(bar)
+	bar:RegisterEvent("UPDATE_FACTION")
+	Update(bar)
 end
 
 local function reputationVisibility(self, selectedFactionIndex)
@@ -97,10 +95,10 @@ local function reputationVisibility(self, selectedFactionIndex)
 	end
 
 	if (shouldEnable) then
-		reputationEnable(self.Reputation)
+		Enable(self.Reputation)
 		ProgressBars:EnableBar(barName)
 	else
-		reputationDisable(self.Reputation)
+		Disable(self.Reputation)
 		ProgressBars:DisableBar(barName)
 	end
 end
@@ -112,10 +110,11 @@ hooksecurefunc('SetWatchedFactionIndex', function(selectedFactionIndex)
 	reputationVisibility(reputationHolder, selectedFactionIndex or 0)
 end)
 
-local reputation = CreateFrame("StatusBar", "ProgressBar", reputationHolder)
+local reputation = CreateFrame("StatusBar", "ProgressBar", reputationHolder, "AnimatedStatusBarTemplate")
+reputation:SetMatchBarValueToAnimation(true)
 reputation:SetAllPoints(reputationHolder)
 reputation:SetStatusBarTexture(C.general.texture, "ARTWORK")
-reputation:SetScript("OnEvent", reputationUpdate)
+reputation:SetScript("OnEvent", Update)
 reputationHolder.Reputation = reputation
 C_Timer.After(1, function()
 	reputationVisibility(reputationHolder, nil)

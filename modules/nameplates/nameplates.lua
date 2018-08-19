@@ -46,6 +46,16 @@ hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
 	frame.healthBar.barTexture:SetVertexColor (r, g, b)
 end)
 
+hooksecurefunc(NameplateBuffContainerMixin, "UpdateAnchor", function(self)
+	self:SetPoint("BOTTOM", self:GetParent().healthBar, "TOP", 0, 12);
+	self:SetScale(0.85)
+	local font, size, flags = GameFontNormalOutline:GetFont()
+	for i, buff in ipairs(self.buffList) do
+		buff.CountFrame.Count:SetFont(font, size, flags)
+		buff.CountFrame:SetPoint("BOTTOMRIGHT", 2, -2)
+	end
+end)
+
 hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
 	if frame:IsForbidden() then return end
 	if UnitIsPlayer(frame.unit) then

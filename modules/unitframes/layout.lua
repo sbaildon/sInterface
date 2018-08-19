@@ -170,7 +170,7 @@ local Auras = function(self)
 	b.spacing = (self:GetWidth() - config.size * config.num) / (config.num-1)
 	b:SetSize(self:GetWidth(), config.size)
 	b.size = config.size
-	b:SetPoint('BOTTOMLEFT', self.Experience or self.Reputation or self, 'TOPLEFT', 0, 9)
+	b:SetPoint('BOTTOMLEFT', self, 'TOPLEFT', 0, 12)
 	b.initialAnchor = 'TOPLEFT'
 	b['growth-y'] = 'UP'
 	b.fontFlag = config.fontFlag or "OUTLINE" --used to apply fontFlag in PostCreateIcon

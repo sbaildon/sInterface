@@ -20,7 +20,7 @@ QuickJoinToastButton:Hide()
 
 hooksecurefunc("FCFTab_UpdateColors", function(self, selected)
 	local string = self:GetFontString()
-	local font, size, flags = string:GetFont()
+	local font, size = string:GetFont()
 	string:SetFont(font, size, "OUTLINE")
 
 	if selected then

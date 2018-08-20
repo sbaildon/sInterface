@@ -50,7 +50,7 @@ hooksecurefunc(NameplateBuffContainerMixin, "UpdateAnchor", function(self)
 	self:SetPoint("BOTTOM", self:GetParent().healthBar, "TOP", 0, 12);
 	self:SetScale(0.85)
 	local font, size, flags = GameFontNormalOutline:GetFont()
-	for i, buff in ipairs(self.buffList) do
+	for _, buff in ipairs(self.buffList) do
 		buff.CountFrame.Count:SetFont(font, size, flags)
 		buff.CountFrame:SetPoint("BOTTOMRIGHT", 2, -2)
 	end

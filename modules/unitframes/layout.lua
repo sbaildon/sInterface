@@ -9,8 +9,8 @@ local _, class = UnitClass('player')
 local CASTBAR_X_OFFSET = 0
 local CASTBAR_Y_OFFSET = -17
 
-local POWER_X_OFFSET = -2
-local POWER_Y_OFFSET = 0
+local POWER_X_OFFSET = 0
+local POWER_Y_OFFSET = 1
 
 local CLASSPOWER_X_OFFSET = 0
 local CLASSPOWER_Y_OFFSET = -8
@@ -234,19 +234,19 @@ local function PostUpdateClassPower(element, _, max, hasMaxChanged, powerType)
 		local color = oUF.colors.power[powerType or "COMBO_POINTS"]
 
 		for index = 1, max do
-			local ClassPowerPip = element[index]
-			ClassPowerPip:SetWidth(width)
+			local pip = element[index]
+			pip:SetWidth(width)
 
 			if index <= 5 then
-				ClassPowerPip:SetStatusBarColor(color[1], color[2], color[3])
+				pip:SetStatusBarColor(color[1], color[2], color[3])
 			else
-				ClassPowerPip:SetStatusBarColor(color[1] * multiplier, color[2] * multiplier, color[3] * multiplier)
+				pip:SetStatusBarColor(color[1] * multiplier, color[2] * multiplier, color[3] * multiplier)
 			end
 		end
 
 		for index = max+1, 10 do
-			local ClassPowerPip = element[index]
-			ClassPowerPip:Hide()
+			local pip = element[index]
+			pip:Hide()
 		end
 	end
 end
@@ -436,7 +436,7 @@ local Power = function(self)
 	local p = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	p:SetPoint('LEFT', (self:GetWidth()/18), 0)
 	p:SetPoint('RIGHT', -(self:GetWidth()/18), 0)
-	p:SetPoint('TOP', self, 'BOTTOM', 0, 1)
+	p:SetPoint('TOP', self, 'BOTTOM', POWER_X_OFFSET, POWER_Y_OFFSET)
 	p:SetHeight(C.uf.size[self.unitSize].power)
 
 	if self.unit == 'player' then p.frequentUpdates = true end

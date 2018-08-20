@@ -269,5 +269,15 @@ read_globals = {
 	"MicroButtonAndBagsBar",
 	"StatusTrackingBarManager",
 	"AuraUtil",
-	"NamePlateDriverFrame"
+	"NamePlateDriverFrame",
+	"SmallTextTooltip",
+	"ChatFrameToggleVoiceMuteButton",
+	"ChatFrameToggleVoiceDeafenButton",
+	"NameplateBuffContainerMixin",
+	"C_AzeriteItem",
+	"ARTIFACT_BAR_COLOR",
+	"SmallTextTooltip",
+	"ChatFrameToggleVoiceDeafenButton",
+	"ChatFrameToggleVoiceMuteButton",
+	"ChatFrameChannelButton"
 }

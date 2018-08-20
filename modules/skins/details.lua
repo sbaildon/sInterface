@@ -1,6 +1,8 @@
 local addon, ns = ...
 local E, C = ns.E, ns.C
 
+if not C.skins.details.enabled then return end
+
 local function skinInstance(instance)
 	if not instance or not instance:IsEnabled() or instance.styled then return end
 

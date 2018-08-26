@@ -88,7 +88,6 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 
 	namePlate.styled = true
 end)
---end
 
 sPlates:SetScript("OnEvent", function(self, event, ...)
 	self[event](self, ...); -- call one of the functions above

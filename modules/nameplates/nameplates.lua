@@ -4,11 +4,13 @@ local E, C = ns.E, ns.C
 if not C.np.enabled then return end;
 
 local colours = {
-	secure = { 0, 255, 0 },
-	insecure = { 255, 124, 0 },
-	na = { 255, 0, 0 },
+	secure = {  0.2, 0.8, 0.1 },
+	insecure = { 1, 1, 0.3},
+	na = { 1, 0, 0 },
 	reaction = {}
 }
+
+local multiplier = 0.4
 
 for eclass, color in next, FACTION_BAR_COLORS do
 	colours.reaction[eclass] = {color.r, color.g, color.b}
@@ -49,6 +51,7 @@ hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
 		r, g, b = unpack(colours.na)
 	end
 	frame.healthBar.barTexture:SetVertexColor (r, g, b)
+	frame.healthBar.background:SetVertexColor(r*multiplier, g*multiplier, b*multiplier, 1)
 end)
 
 hooksecurefunc(NameplateBuffContainerMixin, "UpdateAnchor", function(self)
@@ -74,6 +77,7 @@ end)
 hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	if namePlate.styled or namePlate:IsForbidden() then return end
 	namePlate.healthBar:SetStatusBarTexture(C.general.texture)
+	namePlate.healthBar.background:SetTexture(C.general.texture)
 	namePlate.healthBar.border:Hide()
 
 	E:ShadowedBorder(namePlate.healthBar)
@@ -92,7 +96,7 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	local layer, sublayer = namePlate.selectionHighlight:GetDrawLayer()
 	namePlate.name:SetDrawLayer(layer, sublayer+1)
 
-	namePlate.selectionHighlight:SetAlpha(0.2)
+	namePlate.selectionHighlight:SetAlpha(0)
 
 	namePlate.styled = true
 end)

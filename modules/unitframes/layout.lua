@@ -137,28 +137,48 @@ end
 
 UIDropDownMenu_Initialize(dropdown, init, 'MENU')
 
+local PlayerAuraFilter = function(element, unit, button, name, texture, count, debuffType, duration, expiration, caster, isStealable, nameplateShowSelf, spellID, canApply, isBossDebuff, casterIsPlayer, nameplateShowAll,timeMod, effect1, effect2, effect3)
+	return true
+end
+
 local PostCreateIcon = function(auras, button)
 	local c = button.count
 	c:ClearAllPoints()
-	c:SetPoint('BOTTOMRIGHT', 4, -4)
+	c:SetPoint('BOTTOMRIGHT', auras.size*0.35, -(auras.size*0.21))
 	c:SetFontObject("GameFontNormalOutline")
+	local font, size, flags = c:GetFont()
+	c:SetFont(font, auras.size*0.6, flags)
 	c:SetTextColor(1, 1, 1)
 
 	button.cd:SetReverse(true)
 	button.overlay:SetTexture(nil)
-	button.icon:SetTexCoord(.1, .9, .1, .9)
+	button.icon:SetTexCoord(.05, .95, .2, .7)
 	button:SetBackdrop(backdrop)
 	button:SetBackdropColor(0, 0, 0, 1)
 
 	E:ShadowedBorder(button)
 end
 
-local PostUpdateIcon = function(_, unit, icon)
-	local texture = icon.icon
-	if icon.isPlayer or UnitIsFriend('player', unit) or not icon.isDebuff then
+local PostUpdateIcon = function(_, unit, button)
+	local texture = button.icon
+	if button.isPlayer or UnitIsFriend('player', unit) or not button.isDebuff then
 		texture:SetDesaturated(false)
 	else
 		texture:SetDesaturated(true)
+	end
+	button:SetHeight(button:GetWidth()/1.4)
+end
+
+local AuraSetPosition = function(element, from, to)
+	for i = from, to do
+		local button = element[i]
+		if i > 1 and ((i % element.buttonsPerRow) == 1) then
+			button:SetPoint("BOTTOMLEFT", element[i-element.buttonsPerRow], "TOPLEFT", 0, element.spacing)
+		elseif (i > 1) then
+			button:SetPoint("LEFT", element[i-1], "RIGHT", element.spacing, 0)
+		else
+			button:SetPoint("BOTTOMLEFT", element, "BOTTOMLEFT", 0, 0)
+		end
 	end
 end
 
@@ -166,19 +186,35 @@ local Auras = function(self)
 	local config = C.uf.aura[self.unit]
 	if not config then return end
 
+	local spacing = 0
+	local buttonsPerRow = 0
+	local iterations = 0 -- reduce aura per row until loop condition satisfied
+	while (spacing < 4) do -- require at least this many pixels spacing between buttons
+		local frameWidth = self:GetWidth()
+		buttonsPerRow = (math.floor(frameWidth / config.size) - iterations)
+		local leftover = frameWidth - (buttonsPerRow*config.size)
+		spacing = leftover / (buttonsPerRow-1)
+		iterations = iterations+1
+	end
+
+	local totalButtons = (buttonsPerRow >= 7) and buttonsPerRow or buttonsPerRow*2
+
 	local b = CreateFrame('Frame', nil, self)
-	b.spacing = (self:GetWidth() - config.size * config.num) / (config.num-1)
-	b:SetSize(self:GetWidth(), config.size)
+	b.spacing = spacing
+	b.num = totalButtons
+	b.buttonsPerRow = buttonsPerRow
+	b:SetSize(self:GetWidth(), 14)
 	b.size = config.size
 	b:SetPoint('BOTTOMLEFT', self, 'TOPLEFT', 0, 12)
 	b.initialAnchor = 'TOPLEFT'
 	b['growth-y'] = 'UP'
-	b.fontFlag = config.fontFlag or "OUTLINE" --used to apply fontFlag in PostCreateIcon
 	b.PostCreateIcon = PostCreateIcon
 	b.PostUpdateIcon = PostUpdateIcon
+	b.SetPosition = AuraSetPosition
+
 	if config.mode == 'aura' then
-		b.gap = config.gap
-		b.numTotal = config.num
+		b.gap = false
+		b.numTotal = totalButtons
 		self.Auras = b
 	elseif config.mode == 'debuff' then
 		self.Debuffs = b
@@ -546,6 +582,9 @@ local UnitSpecific = {
 		Power(self)
 		AdditionalPower(self)
 		HealthPrediction(self)
+
+		Auras(self)
+		self.Buffs.CustomFilter = PlayerAuraFilter
 
 		local fcf = CreateFrame("Frame", nil, self.Health)
 		fcf:SetSize(32, 32)

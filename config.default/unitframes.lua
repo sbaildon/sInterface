@@ -35,58 +35,48 @@ C["uf"].size = {
 }
 
 C["uf"].positions = {
-	Player = { 'CENTER', UIParent, 'CENTER', 0, -275 }, -- Unused if emulatePersonalResourceDisplay is set
-	Target = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 55, 130 },
-	Targettarget = { 'TOPLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 7, 0 },
-	Focus = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 56, -100 },
-	Focustarget = { 'TOPLEFT', 'oUF_sInterfaceFocus', 'TOPRIGHT', 7, 0 },
-	Pet = { 'TOPLEFT', 'oUF_sInterfacePlayer', 'TOPRIGHT', 5, 0 },
-	Boss = { 'BOTTOMLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 300, 250 },
-	Tank = { 'BOTTOMRIGHT', 'oUF_sInterfacePlayer', 'TOPLEFT', -350, 150 },
-	Raid = { 'TOPLEFT', UIParent, 'TOPLEFT', 20, -20 },
-	Party = { 'BOTTOMRIGHT', 'oUF_sInterfacePlayer', 'TOPLEFT', -350, 150 },
-	Arena = { 'BOTTOMLEFT', 'oUF_sInterfaceTarget', 'TOPRIGHT', 225, 150 },
+	Player = { "CENTER", UIParent, "CENTER", 0, -275 }, -- Unused if emulatePersonalResourceDisplay is set
+	Target = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 55, 130 },
+	Targettarget = { "TOPLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 7, 0 },
+	Focus = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 56, -100 },
+	Focustarget = { "TOPLEFT", "oUF_sInterfaceFocus", "TOPRIGHT", 7, 0 },
+	Pet = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 5, 0 },
+	Boss = { "BOTTOMLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 300, 250 },
+	Tank = { "BOTTOMRIGHT", "oUF_sInterfacePlayer", "TOPLEFT", -350, 150 },
+	Raid = { "TOPLEFT", UIParent, "TOPLEFT", 20, -20 },
+	Party = { "BOTTOMRIGHT", "oUF_sInterfacePlayer", "TOPLEFT", -350, 150 },
+	Arena = { "BOTTOMLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 225, 150 },
 }
 
 C["uf"].aura = {
+	player = {
+		enable = true,
+		mode = "buff",
+		size = 24
+	},
 	target = {
 		enable = true,
-		mode = 'aura',
-		size = 16,
-		num = 8,
-		gap = false,
-		fontFlag = "OUTLINE"
+		mode = "aura",
+		size = 18
 	},
 	party = {
 		enable = false,
-		mode = 'aura',
-		size = 18,
-		num = 9,
-		gap = false,
-		fontFlag = "OUTLINE"
+		mode = "aura",
+		size = 18
 	},
 	focus = {
 		enable = true,
-		mode = 'aura',
-		size = 16,
-		num = 8,
-		gap = false,
-		fontFlag = "OUTLINE"
+		mode = "aura",
+		size = 18
 	},
 	tank = {
 		enable = true,
-		mode = 'debuff',
-		size = 20,
-		num = 5,
-		gap = false,
-		fontFlag = "OUTLINE"
+		mode = "debuff",
+		size = 30
 	},
 	boss = {
 		enable = false,
-		mode = 'debuff',
-		size = 18,
-		num = 9,
-		gap = false,
-		fontFlag = "OUTLINE"
+		mode = "debuff",
+		size = 24
 	}
 }

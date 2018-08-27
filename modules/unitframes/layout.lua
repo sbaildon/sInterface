@@ -1008,7 +1008,7 @@ oUF:Factory(function(self)
 		([[
 			self:SetHeight(%d)
 			self:SetWidth(%d)
-		]]):format(C.uf.size.secondary.health+C.uf.size.secondary.power+1,C.uf.size.secondary.width)
+		]]):format(C.uf.size.secondary.health, C.uf.size.secondary.width)
 	)
 	party:SetPoint(unpack(C.uf.positions.Party))
 
@@ -1022,7 +1022,7 @@ oUF:Factory(function(self)
 		([[
 			self:SetHeight(%d)
 			self:SetWidth(%d)
-		]]):format(C.uf.size.secondary.health+C.uf.size.secondary.power+1,C.uf.size.secondary.width)
+		]]):format(C.uf.size.secondary.health, C.uf.size.secondary.width)
 	)
 	maintank:SetPoint(unpack(C.uf.positions.Tank))
 

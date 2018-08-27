@@ -223,12 +223,6 @@ local Auras = function(self)
 	end
 end
 
-local PostUpdateHealth = function(health, unit)
-	if UnitIsDead(unit) or UnitIsGhost(unit) or not UnitIsConnected(unit) then
-		health:SetValue(0)
-	end
-end
-
 local PostUpdatePower = function(Power, _, _, _, max)
 	if (max == 0) then
 		Power:Hide()
@@ -566,8 +560,8 @@ local Shared = function(self, unit)
 
 	local hl = self.Health:CreateTexture(nil, nil, nil, 1)
 	hl:SetAllPoints(self)
-	hl:SetTexture([=[Interface\Buttons\WHITE8x8]=])
-	hl:SetVertexColor(1,1,1,.1)
+	hl:SetTexture("Interface/TargetingFrame/UI-TargetingFrame-BarFill")
+	hl:SetVertexColor(1, 1, 1, 0.15)
 	hl:SetBlendMode('ADD')
 	hl:Hide()
 	self.Highlight = hl

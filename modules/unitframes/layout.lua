@@ -138,7 +138,7 @@ end
 UIDropDownMenu_Initialize(dropdown, init, 'MENU')
 
 local PlayerAuraFilter = function(element, unit, button, name, texture, count, debuffType, duration, expiration, caster, isStealable, nameplateShowSelf, spellID, canApply, isBossDebuff, casterIsPlayer, nameplateShowAll,timeMod, effect1, effect2, effect3)
-	return true
+	return nameplateShowSelf or (C.uf.buffs[name])
 end
 
 local PostCreateIcon = function(auras, button)
@@ -420,9 +420,7 @@ end
 
 local Health = function(self)
 	local h = createStatusbar(self, C.general.texture)
-	h:SetPoint'TOP'
-	h:SetPoint'LEFT'
-	h:SetPoint'RIGHT'
+	h:SetAllPoints()
 	h:SetHeight(C.uf.size[self.unitSize].health)
 
 	local hbg = h:CreateTexture(nil, 'BACKGROUND')
@@ -540,12 +538,6 @@ local Shared = function(self, unit)
 	self:SetScript('OnLeave', OnLeave)
 
 	self:RegisterForClicks'AnyUp'
-
-	self:SetBackdrop({
-	bgFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
-		insets = {top = 0, left = 0, bottom = 0, right = 0},
-	})
-	self:SetBackdropColor(0, 0, 0)
 
 	Size(self)
 	Health(self)
@@ -960,7 +952,7 @@ oUF:Factory(function(self)
 			local namePlatePlayer = C_NamePlate.GetNamePlateForUnit("player", issecure());
 			if (namePlatePlayer) then
 				oUF_sInterfacePlayer:ClearAllPoints()
-				oUF_sInterfacePlayer:SetPoint("CENTER", namePlatePlayer, "CENTER", 0, -20)
+				oUF_sInterfacePlayer:SetPoint("CENTER", namePlatePlayer, "CENTER", 0, -30)
 			end
 		end)
 

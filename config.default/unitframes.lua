@@ -80,3 +80,12 @@ C["uf"].aura = {
 		size = 24
 	}
 }
+
+C["uf"].buffs = {
+	["Sudden Doom"] = true,
+	["Dark Succor"] = true,
+
+	["Victorious"] = true,
+	["Sharpen Blade"] = true,
+	["Crushing Assault"] = true
+}

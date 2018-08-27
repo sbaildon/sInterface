@@ -6,8 +6,13 @@ if not C.np.enabled then return end;
 local colours = {
 	secure = { 0, 255, 0 },
 	insecure = { 255, 124, 0 },
-	na = { 255, 0, 0 }
+	na = { 255, 0, 0 },
+	reaction = {}
 }
+
+for eclass, color in next, FACTION_BAR_COLORS do
+	colours.reaction[eclass] = {color.r, color.g, color.b}
+end
 
 local sPlates = CreateFrame("FRAME")
 
@@ -29,14 +34,14 @@ function sPlates:NAME_PLATE_UNIT_ADDED(...)
 	healthBar:SetPoint("BOTTOMRIGHT", castBar, "TOPRIGHT", 0, 3)
 end
 
-hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
-	if UnitIsPlayer(frame.unit) or not UnitAffectingCombat("player") then return end
-	if not (C.np.tankMode and E:PlayerIsTank())  then return end
+hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
+	if UnitIsPlayer(frame.unit) then return end
 
 	local status = UnitThreatSituation("player", frame.unit)
 	local r, g, b
-	if status == nil then return end
-	if status == 3 then
+	if (not (C.np.tankMode and E:PlayerIsTank())) or (status == nil) then
+		r, g, b = unpack(colours.reaction[UnitReaction(frame.unit, 'player')])
+	elseif status == 3 then
 		r, g, b = unpack(colours.secure)
 	elseif status == 2 then
 		r, g, b = unpack(colours.insecure)
@@ -70,6 +75,7 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	if namePlate.styled or namePlate:IsForbidden() then return end
 	namePlate.healthBar:SetStatusBarTexture(C.general.texture)
 	namePlate.healthBar.border:Hide()
+
 	E:ShadowedBorder(namePlate.healthBar)
 
 	namePlate.castBar.Flash:SetTexture(nil)
@@ -85,6 +91,8 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 
 	local layer, sublayer = namePlate.selectionHighlight:GetDrawLayer()
 	namePlate.name:SetDrawLayer(layer, sublayer+1)
+
+	namePlate.selectionHighlight:SetAlpha(0.2)
 
 	namePlate.styled = true
 end)

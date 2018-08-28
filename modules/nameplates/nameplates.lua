@@ -54,6 +54,11 @@ hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
 	frame.healthBar.background:SetVertexColor(r*multiplier, g*multiplier, b*multiplier, 1)
 end)
 
+hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
+	local r, g, b = frame.healthBar:GetStatusBarColor()
+	frame.healthBar.background:SetVertexColor(r*multiplier, g*multiplier, b*multiplier, 1)
+end)
+
 hooksecurefunc(NameplateBuffContainerMixin, "UpdateAnchor", function(self)
 	self:SetPoint("BOTTOM", self:GetParent().healthBar, "TOP", 0, 12);
 	self:SetScale(0.85)

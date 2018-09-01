@@ -7,7 +7,7 @@ local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 
 local CASTBAR_X_OFFSET = 0
-local CASTBAR_Y_OFFSET = -17
+local CASTBAR_Y_OFFSET = -14
 
 local POWER_X_OFFSET = 0
 local POWER_Y_OFFSET = 1
@@ -301,7 +301,7 @@ local PostCastStart = function(self, unit)
 		anchor = parent
 	end
 
-	self:SetPoint("TOP", anchor, "BOTTOM", CASTBAR_X_OFFSET, CASTBAR_Y_OFFSET)
+	self.Icon:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", CASTBAR_X_OFFSET, CASTBAR_Y_OFFSET)
 end
 
 local PostCastStop = function(self)
@@ -324,23 +324,31 @@ local CustomTimeText = function(self, duration)
 end
 
 local Castbar = function(self, unit)
+	local iconSpacing = 6
+	local cb = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
+
 	local cb = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	cb.Time = cb:CreateFontString("sInterface_CastBarTime", "ARTWORK", "GameFontHighlightOutline")
 	cb.Time:SetJustifyH("RIGHT")
-	cb.Time:SetPoint('RIGHT', cb, -2, 4)
+	cb.Time:SetPoint('TOPRIGHT', -TEXT_X_OFFSET, TEXT_Y_OFFSET)
+
 	cb.Text = cb:CreateFontString("sInterface_CastBarTime", "ARTWORK", "GameFontHighlightOutline")
 	cb.Text:SetJustifyH("LEFT")
-	cb.Text:SetPoint('LEFT', cb, 2, 4)
+	cb.Text:SetPoint("TOPLEFT", TEXT_X_OFFSET, TEXT_Y_OFFSET)
 	cb.Text:SetPoint('RIGHT', cb.Time, 'LEFT')
-	cb.Text:SetMaxLines(1)
+	cb.Text:SetText("Example") -- Set so GetFontHeight() returns a value > 0
+	cb.Text:SetHeight(cb.Text:GetStringHeight())
+
 	cb.CastingColor = {0, 0.7, 1}
 	cb.CompleteColor = {0.12, 0.86, 0.15}
 	cb.FailColor = {1.0, 0.09, 0}
 	cb.ChannelingColor = {0.32, 0.3, 1}
+
 	cb.Icon = cb:CreateTexture(nil, 'ARTWORK')
 	cb.Icon:SetPoint('BOTTOMRIGHT', cb, 'BOTTOMLEFT', -6, 0)
 	cb.Icon:SetTexCoord(.1, .9, .1, .9)
-	cb.timeToHold = 0.75
+
+	cb:SetPoint("BOTTOMLEFT", cb.Icon, "BOTTOMRIGHT", iconSpacing, 0)
 
 	cb.Shield = cb:CreateTexture(nil, 'ARTWORK')
 	cb.Shield:SetTexture[[Interface\CastingBar\UI-CastingBar-Arena-Shield]]
@@ -358,16 +366,19 @@ local Castbar = function(self, unit)
 	cb.PostCastInterrupted = PostCastFailed
 	cb.CustomTimeText = CustomTimeText
 
+	cb.timeToHold = 0.75
+
 	E:ShadowedBorder(cb)
 	E:ShadowedBorder(cb.Icon)
 
 	E:RegisterAlphaAnimation(cb)
 
-	local height = self.Health:GetHeight() - self.Power:GetHeight()
-	cb:SetPoint("TOPRIGHT", self.ClassPowerBar or self, "BOTTOMRIGHT", 0, -15)
-	cb.Icon:SetSize(height*2, height*2)
-	cb.Shield:SetSize(height*5.25, height*5.25)
-	cb:SetSize(self:GetWidth()-(height*2)-6, height)
+	local cbHeight = self.Health:GetHeight()/1.3
+	local textHeight = cb.Text:GetStringHeight();
+	local iconSize = (cbHeight+textHeight)-TEXT_Y_OFFSET
+	cb.Icon:SetSize(iconSize, iconSize)
+	cb.Shield:SetSize(cbHeight*5.25, cbHeight*5.25)
+	cb:SetSize(self:GetWidth()-iconSpacing-iconSize, cbHeight)
 	self.Castbar = cb
 end
 

@@ -295,8 +295,6 @@ local PostCastStart = function(self, unit)
 		anchor = parent.ClassPowerBar
 	elseif parent.AdditionalPower and parent.AdditionalPower:IsShown() then
 		anchor = parent.AdditionalPower
-	elseif parent.Power and parent.Power:IsShown() then
-		anchor = parent.Power
 	else
 		anchor = parent
 	end
@@ -327,7 +325,6 @@ local Castbar = function(self, unit)
 	local iconSpacing = 6
 	local cb = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 
-	local cb = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	cb.Time = cb:CreateFontString("sInterface_CastBarTime", "ARTWORK", "GameFontHighlightOutline")
 	cb.Time:SetJustifyH("RIGHT")
 	cb.Time:SetPoint('TOPRIGHT', -TEXT_X_OFFSET, TEXT_Y_OFFSET)
@@ -345,7 +342,6 @@ local Castbar = function(self, unit)
 	cb.ChannelingColor = {0.32, 0.3, 1}
 
 	cb.Icon = cb:CreateTexture(nil, 'ARTWORK')
-	cb.Icon:SetPoint('BOTTOMRIGHT', cb, 'BOTTOMLEFT', -6, 0)
 	cb.Icon:SetTexCoord(.1, .9, .1, .9)
 
 	cb:SetPoint("BOTTOMLEFT", cb.Icon, "BOTTOMRIGHT", iconSpacing, 0)

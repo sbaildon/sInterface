@@ -7,7 +7,7 @@ local oUF = ns.oUF or oUF
 local _, class = UnitClass('player')
 
 local CASTBAR_X_OFFSET = 0
-local CASTBAR_Y_OFFSET = -14
+local CASTBAR_Y_OFFSET = 10
 
 local POWER_X_OFFSET = 0
 local POWER_Y_OFFSET = 1
@@ -17,6 +17,8 @@ local CLASSPOWER_Y_OFFSET = -8
 
 local TEXT_Y_OFFSET = 6
 local TEXT_X_OFFSET = 2
+
+local CASTBAR_HEIGHT_RATIO = 1.3
 
 -- Override some oUF.colors.power
 -- is there a nicer way?
@@ -142,9 +144,13 @@ local PlayerAuraFilter = function(element, unit, button, name, texture, count, d
 end
 
 local PostCreateIcon = function(auras, button)
+	local countFrame = CreateFrame('Frame', '$parentCountFrame', button)
+	countFrame:SetAllPoints(button)
+
 	local c = button.count
 	c:ClearAllPoints()
-	c:SetPoint('BOTTOMRIGHT', auras.size*0.35, -(auras.size*0.21))
+	c:SetPoint('BOTTOMRIGHT', countFrame, 'BOTTOMRIGHT', auras.size*0.35, -(auras.size*0.21))
+	-- c:SetPoint('BOTTOMRIGHT', auras.size*0.35, -(auras.size*0.21))
 	c:SetFontObject("GameFontNormalOutline")
 	local font, size, flags = c:GetFont()
 	c:SetFont(font, auras.size*0.6, flags)
@@ -298,12 +304,14 @@ local PostCastStart = function(self, unit)
 	if parent.ClassPowerBar and parent.ClassPowerBar:IsShown() then
 		anchor = parent.ClassPowerBar
 	elseif parent.AdditionalPower and parent.AdditionalPower:IsShown() then
-		anchor = parent.AdditionalPower
+		anchor = parent.AdditionalPowerHolder
+	elseif parent.Power and parent.Power:IsShown() then
+		anchor = parent.PowerHolder
 	else
 		anchor = parent
 	end
 
-	self.Icon:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", CASTBAR_X_OFFSET, CASTBAR_Y_OFFSET)
+	self.Icon:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", CASTBAR_X_OFFSET, -CASTBAR_Y_OFFSET)
 end
 
 local PostCastStop = function(self)
@@ -373,7 +381,7 @@ local Castbar = function(self, unit)
 
 	E:RegisterAlphaAnimation(cb)
 
-	local cbHeight = self.Health:GetHeight()/1.3
+	local cbHeight = self.Health:GetHeight()/CASTBAR_HEIGHT_RATIO
 	local textHeight = cb.Text:GetStringHeight();
 	local iconSize = (cbHeight+textHeight)-TEXT_Y_OFFSET
 	cb.Icon:SetSize(iconSize, iconSize)
@@ -472,11 +480,17 @@ local ReadyCheck = function(self)
 end
 
 local Power = function(self)
-	local p = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
+	local powerHolder = CreateFrame("Frame", nil, self)
+	powerHolder:SetPoint("LEFT")
+	powerHolder:SetPoint("RIGHT")
+	powerHolder:SetPoint("TOP", self, "BOTTOM", POWER_X_OFFSET, POWER_Y_OFFSET)
+	powerHolder:SetHeight(C.uf.size[self.unitSize].power)
+
+	local p = createStatusbar(powerHolder, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	p:SetPoint('LEFT', (self:GetWidth()/18), 0)
 	p:SetPoint('RIGHT', -(self:GetWidth()/18), 0)
-	p:SetPoint('TOP', self, 'BOTTOM', POWER_X_OFFSET, POWER_Y_OFFSET)
-	p:SetHeight(C.uf.size[self.unitSize].power)
+	p:SetPoint("TOP")
+	p:SetPoint("BOTTOM")
 
 	if self.unit == 'player' then p.frequentUpdates = true end
 
@@ -500,14 +514,21 @@ local Power = function(self)
 
 	p.bg = pbg
 	self.Power = p
+	self.PowerHolder = powerHolder
 end
 
 local AdditionalPower = function(self)
-	local p = createStatusbar(self, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
+	local powerHolder = CreateFrame("Frame", nil, self)
+	powerHolder:SetPoint("LEFT")
+	powerHolder:SetPoint("RIGHT")
+	powerHolder:SetPoint("TOP", self.PowerHolder, "BOTTOM", 0, -4)
+	powerHolder:SetHeight(C.uf.size[self.unitSize].power)
+
+	local p = createStatusbar(powerHolder, C.general.texture, nil, nil, nil, 1, 1, 1, 1)
 	p:SetPoint('LEFT', (self:GetWidth()/18), 0)
 	p:SetPoint('RIGHT', -(self:GetWidth()/18), 0)
-	p:SetPoint('TOP', self.Power, 'BOTTOM', 0, -4)
-	p:SetHeight(C.uf.size[self.unitSize].power)
+	p:SetPoint("TOP")
+	p:SetPoint("BOTTOM")
 
 	p.Smooth = true
 
@@ -527,6 +548,7 @@ local AdditionalPower = function(self)
 
 	p.bg = pbg
 	self.AdditionalPower = p
+	self.AdditionalPowerHolder = powerHolder
 end
 
 local PhaseIndicator = function(self)
@@ -537,6 +559,7 @@ local PhaseIndicator = function(self)
 end
 
 local Size = function(self)
+	-- if  UnitAffectingCombat("player") then return end
 	local uf_cfg = C.uf.size[self.unitSize]
 	local height = uf_cfg.health
 	self:SetSize(uf_cfg.width, height)
@@ -611,8 +634,8 @@ local UnitSpecific = {
 
 		local ClassPowerBar = CreateFrame('Frame', "ClassPowerBar", self)
 		ClassPowerBar:SetWidth(self:GetWidth())
-		ClassPowerBar:SetHeight(self.Power:GetHeight())
-		ClassPowerBar:SetPoint("TOP", self.Power, "BOTTOM", CLASSPOWER_X_OFFSET, CLASSPOWER_Y_OFFSET)
+		ClassPowerBar:SetHeight(self.PowerHolder:GetHeight())
+		ClassPowerBar:SetPoint("TOP", self.PowerHolder, "BOTTOM", CLASSPOWER_X_OFFSET, CLASSPOWER_Y_OFFSET)
 		self.ClassPowerBar = ClassPowerBar
 
 		local ClassPower = {}
@@ -989,22 +1012,22 @@ oUF:Factory(function(self)
 	spawnHelper(self, 'pet', C.uf.positions.Pet)
 
 	spawnHelper(self, 'boss1', C.uf.positions.Boss)
+	local bossCastBar = _G['oUF_sInterfaceBoss1'].Castbar
+	local bossPowerBar = _G['oUF_sInterfaceBoss1'].Power
+	local bossyOffset = bossCastBar:GetHeight() + (CASTBAR_Y_OFFSET*3) + bossPowerBar:GetHeight()
 	for i = 2, MAX_BOSS_FRAMES do
-		local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceBoss'..i-1, 'TOPLEFT', 0, 45 }
+		local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceBoss'..i-1, 'TOPLEFT', 0, bossyOffset }
 		spawnHelper(self, 'boss' .. i, pos)
 	end
 
-	local arena = {}
-	self:SetActiveStyle'sInterface - Arena'
-	for i = 1, 5 do
-		arena[i] = self:Spawn('arena'..i, 'oUF_Arena'..i)
-		if i == 1 then
-			arena[i]:SetPoint(unpack(C.uf.positions.Arena))
-		else
-			arena[i]:SetPoint('BOTTOM', arena[i-1], 'TOP', 0, 35)
-		end
+	spawnHelper(self, "arena1", C.uf.positions.Arena)
+	local arenaCastBar = _G['oUF_sInterfaceArena1'].Castbar
+	local arenaPowerBar = _G['oUF_sInterfaceArena1'].Power
+	local arenayOffset = arenaCastBar:GetHeight() + (CASTBAR_Y_OFFSET*3) + arenaPowerBar:GetHeight()
+	for i = 2, 5 do
+		local pos = { "BOTTOM", "oUF_sInterfaceArena"..i-1, "TOP", 0, arenayOffset }
+		spawnHelper(self, "arena" ..i, pos)
 	end
-
 
 	for i = 1, MAX_PARTY_MEMBERS do
 		local pet = 'PartyMemberFrame'..i..'PetFrame'

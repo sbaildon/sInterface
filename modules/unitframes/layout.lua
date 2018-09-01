@@ -892,7 +892,7 @@ local UnitSpecific = {
 		self:Tag(name, '[arenaspec]')
 
 		local t = CreateFrame('Frame', nil, self)
-		t:SetSize(C.uf.size.secondary.health+C.uf.size.secondary.power+1, C.uf.size.secondary.health+C.uf.size.secondary.power+1)
+		t:SetSize(C.uf.size.secondary.health, C.uf.size.secondary.health)
 		t:SetPoint('TOPRIGHT', self, 'TOPLEFT', -4, 0)
 		E:ShadowedBorder(t)
 		self.Trinket = t

@@ -590,7 +590,7 @@ local UnitSpecific = {
 		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		htext.frequentUpdates = .1
-		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
+		self:Tag(htext, '[sInterface:health]')
 
 		local ptext = self.Health:CreateFontString("sInterface_TargetName", "ARTWORK", "GameFontNormalOutline")
 		ptext:SetJustifyH("LEFT")
@@ -708,7 +708,7 @@ local UnitSpecific = {
 		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		htext.frequentUpdates = .1
-		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
+		self:Tag(htext, '[sInterface:health]')
 
 		local name = self.Health:CreateFontString("sInterface_TargetName", "ARTWORK", "GameFontNormalOutline")
 		name:SetJustifyH("LEFT")
@@ -733,7 +733,7 @@ local UnitSpecific = {
 		local htext = self.Health:CreateFontString("sInterface_FocusHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
-		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
+		self:Tag(htext, '[sInterface:health]')
 
 		local name = self.Health:CreateFontString("sInterface_FocusName", "ARTWORK", "GameFontNormalOutline")
 		name:SetJustifyH("LEFT")
@@ -755,7 +755,7 @@ local UnitSpecific = {
 		local htext = self.Health:CreateFontString("sInterface_BossHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
-		self:Tag(htext, '[sInterface:status][sInterface:healthper]')
+		self:Tag(htext, '[sInterface:health]')
 
 		local name = self.Health:CreateFontString("sInterface_BossName", "ARTWORK", "GameFontNormalOutline")
 		name:SetJustifyH("LEFT")
@@ -831,7 +831,7 @@ local UnitSpecific = {
 		local htext = self.Health:CreateFontString("sInterface_PartyHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
-		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
+		self:Tag(htext, '[sInterface:health]')
 
 		local name = self.Health:CreateFontString("sInterface_PartyName", "ARTWORK", "GameFontNormalOutline")
 		name:SetJustifyH("LEFT")
@@ -856,7 +856,7 @@ local UnitSpecific = {
 		local htext = self.Health:CreateFontString("sInterface_TankHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
-		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
+		self:Tag(htext, '[sInterface:health]')
 
 		local name = self.Health:CreateFontString("sInterface_TankName", "ARTWORK", "GameFontNormalOutline")
 		name:SetJustifyH("LEFT")
@@ -882,7 +882,7 @@ local UnitSpecific = {
 		local htext = self.Health:CreateFontString("sInterface_ArenaHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
-		self:Tag(htext, '[sInterface:status][sInterface:health][ | >sInterface:healthper]')
+		self:Tag(htext, '[sInterface:health]')
 
 		local name = self.Health:CreateFontString("sInterface_ArenaName", "ARTWORK", "GameFontNormalOutline")
 		name:SetJustifyH("LEFT")

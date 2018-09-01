@@ -86,46 +86,24 @@ oUF.Tags.Methods['sInterface:level'] = function(u)
 end
 oUF.Tags.Events['sInterface:level'] = 'UNIT_LEVEL UNIT_CONNECTION'
 
-
-oUF.Tags.Methods['sInterface:status'] = function(u)
-	if UnitIsDead(u) then
+oUF.Tags.Methods["sInterface:health"] = function(unit)
+	if UnitIsDead(unit) then
 		return hex(oUF.colors.health).."Dead".."|r"
-	elseif UnitIsGhost(u) then
+	elseif UnitIsGhost(unit) then
 		return hex(oUF.colors.ghost).."Ghost".."|r"
-	elseif not UnitIsConnected(u) then
+	elseif not UnitIsConnected(unit) then
 		return hex(oUF.colors.disconnected).."Disconnected".."|r"
 	end
 
-	return nil
-end
-oUF.Tags.Events['sInterface:status'] = 'UNIT_HEALTH UNIT_CONNECTION'
-
-
-oUF.Tags.Methods['sInterface:health'] = function(u)
-	if UnitIsDead(u) or UnitIsGhost(u) or not UnitIsConnected(u) then return end
-	local cur, max = UnitHealth(u), UnitHealthMax(u)
-	if (cur == 0) then
-		return nil
-	elseif (cur < max) then
-		return (hex(oUF.colors.health)..sValue(cur))
+	local cur, max = UnitHealth(unit), UnitHealthMax(unit)
+	if (cur < max)  and (cur ~= 0) then
+		return (hex(oUF.colors.health)..sValue(cur)) .. " | " .. math.floor(cur/max*100+.5) .. "%|r"
 	else
 		return (hex(0.33, 0.58, 0.33)..sValue(cur)).."|r"
 	end
+
 end
-oUF.Tags.Events['sInterface:health'] = 'UNIT_HEALTH_FREQUENT UNIT_CONNECTION'
-
-
-oUF.Tags.Methods['sInterface:healthper'] = function(u)
-	if UnitIsDead(u) or UnitIsGhost(u) or not UnitIsConnected(u) then return end
-	local cur, max = UnitHealth(u), UnitHealthMax(u)
-	if (cur < max) and (cur ~= 0) then
-		return (hex(oUF.colors.health))..math.floor(cur/max*100+.5).."%|r"
-	end
-
-	return nil
-end
-oUF.Tags.Events['sInterface:healthper'] = 'UNIT_HEALTH_FREQUENT UNIT_CONNECTION'
-
+oUF.Tags.Events["sInterface:health"] = "UNIT_HEALTH_FREQUENT UNIT_CONNECTION"
 
 oUF.Tags.Methods['sInterface:power'] = function(u)
 	return oUF.Tags.Methods['powercolor'](u)..sValue(UnitPower(u))

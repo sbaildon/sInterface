@@ -231,6 +231,10 @@ local PostUpdatePower = function(Power, _, _, _, max)
 	end
 end
 
+local function PostUpdatePowerArenaPreparation(self, specID)
+	self:Hide()
+end
+
 local function PostUpdateClassPower(element, _, max, hasMaxChanged, powerType)
 	if class == "DEATHKNIGHT" then return end
 	local ClassPowerPip = element[1]
@@ -903,6 +907,8 @@ local UnitSpecific = {
 		t:SetPoint('TOPRIGHT', self, 'TOPLEFT', -4, 0)
 		E:ShadowedBorder(t)
 		self.Trinket = t
+
+		self.Power.PostUpdateArenaPreparation = PostUpdatePowerArenaPreparation
 	end,
 
 	raid = function(self, ...)

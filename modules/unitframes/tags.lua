@@ -53,7 +53,7 @@ local function StatusColor(unit)
 end
 
 oUF.Tags.Methods['sInterface:name'] = function(u)
-	return StatusColor(u)..oUF.Tags.Methods['name'](u)
+	return StatusColor(u)..oUF.Tags.Methods['name'](u).."|r"
 end
 oUF.Tags.Events['sInterface:name'] = 'UNIT_CONNECTION UNIT_NAME_UPDATE UNIT_THREAT_SITUATION_UPDATE'
 

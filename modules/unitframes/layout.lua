@@ -891,7 +891,7 @@ local UnitSpecific = {
 		htext:SetPoint('TOPRIGHT', self, -TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(htext, '[sInterface:health]')
 
-		local name = self.Health:CreateFontString("sInterface_ArenaName", "ARTWORK", "GameFontNormalOutline")
+		local name = self.Health:CreateFontString("sInterface_ArenaName", "ARTWORK", "GameFontHighlightOutline")
 		name:SetJustifyH("LEFT")
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
@@ -984,7 +984,7 @@ oUF:Factory(function(self)
 
 	spawnHelper(self, 'boss1', C.uf.positions.Boss)
 	for i = 2, MAX_BOSS_FRAMES do
-		local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceBoss'..i-1, 'TOPLEFT', 0, 30 }
+		local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceBoss'..i-1, 'TOPLEFT', 0, 45 }
 		spawnHelper(self, 'boss' .. i, pos)
 	end
 

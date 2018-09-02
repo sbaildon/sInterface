@@ -60,6 +60,9 @@ if C.actionbars.bar3.two_rows then
 	MultiBarBottomRightButton7:SetPoint("TOPLEFT", MultiBarBottomRightButton1, "BOTTOMLEFT", 0, -BUTTON_SPACING)
 	bar3:SetWidth((BUTTON_SIZE*6) + (BUTTON_SPACING*5))
 	bar3:SetHeight((BUTTON_SIZE*2) + BUTTON_SPACING)
+else
+	MultiBarBottomRightButton7:ClearAllPoints()
+	MultiBarBottomRightButton7:SetPoint("TOPLEFT", MultiBarBottomRightButton6, "TOPRIGHT", BUTTON_SPACING, 0)
 end
 RegisterStateDriver(bar3, "visibility", C.actionbars.bar3.visibility or "show")
 

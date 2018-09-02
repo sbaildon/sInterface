@@ -17,11 +17,20 @@ for _, bar in next, {bar1, bar2, bar3, bar4, bar5} do
 	bar:SetSize(BUTTON_SIZE*NUM_ACTIONBAR_BUTTONS, BUTTON_SIZE)
 end
 
-bar1:SetPoint(unpack(C.actionbars.bar1.position))
-bar2:SetPoint(unpack(C.actionbars.bar2.position))
-bar3:SetPoint(unpack(C.actionbars.bar3.position))
-bar4:SetPoint(unpack(C.actionbars.bar4.position))
-bar5:SetPoint(unpack(C.actionbars.bar5.position))
+local eventFrame = CreateFrame("Frame", nil, UIParent)
+
+function eventFrame:PLAYER_LOGIN()
+	bar1:SetPoint(unpack(C.actionbars.bar1.position))
+	bar2:SetPoint(unpack(C.actionbars.bar2.position))
+	bar3:SetPoint(unpack(C.actionbars.bar3.position))
+	bar4:SetPoint(unpack(C.actionbars.bar4.position))
+	bar5:SetPoint(unpack(C.actionbars.bar5.position))
+end
+
+eventFrame:RegisterEvent("PLAYER_LOGIN")
+eventFrame:SetScript("OnEvent", function(this, event, ...)
+	this[event](this, ...)
+end)
 
 bar1:SetScale(C.actionbars.scale)
 bar2:SetScale(C.actionbars.scale)

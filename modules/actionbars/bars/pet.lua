@@ -26,4 +26,11 @@ for i = 1, NUM_PET_ACTION_SLOTS do
 	end
 end
 
+if C.actionbars.petbar.two_rows then
+	local half = NUM_PET_ACTION_SLOTS/2
+	local newLineButton = _G["PetActionButton"..half+1]
+	local oldLineButton = _G["PetActionButton1"]
+	newLineButton:SetPoint("TOPLEFT", oldLineButton, "BOTTOMLEFT", 0, -BUTTON_SPACING)
+end
+
 RegisterStateDriver(petbar, "visibility", C.actionbars.petbar.visibility or "show")

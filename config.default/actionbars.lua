@@ -47,6 +47,7 @@ C["actionbars"] = {
 	petbar = { --sInterfacePetBar
 		position = { "TOPLEFT", "sInterfaceActionBar5", "BOTTOMLEFT", 0, -20},
 		visibility = "[petbattle][overridebar][vehicleui][possessbar,@vehicle,exists] hide; [modifier:ctrl,modifier:alt,modifier:shift,@pet,exists][cursor,@pet,exists] show; hide",
+		two_rows = true
 	},
 
 	stancebar = { --sInterfaceStanceBar

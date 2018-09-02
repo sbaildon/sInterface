@@ -9,6 +9,8 @@ local BUTTON_SIZE = ActionButton1:GetHeight()
 local stancebar = ns.sInterfaceBars.stancebar
 
 stancebar:SetSize(BUTTON_SIZE, BUTTON_SIZE)
+stancebar:SetScale(C.actionbars.scale)
+
 stancebar:SetPoint(unpack(C.actionbars.stancebar.position))
 
 StanceBarFrame.ignoreFramePositionManager = true

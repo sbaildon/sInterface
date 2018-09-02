@@ -10,6 +10,8 @@ local BUTTON_SIZE = ActionButton1:GetHeight()
 local overridebar = ns.sInterfaceBars.overridebar
 
 overridebar:SetSize((BUTTON_SIZE*NUM_OVERRIDE_BUTTONS) + (BUTTON_SPACING*(NUM_OVERRIDE_BUTTONS-1)), BUTTON_SIZE)
+overridebar:SetScale(C.actionbars.scale)
+
 overridebar:SetPoint(unpack(C.actionbars.overridebar.position))
 
 -- OverrideActionBar
@@ -24,7 +26,7 @@ for i = 1, NUM_OVERRIDE_BUTTONS do
 		button:SetPoint("TOPLEFT", overridebar, "TOPLEFT")
 		button:SetPoint("BOTTOMLEFT", overridebar, "BOTTOMLEFT")
 	else
-		button:SetPoint("TOPLEFT", _G["OverrideActionBarButton"..i-1], "TOPRIGHT", 6, 0)
+		button:SetPoint("TOPLEFT", _G["OverrideActionBarButton"..i-1], "TOPRIGHT", BUTTON_SPACING, 0)
 	end
 
 end

@@ -23,9 +23,17 @@ bar3:SetPoint(unpack(C.actionbars.bar3.position))
 bar4:SetPoint(unpack(C.actionbars.bar4.position))
 bar5:SetPoint(unpack(C.actionbars.bar5.position))
 
+bar1:SetScale(C.actionbars.scale)
+bar2:SetScale(C.actionbars.scale)
+bar3:SetScale(C.actionbars.scale)
+bar4:SetScale(C.actionbars.scale)
+bar5:SetScale(C.actionbars.scale)
+
 -- BAR 1
 for i = 1, NUM_ACTIONBAR_BUTTONS do
-	RegisterStateDriver(_G["ActionButton"..i], "visibility", C.actionbars.bar1.visibility or "show")
+	local button = _G["ActionButton"..i]
+	button:SetScale(C.actionbars.scale)
+	RegisterStateDriver(button, "visibility", C.actionbars.bar1.visibility or "show")
 end
 ActionButton1:ClearAllPoints()
 ActionButton1:SetPoint("TOPLEFT", bar1, "TOPLEFT", 0, 0)
@@ -70,10 +78,10 @@ RegisterStateDriver(bar3, "visibility", C.actionbars.bar3.visibility or "show")
 -- BAR 4
 MultiBarRight.ignoreFramePositionManager = true
 MultiBarRight:SetSize(MultiBarBottomLeft:GetWidth(), MultiBarBottomLeft:GetHeight())
+MultiBarRight:SetScale(C.actionbars.scale)
 MultiBarRight:ClearAllPoints()
 MultiBarRight:SetParent(bar4)
 MultiBarRight:SetPoint("TOPLEFT", bar4, "TOPLEFT")
-
 MultiBarRightButton1:ClearAllPoints()
 MultiBarRightButton1:SetPoint("TOPLEFT", MultiBarRight, "TOPLEFT", 0, 0)
 for i = 2, NUM_ACTIONBAR_BUTTONS do

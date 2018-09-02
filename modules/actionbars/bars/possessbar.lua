@@ -9,6 +9,7 @@ local BUTTON_SIZE = ActionButton1:GetHeight()
 local possessbar = ns.sInterfaceBars.possessbar
 
 possessbar:SetSize(BUTTON_SIZE, BUTTON_SIZE)
+possessbar:SetScale(C.actionbars.scale)
 
 possessbar:SetPoint(unpack(C.actionbars.possessbar.position))
 

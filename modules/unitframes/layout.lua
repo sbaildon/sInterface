@@ -229,6 +229,12 @@ local Auras = function(self)
 	end
 end
 
+local PostUpdateHealth = function(health, unit)
+	if UnitIsDead(unit) or UnitIsGhost(unit) or not UnitIsConnected(unit) then
+		health:SetValue(0)
+	end
+end
+
 local PostUpdatePower = function(Power, _, _, _, max)
 	if (max == 0) then
 		Power:Hide()
@@ -456,9 +462,10 @@ local Health = function(self)
 
 	h.Smooth = true
 
+	h.PostUpdate = PostUpdateHealth
+
 	h.bg = hbg
 	self.Health = h
-	self.Health.PostUpdate = PostUpdateHealth
 end
 
 local LFD = function(self)
@@ -559,7 +566,7 @@ local PhaseIndicator = function(self)
 end
 
 local Size = function(self)
-	-- if  UnitAffectingCombat("player") then return end
+	if issecure() then return end
 	local uf_cfg = C.uf.size[self.unitSize]
 	local height = uf_cfg.health
 	self:SetSize(uf_cfg.width, height)

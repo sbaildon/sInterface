@@ -42,7 +42,9 @@ hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
 	local status = UnitThreatSituation("player", frame.unit)
 	local r, g, b
 	if (not (C.np.tankMode and E:PlayerIsTank())) or (status == nil) then
-		r, g, b = unpack(colours.reaction[UnitReaction(frame.unit, 'player')])
+		local reaction = colours.reaction[UnitReaction(frame.unit, "player")]
+		if not reaction then return end
+		r, g, b = unpack(reaction)
 	elseif status == 3 then
 		r, g, b = unpack(colours.secure)
 	elseif status == 2 then

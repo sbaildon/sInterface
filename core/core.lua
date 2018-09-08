@@ -31,7 +31,7 @@ function E:ShadowedBorder(anchor)
 	shadow:SetBackdrop({
 		edgeFile = shadowTex, edgeSize = SHADOW_EDGESIZE,
 	})
-	shadow:SetBackdropBorderColor(0, 0, 0, 0.7)
+	shadow:SetBackdropBorderColor(0, 0, 0, 0.6)
 	anchor.shadowedShadow = shadow
 
 end

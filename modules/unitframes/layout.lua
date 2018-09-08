@@ -511,7 +511,7 @@ local Power = function(self)
 	pbg.multiplier = .4
 	E:ShadowedBorder(p)
 	p:SetFrameStrata(self.Health:GetFrameStrata())
-	p:SetFrameLevel(self.Health:GetFrameLevel()+1)
+	p:SetFrameLevel(self.Health:GetFrameLevel()+2)
 	p.shadowedBackdrop:SetFrameStrata(self.Health:GetFrameStrata())
 	p.shadowedBackdrop:SetFrameLevel(self.Health:GetFrameLevel()+1)
 	p.shadowedShadow:SetFrameStrata(self.Health:GetFrameStrata())
@@ -580,7 +580,6 @@ local Shared = function(self, unit)
 
 	self:RegisterForClicks'AnyUp'
 
-	Size(self)
 	Health(self)
 
 	E:ShadowedBorder(self)
@@ -604,6 +603,7 @@ local UnitSpecific = {
 	player = function(self, ...)
 		self.unitSize = 'primary'
 
+		Size(self)
 		Shared(self, ...)
 
 		Power(self)
@@ -736,6 +736,7 @@ local UnitSpecific = {
 	target = function(self, ...)
 		self.unitSize = 'primary'
 
+		Size(self)
 		Shared(self, ...)
 
 		Power(self)
@@ -762,6 +763,7 @@ local UnitSpecific = {
 	focus = function(self, ...)
 		self.unitSize = 'primary'
 
+		Size(self)
 		Shared(self, ...)
 
 		Power(self)
@@ -787,6 +789,7 @@ local UnitSpecific = {
 	boss = function(self, ...)
 		self.unitSize = 'secondary'
 
+		Size(self)
 		Shared(self, ...)
 
 		Power(self)
@@ -824,6 +827,7 @@ local UnitSpecific = {
 	pet = function(self, ...)
 		self.unitSize = 'tertiary'
 
+		Size(self)
 		Shared(self, ...)
 
 		HealthPrediction(self)
@@ -848,6 +852,7 @@ local UnitSpecific = {
 	targettarget = function(self, ...)
 		self.unitSize = 'tertiary'
 
+		Size(self)
 		Shared(self, ...)
 
 		local name = self.Health:CreateFontString("sInterface_TargetTargetName", "ARTWORK", "GameFontNormalOutline")

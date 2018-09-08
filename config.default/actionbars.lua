@@ -3,7 +3,7 @@ local C = ns.C
 
 C["actionbars"] = {
 	enabled = true,
-	scale = 0.9,
+	scale = 0.85,
 
 	bar1 = { -- sInterfaceActionBar1
 		position = { "TOPLEFT", UIParent, "TOPLEFT", C.general.edgeSpacing, -(C.general.edgeSpacing*15)},

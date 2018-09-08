@@ -8,7 +8,12 @@ ns.U_C = U_C
 -- U_C["actionbars"] = {
 -- 	bar1 = {
 -- 		visibility = "show",
--- 		position = { "TOP", oUF_sInterfacePlayer, "BOTTOM", -50, 0 },
+-- 		position = { "TOP", "oUF_sInterfacePlayer", "BOTTOM", 0, -100 },
+-- 		two_rows = true
+-- 	},
+-- 	bar2 = {
+-- 		visibility = "[combat] show; hide",
+-- 		position =  { "TOPLEFT", "sInterfaceActionBar1", "BOTTOMLEFT", 0, -20},
 -- 		two_rows = false
 -- 	}
 -- }

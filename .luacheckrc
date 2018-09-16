@@ -192,6 +192,7 @@ read_globals = {
 	"MultiBarLeftButton1",
 	"MultiBarBottomRightButton7",
 	"MultiBarBottomRightButton1",
+	"MultiBarBottomRightButton6",
 	"NUM_ACTIONBAR_BUTTONS",
 	"ActionButton7",
 	"MultiBarBottomLeftButton7",

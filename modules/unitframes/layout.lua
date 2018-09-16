@@ -152,7 +152,7 @@ local PostCreateIcon = function(auras, button)
 	c:SetPoint('BOTTOMRIGHT', countFrame, 'BOTTOMRIGHT', auras.size*0.35, -(auras.size*0.21))
 	-- c:SetPoint('BOTTOMRIGHT', auras.size*0.35, -(auras.size*0.21))
 	c:SetFontObject("GameFontNormalOutline")
-	local font, size, flags = c:GetFont()
+	local font, _, flags = c:GetFont()
 	c:SetFont(font, auras.size*0.6, flags)
 	c:SetTextColor(1, 1, 1)
 

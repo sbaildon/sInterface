@@ -280,5 +280,6 @@ read_globals = {
 	"SmallTextTooltip",
 	"ChatFrameToggleVoiceDeafenButton",
 	"ChatFrameToggleVoiceMuteButton",
-	"ChatFrameChannelButton"
+	"ChatFrameChannelButton",
+	"UnitReaction"
 }

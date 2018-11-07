@@ -65,6 +65,11 @@ function CoolBar:CreateCooldown(spellId)
 		return
 	end --probably GCD
 
+	if (dur > 600) then
+		noCooldowns[spellId] = true
+		return
+	end --too long to care
+
 	local f
 
 	for _, frame in pairs(cooldowns) do

@@ -987,35 +987,34 @@ local spawnHelper = function(self, unit, pos)
 end
 
 oUF:Factory(function(self)
+	spawnHelper(self, 'player', C.uf.positions.Player)
 	if (C.uf.emulatePersonalResourceDisplay) then
 		SetCVar("nameplateShowSelf", 1)
 		SetCVar("NameplatePersonalShowAlways", 1)
-		C_NamePlate.SetNamePlateSelfClickThrough(true)
+		SetCVar("NameplatePersonalShowWithTarget", 2) -- Show with friendly and hostile targets
 		SetCVar("nameplateSelfAlpha", 0)
+		C_NamePlate.SetNamePlateSelfClickThrough(true)
 
-		spawnHelper(self, 'player', C.uf.positions.Player)
+		local f = CreateFrame("frame")
+		f:RegisterEvent("NAME_PLATE_UNIT_ADDED","player")
+		f:RegisterEvent("NAME_PLATE_UNIT_REMOVED","player")
 
-		hooksecurefunc(NamePlateDriverFrame, "SetupClassNameplateBar", function(self, ontarget, bar)
-			if (not bar or InCombatLockdown() or ontarget) then return end
-			local namePlatePlayer = C_NamePlate.GetNamePlateForUnit("player", issecure());
-			if (namePlatePlayer) then
-				oUF_sInterfacePlayer:ClearAllPoints()
-				oUF_sInterfacePlayer:SetPoint("CENTER", namePlatePlayer, "CENTER", 0, -30)
+		f:SetScript("OnEvent", function(self, event, unit)
+			-- do nothing if the nameplate is not ours
+			if not UnitIsUnit(unit, "player") then return end
+
+			local namePlate = C_NamePlate.GetNamePlateForUnit(unit, issecure());
+			-- return if we're locked
+			if not namePlate then return end
+
+			oUF_sInterfacePlayer:ClearAllPoints()
+			if event == "NAME_PLATE_UNIT_ADDED" then
+				oUF_sInterfacePlayer:SetPoint("CENTER", namePlate, "CENTER", 0, -30)
+			else
+				oUF_sInterfacePlayer:SetPoint(unpack(C.uf.positions.Player))
 			end
 		end)
-
-		NamePlatePlayerResourceFrame:HookScript("OnHide", function()
-			if InCombatLockdown() then return end
-			oUF_sInterfacePlayer:ClearAllPoints()
-			oUF_sInterfacePlayer:SetPoint(unpack(C.uf.positions.Player))
-		end)
-	else
-		SetCVar("nameplateSelfAlpha", GetCVarDefault("nameplateSelfAlpha"))
-		SetCVar("NameplatePersonalShowAlways", GetCVarDefault("NameplatePersonalShowAlways"))
-		C_NamePlate.SetNamePlateSelfClickThrough(false)
-		spawnHelper(self, 'player', C.uf.positions.Player)
 	end
-
 
 	spawnHelper(self, 'target', C.uf.positions.Target)
 	spawnHelper(self, 'targettarget', C.uf.positions.Targettarget)

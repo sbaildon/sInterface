@@ -77,8 +77,6 @@ hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
 		frame.name:SetText(UnitName(frame.unit))
 	end
 	frame.name:SetTextColor(1, 1, 1, 1)
-	local font, size, flags = GameFontNormalOutline:GetFont()
-	frame.name:SetFont(font, size*UIParent:GetScale(), flags)
 end)
 
 hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
@@ -88,24 +86,27 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	namePlate.healthBar.border:Hide()
 
 	E:ShadowedBorder(namePlate.healthBar)
+	local font, size, flags = GameFontNormalOutline:GetFont()
 
 	namePlate.castBar.Flash:SetTexture(nil)
 	namePlate.castBar.background:SetAlpha(0.3)
-	local font, size, flags = GameFontNormalOutline:GetFont()
 	namePlate.castBar.Text:SetFont(font, size*UIParent:GetScale(), flags)
 	namePlate.castBar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	E:ShadowedBorder(namePlate.castBar)
 	E:ShadowedBorder(namePlate.castBar.Icon)
 
+	namePlate.name:SetFont(font, size*UIParent:GetScale(), flags)
 	namePlate.name:SetParent(namePlate.healthBar)
-	namePlate.name:SetPoint("BOTTOM", namePlate.healthBar, "TOP", 0, -3)
-
 	local layer, sublayer = namePlate.selectionHighlight:GetDrawLayer()
 	namePlate.name:SetDrawLayer(layer, sublayer+1)
 
 	namePlate.selectionHighlight:SetAlpha(0)
 
 	namePlate.styled = true
+end)
+
+hooksecurefunc("DefaultCompactNamePlateFrameAnchorInternal", function(namePlate)
+	PixelUtil.SetPoint(namePlate.name, "BOTTOM", namePlate.healthBar, "TOP", 0, -3)
 end)
 
 sPlates:SetScript("OnEvent", function(self, event, ...)

@@ -73,7 +73,7 @@ oUF.Tags.Events['sInterface:shortname'] = 'UNIT_NAME_UPDATE UNIT_HEALTH UNIT_CON
 
 
 oUF.Tags.Methods['sInterface:level'] = function(u)
-	local level = UnitLevel(u)
+	local level = UnitEffectiveLevel(u)
 	local difficulty = hex(GetCreatureDifficultyColor((level > 0) and level or 999))
 
 	if level == MAX_PLAYER_LEVEL then

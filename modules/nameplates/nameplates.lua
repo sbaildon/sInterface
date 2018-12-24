@@ -86,19 +86,17 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	namePlate.healthBar.border:Hide()
 
 	E:ShadowedBorder(namePlate.healthBar)
+	local font, size, flags = GameFontNormalOutline:GetFont()
 
 	namePlate.castBar.Flash:SetTexture(nil)
 	namePlate.castBar.background:SetAlpha(0.3)
-	local font, size, flags = GameFontNormalOutline:GetFont()
 	namePlate.castBar.Text:SetFont(font, size*UIParent:GetScale(), flags)
 	namePlate.castBar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	E:ShadowedBorder(namePlate.castBar)
 	E:ShadowedBorder(namePlate.castBar.Icon)
 
-	local font, size, flags = GameFontNormalOutline:GetFont()
 	namePlate.name:SetFont(font, size*UIParent:GetScale(), flags)
 	namePlate.name:SetParent(namePlate.healthBar)
-
 	local layer, sublayer = namePlate.selectionHighlight:GetDrawLayer()
 	namePlate.name:SetDrawLayer(layer, sublayer+1)
 

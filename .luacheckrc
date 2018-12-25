@@ -111,6 +111,7 @@ read_globals = {
 	"UnitIsPlayer",
 	"UnitIsUnit",
 	"UnitLevel",
+	"UnitEffectiveLevel",
 	"UnitName",
 	"UnitPower",
 	"UnitPowerMax",

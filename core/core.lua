@@ -1,5 +1,6 @@
 local _, ns = ...
-local E, C, U_C = ns.E, ns.C, ns.U_C
+local E, C = ns.E, ns.C
+local U_C = sInterface_userConfig
 
 local shadowTex = "Interface\\AddOns\\sInterface\\media\\shadow_border"
 

@@ -1,0 +1,7 @@
+## Interface: 80100
+## Version: @project-version@
+## Author: sBaildon
+## Title: sInterface Config
+## Notes: User configuration for sInterface
+
+_config.xml

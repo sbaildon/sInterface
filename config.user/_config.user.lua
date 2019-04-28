@@ -1,11 +1,10 @@
-local _, ns = ...
-local U_C = {}
-ns.U_C = U_C
+local C = {}
+sInterface_userConfig = C
 
 -- Remove the leading underscore (_) from this file name
 -- to override configuration values
 
--- U_C["actionbars"] = {
+-- C["actionbars"] = {
 -- 	bar1 = {
 -- 		visibility = "show",
 -- 		position = { "TOP", "oUF_sInterfacePlayer", "BOTTOM", 0, -100 },
@@ -18,12 +17,12 @@ ns.U_C = U_C
 -- 	}
 -- }
 
--- U_C["uf"] = {
+-- C["uf"] = {
 -- 	hidePlayerFrameOoc = false,
 -- 	emulatePersonalResourceDisplay = false
 -- }
 
--- U_C["minimap"] = {
+-- C["minimap"] = {
 	-- width = 250,
 	-- height = 250
 -- }

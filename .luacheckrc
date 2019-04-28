@@ -39,7 +39,8 @@ globals = {
 	"SHOW_MULTI_ACTIONBAR_2",
 	"SHOW_MULTI_ACTIONBAR_3",
 	"SHOW_MULTI_ACTIONBAR_4",
-	"SLASH_ALIGN1"
+	"SLASH_ALIGN1",
+	"sInterface_userConfig"
 }
 read_globals = {
 	"AtlasLootTooltip",

@@ -722,8 +722,8 @@ local UnitSpecific = {
 		E:RegisterAlphaAnimation(self)
 
 		if C.uf.hidePlayerFrameOoc then
-			self:RegisterEvent("PLAYER_REGEN_ENABLED", LeaveCombat)
-			self:RegisterEvent("PLAYER_REGEN_DISABLED", EnterCombat)
+			self:RegisterEvent("PLAYER_REGEN_ENABLED", LeaveCombat, true)
+			self:RegisterEvent("PLAYER_REGEN_DISABLED", EnterCombat, true)
 			self:RegisterEvent("UNIT_HEALTH", HealthUpdate)
 			self:RegisterEvent("UNIT_SPELLCAST_START", SpellStart)
 			self:RegisterEvent("UNIT_SPELLCAST_STOP", SpellFinish)

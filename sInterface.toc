@@ -10,9 +10,6 @@
 init.lua
 embeds\_embeds.xml
 config.default\_config.xml
+config.user\_config.xml
 core\_core.xml
 modules\_modules.xml
-
-#@do-not-package@
-config.user\_config.xml
-#@end-do-not-package@

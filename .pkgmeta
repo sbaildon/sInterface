@@ -1,10 +1,8 @@
 package-as: sInterface
 wowi-archive-previous: yes
 
-move-folders:
-  sInterface/config.user: sInterface_Config
-
 ignore:
-  - .travis.yml
+  - .github
   - README.md
   - .luacheckrc
+  - .editorconfig

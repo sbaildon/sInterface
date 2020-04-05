@@ -1,5 +1,5 @@
 color = true
-exclude_files = { ".release/", "embeds", "config/" }
+exclude_files = { ".*/", "embeds", "config/" }
 max_line_length = false
 ignore = { "212", "431", "432" } -- ignore upvalue shadowing
 globals = {

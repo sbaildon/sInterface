@@ -75,11 +75,9 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 			difficultyColor = GetQuestDifficultyColor(level)
 		end
 		left[line]:SetFormattedText('|cff%02x%02x%02x%s|r %s', difficultyColor.r*255, difficultyColor.g*255, difficultyColor.b*255, level, race)
-		line = line + 1
 
-		for i = line, GameTooltip:NumLines() do
-			left[i]:SetText(nil)
-		end
+		GameTooltipTextLeft4:SetText(nil)
+		GameTooltipTextLeft5:SetText(nil)
 	else
 		local name = UnitName(unit)
 		left[line]:SetText(name)

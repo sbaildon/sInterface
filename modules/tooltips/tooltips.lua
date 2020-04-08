@@ -53,6 +53,7 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 		local name, realm = UnitName(unit)
 		local _, unitClass = UnitClass(unit)
 		local classColor = RAID_CLASS_COLORS[unitClass]
+
 		if realm then
 			left[line]:SetFormattedText("|cff%02x%02x%02x%s %s %s|r", classColor.r*255, classColor.g*255, classColor.b*255, name, 'of', realm)
 		else
@@ -74,10 +75,8 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 		else
 			difficultyColor = GetQuestDifficultyColor(level)
 		end
-		left[line]:SetFormattedText('|cff%02x%02x%02x%s|r %s', difficultyColor.r*255, difficultyColor.g*255, difficultyColor.b*255, level, race)
 
-		GameTooltipTextLeft4:SetText(nil)
-		GameTooltipTextLeft5:SetText(nil)
+		left[line]:SetFormattedText('|cff%02x%02x%02x%s|r %s', difficultyColor.r*255, difficultyColor.g*255, difficultyColor.b*255, level, race)
 	else
 		local name = UnitName(unit)
 		left[line]:SetText(name)

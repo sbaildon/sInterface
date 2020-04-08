@@ -48,22 +48,24 @@ end })
 GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 	local unit = select(2, self:GetUnit()) or (GetMouseFocus() and GetMouseFocus():GetAttribute("unit")) or (UnitExists("mouseover") and "mouseover")
 	if not unit then return end
+	local line = 1
 	if UnitIsPlayer(unit) then
 		local name, realm = UnitName(unit)
 		local _, unitClass = UnitClass(unit)
 		local classColor = RAID_CLASS_COLORS[unitClass]
 
 		if realm then
-			GameTooltipTextLeft1:SetText(string.format("|cff%02x%02x%02x%s %s %s|r", classColor.r*255, classColor.g*255, classColor.b*255, name, "of", realm))
+			left[line]:SetFormattedText("|cff%02x%02x%02x%s %s %s|r", classColor.r*255, classColor.g*255, classColor.b*255, name, 'of', realm)
 		else
-			GameTooltipTextLeft1:SetText(string.format("|cff%02x%02x%02x%s|r", classColor.r*255, classColor.g*255, classColor.b*255, name))
+			left[line]:SetFormattedText("|cff%02x%02x%02x%s|r", classColor.r*255, classColor.g*255, classColor.b*255, name)
 		end
+		line = line + 1
 
 		local guild = GetGuildInfo(unit)
 		if guild then
-			GameTooltipTextLeft2:SetText(string.format("|cff%02x%02x%02x%s|r", 255, 213, 131, guild))
+			left[line]:SetFormattedText('|cff%02x%02x%02x%s|r', 255, 213, 131, guild)
+			line = line + 1
 		end
-		local levelLine = guild and GameTooltipTextLeft3 or GameTooltipTextLeft2
 
 		local level, race = UnitLevel(unit), UnitRace(unit)
 		local difficultyColor
@@ -74,9 +76,8 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 			difficultyColor = GetQuestDifficultyColor(level)
 		end
 
-		levelLine:SetText(string.format("|cff%02x%02x%02x%s|r %s", difficultyColor.r*255, difficultyColor.g*255, difficultyColor.b*255, level, race), HIGHLIGHT_FONT_COLOR:GetRGB())
+		left[line]:SetFormattedText('|cff%02x%02x%02x%s|r %s', difficultyColor.r*255, difficultyColor.g*255, difficultyColor.b*255, level, race)
 	else
-		local line = 1
 		local name = UnitName(unit)
 		left[line]:SetText(name)
 		line = line + 1

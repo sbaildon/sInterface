@@ -87,5 +87,14 @@ C["uf"].buffs = {
 
 	["Victorious"] = true,
 	["Sharpen Blade"] = true,
-	["Crushing Assault"] = true
+	["Crushing Assault"] = true,
+
+
+	["Clearcasting"] = true,
+	["Rule of Threes"] = true,
+	["Displacement Beacon"] = true,
+	["Presence of Mind"] = true,
+
+	["Heating Up"] = true,
+	["Hot Streak!"] = true
 }

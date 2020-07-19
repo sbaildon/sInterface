@@ -31,6 +31,7 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	else
 		tooltip:SetOwner(parent, "ANCHOR_NONE")
 		tooltip:ClearAllPoints()
+		tooltip:SetClampedToScreen(true)
 		tooltip:SetPoint(unpack(C.tooltips.pos))
 	end
 end)

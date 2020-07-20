@@ -82,10 +82,17 @@ C["uf"].aura = {
 }
 
 C["uf"].buffs = {
+	-- Unholy DK
 	["Sudden Doom"] = true,
 	["Dark Succor"] = true,
 
+	-- Arms Warrior
 	["Victorious"] = true,
 	["Sharpen Blade"] = true,
-	["Crushing Assault"] = true
+	["Crushing Assault"] = true,
+
+	-- Fury Warrior
+	["Enraged Regeneration"] = true,
+	["Whirlwind"] = true,
+	["Barbarian"] = true,
 }

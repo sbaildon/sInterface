@@ -64,7 +64,7 @@ end
 local function skin()
 	Details:SelectNumericalSystem(1)
 	Details:SetUseAnimations(true)
-	Details:SetWindowUpdateSpeed(0.05)
+	Details:SetWindowUpdateSpeed(0.30)
 
 	--[[
 		Overwrite a func that moves instance 1

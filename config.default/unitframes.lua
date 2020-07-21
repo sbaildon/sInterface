@@ -96,4 +96,14 @@ C["uf"].buffs = {
 	["Whirlwind"] = true,
 	["Barbarian"] = true,
 	["Battle Trance"] = true,
+
+	-- Arcane Mage
+	["Clearcasting"] = true,
+	["Rule of Threes"] = true,
+	["Displacement Beacon"] = true,
+	["Presence of Mind"] = true,
+
+	-- Fire Mage
+	["Heating Up"] = true,
+	["Hot Streak!"] = true
 }

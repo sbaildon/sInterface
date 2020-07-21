@@ -1,0 +1,28 @@
+name: publish
+
+on:
+    push:
+        branches:
+            - master
+        tags:
+            - v*
+
+jobs:
+    publish:
+        name: publish
+        runs-on: ubuntu-latest
+        if: contains(github.ref, 'refs/tags')
+        steps:
+        - name: checkout
+          uses: actions/checkout@v2
+          with:
+            submodules: 'recursive'
+
+        - name: install deps
+          run: sudo apt-get install jq
+
+        - name: wowinterface release
+          env:
+            WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+            GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          run: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash

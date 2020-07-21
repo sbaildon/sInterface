@@ -11,7 +11,6 @@ jobs:
     publish:
         name: publish
         runs-on: ubuntu-latest
-        if: contains(github.ref, 'refs/tags')
         steps:
         - name: checkout
           uses: actions/checkout@v2
@@ -21,7 +20,7 @@ jobs:
         - name: install deps
           run: sudo apt-get install jq
 
-        - name: wowinterface release
+        - name: build and publish
           env:
             WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
             GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}

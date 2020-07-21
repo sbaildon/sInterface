@@ -82,19 +82,27 @@ C["uf"].aura = {
 }
 
 C["uf"].buffs = {
+	-- Unholy DK
 	["Sudden Doom"] = true,
 	["Dark Succor"] = true,
 
+	-- Arms Warrior
 	["Victorious"] = true,
 	["Sharpen Blade"] = true,
 	["Crushing Assault"] = true,
 
+  -- Fury Warrior
+	["Enraged Regeneration"] = true,
+	["Whirlwind"] = true,
+	["Barbarian"] = true,
 
+  -- Arcane Mage
 	["Clearcasting"] = true,
 	["Rule of Threes"] = true,
 	["Displacement Beacon"] = true,
 	["Presence of Mind"] = true,
 
+  -- Fire Mage
 	["Heating Up"] = true,
 	["Hot Streak!"] = true
 }

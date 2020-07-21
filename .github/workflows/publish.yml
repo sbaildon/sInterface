@@ -1,0 +1,27 @@
+name: publish
+
+on:
+    push:
+        branches:
+            - master
+        tags:
+            - v*
+
+jobs:
+    publish:
+        name: publish
+        runs-on: ubuntu-latest
+        steps:
+        - name: checkout
+          uses: actions/checkout@v2
+          with:
+            submodules: 'recursive'
+
+        - name: install deps
+          run: sudo apt-get install jq
+
+        - name: build and publish
+          env:
+            WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+            GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          run: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash

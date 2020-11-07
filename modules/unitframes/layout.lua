@@ -374,8 +374,8 @@ local Castbar = function(self, unit)
 
 	cb.PostCastStart = PostCastStart
 	cb.PostCastStop = PostCastStop
-	cb.PostCastFailed = PostCastFailed
-	cb.PostCastInterrupted = PostCastFailed
+	cb.PostCastFail = PostCastFailed
+	cb.PostCastInterruptible = PostCastFailed
 	cb.CustomTimeText = CustomTimeText
 
 	cb.timeToHold = 0.75

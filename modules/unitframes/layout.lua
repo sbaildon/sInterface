@@ -160,8 +160,6 @@ local PostCreateIcon = function(auras, button)
 	button.cd:SetReverse(true)
 	button.overlay:SetTexture(nil)
 	button.icon:SetTexCoord(.05, .95, .2, .7)
-	button:SetBackdrop(backdrop)
-	button:SetBackdropColor(0, 0, 0, 1)
 
 	E:ShadowedBorder(button)
 end

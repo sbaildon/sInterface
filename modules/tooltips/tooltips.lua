@@ -23,8 +23,6 @@ local function SetBackdropStyle(self)
 	self:SetBackdropBorderColor(1, 1, 1, 0)
 end
 
-hooksecurefunc("GameTooltip_SetBackdropStyle", SetBackdropStyle)
-
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	if C.tooltips.anchor_cursor then
 		tooltip:SetOwner(parent, "ANCHOR_CURSOR")

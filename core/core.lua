@@ -10,7 +10,7 @@ function E:ShadowedBorder(anchor)
 	local BACKDROP_OFFSET = 3
 	local BACKDROP_INSET  = 2
 
-	local backdrop = CreateFrame('Frame', nil, frame)
+	local backdrop = CreateFrame('Frame', nil, frame, BackdropTemplateMixin and "BackdropTemplate")
 	backdrop:SetFrameStrata('BACKGROUND')
 	backdrop:SetFrameLevel(0)
 	backdrop:SetPoint('TOPLEFT', anchor, 'TOPLEFT', -BACKDROP_OFFSET, BACKDROP_OFFSET)
@@ -25,7 +25,7 @@ function E:ShadowedBorder(anchor)
 	local SHADOW_OFFSET   = 5
 	local SHADOW_EDGESIZE = 5
 
-	local shadow = CreateFrame('Frame', nil, frame)
+	local shadow = CreateFrame('Frame', nil, frame, BackdropTemplateMixin and "BackdropTemplate")
 	shadow:SetFrameStrata('BACKGROUND')
 	shadow:SetPoint('TOPLEFT', anchor, 'TOPLEFT', -SHADOW_OFFSET, SHADOW_OFFSET)
 	shadow:SetPoint('BOTTOMRIGHT', anchor, 'BOTTOMRIGHT', SHADOW_OFFSET, -SHADOW_OFFSET)

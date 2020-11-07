@@ -16,7 +16,6 @@ for i = 1, 3 do
 	local mirSB = _G["MirrorTimer"..i.."StatusBar"]
 		E:ShadowedBorder(mirSB)
 		mirSB:SetStatusBarTexture(C.general.texture)
-		mirSB:SetBackdropColor(0, 0, 0, 0)
 		mirSB:SetSize(mir:GetWidth(), mir:GetHeight()/3)
 
 	local mirT = _G["MirrorTimer"..i.."Text"]

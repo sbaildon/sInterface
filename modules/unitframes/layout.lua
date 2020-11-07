@@ -370,6 +370,7 @@ local Castbar = function(self, unit)
 	cb.Spark = cb:CreateTexture(nil,'OVERLAY')
 	cb.Spark:SetBlendMode('Add')
 	cb.Spark:SetSize(10, cb:GetHeight())
+	cb.Spark:SetPoint("CENTER", cb:GetStatusBarTexture(), "RIGHT", 0, 0)
 
 	cb.PostCastStart = PostCastStart
 	cb.PostCastStop = PostCastStop

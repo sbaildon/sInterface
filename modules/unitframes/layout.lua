@@ -372,9 +372,7 @@ local Castbar = function(self, unit)
 	cb.Spark:SetSize(10, cb:GetHeight())
 
 	cb.PostCastStart = PostCastStart
-	cb.PostChannelStart = PostCastStart
 	cb.PostCastStop = PostCastStop
-	cb.PostChannelStop = PostCastStop
 	cb.PostCastFailed = PostCastFailed
 	cb.PostCastInterrupted = PostCastFailed
 	cb.CustomTimeText = CustomTimeText

@@ -758,7 +758,7 @@ local UnitSpecific = {
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
 		name:SetHeight(10)
-		self:Tag(name, '[sInterface:level< ][sInterface:name]')
+		self:Tag(name, '[sInterface:level<$ ][sInterface:name]')
 	end,
 
 	focus = function(self, ...)
@@ -784,7 +784,7 @@ local UnitSpecific = {
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
-		self:Tag(name, '[sInterface:level< ][sInterface:name]')
+		self:Tag(name, '[sInterface:level<$ ][sInterface:name]')
 	end,
 
 	boss = function(self, ...)
@@ -885,7 +885,7 @@ local UnitSpecific = {
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
-		self:Tag(name, '[sInterface:level< ][sInterface:name]')
+		self:Tag(name, '[sInterface:level<$ ][sInterface:name]')
 	end,
 
 	tank = function(self, ...)
@@ -910,7 +910,7 @@ local UnitSpecific = {
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		name:SetHeight(10)
 		name:SetPoint('RIGHT', htext, 'LEFT', -3, 0)
-		self:Tag(name, '[sInterface:level< ][sInterface:name]')
+		self:Tag(name, '[sInterface:level<$ ][sInterface:name]')
 
 		local rc = self.Health:CreateTexture(nil, 'OVERLAY')
 		rc:SetPoint('CENTER')

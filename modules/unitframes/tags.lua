@@ -74,11 +74,14 @@ oUF.Tags.Events['sInterface:shortname'] = 'UNIT_NAME_UPDATE UNIT_HEALTH UNIT_CON
 
 oUF.Tags.Methods['sInterface:level'] = function(u)
 	local level = UnitEffectiveLevel(u)
-	local difficulty = hex(GetCreatureDifficultyColor((level > 0) and level or 999))
 
 	if level == MAX_PLAYER_LEVEL then
 		return nil
-	elseif level <= 0 then
+	end
+
+	local difficulty = hex(GetCreatureDifficultyColor((level > 0) and level or 999))
+
+	if level <= 0 then
 		level = '??'
 	end
 
@@ -103,7 +106,7 @@ oUF.Tags.Methods["sInterface:health"] = function(unit)
 	end
 
 end
-oUF.Tags.Events["sInterface:health"] = "UNIT_HEALTH_FREQUENT UNIT_CONNECTION"
+oUF.Tags.Events["sInterface:health"] = "UNIT_HEALTH UNIT_CONNECTION"
 
 oUF.Tags.Methods['sInterface:power'] = function(u)
 	return oUF.Tags.Methods['powercolor'](u)..sValue(UnitPower(u))

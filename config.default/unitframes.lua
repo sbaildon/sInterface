@@ -95,4 +95,5 @@ C["uf"].buffs = {
 	["Enraged Regeneration"] = true,
 	["Whirlwind"] = true,
 	["Barbarian"] = true,
+	["Battle Trance"] = true,
 }

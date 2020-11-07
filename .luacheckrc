@@ -286,5 +286,6 @@ read_globals = {
 	"UnitReaction",
 	"PixelUtil",
 	"GameTooltipTextLeft4",
-	"GameTooltipTextLeft5"
+	"GameTooltipTextLeft5",
+	"BackdropTemplateMixin"
 }

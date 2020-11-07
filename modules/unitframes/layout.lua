@@ -25,11 +25,6 @@ local CASTBAR_HEIGHT_RATIO = 1.3
 oUF.colors.power["COMBO_POINTS"] = {1, 0.1, 0.1}
 oUF.colors.power["FOCUS"] = {1, 0.5, 0.25} -- why do we have to do this?
 
-local backdrop = {
-	bgFile = [=[Interface\ChatFrame\ChatFrameBackground]=],
-	insets = {top = -1, left = -1, bottom = -1, right = -1},
-}
-
 local function EnterCombat(self)
 	self:PlayReveal()
 	oUF_sInterfacePet:PlayReveal()

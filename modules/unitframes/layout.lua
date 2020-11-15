@@ -989,8 +989,8 @@ oUF:Factory(function(self)
 		C_NamePlate.SetNamePlateSelfClickThrough(true)
 
 		local f = CreateFrame("frame")
-		f:RegisterEvent("NAME_PLATE_UNIT_ADDED","player")
-		f:RegisterEvent("NAME_PLATE_UNIT_REMOVED","player")
+		f:RegisterEvent("NAME_PLATE_UNIT_ADDED", "player")
+		f:RegisterEvent("NAME_PLATE_UNIT_REMOVED", "player")
 
 		f:SetScript("OnEvent", function(self, event, unit)
 			-- do nothing if the nameplate is not ours

@@ -998,7 +998,7 @@ oUF:Factory(function(self)
 
 			local namePlate = C_NamePlate.GetNamePlateForUnit(unit, issecure());
 			-- return if we're locked
-			if not namePlate then return end
+			if not namePlate or InCombatLockdown() then return end
 
 			oUF_sInterfacePlayer:ClearAllPoints()
 			if event == "NAME_PLATE_UNIT_ADDED" then

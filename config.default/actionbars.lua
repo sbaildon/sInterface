@@ -1,84 +1,184 @@
-local _, ns = ...
+local A, ns = ...
 local C = ns.C
+
+local fader = {
+	fadeInAlpha = 1,
+	fadeInDuration = 0.3,
+	fadeInSmooth = "OUT",
+	fadeOutAlpha = 0,
+	fadeOutDuration = 0.9,
+	fadeOutSmooth = "OUT",
+	fadeOutDelay = 0,
+      }
+
+      local faderOnShow = {
+	fadeInAlpha = 1,
+	fadeInDuration = 0.3,
+	fadeInSmooth = "OUT",
+	fadeOutAlpha = 0,
+	fadeOutDuration = 0.9,
+	fadeOutSmooth = "OUT",
+	fadeOutDelay = 0,
+	trigger = "OnShow",
+      }
 
 C["actionbars"] = {
 	enabled = true,
-	scale = 0.85,
 
-	bar1 = { -- sInterfaceActionBar1
-		position = { "RIGHT", UIParent, "RIGHT", -(C.general.edgeSpacing*17), 120},
-		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor][possessbar] show; hide",
-		two_rows = true
+	bar1 = {
+		framePoint      = { "CENTER", UIParent, "CENTER", 0, 0 },
+		frameScale      = 0.9,
+		framePadding    = 5,
+		buttonWidth     = 32,
+		buttonHeight    = 32,
+		buttonMargin    = 7,
+		numCols         = 6,
+		startPoint      = "TOPLEFT",
+		fader           = faderOnShow,
+		frameVisibility = "show"
+		-- frameVisibility = "[petbattle] hide; [combat][mod:shift][@target,exists,nodead][@vehicle,exists][overridebar][shapeshift][vehicleui][possessbar] show; hide"
 	},
 
-	bar2 = { --sInterfaceActionBar2
-		position = { "TOPLEFT", "sInterfaceActionBar1", "BOTTOMLEFT", 0, -20},
-		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
-		two_rows = true,
-		enabled = true,
+	bar2 = {
+		framePoint      = { "TOPLEFT", A.."Bar1", "BOTTOMLEFT", 0, 0 },
+		frameScale      = 0.9,
+		framePadding    = 5,
+		buttonWidth     = 32,
+		buttonHeight    = 32,
+		buttonMargin    = 7,
+		numCols         = 6,
+		startPoint      = "TOPLEFT",
+		fader           = faderOnShow,
+		frameVisibility = "show"
+		-- frameVisibility = "[petbattle][overridebar][vehicleui][possessbar][shapeshift] hide; [combat][mod:shift][@target,exists,nodead] show; hide"
 	},
 
-	bar3 = { --sInterfaceActionBar3
-		position = { "TOPLEFT", "sInterfaceActionBar2", "BOTTOMLEFT", 0, -20},
-		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
-		two_rows = true,
-		enabled = true,
+	bar3 = {
+		framePoint      = { "TOPLEFT", A.."Bar2", "BOTTOMLEFT", 0, 0 },
+		frameScale      = 0.9,
+		framePadding    = 5,
+		buttonWidth     = 32,
+		buttonHeight    = 32,
+		buttonMargin    = 7,
+		numCols         = 6,
+		startPoint      = "TOPLEFT",
+		fader           = faderOnShow,
+		frameVisibility = "show"
+		--frameVisibility = "[combat][mod][@target,exists,nodead] show; hide"
 	},
 
-	bar4 = { --sInterfaceActionBar4
-		position = { "TOPLEFT", "sInterfaceActionBar3", "BOTTOMLEFT", 0, -20},
-		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
-		two_rows = true,
-		enabled = true,
+	bar4 = {
+		framePoint      = { "TOPLEFT", A.."Bar3", "BOTTOMLEFT", 0, 0 },
+		frameScale      = 0.9,
+		framePadding    = 5,
+		buttonWidth     = 32,
+		buttonHeight    = 32,
+		buttonMargin    = 7,
+		numCols         = 6,
+		startPoint      = "TOPRIGHT",
+		fader           = faderOnShow,
+		frameVisibility = "show"
 	},
 
-	bar5 = { --sInterfaceActionBar5
-		position = { "TOPLEFT", "sInterfaceActionBar4", "BOTTOMLEFT", 0, -20},
-		visibility = "[modifier:ctrl, modifier:alt, modifier:shift][cursor] show; hide",
-		two_rows = true,
-		enabled = true,
+	bar5 = {
+		framePoint      = { "TOPLEFT", A.."Bar4", "BOTTOMLEFT", 0, 0 },
+		frameScale      = 0.9,
+		framePadding    = 5,
+		buttonWidth     = 32,
+		buttonHeight    = 32,
+		buttonMargin    = 7,
+		numCols         = 6,
+		startPoint      = "TOPRIGHT",
+		fader           = faderOnShow,
+		frameVisibility = "show"
 	},
 
-	possessbar = { --sInterfacePossessBar
-		position = { "BOTTOMLEFT", "ChatFrame1", "TOPLEFT", 0, 100},
-		visibility = "[possessbar] show; hide",
+	possessexitbar = {
+		framePoint      = { "BOTTOM", A.."VehicleExitBar", "TOP", 0, 5 },
+		frameScale      = 0.95,
+		framePadding    = 5,
+		buttonWidth     = 32,
+		buttonHeight    = 32,
+		buttonMargin    = 7,
+		numCols         = 1,
+		startPoint      = "BOTTOMLEFT",
+		fader           = nil,
 	},
 
-	petbar = { --sInterfacePetBar
-		position = { "TOPLEFT", "sInterfaceActionBar5", "BOTTOMLEFT", 0, -20},
-		visibility = "[petbattle][overridebar][vehicleui][possessbar,@vehicle,exists] hide; [modifier:ctrl,modifier:alt,modifier:shift,@pet,exists][cursor,@pet,exists] show; hide",
-		two_rows = true
+
+	petbar = {
+		framePoint      = { "BOTTOMLEFT", A.."Bar1", "TOPLEFT", 0, 0 },
+		frameScale      = 0.8,
+		framePadding    = 5,
+		buttonWidth     = 32,
+		buttonHeight    = 32,
+		buttonMargin    = 7,
+		numCols         = 6,
+		startPoint      = "BOTTOMLEFT",
+		fader           = faderOnShow,
+		frameVisibility = "show"
+		--frameVisibility = "[petbattle][overridebar][vehicleui][possessbar][shapeshift] hide; [pet,mod] show; hide"
 	},
 
-	stancebar = { --sInterfaceStanceBar
-		position = { "TOPLEFT", "sInterfacePetBar", "BOTTOMLEFT", 0, -20},
-		visibility = "hide",
+	stancebar = {
+		framePoint      = { "TOPLEFT", UIParent, "TOPLEFT", 0, 0 },
+		frameScale      = 0.8,
+		framePadding    = 5,
+		buttonWidth     = 32,
+		buttonHeight    = 32,
+		buttonMargin    = 7,
+		numCols         = 12,
+		startPoint      = "BOTTOMLEFT",
+		fader           = nil,
+		frameVisibility = "show"
+		-- frameVisibility = "[petbattle][overridebar][vehicleui][possessbar][shapeshift][nomod] hide; show"
 	},
 
-	overridebar = { --sInterfaceOverrideBar
-		position = { "BOTTOM", UIParent, "BOTTOM", 0, C.general.edgeSpacing*3},
-		visibility = "[overridebar][vehicleui][possessbar,@vehicle,exists] show; hide"
+	vehicleexitbar = {
+		framePoint      = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 0 },
+		frameScale      = 0.95,
+		framePadding    = 5,
+		buttonWidth     = 36,
+		buttonHeight    = 36,
+		buttonMargin    = 7,
+		numCols         = 1,
+		startPoint      = "BOTTOMLEFT",
+		fader           = nil,
 	},
 
-	vehicleexit = {
-		position = {"TOPLEFT", "sInterfaceOverrideBar", "TOPRIGHT", 6, 0},
-		visibility = "[overridebar][vehicleui][possessbar,@vehicle,exists] show; hide"
+	extrabar = {
+		framePoint      = { "BOTTOM", UIParent, "TOP", 0, 10 },
+		frameScale      = 0.95,
+		framePadding    = 5,
+		buttonWidth     = 36,
+		buttonHeight    = 36,
+		buttonMargin    = 7,
+		numCols         = 1,
+		startPoint      = "BOTTOMLEFT",
+		fader           = nil,
 	},
 
-	extrabar = { --sInterfaceExtraBar
-		position = { "BOTTOM", UIParent, "BOTTOM", 0, C.general.edgeSpacing*6},
-		visibility = "show"
+	bagbar = {
+		framePoint      = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -50, 0 },
+		frameScale      = 1,
+		framePadding    = 5,
+		buttonWidth     = 32,
+		buttonHeight    = 32,
+		buttonMargin    = 2,
+		numCols         = 6, --number of buttons per column
+		startPoint      = "BOTTOMRIGHT", --start postion of first button: BOTTOMLEFT, TOPLEFT, TOPRIGHT, BOTTOMRIGHT
+		fader           = fader,
 	},
 
-	bags = { --sInterfaceBagsBar
-		position = { "TOPLEFT", "sInterfaceMicromenu", "TOPRIGHT", 0, 0},
-		visibility = "[modifier:ctrl, modifier:alt, modifier:shift] show; hide",
-		show_all = false
-	},
-
-	micromenu = { --sInterfaceMicromenu
-		position = { "TOP", UIParent, "TOP", 0, -C.general.edgeSpacing},
-		visibility = "[modifier:ctrl, modifier:alt, modifier:shift] show; hide",
-		two_rows = true
-	},
+	micromenubar = {
+		framePoint      = { "TOP", UIParent, "TOP", 0, 5 },
+		frameScale      = 0.8,
+		framePadding    = 5,
+		buttonWidth     = 28,
+		buttonHeight    = 38,
+		buttonMargin    = 0,
+		numCols         = 12,
+		startPoint      = "BOTTOMLEFT",
+		fader           = fader,
+	}
 }

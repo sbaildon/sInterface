@@ -4,4 +4,7 @@
 	<Script file="oUF_GCD\oUF_GCD.lua" />
 	<Script file="oUF_FloatingCombatFeedback\oUF_FloatingCombatFeedback.lua" />
 	<Script file="oUF_Trinkets\oUF_Trinkets.lua" />
+
+	<Include file="rLib\rLib.xml" />
+	<Include file="rActionBar\rActionBar.xml" />
 </Ui>

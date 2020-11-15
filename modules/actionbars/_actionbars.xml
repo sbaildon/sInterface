@@ -1,13 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="blizzard.lua"/>
 	<Script file="core.lua"/>
-	<Script file="bars/actionbars.lua"/>
-	<Script file="bars/bags.lua"/>
-	<Script file="bars/extra.lua"/>
-	<Script file="bars/micromenu.lua"/>
-	<Script file="bars/override.lua"/>
-	<Script file="bars/pet.lua"/>
-	<Script file="bars/possessbar.lua"/>
-	<Script file="bars/stance.lua"/>
 	<Script file="style.lua"/>
 </Ui>

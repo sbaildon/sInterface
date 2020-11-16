@@ -11,7 +11,7 @@ local fader = {
 	fadeOutDelay = 0,
       }
 
-      local faderOnShow = {
+local faderOnShow = {
 	fadeInAlpha = 1,
 	fadeInDuration = 0.3,
 	fadeInSmooth = "OUT",
@@ -20,27 +20,26 @@ local fader = {
 	fadeOutSmooth = "OUT",
 	fadeOutDelay = 0,
 	trigger = "OnShow",
-      }
+}
 
 C["actionbars"] = {
 	enabled = true,
 
 	bar1 = {
-		framePoint      = { "CENTER", UIParent, "CENTER", 0, 0 },
+		framePoint      = { "CENTER", UIParent, "BOTTOM", 0, 150 },
 		frameScale      = 0.9,
 		framePadding    = 5,
 		buttonWidth     = 32,
 		buttonHeight    = 32,
 		buttonMargin    = 7,
 		numCols         = 6,
-		startPoint      = "TOPLEFT",
+		startPoint      = "BOTTOMLEFT",
 		fader           = faderOnShow,
-		frameVisibility = "show"
-		-- frameVisibility = "[petbattle] hide; [combat][mod:shift][@target,exists,nodead][@vehicle,exists][overridebar][shapeshift][vehicleui][possessbar] show; hide"
+		frameVisibility = "[petbattle] hide; [cursor][mod:ctrl, mod:alt][@vehicle,exists][overridebar][shapeshift][vehicleui][possessbar] show; hide"
 	},
 
 	bar2 = {
-		framePoint      = { "TOPLEFT", A.."Bar1", "BOTTOMLEFT", 0, 0 },
+		framePoint      = { "TOPLEFT", UIParent, "TOPLEFT", 100, -200 },
 		frameScale      = 0.9,
 		framePadding    = 5,
 		buttonWidth     = 32,
@@ -49,8 +48,7 @@ C["actionbars"] = {
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
 		fader           = faderOnShow,
-		frameVisibility = "show"
-		-- frameVisibility = "[petbattle][overridebar][vehicleui][possessbar][shapeshift] hide; [combat][mod:shift][@target,exists,nodead] show; hide"
+		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
 	},
 
 	bar3 = {
@@ -63,8 +61,7 @@ C["actionbars"] = {
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
 		fader           = faderOnShow,
-		frameVisibility = "show"
-		--frameVisibility = "[combat][mod][@target,exists,nodead] show; hide"
+		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
 	},
 
 	bar4 = {
@@ -75,9 +72,9 @@ C["actionbars"] = {
 		buttonHeight    = 32,
 		buttonMargin    = 7,
 		numCols         = 6,
-		startPoint      = "TOPRIGHT",
+		startPoint      = "TOPLEFT",
 		fader           = faderOnShow,
-		frameVisibility = "show"
+		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
 	},
 
 	bar5 = {
@@ -88,9 +85,9 @@ C["actionbars"] = {
 		buttonHeight    = 32,
 		buttonMargin    = 7,
 		numCols         = 6,
-		startPoint      = "TOPRIGHT",
+		startPoint      = "TOPLEFT",
 		fader           = faderOnShow,
-		frameVisibility = "show"
+		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
 	},
 
 	possessexitbar = {
@@ -107,17 +104,16 @@ C["actionbars"] = {
 
 
 	petbar = {
-		framePoint      = { "BOTTOMLEFT", A.."Bar1", "TOPLEFT", 0, 0 },
-		frameScale      = 0.8,
+		framePoint      = { "TOPLEFT", A.."Bar5", "BOTTOMLEFT", 0, 0 },
+		frameScale      = 0.9,
 		framePadding    = 5,
 		buttonWidth     = 32,
 		buttonHeight    = 32,
 		buttonMargin    = 7,
 		numCols         = 6,
-		startPoint      = "BOTTOMLEFT",
+		startPoint      = "TOPLEFT",
 		fader           = faderOnShow,
-		frameVisibility = "show"
-		--frameVisibility = "[petbattle][overridebar][vehicleui][possessbar][shapeshift] hide; [pet,mod] show; hide"
+		frameVisibility = "[cursor][pet, mod:ctrl, mod:alt] show; hide"
 	},
 
 	stancebar = {
@@ -159,26 +155,27 @@ C["actionbars"] = {
 	},
 
 	bagbar = {
-		framePoint      = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -50, 0 },
+		framePoint      = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 0 },
 		frameScale      = 1,
 		framePadding    = 5,
 		buttonWidth     = 32,
 		buttonHeight    = 32,
 		buttonMargin    = 2,
-		numCols         = 6, --number of buttons per column
+		numCols         = 1, --number of buttons per column
 		startPoint      = "BOTTOMRIGHT", --start postion of first button: BOTTOMLEFT, TOPLEFT, TOPRIGHT, BOTTOMRIGHT
 		fader           = fader,
+		frameVisibility = "hide"
 	},
 
 	micromenubar = {
-		framePoint      = { "TOP", UIParent, "TOP", 0, 5 },
+		framePoint      = { "BOTTOM", UIParent, "BOTTOM", 0, 0 },
 		frameScale      = 0.8,
 		framePadding    = 5,
 		buttonWidth     = 28,
 		buttonHeight    = 38,
 		buttonMargin    = 0,
 		numCols         = 12,
-		startPoint      = "BOTTOMLEFT",
+		startPoint      = "LEFT",
 		fader           = fader,
 	}
 }

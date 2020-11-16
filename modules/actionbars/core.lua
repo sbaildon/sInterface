@@ -1,7 +1,7 @@
 local A, ns = ...
-local C, UC = ns.C, ns.UC
+local E, C, UC = ns.E, ns.C, ns.UC
 
-if not C.actionbars.enabled then return end
+if not E:ValueOrFallback(C.actionbars.enabled, UC, 'actionbars', 'enabled') then return end
 
 local faderOnShow = {
 	fadeInAlpha = 1,
@@ -24,50 +24,40 @@ local fader = {
 	fadeOutDelay = 0,
 }
 
-local function userConfigOrFallback(fallback, t, ...)
-	for _, k in ipairs{...} do
-		t = t[k]
-		if not t then
-		    return fallback
-		end
-	end
-	return t
-end
-
-local bar1 = userConfigOrFallback(C.actionbars.bar1, UC, 'actionbars', 'bar1')
+local bar1 = E:ValueOrFallback(C.actionbars.bar1, UC, 'actionbars', 'bar1')
 bar1["fader"] = faderOnShow
 
-local bar2 = userConfigOrFallback(C.actionbars.bar2, UC, 'actionbars', 'bar2')
+local bar2 = E:ValueOrFallback(C.actionbars.bar2, UC, 'actionbars', 'bar2')
 bar2["fader"] = faderOnShow
 
-local bar3 = userConfigOrFallback(C.actionbars.bar3, UC, 'actionbars', 'bar3')
+local bar3 = E:ValueOrFallback(C.actionbars.bar3, UC, 'actionbars', 'bar3')
 bar3["fader"] = faderOnShow
 
-local bar4 = userConfigOrFallback(C.actionbars.bar4, UC, 'actionbars', 'bar4')
+local bar4 = E:ValueOrFallback(C.actionbars.bar4, UC, 'actionbars', 'bar4')
 bar4["fader"] = faderOnShow
 
-local bar5 = userConfigOrFallback(C.actionbars.bar5, UC, 'actionbars', 'bar5')
+local bar5 = E:ValueOrFallback(C.actionbars.bar5, UC, 'actionbars', 'bar5')
 bar5["fader"] = faderOnShow
 
-local petbar = userConfigOrFallback(C.actionbars.petbar, UC, 'actionbars', 'petbar')
+local petbar = E:ValueOrFallback(C.actionbars.petbar, UC, 'actionbars', 'petbar')
 petbar["fader"] = faderOnShow
 
-local stancebar = userConfigOrFallback(C.actionbars.stancebar, UC, 'actionbars', 'stancebar')
+local stancebar = E:ValueOrFallback(C.actionbars.stancebar, UC, 'actionbars', 'stancebar')
 stancebar["fader"] = faderOnShow
 
-local extrabar = userConfigOrFallback(C.actionbars.extrabar, UC, 'actionbars', 'extrabar')
+local extrabar = E:ValueOrFallback(C.actionbars.extrabar, UC, 'actionbars', 'extrabar')
 extrabar["fader"] = faderOnShow
 
-local micromenubar = userConfigOrFallback(C.actionbars.micromenubar, UC, 'actionbars', 'micromenubar')
+local micromenubar = E:ValueOrFallback(C.actionbars.micromenubar, UC, 'actionbars', 'micromenubar')
 micromenubar["fader"] = fader
 
-local bagbar = userConfigOrFallback(C.actionbars.bagbar, UC, 'actionbars', 'bagbar')
+local bagbar = E:ValueOrFallback(C.actionbars.bagbar, UC, 'actionbars', 'bagbar')
 bagbar["fader"] = fader
 
-local vehicleexitbar = userConfigOrFallback(C.actionbars.vehicleexitbar, UC, 'actionbars', 'vehicleexitbar')
+local vehicleexitbar = E:ValueOrFallback(C.actionbars.vehicleexitbar, UC, 'actionbars', 'vehicleexitbar')
 vehicleexitbar["fader"] = faderOnShow
 
-local possessexitbar = userConfigOrFallback(C.actionbars.possessexitbar, UC, 'actionbars', 'possessexitbar')
+local possessexitbar = E:ValueOrFallback(C.actionbars.possessexitbar, UC, 'actionbars', 'possessexitbar')
 possessexitbar["fader"] = faderOnShow
 
 rActionBar:CreateActionBar1(A, bar1)

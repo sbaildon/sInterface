@@ -135,7 +135,7 @@ C["actionbars"] = {
 	},
 
 	vehicleexitbar = {
-		framePoint      = { "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 0 },
+		framePoint      = { "BOTTOMLEFT", "ChatFrame1", "TOPLEFT", 0, 70 },
 		frameScale      = 0.95,
 		framePadding    = 5,
 		buttonWidth     = 36,

@@ -1,27 +1,6 @@
 local A, ns = ...
 local C = ns.C
 
-local fader = {
-	fadeInAlpha = 1,
-	fadeInDuration = 0.3,
-	fadeInSmooth = "OUT",
-	fadeOutAlpha = 0,
-	fadeOutDuration = 0.9,
-	fadeOutSmooth = "OUT",
-	fadeOutDelay = 0,
-      }
-
-local faderOnShow = {
-	fadeInAlpha = 1,
-	fadeInDuration = 0.3,
-	fadeInSmooth = "OUT",
-	fadeOutAlpha = 0,
-	fadeOutDuration = 0.9,
-	fadeOutSmooth = "OUT",
-	fadeOutDelay = 0,
-	trigger = "OnShow",
-}
-
 C["actionbars"] = {
 	enabled = true,
 
@@ -34,7 +13,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "BOTTOMLEFT",
-		fader           = faderOnShow,
 		frameVisibility = "[petbattle] hide; [cursor][mod:ctrl, mod:alt][@vehicle,exists][overridebar][shapeshift][vehicleui][possessbar] show; hide"
 	},
 
@@ -47,7 +25,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		fader           = faderOnShow,
 		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
 	},
 
@@ -60,7 +37,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		fader           = faderOnShow,
 		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
 	},
 
@@ -73,7 +49,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		fader           = faderOnShow,
 		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
 	},
 
@@ -86,7 +61,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		fader           = faderOnShow,
 		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
 	},
 
@@ -112,7 +86,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		fader           = faderOnShow,
 		frameVisibility = "[cursor][pet, mod:ctrl, mod:alt] show; hide"
 	},
 
@@ -125,9 +98,7 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 12,
 		startPoint      = "BOTTOMLEFT",
-		fader           = nil,
-		frameVisibility = "show"
-		-- frameVisibility = "[petbattle][overridebar][vehicleui][possessbar][shapeshift][nomod] hide; show"
+		frameVisibility = "hide"
 	},
 
 	vehicleexitbar = {
@@ -151,7 +122,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 1,
 		startPoint      = "CENTER",
-		fader           = nil,
 	},
 
 	bagbar = {
@@ -163,7 +133,6 @@ C["actionbars"] = {
 		buttonMargin    = 2,
 		numCols         = 1, --number of buttons per column
 		startPoint      = "BOTTOMRIGHT", --start postion of first button: BOTTOMLEFT, TOPLEFT, TOPRIGHT, BOTTOMRIGHT
-		fader           = fader,
 		frameVisibility = "hide"
 	},
 
@@ -176,6 +145,5 @@ C["actionbars"] = {
 		buttonMargin    = 0,
 		numCols         = 12,
 		startPoint      = "LEFT",
-		fader           = fader,
 	}
 }

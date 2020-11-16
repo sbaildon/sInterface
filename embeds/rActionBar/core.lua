@@ -127,6 +127,3 @@ function L:CreateButtonFrame(cfg,buttonList,delaySetup)
   end
   return frame
 end
-
---create slash commands
-rLib:CreateSlashCmd(L.addonName, L.addonShortcut, L.dragFrames, L.addonColor)

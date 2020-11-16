@@ -147,14 +147,14 @@ C["actionbars"] = {
 	},
 
 	extrabar = {
-		framePoint      = { "BOTTOM", UIParent, "TOP", 0, 10 },
+		framePoint      = { "BOTTOM", UIParent, "BOTTOM", 0, 160 },
 		frameScale      = 0.95,
-		framePadding    = 5,
+		framePadding    = 0,
 		buttonWidth     = 36,
 		buttonHeight    = 36,
 		buttonMargin    = 7,
 		numCols         = 1,
-		startPoint      = "BOTTOMLEFT",
+		startPoint      = "CENTER",
 		fader           = nil,
 	},
 

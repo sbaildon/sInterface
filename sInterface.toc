@@ -3,6 +3,7 @@
 ## Author: sbaildon <sean@baildon.co>
 ## Title: sInterface
 ## Notes: An opinionated UI replacement
+## OptionalDeps: sInterface_Config
 
 ## X-WoWI-ID: 24674
 

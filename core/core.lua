@@ -1,6 +1,8 @@
 local _, ns = ...
 local E, C = ns.E, ns.C
-local U_C = sInterface_userConfig
+
+local UC = sInterface_Config or {}
+ns.UC = UC
 
 local shadowTex = "Interface\\AddOns\\sInterface\\media\\shadow_border"
 
@@ -78,21 +80,6 @@ function E:CommaValue(number)  -- credit http://richard.warburton.it
 
 	local left ,num, right = string.match(number,'^([^%d]*%d)(%d*)(.-)$')
 	return left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right
-end
-
-local function merge(t1, t2)
-	for k, v in pairs(t2) do
-		if (type(v) == "table") and (type(t1[k] or false) == "table") then
-			merge(t1[k], t2[k])
-		else
-			t1[k] = v
-		end
-	end
-	return t1
-end
-
-if (U_C) then
-	ns.C = merge(C, U_C)
 end
 
 SLASH_RELOADUI1 = '/rl'

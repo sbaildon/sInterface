@@ -1,5 +1,5 @@
 local A, ns = ...
-local C = ns.C
+local C, UC = ns.C, ns.UC
 
 if not C.actionbars.enabled then return end
 
@@ -24,25 +24,61 @@ local fader = {
 	fadeOutDelay = 0,
 }
 
-C.actionbars.bar1["fader"] = faderOnShow
-C.actionbars.bar2["fader"] = faderOnShow
-C.actionbars.bar3["fader"] = faderOnShow
-C.actionbars.bar4["fader"] = faderOnShow
-C.actionbars.bar5["fader"] = faderOnShow
-C.actionbars.petbar["fader"] = faderOnShow
-C.actionbars.extrabar["fader"] = faderOnShow
-C.actionbars.micromenubar["fader"] = fader
+local function userConfigOrFallback(fallback, t, ...)
+	for _, k in ipairs{...} do
+		t = t[k]
+		if not t then
+		    return fallback
+		end
+	end
+	return t
+end
 
+local bar1 = userConfigOrFallback(C.actionbars.bar1, UC, 'actionbars', 'bar1')
+bar1["fader"] = faderOnShow
 
-rActionBar:CreateActionBar1(A, C.actionbars.bar1)
-rActionBar:CreateActionBar2(A, C.actionbars.bar2)
-rActionBar:CreateActionBar3(A, C.actionbars.bar3)
-rActionBar:CreateActionBar4(A, C.actionbars.bar4)
-rActionBar:CreateActionBar5(A, C.actionbars.bar5)
-rActionBar:CreatePetBar(A, C.actionbars.petbar)
-rActionBar:CreateStanceBar(A, C.actionbars.stancebar)
-rActionBar:CreateBagBar(A, C.actionbars.bagbar)
-rActionBar:CreateMicroMenuBar(A, C.actionbars.micromenubar)
-rActionBar:CreateExtraBar(A, C.actionbars.extrabar)
-rActionBar:CreateVehicleExitBar(A, C.actionbars.vehicleexitbar)
-rActionBar:CreatePossessExitBar(A, C.actionbars.possessexitbar)
+local bar2 = userConfigOrFallback(C.actionbars.bar2, UC, 'actionbars', 'bar2')
+bar2["fader"] = faderOnShow
+
+local bar3 = userConfigOrFallback(C.actionbars.bar3, UC, 'actionbars', 'bar3')
+bar3["fader"] = faderOnShow
+
+local bar4 = userConfigOrFallback(C.actionbars.bar4, UC, 'actionbars', 'bar4')
+bar4["fader"] = faderOnShow
+
+local bar5 = userConfigOrFallback(C.actionbars.bar5, UC, 'actionbars', 'bar5')
+bar5["fader"] = faderOnShow
+
+local petbar = userConfigOrFallback(C.actionbars.petbar, UC, 'actionbars', 'petbar')
+petbar["fader"] = faderOnShow
+
+local stancebar = userConfigOrFallback(C.actionbars.stancebar, UC, 'actionbars', 'stancebar')
+stancebar["fader"] = faderOnShow
+
+local extrabar = userConfigOrFallback(C.actionbars.extrabar, UC, 'actionbars', 'extrabar')
+extrabar["fader"] = faderOnShow
+
+local micromenubar = userConfigOrFallback(C.actionbars.micromenubar, UC, 'actionbars', 'micromenubar')
+micromenubar["fader"] = fader
+
+local bagbar = userConfigOrFallback(C.actionbars.bagbar, UC, 'actionbars', 'bagbar')
+bagbar["fader"] = fader
+
+local vehicleexitbar = userConfigOrFallback(C.actionbars.vehicleexitbar, UC, 'actionbars', 'vehicleexitbar')
+vehicleexitbar["fader"] = faderOnShow
+
+local possessexitbar = userConfigOrFallback(C.actionbars.possessexitbar, UC, 'actionbars', 'possessexitbar')
+possessexitbar["fader"] = faderOnShow
+
+rActionBar:CreateActionBar1(A, bar1)
+rActionBar:CreateActionBar2(A, bar2)
+rActionBar:CreateActionBar3(A, bar3)
+rActionBar:CreateActionBar4(A, bar4)
+rActionBar:CreateActionBar5(A, bar5)
+rActionBar:CreatePetBar(A, petbar)
+rActionBar:CreateStanceBar(A, stancebar)
+rActionBar:CreateBagBar(A, bagbar)
+rActionBar:CreateMicroMenuBar(A, micromenubar)
+rActionBar:CreateExtraBar(A, extrabar)
+rActionBar:CreateVehicleExitBar(A, vehicleexitbar)
+rActionBar:CreatePossessExitBar(A, possessexitbar)

@@ -198,7 +198,7 @@ function rActionBar:CreateVehicleExitBar(addonName,cfg)
   cfg.frameVisibilityFunc = "exit"
   --create vehicle exit button
   local button = CreateFrame("CHECKBUTTON", A.."VehicleExitButton", nil, "ActionButtonTemplate, SecureHandlerClickTemplate")
-  button.icon:SetTexture("interface\\addons\\"..A.."\\media\\vehicleexit")
+  button.icon:SetTexture("interface\\addons\\"..A.."\\embeds\\rActionBar\\media\\vehicleexit")
   button:RegisterForClicks("AnyUp")
   local function OnClick(self)
     if UnitOnTaxi("player") then TaxiRequestEarlyLanding() else VehicleExit() end self:SetChecked(false)

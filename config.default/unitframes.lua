@@ -35,7 +35,7 @@ C["uf"].size = {
 }
 
 C["uf"].positions = {
-	Player = { "CENTER", UIParent, "CENTER", 0, -275 }, -- Unused if emulatePersonalResourceDisplay is set
+	Player = { "CENTER", UIParent, "CENTER", 0, -175}, -- Unused if emulatePersonalResourceDisplay is set
 	Target = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 55, 130 },
 	Targettarget = { "TOPLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 7, 0 },
 	Focus = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 56, -100 },

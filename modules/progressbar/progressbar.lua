@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
-if not C.progressBars.enabled then return end;
+if not E:C('progressbars', 'enabled') then return end;
 
 local bars = {}
 
@@ -42,14 +42,14 @@ local function reposition()
 			if (prevElement == nil) then
 				something:SetPoint("TOP", ProgressBars, "TOP")
 			else
-				something:SetPoint("TOP", prevElement, "BOTTOM", 0, -C.progressBars.spacing)
+				something:SetPoint("TOP", prevElement, "BOTTOM", 0, -E:C('progressbars', 'spacing'))
 			end
 
 			prevElement = something
 		end
 	end
 
-	ProgressBars:SetHeight(totalHeight + (C.progressBars.spacing * (enabledCount-1)))
+	ProgressBars:SetHeight(totalHeight + (E:C('progressbars', 'spacing') * (enabledCount-1)))
 end
 
 function ProgressBars:CreateBar(barName)

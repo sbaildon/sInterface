@@ -1,7 +1,7 @@
 local _, ns = ...
 local C = ns.C
 
-C["progressBars"] = {
+C["progressbars"] = {
 	enabled = true,
 	spacing = 7,
 

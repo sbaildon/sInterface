@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
-if not C.progressBars.enabled then return end;
+if not E:C('progressbars', 'enabled') then return end;
 
 local ProgressBars = ns.sInterfaceProgressBars
 local barName = "azerite"
@@ -45,7 +45,7 @@ local function Visibility(self)
 end
 
 local azeriteHolder = ProgressBars:CreateBar(barName)
-azeriteHolder:SetHeight(C.progressBars.azerite.height)
+azeriteHolder:SetHeight(E:C('progressbars', 'azerite', 'height'))
 azeriteHolder:RegisterEvent("UNIT_INVENTORY_CHANGED")
 azeriteHolder:RegisterEvent("PLAYER_ENTERING_WORLD")
 azeriteHolder:SetScript("OnEvent", Visibility)
@@ -53,7 +53,7 @@ azeriteHolder:SetScript("OnEvent", Visibility)
 local azerite = CreateFrame("StatusBar", "ProgressBar", azeriteHolder, "AnimatedStatusBarTemplate")
 azerite:SetMatchBarValueToAnimation(true)
 azerite:SetAllPoints(azeriteHolder)
-azerite:SetStatusBarTexture(C.general.texture, "ARTWORK")
+azerite:SetStatusBarTexture(E:C('general', 'texture'), "ARTWORK")
 azerite:SetScript("OnEvent", Update)
 azerite:SetStatusBarColor(ARTIFACT_BAR_COLOR:GetRGB())
 azeriteHolder.Azerite = azerite

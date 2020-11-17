@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
-if not C.progressBars.enabled then return end;
+if not E:C('progressbars', 'enabled') then return end;
 
 local ProgressBars = ns.sInterfaceProgressBars
 local barName = "experience"
@@ -87,7 +87,7 @@ local function xpVisibility(self)
 end
 
 local experienceHolder = ProgressBars:CreateBar(barName)
-experienceHolder:SetHeight(C.progressBars.experience.height)
+experienceHolder:SetHeight(E:C('progressbars', 'experience', 'height'))
 experienceHolder:RegisterEvent('PLAYER_LEVEL_UP')
 experienceHolder:RegisterEvent('DISABLE_XP_GAIN')
 experienceHolder:RegisterEvent('ENABLE_XP_GAIN')
@@ -100,13 +100,13 @@ end)
 local experience = CreateFrame("StatusBar", "Experience", experienceHolder, "AnimatedStatusBarTemplate")
 experience:SetMatchBarValueToAnimation(true)
 experience:SetAllPoints(experienceHolder)
-experience:SetStatusBarTexture(C.general.texture, "ARTWORK")
+experience:SetStatusBarTexture(E:C('general', 'texture'), "ARTWORK")
 experience:SetFrameLevel(2)
 experience:SetScript("OnEvent", Update)
 experienceHolder.Experience = experience
 
 local rested = CreateFrame("StatusBar", "ExperienceRested", experience)
-rested:SetStatusBarTexture(C.general.texture, "ARTWORK")
+rested:SetStatusBarTexture(E:C('general', 'texture'), "ARTWORK")
 rested:SetAllPoints(experience)
 rested:SetStatusBarColor(0, 2/5, 1)
 rested:SetFrameLevel(1)

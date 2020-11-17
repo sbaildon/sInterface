@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
-if not C.progressBars.enabled then return end;
+if not E:C('progressbars', 'enabled') then return end;
 
 local ProgressBars = ns.sInterfaceProgressBars
 local barName = "reputation"
@@ -104,7 +104,7 @@ local function reputationVisibility(self, selectedFactionIndex)
 end
 
 local reputationHolder = ProgressBars:CreateBar(barName)
-reputationHolder:SetHeight(C.progressBars.reputation.height)
+reputationHolder:SetHeight(E:C('progressbars', 'reputation', 'height'))
 reputationHolder:SetScript("OnEvent", reputationVisibility)
 hooksecurefunc('SetWatchedFactionIndex', function(selectedFactionIndex)
 	reputationVisibility(reputationHolder, selectedFactionIndex or 0)
@@ -113,7 +113,7 @@ end)
 local reputation = CreateFrame("StatusBar", "ProgressBar", reputationHolder, "AnimatedStatusBarTemplate")
 reputation:SetMatchBarValueToAnimation(true)
 reputation:SetAllPoints(reputationHolder)
-reputation:SetStatusBarTexture(C.general.texture, "ARTWORK")
+reputation:SetStatusBarTexture(E:C('general', 'texture'), "ARTWORK")
 reputation:SetScript("OnEvent", Update)
 reputationHolder.Reputation = reputation
 C_Timer.After(1, function()

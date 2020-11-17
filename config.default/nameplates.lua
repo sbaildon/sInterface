@@ -1,7 +1,7 @@
 local _, ns = ...
 local C = ns.C
 
-C['np'] = {
+C['nameplates'] = {
 	enabled = true,
 	tankMode = true
 }

@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
-if not C.np.enabled then return end;
+if not E:C('nameplates', 'enabled') then return end;
 
 local colours = {
 	secure = {  0.2, 0.8, 0.1 },
@@ -27,7 +27,7 @@ function sPlates:NAME_PLATE_UNIT_ADDED(...)
 	local namePlate = namePlateFrameBase.UnitFrame
 
 	local castBar = namePlate.castBar
-	castBar:SetStatusBarTexture(C.general.texture)
+	castBar:SetStatusBarTexture(E:C('general', 'texture'))
 	castBar:SetHeight(3)
 
 	local healthBar = namePlate.healthBar
@@ -41,7 +41,7 @@ hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
 
 	local status = UnitThreatSituation("player", frame.unit)
 	local r, g, b
-	if (not (C.np.tankMode and E:PlayerIsTank())) or (status == nil) then
+	if (not (E:C('nameplates', 'tankMode') and E:PlayerIsTank())) or (status == nil) then
 		local reaction = colours.reaction[UnitReaction(frame.unit, "player")]
 		if not reaction then return end
 		r, g, b = unpack(reaction)
@@ -81,8 +81,8 @@ end)
 
 hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 	if namePlate.styled or namePlate:IsForbidden() then return end
-	namePlate.healthBar:SetStatusBarTexture(C.general.texture)
-	namePlate.healthBar.background:SetTexture(C.general.texture)
+	namePlate.healthBar:SetStatusBarTexture(E:C('general', 'texture'))
+	namePlate.healthBar.background:SetTexture(E:C('general', 'texture'))
 	namePlate.healthBar.border:Hide()
 
 	E:ShadowedBorder(namePlate.healthBar)

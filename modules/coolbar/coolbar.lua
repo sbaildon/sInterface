@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
-if not C.coolbar.enabled then return end;
+if not E:C('coolbar', 'enabled') then return end;
 
 local CoolBar = CreateFrame("Frame", "CoolBar", UIParent)
 
@@ -22,12 +22,12 @@ end
 
 function CoolBar:PLAYER_LOGIN()
 	CoolBar:SetFrameStrata("BACKGROUND")
-	CoolBar:SetHeight(C.coolbar.height)
-	CoolBar:SetWidth(C.coolbar.width)
-	CoolBar:SetPoint(unpack(C.coolbar.pos))
+	CoolBar:SetHeight(E:C('coolbar', 'height'))
+	CoolBar:SetWidth(E:C('coolbar', 'width'))
+	CoolBar:SetPoint(unpack(E:C('coolbar', 'pos')))
 
 	CoolBar.bg = CoolBar:CreateTexture(nil, "ARTWORK")
-	CoolBar.bg:SetTexture(C.general.texture)
+	CoolBar.bg:SetTexture(E:C('general', 'texture'))
 	CoolBar.bg:SetVertexColor(0.2, 0.2, 0.2, 0.5)
 	CoolBar.bg:SetAllPoints(CoolBar)
 
@@ -140,7 +140,7 @@ function CoolBar:CreateCooldown(spellId)
 		if UnitAffectingCombat('player') then
 			CoolBar:PlayReveal()
 		else
-			CoolBar:PlayAlpha(C.general.oocAlpha)
+			CoolBar:PlayAlpha(E:C('general', 'oocAlpha'))
 		end
 	end
 
@@ -196,7 +196,7 @@ end
 function CoolBar:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if (spellId == nil) or (noCooldowns[spellId]) then return end
 
-	if not (C.coolbar.disabled[spellId]) then
+	if not (E:C('coolbar', 'disabled')[spellId]) then
 		C_Timer.After(0.1, function()
 			CoolBar:CreateCooldown(spellId)
 		end)
@@ -231,7 +231,7 @@ end
 
 function CoolBar:PLAYER_REGEN_ENABLED()
 	if CoolBar.active > 0 then
-		CoolBar:PlayAlpha(C.general.oocAlpha)
+		CoolBar:PlayAlpha(E:C('general', 'oocAlpha'))
 	end
 end
 

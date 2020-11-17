@@ -1,7 +1,7 @@
 local _, ns = ...
-local C = ns.C
+local E = ns.E
 
-if not C.chat.enabled then return end
+if not E:C('chat', 'enabled') then return end
 
 ChatFrameMenuButton:HookScript("OnShow", ChatFrameMenuButton.Hide)
 ChatFrameMenuButton:Hide()
@@ -39,7 +39,7 @@ local function style(self)
 	self:SetMaxResize(UIParent:GetWidth(), UIParent:GetHeight())
 	self:SetMinResize(100, 50)
 	local font, size, flags = ChatFontNormal:GetFont()
-	self:SetFont(font, C.chat.fontSize and C.chat.fontSize or size, flags)
+	self:SetFont(font, E:C('chat', 'fontSize'), flags)
 
 	local tab = _G[name.."Tab"]
 	tab:SetScript("OnEnter", function(self)
@@ -101,10 +101,10 @@ hooksecurefunc("FloatingChatFrame_Update", function()
 	FCF_SetLocked(ChatFrame1, false)
 
 	ChatFrame1:ClearAllPoints()
-	ChatFrame1:SetPoint(unpack(C.chat.position))
+	ChatFrame1:SetPoint(unpack(E:C('chat', 'position')))
 	ChatFrame1:SetUserPlaced(true)
-	ChatFrame1:SetHeight(C.chat.height)
-	ChatFrame1:SetWidth(C.chat.width)
+	ChatFrame1:SetHeight(E:C('chat', 'height'))
+	ChatFrame1:SetWidth(E:C('chat', 'width'))
 
 	FCF_SetLocked(ChatFrame1, true)
 end)

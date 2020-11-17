@@ -1,7 +1,7 @@
 local addon, ns = ...
-local C = ns.C
+local E = ns.E
 
-if not C.orderhall.enabled then return end
+if not E:C('orderhall', 'enabled') then return end
 
 local orderhall = CreateFrame('Frame', addon..'OrderHall')
 

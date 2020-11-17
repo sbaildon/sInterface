@@ -1,7 +1,7 @@
 local _, ns = ...
-local C = ns.C
+local E = ns.E
 
-if not C.errors.enabled then return end;
+if not E:C('errors', 'enabled') then return end;
 
 local functionality_enabled = true;
 

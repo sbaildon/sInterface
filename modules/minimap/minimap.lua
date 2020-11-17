@@ -1,12 +1,12 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
-if not C.minimap.enabled then return end
+if not E:C('minimap', 'enabled') then return end
 
 -- Position
 Minimap:ClearAllPoints()
-Minimap:SetPoint(unpack(C.minimap.position))
-Minimap:SetSize(C.minimap.width, C.minimap.height)
+Minimap:SetPoint(unpack(E:C('minimap', 'position')))
+Minimap:SetSize(E:C('minimap', 'width'), E:C('minimap', 'height'))
 
 -- Square Shape
 Minimap:SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
@@ -35,7 +35,7 @@ MinimapNorthTag:SetTexture(nil)
 
 -- Zone
 MinimapZoneTextButton:Hide()
-if (C.minimap.zoneText) then
+if (E:C('minimap', 'zoneText')) then
 	MinimapZoneText:SetFontObject("GameFontNormalOutline")
 	MinimapZoneText:SetPoint("LEFT", Minimap, "LEFT", 0, 0)
 	MinimapZoneText:SetPoint("RIGHT", Minimap, "RIGHT", 0, 0)

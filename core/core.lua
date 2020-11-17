@@ -92,6 +92,25 @@ function E:ValueOrFallback(fallback, t, ...)
 	return t
 end
 
+function deepExists(t, ...)
+	for _, k in ipairs{...} do
+		t = t[k]
+		if t == nil then
+		    return nil
+		end
+	end
+	return t
+end
+
+
+function E:Config(...)
+	return deepExists(UC, ...) or deepExists(C, ...)
+end
+
+function E:C(...)
+	return E:Config(...)
+end
+
 
 SLASH_RELOADUI1 = '/rl'
 SlashCmdList.RELOADUI = ReloadUI

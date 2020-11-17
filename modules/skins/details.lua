@@ -1,7 +1,22 @@
 local addon, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
-if not C.skins.details.enabled then return end
+if not E:C('skins', 'details', 'enabled') then return end
+
+C = {
+	general = {
+		texture = E:C('general', 'texture')
+	},
+	skins = {
+		details = {
+			width = E:C('skins', 'details', 'width'),
+			point = E:C('skins', 'details', 'point'),
+			barHeight = E:C('skins', 'details', 'barHeight'),
+			barSpacing = E:C('skins', 'details', 'barSpacing'),
+			barsToDisplayMax = E:C('skins', 'details', 'barsToDisplayMax')
+		}
+	}
+}
 
 local function skinInstance(instance)
 	if not instance or not instance:IsEnabled() or instance.styled then return end

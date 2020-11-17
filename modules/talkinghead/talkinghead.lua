@@ -1,11 +1,11 @@
 local addon, ns = ...
-local C = ns.C
+local E = ns.E
 
-if not C.talkinghead.enabled then return end
+if not E:C('talkinghead', 'enabled') then return end
 
 local TalkingHeadAnchor = CreateFrame("Frame", addon.."TalkingHeadAnchor", UIParent)
-TalkingHeadAnchor:SetScale(C["talkinghead"].scale)
-TalkingHeadAnchor:SetPoint(unpack(C["talkinghead"].position))
+TalkingHeadAnchor:SetScale(E:C('talkinghead', 'scale'))
+TalkingHeadAnchor:SetPoint(unpack(E:C('talkinghead', 'position')))
 TalkingHeadAnchor:SetSize(1,1)
 
 TalkingHeadAnchor:RegisterEvent('ADDON_LOADED')

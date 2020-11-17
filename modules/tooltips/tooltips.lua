@@ -1,7 +1,7 @@
 local _, ns = ...
-local C = ns.C
+local E = ns.E
 
-if not C.tooltips.enabled then return end
+if not E:C('tooltips', 'enabled') then return end
 
 local unpack, type = unpack, type
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
@@ -24,13 +24,13 @@ local function SetBackdropStyle(self)
 end
 
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-	if C.tooltips.anchor_cursor then
+	if E:C('tooltips', 'anchor_cursor') then
 		tooltip:SetOwner(parent, "ANCHOR_CURSOR")
 	else
 		tooltip:SetOwner(parent, "ANCHOR_NONE")
 		tooltip:ClearAllPoints()
 		tooltip:SetClampedToScreen(true)
-		tooltip:SetPoint(unpack(C.tooltips.pos))
+		tooltip:SetPoint(unpack(E:C('tooltips', 'pos')))
 	end
 end)
 

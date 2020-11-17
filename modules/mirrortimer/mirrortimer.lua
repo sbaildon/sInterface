@@ -1,7 +1,7 @@
 local _, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
-if not C.mirrortimer.enabled then return end;
+if not E:C('mirrortimer', 'enabled') then return end;
 
 for i = 1, 3 do
 	local mir = _G["MirrorTimer"..i]
@@ -15,7 +15,7 @@ for i = 1, 3 do
 
 	local mirSB = _G["MirrorTimer"..i.."StatusBar"]
 		E:ShadowedBorder(mirSB)
-		mirSB:SetStatusBarTexture(C.general.texture)
+		mirSB:SetStatusBarTexture(E:C('general', 'texture'))
 		mirSB:SetSize(mir:GetWidth(), mir:GetHeight()/3)
 
 	local mirT = _G["MirrorTimer"..i.."Text"]

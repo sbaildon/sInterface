@@ -1,7 +1,7 @@
 local _, ns = ...
-local C = ns.C
+local E = ns.E
 
-if not C.junkseller.enabled then return end;
+if not E:C('junkseller', 'enabled') then return end;
 
 local function GreySell()
 	for bag=0,4 do

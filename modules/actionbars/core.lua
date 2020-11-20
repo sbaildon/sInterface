@@ -24,40 +24,56 @@ local fader = {
 	fadeOutDelay = 0,
 }
 
-local bar1 = E:C('actionbars', 'bar1')
+local function loader(name)
+	local t = {
+		framePoint      = E:C('actionbars', name, 'framePoint'),
+		frameScale      = E:C('actionbars', name, 'frameScale'),
+		framePadding    = E:C('actionbars', name, 'framePadding'),
+		buttonWidth     = E:C('actionbars', name, 'buttonWidth'),
+		buttonHeight    = E:C('actionbars', name, 'buttonHeight'),
+		buttonMargin    = E:C('actionbars', name, 'buttonMargin'),
+		numCols         = E:C('actionbars', name, 'numCols'),
+		startPoint      = E:C('actionbars', name, 'startPoint'),
+		frameVisibility = E:C('actionbars', name, 'frameVisibility'),
+	}
+
+	return t
+end
+
+local bar1 = loader("bar1")
 bar1["fader"] = faderOnShow
 
-local bar2 = E:C('actionbars', 'bar2')
+local bar2 = loader("bar2")
 bar2["fader"] = faderOnShow
 
-local bar3 = E:C('actionbars', 'bar3')
+local bar3 = loader("bar3")
 bar3["fader"] = faderOnShow
 
-local bar4 = E:C('actionbars', 'bar4')
+local bar4 = loader("bar4")
 bar4["fader"] = faderOnShow
 
-local bar5 = E:C('actionbars', 'bar5')
+local bar5 = loader("bar5")
 bar5["fader"] = faderOnShow
 
-local petbar = E:C('actionbars', 'petbar')
+local petbar = loader("petbar")
 petbar["fader"] = faderOnShow
 
-local stancebar = E:C('actionbars', 'stancebar')
+local stancebar = loader("stancebar")
 stancebar["fader"] = faderOnShow
 
-local extrabar = E:C('actionbars', 'extrabar')
+local extrabar = loader("extrabar")
 extrabar["fader"] = faderOnShow
 
-local micromenubar = E:C('actionbars', 'micromenubar')
+local micromenubar = loader("micromenubar")
 micromenubar["fader"] = fader
 
-local bagbar = E:C('actionbars', 'bagbar')
+local bagbar = loader("bagbar")
 bagbar["fader"] = fader
 
-local vehicleexitbar = E:C('actionbars', 'vehicleexitbar')
+local vehicleexitbar = loader("vehicleexitbar")
 vehicleexitbar["fader"] = faderOnShow
 
-local possessexitbar = E:C('actionbars', 'possessexitbar')
+local possessexitbar = loader("possessexitbar")
 possessexitbar["fader"] = faderOnShow
 
 rActionBar:CreateActionBar1(A, bar1)

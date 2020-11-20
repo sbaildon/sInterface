@@ -80,6 +80,7 @@ C["uf"] = {
 		}
 	},
 
+	-- buffs to track on the player unitframe
 	buffs = {
 		-- Unholy DK
 		["Sudden Doom"] = true,

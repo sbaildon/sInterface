@@ -70,8 +70,8 @@ local function resizeInstance(instance)
 	pos.h = (C.skins.details.barHeight*(barsToDisplay)) + (C.skins.details.barSpacing*(barsToDisplay))
 	pos.scale = 1
 	pos.point = C.skins.details.point
-	pos.x = -C.general.edgeSpacing
-	pos.y = C.general.edgeSpacing
+	pos.x = -E:C('general', 'edgeSpacing')
+	pos.y = E:C('general', 'edgeSpacing')
 
 	instance:RestorePositionFromPositionTable(pos)
 end
@@ -114,8 +114,8 @@ local function skin()
 		local instance = ...
 		if not instance.barras then return end
 		for _, row in ipairs (instance.barras) do
-			row.texto_esquerdo:SetPoint("LEFT", row.statusbar, "LEFT", 3, 0)
-			row.texto_direita:SetPoint("RIGHT", row.statusbar, "RIGHT", -2, 0)
+			row.lineText1:SetPoint("LEFT", row.statusbar, "LEFT", 3, 0)
+			row.lineText4:SetPoint("RIGHT", row.statusbar, "RIGHT", -2, 0)
 		end
 	end
 

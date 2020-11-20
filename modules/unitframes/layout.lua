@@ -185,16 +185,19 @@ local AuraSetPosition = function(element, from, to)
 end
 
 local Auras = function(self)
-	local config = E:C('uf', 'aura', self.unit)
-	if not config then return end
+	local enable = E:C('uf', 'aura', self.unit, 'enable')
+	if not enable then return end
+
+	local mode = E:C('uf', 'aura', self.unit, 'mode')
+	local size = E:C('uf', 'aura', self.unit, 'size')
 
 	local spacing = 0
 	local buttonsPerRow = 0
 	local iterations = 0 -- reduce aura per row until loop condition satisfied
 	while (spacing < 4) do -- require at least this many pixels spacing between buttons
 		local frameWidth = self:GetWidth()
-		buttonsPerRow = (math.floor(frameWidth / config.size) - iterations)
-		local leftover = frameWidth - (buttonsPerRow*config.size)
+		buttonsPerRow = (math.floor(frameWidth / size) - iterations)
+		local leftover = frameWidth - (buttonsPerRow*size)
 		spacing = leftover / (buttonsPerRow-1)
 		iterations = iterations+1
 	end
@@ -206,7 +209,7 @@ local Auras = function(self)
 	b.num = totalButtons
 	b.buttonsPerRow = buttonsPerRow
 	b:SetSize(self:GetWidth(), 14)
-	b.size = config.size
+	b.size = size
 	b:SetPoint('BOTTOMLEFT', self, 'TOPLEFT', 0, 12)
 	b.initialAnchor = 'TOPLEFT'
 	b['growth-y'] = 'UP'
@@ -214,11 +217,11 @@ local Auras = function(self)
 	b.PostUpdateIcon = PostUpdateIcon
 	b.SetPosition = AuraSetPosition
 
-	if config.mode == 'aura' then
+	if mode == 'aura' then
 		b.gap = false
 		b.numTotal = totalButtons
 		self.Auras = b
-	elseif config.mode == 'debuff' then
+	elseif mode == 'debuff' then
 		self.Debuffs = b
 	else
 		self.Buffs = b

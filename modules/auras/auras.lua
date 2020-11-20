@@ -47,12 +47,12 @@ local function style(aura)
 end
 
 local function updateBuffAnchors()
-	local buff, previousBuff, aboveBuff
+	local previousBuff, aboveBuff
 
-	buffs = {}
+	local buffs = {}
 
 	for i = 1, BuffFrame.numEnchants do
-		buff = _G["TempEnchant"..i]
+		local buff = _G["TempEnchant"..i]
 		if not buff then return end
 		if buff:IsShown() then
 			table.insert(buffs, buff)
@@ -60,7 +60,7 @@ local function updateBuffAnchors()
 	end
 
 	for i = 1, BUFF_ACTUAL_DISPLAY do
-		buff = _G["BuffButton"..i]
+		local buff = _G["BuffButton"..i]
 		if not buff then return end
 		if buff:IsShown() then
 			table.insert(buffs, buff)

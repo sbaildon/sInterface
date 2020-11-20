@@ -287,5 +287,7 @@ read_globals = {
 	"PixelUtil",
 	"GameTooltipTextLeft4",
 	"GameTooltipTextLeft5",
-	"BackdropTemplateMixin"
+	"BackdropTemplateMixin",
+	"rActionBar",
+	"BuffFrame"
 }

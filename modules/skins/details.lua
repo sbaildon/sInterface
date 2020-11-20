@@ -3,7 +3,7 @@ local E = ns.E
 
 if not E:C('skins', 'details', 'enabled') then return end
 
-C = {
+local C = {
 	general = {
 		texture = E:C('general', 'texture')
 	},

@@ -48,9 +48,29 @@ end
 
 local function updateBuffAnchors()
 	local buff, previousBuff, aboveBuff
+
+	buffs = {}
+
+	for i = 1, BuffFrame.numEnchants do
+		buff = _G["TempEnchant"..i]
+		if not buff then return end
+		if buff:IsShown() then
+			table.insert(buffs, buff)
+		end
+	end
+
 	for i = 1, BUFF_ACTUAL_DISPLAY do
 		buff = _G["BuffButton"..i]
+		if not buff then return end
+		if buff:IsShown() then
+			table.insert(buffs, buff)
+		end
+	end
+
+	for i, buff in next, buffs do
 		style(buff)
+
+		buff:ClearAllPoints()
 
 		if i > 1 and mod(i, max_per_row) == 1 then
 			buff:SetPoint("TOPRIGHT", aboveBuff, "BOTTOMRIGHT", 0, spacing*2)
@@ -63,7 +83,6 @@ local function updateBuffAnchors()
 		end
 		previousBuff = buff
 	end
-
 end
 
 local function updateDebuffAnchors()

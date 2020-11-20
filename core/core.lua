@@ -94,7 +94,13 @@ end
 
 
 function E:Config(...)
-	return deepExists(UC, ...) or deepExists(C, ...)
+	local user_config  = deepExists(UC, ...)
+
+	if user_config == nil then
+		return deepExists(C, ...)
+	else
+		return user_config
+	end
 end
 
 function E:C(...)

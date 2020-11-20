@@ -562,9 +562,9 @@ end
 
 local Size = function(self)
 	if issecure() then return end
-	local uf_cfg = E:C('uf', 'size', self.unitSize)
-	local height = uf_cfg.health
-	self:SetSize(uf_cfg.width, height)
+	local width = E:C('uf', 'size', self.unitSize, 'width')
+	local height = E:C('uf', 'size', self.unitSize, 'health')
+	self:SetSize(width, height)
 end
 
 local Shared = function(self, unit)

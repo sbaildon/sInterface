@@ -1,5 +1,5 @@
 local name, ns = ...
-local E, C = ns.E, ns.C
+local E = ns.E
 
 if not E:C('uf', 'enabled') then return end
 

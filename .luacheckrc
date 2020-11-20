@@ -289,5 +289,6 @@ read_globals = {
 	"GameTooltipTextLeft5",
 	"BackdropTemplateMixin",
 	"rActionBar",
-	"BuffFrame"
+	"BuffFrame",
+	"sInterface_Config"
 }

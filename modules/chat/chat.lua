@@ -38,7 +38,7 @@ local function style(self)
 	self:SetClampRectInsets(0, 0, 0, 0)
 	self:SetMaxResize(UIParent:GetWidth(), UIParent:GetHeight())
 	self:SetMinResize(100, 50)
-	local font, size, flags = ChatFontNormal:GetFont()
+	local font, _, flags = ChatFontNormal:GetFont()
 	self:SetFont(font, E:C('chat', 'fontSize'), flags)
 
 	local tab = _G[name.."Tab"]

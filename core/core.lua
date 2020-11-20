@@ -82,17 +82,7 @@ function E:CommaValue(number)  -- credit http://richard.warburton.it
 	return left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right
 end
 
-function E:ValueOrFallback(fallback, t, ...)
-	for _, k in ipairs{...} do
-		t = t[k]
-		if t == nil then
-		    return fallback
-		end
-	end
-	return t
-end
-
-function deepExists(t, ...)
+local function deepExists(t, ...)
 	for _, k in ipairs{...} do
 		t = t[k]
 		if t == nil then

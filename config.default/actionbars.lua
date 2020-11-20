@@ -17,7 +17,7 @@ C["actionbars"] = {
 	},
 
 	bar2 = {
-		framePoint      = { "TOPLEFT", UIParent, "TOPLEFT", 100, -200 },
+		framePoint      = { "TOPRIGHT", UIParent, "TOPRIGHT", -300, -250 },
 		frameScale      = 0.9,
 		framePadding    = 5,
 		buttonWidth     = 32,

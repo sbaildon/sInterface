@@ -19,9 +19,13 @@ local backdrop = { bgFile = "Interface\\Buttons\\WHITE8x8",
 
 local function SetBackdropStyle(self)
 	self:SetBackdrop(backdrop)
-	self:SetBackdropColor(unpack(bgColor))
 	self:SetBackdropBorderColor(1, 1, 1, 0)
+	self:SetBackdropColor(unpack(bgColor))
 end
+
+hooksecurefunc("GameTooltip_UpdateStyle", function(self)
+	SetBackdropStyle(self)
+end)
 
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
 	if E:C('tooltips', 'anchor_cursor') then

@@ -37,6 +37,7 @@ function sPlates:NAME_PLATE_UNIT_ADDED(...)
 end
 
 hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
+	if issecure() then return end
 	if UnitIsPlayer(frame.unit) then return end
 
 	local status = UnitThreatSituation("player", frame.unit)
@@ -59,6 +60,7 @@ hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
 end)
 
 hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
+	if issecure() then return end
 	local r, g, b = frame.healthBar:GetStatusBarColor()
 	frame.healthBar.background:SetVertexColor(r*multiplier, g*multiplier, b*multiplier, 1)
 end)

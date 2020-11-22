@@ -184,12 +184,12 @@ local AuraSetPosition = function(element, from, to)
 	end
 end
 
-local Auras = function(self)
-	local enable = E:C('uf', 'aura', self.unit, 'enable')
-	if not enable then return end
+local function Auras(self)
+	local enabled = E:C('uf', self.unit:match('[^%d]+'), 'auras', 'enabled')
+	if not enabled then return end
 
-	local mode = E:C('uf', 'aura', self.unit, 'mode')
-	local size = E:C('uf', 'aura', self.unit, 'size')
+	local mode = E:C('uf', self.unit:match('[^%d]+'), 'auras', 'mode')
+	local size = E:C('uf', self.unit:match('[^%d]+'), 'auras', 'size')
 
 	local spacing = 0
 	local buttonsPerRow = 0
@@ -202,7 +202,7 @@ local Auras = function(self)
 		iterations = iterations+1
 	end
 
-	local totalButtons = (buttonsPerRow >= 7) and buttonsPerRow or buttonsPerRow*2
+	local totalButtons = buttonsPerRow
 
 	local b = CreateFrame('Frame', nil, self)
 	b.spacing = spacing
@@ -385,7 +385,7 @@ local Castbar = function(self, unit)
 
 	E:RegisterAlphaAnimation(cb)
 
-	local cbHeight = self.Health:GetHeight()/CASTBAR_HEIGHT_RATIO
+	local cbHeight = self:GetHeight()/CASTBAR_HEIGHT_RATIO
 	local textHeight = cb.Text:GetStringHeight();
 	local iconSize = (cbHeight+textHeight)-TEXT_Y_OFFSET
 	cb.Icon:SetSize(iconSize, iconSize)
@@ -444,7 +444,6 @@ end
 local Health = function(self)
 	local h = createStatusbar(self, E:C('general', 'texture'))
 	h:SetAllPoints()
-	h:SetHeight(E:C('uf', 'size', self.unitSize, 'health'))
 
 	local hbg = h:CreateTexture(nil, 'BACKGROUND')
 	hbg:SetDrawLayer('BACKGROUND', 1)
@@ -489,7 +488,7 @@ local Power = function(self)
 	powerHolder:SetPoint("LEFT")
 	powerHolder:SetPoint("RIGHT")
 	powerHolder:SetPoint("TOP", self, "BOTTOM", POWER_X_OFFSET, POWER_Y_OFFSET)
-	powerHolder:SetHeight(E:C('uf', 'size', self.unitSize, 'power'))
+	powerHolder:SetHeight(E:C('uf', self.unit:match('[^%d]+'), 'size', 'power'))
 
 	local p = createStatusbar(powerHolder, E:C('general', 'texture'), nil, nil, nil, 1, 1, 1, 1)
 	p:SetPoint('LEFT', (self:GetWidth()/18), 0)
@@ -527,7 +526,8 @@ local AdditionalPower = function(self)
 	powerHolder:SetPoint("LEFT")
 	powerHolder:SetPoint("RIGHT")
 	powerHolder:SetPoint("TOP", self.PowerHolder, "BOTTOM", 0, -4)
-	powerHolder:SetHeight(E:C('uf', 'size', self.unitSize, 'power'))
+	powerHolder:SetHeight(E:C('uf', self.unit:match('[^%d]+'), 'size', 'power'))
+
 
 	local p = createStatusbar(powerHolder, E:C('general', 'texture'), nil, nil, nil, 1, 1, 1, 1)
 	p:SetPoint('LEFT', (self:GetWidth()/18), 0)
@@ -563,20 +563,19 @@ local PhaseIndicator = function(self)
 	self.PhaseIndicator = PhaseIndicator
 end
 
-local Size = function(self)
-	if issecure() then return end
-	local width = E:C('uf', 'size', self.unitSize, 'width')
-	local height = E:C('uf', 'size', self.unitSize, 'health')
-	self:SetSize(width, height)
-end
-
 local Shared = function(self, unit)
+	unit = self.unit:match('^(.-)%d+') or self.unit
+	-- self.unit = unit
 	self.menu = menu
 
 	self:SetScript('OnEnter', OnEnter)
 	self:SetScript('OnLeave', OnLeave)
 
 	self:RegisterForClicks'AnyUp'
+
+	local width = E:C('uf', unit, 'size', 'width')
+	local height = E:C('uf', unit, 'size', 'height')
+	self:SetSize(width, height)
 
 	Health(self)
 
@@ -597,13 +596,10 @@ local Shared = function(self, unit)
 	self.Highlight = hl
 end
 
+
 local UnitSpecific = {
 	player = function(self, ...)
-		self.unitSize = 'primary'
-
-		Size(self)
-		Shared(self, ...)
-
+		Shared(self)
 		Power(self)
 		AdditionalPower(self)
 		HealthPrediction(self)
@@ -694,16 +690,18 @@ local UnitSpecific = {
 		self.GCD = CreateFrame('Frame', nil, self.Health)
 		self.GCD:SetPoint('LEFT', self.Health, 'LEFT')
 		self.GCD:SetPoint('RIGHT', self.Health, 'RIGHT')
-		self.GCD:SetHeight(E:C('uf', 'size', 'primary', 'health')+4)
+		self.GCD:SetHeight(E:C('uf', self.unit, 'size', 'height')+4)
+
+		self.GCD:SetHeight(E:C('uf', self.unit, 'size', 'height')+4)
 
 		self.GCD.Spark = self.GCD:CreateTexture(nil, "OVERLAY")
 		self.GCD.Spark:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark")
 		self.GCD.Spark:SetBlendMode("ADD")
-		self.GCD.Spark:SetHeight((E:C('uf', 'size', 'primary', 'health')*2)+4)
+		self.GCD.Spark:SetHeight((E:C('uf', self.unit, 'size', 'height')*2)+4)
 		self.GCD.Spark:SetWidth(9)
 		self.GCD.Spark:SetPoint('LEFT', self.Health, 'LEFT', 0, 0)
 
-		local altp = createStatusbar(self, E:C('general', 'texture'), nil, E:C('uf', 'size', self.unitSize, 'power'), self:GetWidth(), 1, 1, 1, 1)
+		local altp = createStatusbar(self, E:C('general', 'texture'), nil, E:C('uf', self.unit, 'size', 'power'), self:GetWidth(), 1, 1, 1, 1)
 		altp:SetPoint("BOTTOM", self, "TOP", 0, 3)
 		altp.bg = altp:CreateTexture(nil, 'BORDER')
 		altp.bg:SetAllPoints(altp)
@@ -732,17 +730,12 @@ local UnitSpecific = {
 	end,
 
 	target = function(self, ...)
-		self.unitSize = 'primary'
-
-		Size(self)
-		Shared(self, ...)
-
+		Shared(self)
 		Power(self)
 		HealthPrediction(self)
 		Castbar(self)
 		PhaseIndicator(self)
-
-		if E:C('uf', 'aura', 'target', 'enable') then Auras(self) end
+		Auras(self)
 
 		local htext = self.Health:CreateFontString("sInterface_TargetHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
@@ -759,17 +752,12 @@ local UnitSpecific = {
 	end,
 
 	focus = function(self, ...)
-		self.unitSize = 'primary'
-
-		Size(self)
-		Shared(self, ...)
-
+		Shared(self)
 		Power(self)
 		HealthPrediction(self)
 		Castbar(self)
 		PhaseIndicator(self)
-
-		if E:C('uf', 'aura', 'focus', 'enable') then Auras(self) end
+		Auras(self)
 
 		local htext = self.Health:CreateFontString("sInterface_FocusHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
@@ -785,14 +773,11 @@ local UnitSpecific = {
 	end,
 
 	boss = function(self, ...)
-		self.unitSize = 'secondary'
-
-		Size(self)
-		Shared(self, ...)
-
+		Shared(self)
 		Power(self)
 		Castbar(self)
 		PhaseIndicator(self)
+		Auras(self)
 
 		local htext = self.Health:CreateFontString("sInterface_BossHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
@@ -823,11 +808,7 @@ local UnitSpecific = {
 	end,
 
 	pet = function(self, ...)
-		self.unitSize = 'tertiary'
-
-		Size(self)
-		Shared(self, ...)
-
+		Shared(self)
 		HealthPrediction(self)
 		PhaseIndicator(self)
 
@@ -848,10 +829,8 @@ local UnitSpecific = {
 	end,
 
 	targettarget = function(self, ...)
-		self.unitSize = 'tertiary'
-
-		Size(self)
-		Shared(self, ...)
+		Shared(self)
+		Auras(self)
 
 		local name = self.Health:CreateFontString("sInterface_TargetTargetName", "ARTWORK", "GameFontNormalOutline")
 		name:SetJustifyH("LEFT")
@@ -860,17 +839,13 @@ local UnitSpecific = {
 	end,
 
 	party = function(self, ...)
-		self.unitSize = 'secondary'
-
-		Shared(self, ...)
-
+		Shared(self)
 		Power(self)
 		HealthPrediction(self)
 		PhaseIndicator(self)
 		LFD(self)
 		ReadyCheck(self)
-
-		if E:C('uf', 'aura', 'party', 'enable') then Auras(self) end
+		Auras(self)
 
 		local htext = self.Health:CreateFontString("sInterface_PartyHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
@@ -886,16 +861,12 @@ local UnitSpecific = {
 	end,
 
 	tank = function(self, ...)
-		self.unitSize = 'secondary'
-
-		Shared(self, ...)
-
+		Shared(self)
 		Power(self)
 		HealthPrediction(self)
 		PhaseIndicator(self)
 		LFD(self)
-
-		if E:C('uf', 'aura', 'tank', 'enable') then Auras(self) end
+		Auras(self)
 
 		local htext = self.Health:CreateFontString("sInterface_TankHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
@@ -916,12 +887,10 @@ local UnitSpecific = {
 	end,
 
 	arena = function(self, ...)
-		self.unitSize = 'secondary'
-
-		Shared(self, ...)
-
+		Shared(self)
 		Power(self)
 		Castbar(self)
+		Auras(self)
 
 		local htext = self.Health:CreateFontString("sInterface_ArenaHealth", "ARTWORK", "GameFontNormalOutline")
 		htext:SetJustifyH("RIGHT")
@@ -936,7 +905,7 @@ local UnitSpecific = {
 		self:Tag(name, '[arenaspec]')
 
 		local t = CreateFrame('Frame', nil, self)
-		t:SetSize(E:C('uf', 'size', 'secondary', 'health'), E:C('uf', 'size', 'secondary', 'health'))
+		t:SetSize(E:C('uf', self.unit:match('[^%d]+'), 'size', 'height'), E:C('uf', self.unit:match('[^%d]+'), 'size', 'height'))
 		t:SetPoint('TOPRIGHT', self, 'TOPLEFT', -4, 0)
 		E:ShadowedBorder(t)
 		self.Trinket = t
@@ -945,10 +914,7 @@ local UnitSpecific = {
 	end,
 
 	raid = function(self, ...)
-		self.unitSize = 'raid'
-
-		Shared(self, ...)
-
+		Shared(self)
 		HealthPrediction(self)
 		LFD(self)
 		ReadyCheck(self)
@@ -966,12 +932,14 @@ local hider = CreateFrame("Frame", "Hider", UIParent)
 hider:Hide()
 
 oUF:RegisterStyle('sInterface', Shared)
-
 for unit,layout in next, UnitSpecific do
 	oUF:RegisterStyle('sInterface - ' .. unit:gsub('^%l', string.upper), layout)
 end
 
-local spawnHelper = function(self, unit, pos)
+local function spawnHelper(self, unit, pos)
+	baseUnit = unit:match('^(.-)%d+') or unit
+	if not E:C("uf", baseUnit, "enabled") then return end
+
 	if(UnitSpecific[unit]) then
 		self:SetActiveStyle('sInterface - ' .. unit:gsub('^%l', string.upper))
 	elseif(UnitSpecific[unit:match('[^%d]+')]) then
@@ -984,99 +952,65 @@ local spawnHelper = function(self, unit, pos)
 	return object
 end
 
-oUF:Factory(function(self)
-	spawnHelper(self, 'player', E:C('uf', 'positions', 'Player'))
-	if (E:C('uf', 'emulatePersonalResourceDisplay')) then
-		SetCVar("nameplateShowSelf", 1)
-		SetCVar("NameplatePersonalShowAlways", 1)
-		SetCVar("NameplatePersonalShowWithTarget", 2) -- Show with friendly and hostile targets
-		SetCVar("nameplateSelfAlpha", 0)
-		C_NamePlate.SetNamePlateSelfClickThrough(true)
-
-		local f = CreateFrame("frame")
-		f:RegisterEvent("NAME_PLATE_UNIT_ADDED", "player")
-		f:RegisterEvent("NAME_PLATE_UNIT_REMOVED", "player")
-
-		f:SetScript("OnEvent", function(self, event, unit)
-			-- do nothing if the nameplate is not ours
-			if not UnitIsUnit(unit, "player") then return end
-
-			local namePlate = C_NamePlate.GetNamePlateForUnit(unit, issecure());
-			-- return if we're locked
-			if not namePlate or InCombatLockdown() then return end
-
-			oUF_sInterfacePlayer:ClearAllPoints()
-			if event == "NAME_PLATE_UNIT_ADDED" then
-				oUF_sInterfacePlayer:SetPoint("CENTER", namePlate, "CENTER", 0, -30)
-			else
-				oUF_sInterfacePlayer:SetPoint(unpack(E:C('uf', 'positions', 'Player')))
-			end
-		end)
-	end
-
-	spawnHelper(self, 'target', E:C('uf', 'positions', 'Target'))
-	spawnHelper(self, 'targettarget', E:C('uf', 'positions', 'Targettarget'))
-	spawnHelper(self, 'focus', E:C('uf', 'positions', 'Focus'))
-	spawnHelper(self, 'focustarget', E:C('uf', 'positions', 'Focustarget'))
-	spawnHelper(self, 'pet', E:C('uf', 'positions', 'Pet'))
-
-	spawnHelper(self, 'boss1', E:C('uf', 'positions', 'Boss'))
-	local bossCastBar = _G['oUF_sInterfaceBoss1'].Castbar
-	local bossPowerBar = _G['oUF_sInterfaceBoss1'].Power
-	local bossyOffset = bossCastBar:GetHeight() + (CASTBAR_Y_OFFSET*3) + bossPowerBar:GetHeight()
-	for i = 2, MAX_BOSS_FRAMES do
-		local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceBoss'..i-1, 'TOPLEFT', 0, bossyOffset }
-		spawnHelper(self, 'boss' .. i, pos)
-	end
-
-	spawnHelper(self, "arena1", E:C('uf', 'positions', 'Arena'))
-	local arenaCastBar = _G['oUF_sInterfaceArena1'].Castbar
-	local arenaPowerBar = _G['oUF_sInterfaceArena1'].Power
-	local arenayOffset = arenaCastBar:GetHeight() + (CASTBAR_Y_OFFSET*3) + arenaPowerBar:GetHeight()
-	for i = 2, 5 do
-		local pos = { "BOTTOM", "oUF_sInterfaceArena"..i-1, "TOP", 0, arenayOffset }
-		spawnHelper(self, "arena" ..i, pos)
-	end
+local function partySpawn(self)
+	if not E:C('uf', 'party', 'enabled') then return end
 
 	for i = 1, MAX_PARTY_MEMBERS do
 		local pet = 'PartyMemberFrame'..i..'PetFrame'
 		_G[pet]:SetParent(hider)
 		_G[pet..'HealthBar']:UnregisterAllEvents()
 	end
-	self:SetActiveStyle'sInterface - Party'
-	local party = self:SpawnHeader('oUF_Party', nil, 'custom [@arena1,exists][@arena2,exists][@arena3,exists][group:party,nogroup:raid] show; hide',
+
+	local adjuster = E:C('uf', 'party', 'auras', 'enabled') and E:C('uf', 'party', 'auras', 'size') or 0
+	local yOffset =  -23 + -adjuster
+
+	self:SetActiveStyle('sInterface - Party')
+	local party = self:SpawnHeader(nil, nil, 'custom [@arena1,exists][@arena2,exists][@arena3,exists][group:party,nogroup:raid] show; hide',
 	'showPlayer', false,
 	'showSolo', false,
 	'showParty', true,
-	'yOffset', -23,
+	'yOffset', yOffset,
 	'oUF-initialConfigFunction',
 		([[
 			self:SetHeight(%d)
 			self:SetWidth(%d)
-		]]):format(E:C('uf', 'size', 'secondary', 'health'), E:C('uf', 'size', 'secondary', 'width'))
+		]]):format(E:C('uf', 'party', 'size', 'height'), E:C('uf', 'party', 'size', 'width'))
 	)
-	party:SetPoint(unpack(E:C('uf', 'positions', 'Party')))
 
-	self:SetActiveStyle'sInterface - Tank'
+	party:SetPoint(unpack(E:C('uf', 'party', 'position')))
+end
+
+local function maintankSpawn(self)
+	if not E:C('uf', 'maintank', 'enabled') then return end
+
+	local adjuster = E:C('uf', 'maintank', 'auras', 'enabled') and E:C('uf', 'maintank', 'auras', 'size') or 0
+	local yOffset =  -23 + -adjuster
+
+	self:SetActiveStyle('sInterface - Tank')
 	local maintank = self:SpawnHeader('oUF_MainTank', nil, 'raid',
 	'showRaid', true,
 	'showSolo', false,
 	'groupFilter', 'MAINTANK',
-	'yOffset', -35,
+	'yOffset', yOffset,
 	'oUF-initialConfigFunction',
 		([[
 			self:SetHeight(%d)
 			self:SetWidth(%d)
-		]]):format(E:C('uf', 'size', 'secondary', 'health'), E:C('uf', 'size', 'secondary', 'width'))
+		]]):format(E:C('uf', 'maintank', 'size', 'height'), E:C('uf', 'maintank', 'size', 'width'))
 	)
-	maintank:SetPoint(unpack(E:C('uf', 'positions', 'Tank')))
+
+	maintank:SetPoint(unpack(E:C('uf', 'maintank', 'position')))
+end
+
+local function raidSpawn(self)
+	if not E:C('uf', 'raid', 'enabled') then return end
 
 	if IsAddOnLoaded('Blizzard_CompactRaidFrames') then
 		CompactRaidFrameManager:SetParent(hider)
 		CompactUnitFrameProfiles:UnregisterAllEvents()
 	end
 
-	self:SetActiveStyle'sInterface - Raid'
+	self:SetActiveStyle('sInterface - Raid')
 	local raid = oUF:SpawnHeader(nil, nil, 'raid',
 	'showPlayer', true,
 	'showSolo', false,
@@ -1095,7 +1029,89 @@ oUF:Factory(function(self)
 	'oUF-initialConfigFunction', ([[
 		self:SetHeight(%d)
 		self:SetWidth(%d)
-	]]):format(E:C('uf', 'size', 'raid', 'health'), E:C('uf', 'size', 'raid', 'width'))
+	]]):format(E:C('uf', 'raid', 'size', 'height'), E:C('uf', 'raid', 'size', 'width'))
 	)
-	raid:SetPoint(unpack(E:C('uf', 'positions', 'Raid')))
+
+	raid:SetPoint(unpack(E:C('uf', 'raid', 'position')))
+end
+
+local function bossSpawn(self)
+	if not E:C("uf", "boss", "enabled") then return end
+
+	spawnHelper(self, "boss1", E:C("uf", "boss", "position"))
+
+	local adjuster = E:C('uf', 'boss', 'auras', 'enabled') and E:C('uf', 'boss', 'auras', 'size') or 0
+	local bossCastBar = _G['oUF_sInterfaceBoss1'].Castbar
+	local bossPowerBar = _G['oUF_sInterfaceBoss1'].Power
+	local bossyOffset = bossCastBar:GetHeight() + (CASTBAR_Y_OFFSET*3) + bossPowerBar:GetHeight() + adjuster
+
+	for i = 2, MAX_BOSS_FRAMES do
+		local pos = { 'BOTTOMLEFT', 'oUF_sInterfaceBoss'..i-1, 'TOPLEFT', 0, bossyOffset }
+		spawnHelper(self, 'boss' .. i, pos)
+	end
+end
+
+local function arenaSpawn(self)
+	if not E:C('uf', 'arena', 'enabled') then return end
+
+	spawnHelper(self, "arena1", E:C('uf', 'arena', 'position'))
+
+	local adjuster = E:C('uf', 'arena', 'auras', 'enabled') and E:C('uf', 'arena', 'auras', 'size') or 0
+	local arenaCastBar = _G['oUF_sInterfaceArena1'].Castbar
+	local arenaPowerBar = _G['oUF_sInterfaceArena1'].Power
+	local arenayOffset = arenaCastBar:GetHeight() + (CASTBAR_Y_OFFSET*3) + arenaPowerBar:GetHeight() + adjuster
+
+	for i = 2, 5 do
+		local pos = { "BOTTOM", "oUF_sInterfaceArena"..i-1, "TOP", 0, arenayOffset }
+		spawnHelper(self, "arena" ..i, pos)
+	end
+end
+
+local function playerSpawn(self)
+	if not E:C('uf', 'player', 'enabled') then return end
+
+	spawnHelper(self, 'player', E:C('uf', 'player', 'position'))
+
+	if not (E:C('uf', 'emulatePersonalResourceDisplay')) then return end
+
+	SetCVar("nameplateShowSelf", 1)
+	SetCVar("NameplatePersonalShowAlways", 1)
+	SetCVar("NameplatePersonalShowWithTarget", 2) -- Show with friendly and hostile targets
+	SetCVar("nameplateSelfAlpha", 0)
+	C_NamePlate.SetNamePlateSelfClickThrough(true)
+
+	local f = CreateFrame("frame")
+	f:RegisterEvent("NAME_PLATE_UNIT_ADDED", "player")
+	f:RegisterEvent("NAME_PLATE_UNIT_REMOVED", "player")
+
+	f:SetScript("OnEvent", function(self, event, unit)
+		-- do nothing if the nameplate is not ours
+		if not UnitIsUnit(unit, "player") then return end
+
+		local namePlate = C_NamePlate.GetNamePlateForUnit(unit, issecure());
+		-- return if we're locked
+		if not namePlate or InCombatLockdown() then return end
+
+		oUF_sInterfacePlayer:ClearAllPoints()
+		if event == "NAME_PLATE_UNIT_ADDED" then
+			oUF_sInterfacePlayer:SetPoint("CENTER", namePlate, "CENTER", 0, -30)
+		else
+			oUF_sInterfacePlayer:SetPoint(unpack(E:C('uf', 'player', 'position')))
+		end
+	end)
+end
+
+oUF:Factory(function(self)
+	playerSpawn(self)
+	spawnHelper(self, "target", E:C("uf", "target", "position"))
+	spawnHelper(self, "targettarget", E:C("uf", "targettarget", "position"))
+	spawnHelper(self, "focus", E:C("uf", "focus", "position"))
+	spawnHelper(self, "focustarget", E:C("uf", "focustarget", "position"))
+	spawnHelper(self, "pet", E:C("uf", "pet", "position"))
+
+	partySpawn(self)
+	raidSpawn(self)
+	maintankSpawn(self)
+	bossSpawn(self)
+	arenaSpawn(self)
 end)

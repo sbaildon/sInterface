@@ -1,6 +1,30 @@
 local _, ns = ...
 local C = ns.C
 
+-- 'sizes' is created for convenience.
+-- you can set values directly in the unitframe
+-- configuration
+local sizes = {
+	primary = {
+		width = 155,
+		height = 12,
+		power = 3,
+	},
+	secondary = {
+		width = 135,
+		height = 12,
+		power = 3
+	},
+	tertiary = {
+		width = 56,
+		height = 7,
+	},
+	raid = {
+		width = 60,
+		height = 12
+	}
+}
+
 C["uf"] = {
 	enabled = true,
 	hidePlayerFrameOoc = true,
@@ -12,71 +36,122 @@ C["uf"] = {
 	-- Spacing between icons like combo points, arcane orbs, soul shards, etc.
 	classIconSpacing = 4,
 
-	size = {
-		primary = {
-			width = 155,
-			health = 12,
-			power = 3,
-		},
-		secondary = {
-			width = 135,
-			health = 12,
-			power = 3,
-		},
-		tertiary = {
-			width = 56,
-			health = 7,
-		},
-		raid = {
-			width = 60,
-			health = 12
-		}
-	},
-
-	positions = {
-		Player = { "CENTER", UIParent, "CENTER", 0, -175}, -- Unused if emulatePersonalResourceDisplay is set
-		Target = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 55, 130 },
-		Targettarget = { "TOPLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 7, 0 },
-		Focus = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 56, -100 },
-		Focustarget = { "TOPLEFT", "oUF_sInterfaceFocus", "TOPRIGHT", 7, 0 },
-		Pet = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 5, 0 },
-		Boss = { "BOTTOMLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 300, 250 },
-		Tank = { "BOTTOMRIGHT", "oUF_sInterfacePlayer", "TOPLEFT", -350, 150 },
-		Raid = { "TOPLEFT", UIParent, "TOPLEFT", 20, -20 },
-		Party = { "BOTTOMRIGHT", "oUF_sInterfacePlayer", "TOPLEFT", -350, 150 },
-		Arena = { "BOTTOMLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 225, 150 },
-	},
-
-	aura = {
-		player = {
-			enable = true,
+	player = {
+		enabled = true,
+		position = { "CENTER", UIParent, "CENTER", 0, -175}, -- Unused if emulatePersonalResourceDisplay is set
+		size = sizes.primary,
+		auras = {
+			enabled = true,
 			mode = "buff",
 			size = 24
 		},
-		target = {
-			enable = true,
+	},
+
+	target = {
+		enabled = true,
+		position = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 55, 130 },
+		size = sizes.primary,
+		auras = {
+			enabled = true,
+			mode = "aura",
+			size = 18
+		}
+	},
+
+	targettarget = {
+		enabled = true,
+		position = { "TOPLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 7, 0 },
+		size = sizes.tertiary,
+		auras = {
+			enabled = false,
+			mode = "aura",
+			size = 16
+		}
+	},
+
+	pet = {
+		enabled = true,
+		position = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 5, 0 },
+		size = sizes.tertiary,
+		auras = {
+			enabled = false,
+			mode = "aura",
+			size = 16
+		}
+	},
+
+	focus = {
+		enabled = true,
+		position = { "TOPLEFT", "oUF_sInterfacePlayer", "TOPRIGHT", 56, -100 },
+		size = sizes.primary,
+		auras = {
+			enabled = true,
 			mode = "aura",
 			size = 18
 		},
-		party = {
-			enable = false,
+	},
+
+	focustarget = {
+		enabled = true,
+		position = { "TOPLEFT", "oUF_sInterfaceFocus", "TOPRIGHT", 7, 0 },
+		size = sizes.tertiary,
+		auras = {
+			enabled = false,
 			mode = "aura",
+			size = 16
+		}
+	},
+
+	party = {
+		enabled = true,
+		position = { "BOTTOMRIGHT", "oUF_sInterfacePlayer", "TOPLEFT", -350, 150 },
+		size = sizes.secondary,
+		auras = {
+			enabled = false,
+			mode = "debuff",
 			size = 18
-		},
-		focus = {
-			enable = true,
-			mode = "aura",
-			size = 18
-		},
-		tank = {
-			enable = true,
+		}
+	},
+
+	boss = {
+		enabled = true,
+		position = { "BOTTOMLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 300, 250 },
+		size = sizes.secondary,
+		auras = {
+			enabled = false,
+			mode = "debuff",
+			size = 24
+		}
+	},
+
+	arena = {
+		enabled = true,
+		position = { "BOTTOMLEFT", "oUF_sInterfaceTarget", "TOPRIGHT", 125, 125 },
+		size = sizes.secondary,
+		auras = {
+			enabled = true,
+			mode = "debuff",
+			size = 30
+		}
+	},
+
+	maintank = {
+		enabled = true,
+		position = { "BOTTOMRIGHT", "oUF_sInterfacePlayer", "TOPLEFT", -350, 150 },
+		size = sizes.secondary,
+		auras = {
+			enabled = true,
 			mode = "debuff",
 			size = 30
 		},
-		boss = {
-			enable = false,
-			mode = "debuff",
-			size = 24
+	},
+
+	raid = {
+		enabled = true,
+		position = { "TOPLEFT", UIParent, "TOPLEFT", 20, -20 },
+		size = {
+			width = 60,
+			height = 12
 		}
 	},
 

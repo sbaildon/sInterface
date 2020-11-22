@@ -37,7 +37,7 @@ function sPlates:NAME_PLATE_UNIT_ADDED(...)
 end
 
 hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
-	if issecure() then return end
+	if frame:IsForbidden() then return end
 	if UnitIsPlayer(frame.unit) then return end
 
 	local status = UnitThreatSituation("player", frame.unit)
@@ -55,17 +55,18 @@ hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
 	end
 	if frame.healthBar.barTexture then
 		frame.healthBar.barTexture:SetVertexColor (r, g, b)
+		frame.healthBar.background:SetVertexColor(r*multiplier, g*multiplier, b*multiplier, 1)
 	end
-	frame.healthBar.background:SetVertexColor(r*multiplier, g*multiplier, b*multiplier, 1)
 end)
 
 hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
-	if issecure() then return end
+	if frame:IsForbidden() then return end
 	local r, g, b = frame.healthBar:GetStatusBarColor()
 	frame.healthBar.background:SetVertexColor(r*multiplier, g*multiplier, b*multiplier, 1)
 end)
 
 hooksecurefunc(NameplateBuffContainerMixin, "UpdateAnchor", function(self)
+	if self:IsForbidden() then return end
 	self:SetPoint("BOTTOM", self:GetParent().healthBar, "TOP", 0, 12);
 	self:SetScale(0.85)
 	local font, size, flags = GameFontNormalOutline:GetFont()
@@ -110,6 +111,7 @@ hooksecurefunc("DefaultCompactNamePlateFrameSetupInternal", function(namePlate)
 end)
 
 hooksecurefunc("DefaultCompactNamePlateFrameAnchorInternal", function(namePlate)
+	if namePlate:IsForbidden() then return end
 	PixelUtil.SetPoint(namePlate.name, "BOTTOM", namePlate.healthBar, "TOP", 0, -3)
 end)
 

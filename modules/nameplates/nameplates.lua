@@ -52,7 +52,9 @@ hooksecurefunc("CompactUnitFrame_UpdateAggroFlash", function(frame)
 	else
 		r, g, b = unpack(colours.na)
 	end
-	frame.healthBar.barTexture:SetVertexColor (r, g, b)
+	if frame.healthBar.barTexture then
+		frame.healthBar.barTexture:SetVertexColor (r, g, b)
+	end
 	frame.healthBar.background:SetVertexColor(r*multiplier, g*multiplier, b*multiplier, 1)
 end)
 

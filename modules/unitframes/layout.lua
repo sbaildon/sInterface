@@ -692,8 +692,6 @@ local UnitSpecific = {
 		self.GCD:SetPoint('RIGHT', self.Health, 'RIGHT')
 		self.GCD:SetHeight(E:C('uf', self.unit, 'size', 'height')+4)
 
-		self.GCD:SetHeight(E:C('uf', self.unit, 'size', 'height')+4)
-
 		self.GCD.Spark = self.GCD:CreateTexture(nil, "OVERLAY")
 		self.GCD.Spark:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark")
 		self.GCD.Spark:SetBlendMode("ADD")

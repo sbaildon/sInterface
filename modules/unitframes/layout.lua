@@ -338,7 +338,7 @@ local CustomTimeText = function(self, duration)
 	end
 end
 
-local Castbar = function(self, unit)
+local function Castbar(self, unit)
 	local iconSpacing = 6
 	local cb = createStatusbar(self, E:C('general', 'texture'), nil, nil, nil, 1, 1, 1, 1)
 
@@ -563,9 +563,46 @@ local PhaseIndicator = function(self)
 	self.PhaseIndicator = PhaseIndicator
 end
 
-local Shared = function(self, unit)
+local function TankMode(self)
+	if not E:C('uf', 'tank_mode') then return end
+
+	local colours = {
+		secure = { 0.2, 0.8, 0.1 },
+		insecure = { 1, 1, 0.3 },
+		na = { 1, 0, 0 },
+	}
+
+	postUpdateColor = function(health, unit, r, g, b)
+		if not IsInGroup() then return end
+		if UnitIsPlayer(unit) then return end
+		if not E:PlayerIsTank() then return end
+
+		local status = UnitThreatSituation("player", unit)
+		if not status then return end
+
+		if status == 3 then -- securely tanking, highest threat
+			r, g, b = unpack(colours.secure)
+		elseif status == 2 then --  insecurely tanking, another unit have higher threat but not tanking.
+			r, g, b = unpack(colours.insecure)
+		else --  not tanking, lower threat than tank, OR unit is not on otherunit's threat table
+			r, g, b = unpack(colours.na)
+		end
+
+		health:SetStatusBarColor(r, g, b, 1)
+
+		local bg = health.bg
+		if not bg then return end
+		local mu = bg.multiplier or 1
+		bg:SetVertexColor(r * mu, g * mu, b * mu)
+	end
+
+	self.Health.PostUpdateColor = postUpdateColor
+end
+
+
+local function Shared(self, unit)
+	-- remove suffix (1, 2, n, ...) from unit
 	unit = self.unit:match('^(.-)%d+') or self.unit
-	-- self.unit = unit
 	self.menu = menu
 
 	self:SetScript('OnEnter', OnEnter)
@@ -922,6 +959,21 @@ local UnitSpecific = {
 		name:SetPoint('TOPLEFT', self, TEXT_X_OFFSET, TEXT_Y_OFFSET)
 		self:Tag(name, '[sInterface:shortname]')
 	end,
+
+	nameplate = function(self, ...)
+		Shared(self)
+
+		Castbar(self)
+		TankMode(self)
+
+		local name = self.Health:CreateFontString("sInterface_NamePlateName", "ARTWORK", "GameFontNormalOutline") name:SetJustifyH("CENTER")
+		name:SetPoint('TOP', self, 0, TEXT_Y_OFFSET+1)
+
+		self:Tag(name, '[sInterface:name]')
+
+		self:SetPoint("CENTER", 0, 0)
+		self:SetScale(0.9)
+	end
 }
 
 UnitSpecific.focustarget = UnitSpecific.targettarget
@@ -1099,6 +1151,32 @@ local function playerSpawn(self)
 	end)
 end
 
+local function OnTargetChanged(frame)
+	if not frame then return end
+
+	if UnitIsUnit(frame.unit, 'target') then
+		-- frame:SetScale(0.7)
+	end
+    end
+
+local function nameplateSpawn(self)
+	local cvars = {
+		-- important, strongly recommend to set these to 1
+		nameplateGlobalScale = 0.9,
+		NamePlateHorizontalScale = 1,
+		NamePlateVerticalScale = 1,
+		-- optional, you may use any values
+		nameplateLargerScale = 1,
+		nameplateMaxScale = 1,
+		nameplateMinScale = 1,
+		nameplateSelectedScale = 1,
+		nameplateSelfScale = 1,
+	}
+
+	self:SetActiveStyle('sInterface - Nameplate')
+	self:SpawnNamePlates(nil, OnTargetChanged, cvars)
+end
+
 oUF:Factory(function(self)
 	playerSpawn(self)
 	spawnHelper(self, "target", E:C("uf", "target", "position"))
@@ -1112,4 +1190,5 @@ oUF:Factory(function(self)
 	maintankSpawn(self)
 	bossSpawn(self)
 	arenaSpawn(self)
+	nameplateSpawn(self)
 end)

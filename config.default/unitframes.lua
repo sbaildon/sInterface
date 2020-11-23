@@ -33,6 +33,11 @@ C["uf"] = {
 	-- instead, anchoring the player frame to the Personal Resource Display
 	emulatePersonalResourceDisplay = true,
 
+	-- colour nameplates by threat security when
+	-- the player is a tank. does nothing if the player is
+	-- not a tank
+	tank_mode = true,
+
 	-- Spacing between icons like combo points, arcane orbs, soul shards, etc.
 	classIconSpacing = 4,
 
@@ -152,6 +157,14 @@ C["uf"] = {
 		size = {
 			width = 60,
 			height = 12
+		}
+	},
+
+	nameplate = {
+		enabled = true,
+		size = {
+			width = 120,
+			height = 6
 		}
 	},
 

@@ -564,7 +564,7 @@ local PhaseIndicator = function(self)
 end
 
 local Shared = function(self, ...)
-	unit = self.unit:match('^(.-)%d+') or self.unit
+	local unit = self.unit:match('^(.-)%d+') or self.unit
 	-- self.unit = unit
 	self.menu = menu
 

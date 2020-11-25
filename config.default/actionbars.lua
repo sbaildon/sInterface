@@ -13,7 +13,8 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "BOTTOMLEFT",
-		frameVisibility = "[petbattle] hide; [cursor][mod:ctrl, mod:alt][@vehicle,exists][overridebar][shapeshift][vehicleui][possessbar] show; hide"
+		frameVisibility = "[petbattle] hide; [cursor][mod:ctrl, mod:alt][@vehicle,exists][overridebar][shapeshift][vehicleui][possessbar] show; hide",
+		mouseover       = false,
 	},
 
 	bar2 = {
@@ -25,7 +26,8 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
+		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide",
+		mouseover       = false,
 	},
 
 	bar3 = {
@@ -37,7 +39,8 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
+		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide",
+		mouseover       = false,
 	},
 
 	bar4 = {
@@ -49,7 +52,8 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
+		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide",
+		mouseover       = false,
 	},
 
 	bar5 = {
@@ -61,7 +65,8 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide"
+		frameVisibility = "[cursor][mod:ctrl, mod:alt] show; hide",
+		mouseover       = false,
 	},
 
 	possessexitbar = {
@@ -73,9 +78,9 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 1,
 		startPoint      = "BOTTOMLEFT",
-		fader           = nil,
+		frameVisibility = "show",
+		mouseover       = false,
 	},
-
 
 	petbar = {
 		framePoint      = { "TOPLEFT", A.."Bar5", "BOTTOMLEFT", 0, 0 },
@@ -86,7 +91,8 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 6,
 		startPoint      = "TOPLEFT",
-		frameVisibility = "[cursor][pet, mod:ctrl, mod:alt] show; hide"
+		frameVisibility = "[cursor][pet, mod:ctrl, mod:alt] show; hide",
+		mouseover       = false,
 	},
 
 	stancebar = {
@@ -98,7 +104,8 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 12,
 		startPoint      = "BOTTOMLEFT",
-		frameVisibility = "hide"
+		frameVisibility = "hide",
+		mouseover       = false,
 	},
 
 	vehicleexitbar = {
@@ -110,7 +117,8 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 1,
 		startPoint      = "BOTTOMLEFT",
-		fader           = nil,
+		frameVisibility = "show",
+		mouseover       = false,
 	},
 
 	extrabar = {
@@ -122,6 +130,8 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 1,
 		startPoint      = "CENTER",
+		frameVisibility = "show",
+		mouseover       = false,
 	},
 
 	bagbar = {
@@ -133,7 +143,8 @@ C["actionbars"] = {
 		buttonMargin    = 2,
 		numCols         = 1, --number of buttons per column
 		startPoint      = "BOTTOMRIGHT", --start postion of first button: BOTTOMLEFT, TOPLEFT, TOPRIGHT, BOTTOMRIGHT
-		frameVisibility = "hide"
+		frameVisibility = "hide",
+		mouseover       = false
 	},
 
 	micromenubar = {
@@ -145,5 +156,7 @@ C["actionbars"] = {
 		buttonMargin    = 0,
 		numCols         = 12,
 		startPoint      = "LEFT",
+		frameVisibility = "show",
+		mouseover       = true,
 	}
 }

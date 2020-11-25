@@ -5,10 +5,10 @@ if not E:C('actionbars', 'enabled') then return end
 
 local faderOnShow = {
 	fadeInAlpha = 1,
-	fadeInDuration = 0.3,
+	fadeInDuration = 0.1,
 	fadeInSmooth = "OUT",
 	fadeOutAlpha = 0,
-	fadeOutDuration = 0.9,
+	fadeOutDuration = 0.2,
 	fadeOutSmooth = "OUT",
 	fadeOutDelay = 0,
 	trigger = "OnShow",
@@ -16,10 +16,10 @@ local faderOnShow = {
 
 local fader = {
 	fadeInAlpha = 1,
-	fadeInDuration = 0.3,
+	fadeInDuration = 0.1,
 	fadeInSmooth = "OUT",
 	fadeOutAlpha = 0,
-	fadeOutDuration = 0.9,
+	fadeOutDuration = 0.2,
 	fadeOutSmooth = "OUT",
 	fadeOutDelay = 0,
 }
@@ -35,46 +35,24 @@ local function loader(name)
 		numCols         = E:C('actionbars', name, 'numCols'),
 		startPoint      = E:C('actionbars', name, 'startPoint'),
 		frameVisibility = E:C('actionbars', name, 'frameVisibility'),
+		fader           = E:C('actionbars', name, 'mouseover') and fader or faderOnShow
 	}
 
 	return t
 end
 
 local bar1 = loader("bar1")
-bar1["fader"] = faderOnShow
-
 local bar2 = loader("bar2")
-bar2["fader"] = faderOnShow
-
 local bar3 = loader("bar3")
-bar3["fader"] = faderOnShow
-
 local bar4 = loader("bar4")
-bar4["fader"] = faderOnShow
-
 local bar5 = loader("bar5")
-bar5["fader"] = faderOnShow
-
 local petbar = loader("petbar")
-petbar["fader"] = faderOnShow
-
 local stancebar = loader("stancebar")
-stancebar["fader"] = faderOnShow
-
 local extrabar = loader("extrabar")
-extrabar["fader"] = faderOnShow
-
 local micromenubar = loader("micromenubar")
-micromenubar["fader"] = fader
-
 local bagbar = loader("bagbar")
-bagbar["fader"] = fader
-
 local vehicleexitbar = loader("vehicleexitbar")
-vehicleexitbar["fader"] = faderOnShow
-
 local possessexitbar = loader("possessexitbar")
-possessexitbar["fader"] = faderOnShow
 
 rActionBar:CreateActionBar1(A, bar1)
 rActionBar:CreateActionBar2(A, bar2)

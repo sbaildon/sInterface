@@ -78,7 +78,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 1,
 		startPoint      = "BOTTOMLEFT",
-		frameVisibility = "show",
 		mouseover       = false,
 	},
 
@@ -117,7 +116,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 1,
 		startPoint      = "BOTTOMLEFT",
-		frameVisibility = "show",
 		mouseover       = false,
 	},
 
@@ -130,7 +128,6 @@ C["actionbars"] = {
 		buttonMargin    = 7,
 		numCols         = 1,
 		startPoint      = "CENTER",
-		frameVisibility = "show",
 		mouseover       = false,
 	},
 
@@ -156,7 +153,6 @@ C["actionbars"] = {
 		buttonMargin    = 0,
 		numCols         = 12,
 		startPoint      = "LEFT",
-		frameVisibility = "show",
 		mouseover       = true,
 	}
 }

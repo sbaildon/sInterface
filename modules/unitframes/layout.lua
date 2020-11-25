@@ -563,7 +563,7 @@ local PhaseIndicator = function(self)
 	self.PhaseIndicator = PhaseIndicator
 end
 
-local Shared = function(self, unit)
+local Shared = function(self, ...)
 	unit = self.unit:match('^(.-)%d+') or self.unit
 	-- self.unit = unit
 	self.menu = menu
@@ -937,7 +937,7 @@ for unit,layout in next, UnitSpecific do
 end
 
 local function spawnHelper(self, unit, pos)
-	baseUnit = unit:match('^(.-)%d+') or unit
+	local baseUnit = unit:match('^(.-)%d+') or unit
 	if not E:C("uf", baseUnit, "enabled") then return end
 
 	if(UnitSpecific[unit]) then

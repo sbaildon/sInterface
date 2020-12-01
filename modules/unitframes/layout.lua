@@ -274,7 +274,7 @@ local function PostUpdateClassPower(element, _, max, hasMaxChanged, powerType)
 		local multiplier = 0.7
 
 		local newMax = (max > 5) and 5 or max
-		local width = (E:C('uf', 'size', 'primary', 'width') - (E:C('uf', 'classIconSpacing') * (newMax - 1))) / newMax
+		local width = (E:C('uf', 'player', 'size', 'width') - (E:C('uf', 'classIconSpacing') * (newMax - 1))) / newMax
 
 		local color = oUF.colors.power[powerType or "COMBO_POINTS"]
 
@@ -666,7 +666,7 @@ local UnitSpecific = {
 		if(class == 'DEATHKNIGHT') then
 			local Runes = {}
 			local totalRunes = 6
-			local width = (E:C('uf', 'size', 'primary', 'width') - (E:C('uf', 'classIconSpacing') * (totalRunes - 1))) / totalRunes
+			local width = (E:C('uf', 'player', 'size', 'width') - (E:C('uf', 'classIconSpacing') * (totalRunes - 1))) / totalRunes
 			for index = 1, totalRunes do
 				local Rune = CreateFrame('StatusBar', "Rune"..index, ClassPowerBar)
 				Rune:SetSize(width, ClassPowerBar:GetHeight())

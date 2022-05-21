@@ -42,7 +42,7 @@ end
 local function StatusColor(unit)
 	if E:PlayerIsTank()
 	    and (UnitInRaid(unit) or UnitInParty(unit))
-	    and not (UnitName("player") == UnitName(unit)) then
+	    and (UnitName("player") ~= UnitName(unit)) then
 		local status = UnitThreatSituation(unit)
 		if status and status > 0 then
 			return hex(GetThreatStatusColor(status))

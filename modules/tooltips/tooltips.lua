@@ -30,24 +30,24 @@ local function SetBackdropStyle(self)
 	self.style:SetBackdropColor(unpack(bgColor))
 end
 
-hooksecurefunc("GameTooltip_UpdateStyle", function(self)
-	SetBackdropStyle(self)
-end)
+local function anchor_to_cursor(tooltip, parent)
+	tooltip:SetOwner(parent, "ANCHOR_CURSOR")
+end
 
-hooksecurefunc("GameTooltip_SetDefaultAnchor", function(tooltip, parent)
-	if E:C('tooltips', 'anchor_cursor') then
-		tooltip:SetOwner(parent, "ANCHOR_CURSOR")
-	else
-		tooltip:SetOwner(parent, "ANCHOR_NONE")
-		tooltip:ClearAllPoints()
-		tooltip:SetClampedToScreen(true)
-		tooltip:SetPoint(unpack(E:C('tooltips', 'pos')))
-	end
-end)
+local function anchor_to_coords(tooltip, parent)
+	tooltip:SetOwner(parent, "ANCHOR_NONE")
+	tooltip:ClearAllPoints()
+	tooltip:SetClampedToScreen(true)
+	tooltip:SetPoint(unpack(E:C('tooltips', 'pos')))
+end
 
-hooksecurefunc("EmbeddedItemTooltip_UpdateSize", function(self)
-	self.Tooltip:SetBackdrop(nil)
-end)
+local anchor_cursor = E:C("tooltips", "anchor_cursor")
+
+if anchor_cursor then
+	hooksecurefunc("GameTooltip_SetDefaultAnchor", anchor_to_cursor)
+else
+	hooksecurefunc("GameTooltip_SetDefaultAnchor", anchor_to_coords)
+end
 
 local left = setmetatable({}, { __index = function(left, i)
 	local line = _G["GameTooltipTextLeft" .. i]

@@ -2,5 +2,5 @@
 	<Script file="progressbar.lua"/>
 	<Script file="experience.lua"/>
 	<Script file="reputation.lua"/>
-	<Script file="azerite.lua"/>
+	<!-- <Script file="azerite.lua"/> -->
 </Ui>

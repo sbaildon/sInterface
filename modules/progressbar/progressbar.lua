@@ -1,9 +1,11 @@
 local _, ns = ...
 local E = ns.E
 
-if not E:C('progressbars', 'enabled') then return end;
-
+if not E:C('progressbars', 'enabled') then return end
+;
 local bars = {}
+
+local Minimap = Minimap
 
 local ProgressBars = CreateFrame("Frame", "sInterfaceProgressBars", Minimap)
 ProgressBars:SetPoint("TOPLEFT", Minimap, "BOTTOMLEFT", 0, -10)
@@ -49,12 +51,12 @@ local function reposition()
 		end
 	end
 
-	ProgressBars:SetHeight(totalHeight + (E:C('progressbars', 'spacing') * (enabledCount-1)))
+	ProgressBars:SetHeight(totalHeight + (E:C('progressbars', 'spacing') * (enabledCount - 1)))
 end
 
 function ProgressBars:CreateBar(barName)
 	if not barName then return end
-	local barHolder = CreateFrame("Frame", "sInterfaceProgressBars_"..barName, ProgressBars)
+	local barHolder = CreateFrame("Frame", "sInterfaceProgressBars_" .. barName, ProgressBars)
 	barHolder:SetPoint("LEFT", ProgressBars, "LEFT")
 	barHolder:SetPoint("RIGHT", ProgressBars, "RIGHT")
 	E:ShadowedBorder(barHolder)

@@ -11,16 +11,23 @@ GameTooltipStatusBar:ClearAllPoints()
 GameTooltipStatusBar:Hide()
 
 local bgColor = { 0.03, 0.03, 0.03, 0.8 }
-local backdrop = { bgFile = "Interface\\Buttons\\WHITE8x8",
+local backdrop = {
+	bgFile = "Interface\\Buttons\\WHITE8x8",
 	edgeFile = "Interface\\Buttons\\WHITE8x8",
-	tiled = false, edgeSize = 1,
+	tiled = false, edgeSize = 0,
 	insets = { left = 0, right = 0, top = 0, bottom = 0 },
 }
 
 local function SetBackdropStyle(self)
-	self:SetBackdrop(backdrop)
-	self:SetBackdropBorderColor(1, 1, 1, 0)
-	self:SetBackdropColor(unpack(bgColor))
+	if (self.SetBackdrop) then
+		self:SetBackdrop(nil)
+	end
+
+	if not self.style then return end
+
+	self.style:SetBackdrop(backdrop)
+	self.style:SetBackdropBorderColor(1, 1, 1, 0)
+	self.style:SetBackdropColor(unpack(bgColor))
 end
 
 hooksecurefunc("GameTooltip_UpdateStyle", function(self)
@@ -48,7 +55,7 @@ local left = setmetatable({}, { __index = function(left, i)
 	return line
 end })
 
-GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
+GameTooltip:HookScript("OnTooltipSetUnit", function(self, ...)
 	local unit = select(2, self:GetUnit()) or (GetMouseFocus() and GetMouseFocus():GetAttribute("unit")) or (UnitExists("mouseover") and "mouseover")
 	if not unit then return end
 	local line = 1
@@ -101,12 +108,23 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(self,...)
 	end
 end)
 
+
 local tooltips = { GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3, WorldMapTooltip, SmallTextTooltip }
 for _, tooltip in ipairs(tooltips) do
-	tooltip:HookScript("OnShow", SetBackdropStyle)
-	tooltip:HookScript("OnHide", SetBackdropStyle)
-	tooltip:HookScript("OnUpdate", SetBackdropStyle)
-	if tooltip:HasScript("OnTooltipCleared") then
-		tooltip:HookScript("OnTooltipCleared", SetBackdropStyle)
+	tooltip.style = CreateFrame("Frame", nil, tooltip, BackdropTemplateMixin and "BackdropTemplate" or nil)
+	tooltip.style:SetFrameLevel(tooltip:GetFrameLevel())
+	tooltip.style:SetAllPoints()
+
+	if (tooltip == GameTooltip) then
+		tooltip.GetBackdrop = function(self) return self.style:GetBackdrop() end
+		tooltip.GetBackdropColor = function(self) return self.style:GetBackdropColor() end
+		tooltip.GetBackdropBorderColor = function(self) return self.style:GetBackdropBorderColor() end
 	end
+
+	if (tooltip.style and tooltip.NineSlice) then
+		tooltip.NineSlice:Hide()
+		tooltip.NineSlice.Show = function() end
+	end
+
+	SetBackdropStyle(tooltip)
 end

@@ -7,4 +7,5 @@
 
 ## X-WoWI-ID: 24674
 
+core.lua
 modules\_modules.xml

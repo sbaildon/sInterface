@@ -1,6 +1,9 @@
+(local (_ ns) ...)
+
 (let [minimap _G.Minimap
       zoom-out _G.MinimapZoomOut
       zoom-in _G.MinimapZoomIn]
+  (ns.E:bordered minimap)
   (minimap:ClearAllPoints)
   (minimap:SetMaskTexture "Interface\\ChatFrame\\ChatFrameBackground")
   (minimap:EnableMouseWheel true)

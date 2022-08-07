@@ -2,6 +2,5 @@
 	<Include file="unitframes\_unitframes.xml" />
 	<Include file="chat\_chat.xml" />
 	<Include file="coolbar\_coolbar.xml" />
-	<Include file="errors\_errors.xml" />
 	<Include file="skins\_skins.xml" />
 </Ui>

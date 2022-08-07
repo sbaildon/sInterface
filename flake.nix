@@ -10,16 +10,17 @@
   };
 
   outputs = { self, nixpkgs }:
-    let
-      pkgs = nixpkgs.legacyPackages.x86_64-darwin;
+    let pkgs = nixpkgs.legacyPackages.x86_64-darwin;
     in {
       formatter.x86_64-darwin = pkgs.nixfmt;
 
       # nix develop
-      devShells.x86_64-darwin.default = pkgs.mkShell {
-        buildInputs = [
-          pkgs.fennel
-        ];
+      devShells.x86_64-darwin.default =
+        pkgs.mkShell { buildInputs = [ pkgs.fennel ]; };
+
+      apps.x86_64-darwin.fennel = {
+        type = "app";
+        program = "${pkgs.fennel}/bin/fennel";
       };
     };
 }

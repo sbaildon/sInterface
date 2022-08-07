@@ -1,7 +1,3 @@
-[submodule "embeds/oUF"]
-	path = embeds/oUF
-	url = https://github.com/oUF-wow/oUF.git
-	branch = master
 [submodule "embeds/oUF_FloatingCombatFeedback"]
 	path = embeds/oUF_FloatingCombatFeedback
 	url = https://github.com/ls-/oUF_FloatingCombatFeedback.git

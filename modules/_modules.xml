@@ -7,6 +7,5 @@
 	<Include file="minimap\_minimap.xml" />
 	<Include file="mirrortimer\_mirrortimer.xml" />
 	<Include file="nameplates\_nameplates.xml" />
-	<Include file="objectivetracker\_objectivetracker.xml" />
 	<Include file="skins\_skins.xml" />
 </Ui>

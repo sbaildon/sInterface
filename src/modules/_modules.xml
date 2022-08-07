@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Include file="align\_align.xml" />
 	<Include file="minimap\_minimap.xml" />
+	<Include file="progress_bars\_progress_bars.xml" />
 </Ui>

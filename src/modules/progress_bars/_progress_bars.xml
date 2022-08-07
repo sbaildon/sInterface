@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="progress_bars.lua" />
+	<Script file="experience.lua" />
+</Ui>

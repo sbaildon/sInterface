@@ -1,9 +1,0 @@
-## Interface: 80000
-## Author: zork
-## Title: rActionBar
-## Notes: Blizzard actionbar framework
-## RequiredDeps: rLib
-
-core.lua
-blizzard.lua
-bars.lua

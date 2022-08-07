@@ -2,7 +2,3 @@
 	path = embeds/oUF_Smooth
 	url = https://github.com/sBaildon/oUF_Smooth.git
 	branch = master
-[submodule "embeds/oUF_GCD"]
-	path = embeds/oUF_GCD
-	url = https://github.com/sBaildon/oUF_GCD.git
-	branch = master

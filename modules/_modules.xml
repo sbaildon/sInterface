@@ -3,6 +3,5 @@
 	<Include file="chat\_chat.xml" />
 	<Include file="coolbar\_coolbar.xml" />
 	<Include file="errors\_errors.xml" />
-	<Include file="junkseller\_junkseller.xml" />
 	<Include file="skins\_skins.xml" />
 </Ui>

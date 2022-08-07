@@ -1,4 +1,0 @@
-[submodule "embeds/oUF_Smooth"]
-	path = embeds/oUF_Smooth
-	url = https://github.com/sBaildon/oUF_Smooth.git
-	branch = master

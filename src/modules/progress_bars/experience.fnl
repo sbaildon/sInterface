@@ -1,8 +1,8 @@
 (local (_ ns) ...)
 
 (fn max-player-level []
-    (let [(restricted-level _ _) (_G.GetRestrictedAccountData)]
-      (if (> restricted-level 0) restricted-level _G.MAX_PLAYER_LEVEL)))
+  (let [(restricted-level _ _) (_G.GetRestrictedAccountData)]
+    (if (> restricted-level 0) restricted-level _G.MAX_PLAYER_LEVEL)))
 
 (fn unit-is-max-level? [unit]
   (= (_G.UnitLevel unit) (max-player-level)))
@@ -17,7 +17,8 @@
   ((if (_G.IsWatchingHonorAsXP) _G.UnitHonorLevel _G.UnitLevel) :player))
 
 (fn get-rested []
-  (or ((if (_G.IsWatchingHonorAsXP) _G.GetHonorExhaustion _G.GetXPExhaustion)) 0))
+  (or ((if (_G.IsWatchingHonorAsXP) _G.GetHonorExhaustion _G.GetXPExhaustion))
+      0))
 
 (fn set-colour [bar]
   (let [[r g b a] (if (_G.IsWatchingHonorAsXP) [1 0.25 0 1] [1 0 1 1])]
@@ -37,17 +38,26 @@
   (set-values bar))
 
 (fn register-xp-events [bar]
-  (each [_ event (ipairs [:PLAYER_XP_UPDATE :HONOR_LEVEL_UPDATE :HONOR_XP_UPDATE :UPDATE_EXHAUSTION])]
+  (each [_ event (ipairs [:PLAYER_XP_UPDATE
+                          :HONOR_LEVEL_UPDATE
+                          :HONOR_XP_UPDATE
+                          :UPDATE_EXHAUSTION])]
     (bar:RegisterEvent event)))
 
 (fn unregister-xp-events [bar]
-  (each [_ event (ipairs [:PLAYER_XP_UPDATE :HONOR_LEVEL_UPDATE :HONOR_XP_UPDATE :UPDATE_EXHAUSTION])]
+  (each [_ event (ipairs [:PLAYER_XP_UPDATE
+                          :HONOR_LEVEL_UPDATE
+                          :HONOR_XP_UPDATE
+                          :UPDATE_EXHAUSTION])]
     (bar:UnregisterEvent event)))
 
 (fn visibility [self]
-  (if (or (and (unit-is-max-level? :player) (not (_G.IsWatchingHonorAsXP))) (_G.IsXPUserDisabled))
+  (if (or (and (unit-is-max-level? :player) (not (_G.IsWatchingHonorAsXP)))
+          (_G.IsXPUserDisabled))
       (unregister-xp-events self.Experience)
-      (do (register-xp-events self.Experience) (update self.Experience))))
+      (do
+        (register-xp-events self.Experience)
+        (update self.Experience))))
 
 (local bars ns.sInterfaceProgressBars)
 
@@ -55,24 +65,34 @@
   (frame:SetScript :OnEvent visibility)
 
   (fn frame.Enable [self]
-    (each [_ event (ipairs [:PLAYER_LEVEL_UP :DISABLE_XP_GAIN :ENABLE_XP_GAIN :PLAYER_ENTERING_WORLD])]
+    (each [_ event (ipairs [:PLAYER_LEVEL_UP
+                            :DISABLE_XP_GAIN
+                            :ENABLE_XP_GAIN
+                            :PLAYER_ENTERING_WORLD])]
       (frame:RegisterEvent event))
     (visibility frame))
 
   (fn frame.Disable [self]
-    (each [_ event (ipairs [:PLAYER_LEVEL_UP :DISABLE_XP_GAIN :ENABLE_XP_GAIN :PLAYER_ENTERING_WORLD])]
+    (each [_ event (ipairs [:PLAYER_LEVEL_UP
+                            :DISABLE_XP_GAIN
+                            :ENABLE_XP_GAIN
+                            :PLAYER_ENTERING_WORLD])]
       (frame:UnregisterEvent event)))
 
-  (let [experience (CreateFrame :StatusBar :experience frame :AnimatedStatusBarTemplate)]
+  (let [experience (CreateFrame :StatusBar :experience frame
+                                :AnimatedStatusBarTemplate)]
     (experience:SetMatchBarValueToAnimation true)
     (experience:SetAllPoints frame)
-    (experience:SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar" :ARTWORK)
+    (experience:SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar"
+                                    :ARTWORK)
     (experience:SetScript :OnEvent update)
     (set frame.Experience experience)
     (let [exhaustion (CreateFrame :StatusBar :exhaustion experience)]
-      (exhaustion:SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar" :ARTWORK)
+      (exhaustion:SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar"
+                                      :ARTWORK)
       (exhaustion:SetAllPoints experience)
       (exhaustion:SetStatusBarColor 0 0.4 1)
       (exhaustion:SetFrameLevel (- (experience:GetFrameLevel) 1))
       (set experience.Exhaustion exhaustion)))
   (bars:EnableBar :experience))
+

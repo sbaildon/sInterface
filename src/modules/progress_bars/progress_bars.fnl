@@ -15,12 +15,12 @@
       (tset (. self :bars) bar-name frame)
       (ns.E:bordered frame)
       frame))
-  (fn progress-bars.DisableBar [self bar-name]
-    (match (?. self :bars bar-name)
-      nil nil
-      bar (bar:Disable)))
   (fn progress-bars.EnableBar [self bar-name]
     (match (?. self :bars bar-name)
       nil nil
       bar (bar:Enable)))
+  (fn progress-bars.DisableBar [self bar-name]
+    (match (?. self :bars bar-name)
+      nil nil
+      bar (bar:Disable)))
   (set ns.sInterfaceProgressBars progress-bars))

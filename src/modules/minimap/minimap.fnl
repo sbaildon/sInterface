@@ -1,73 +1,75 @@
 (local (_ ns) ...)
 
-(let [minimap _G.Minimap
-      zoom-out _G.MinimapZoomOut
-      zoom-in _G.MinimapZoomIn]
+(local cluster _G.MinimapCluster)
+(local header-offset 9)
+
+(cluster:SetPoint :TOPRIGHT UIParent :TOPRIGHT -30 -10)
+
+(let [minimap cluster.Minimap]
   (ns.E:bordered minimap)
-  (minimap:ClearAllPoints)
   (minimap:SetMaskTexture "Interface\\ChatFrame\\ChatFrameBackground")
-  (minimap:EnableMouseWheel true)
-  (minimap:SetScript :OnMouseWheel
-                     (lambda [?self direction]
-                       (if (> direction 0)
-                           (zoom-in:Click)
-                           (zoom-out:Click)))))
+  (cluster:SetSize (minimap:GetWidth) (+ header-offset (minimap:GetHeight))))
 
-(each [_ border (ipairs [_G.MinimapBorder _G.MinimapBorderTop])]
-  (border:Hide))
+(let [border-top cluster.BorderTop
+      minimap _G.MinimapCluster]
+  (border-top:ClearAllPoints)
+  (border-top:SetPoint :TOPLEFT minimap :TOPLEFT 0 0)
+  (border-top:SetPoint :TOPRIGHT minimap :TOPRIGHT 0 0))
 
-(each [_ button (ipairs [_G.MinimapZoomIn _G.MinimapZoomOut])]
-  (button:Hide))
+(let [zone-text _G.MinimapZoneText
+      border-top cluster.BorderTop]
+  (zone-text:SetFontObject :GameFontNormalOutline)
+  (zone-text:SetJustifyH :CENTER)
+  (zone-text:SetPoint :CENTER border-top :CENTER))
 
-(let [instance _G.MiniMapInstanceDifficulty]
+(fn position-border [cluster]
+  (let [border cluster.BorderTop
+        minimap cluster.Minimap]
+    (minimap:SetPoint :TOPRIGHT cluster :TOPRIGHT 0 0)
+    (border:ClearAllPoints)
+    (border:SetPoint :TOP minimap :TOP 0 header-offset)))
+
+(let [border-top cluster.BorderTop]
+  (hooksecurefunc cluster :SetHeaderUnderneath position-border))
+
+(let [instance cluster.InstanceDifficulty]
   (instance:Hide))
 
-(let [calendar _G.GameTimeFrame]
-  (calendar:Hide))
-
-(let [world-map _G.MiniMapWorldMapButton]
-  (world-map:Hide))
-
-(let [tracking-background _G.MiniMapTrackingBackground
-      tracking-button _G.MiniMapTrackingButton
-      tracking _G.MiniMapTracking
-      minimap _G.Minimap]
-  (tracking-background:SetAlpha 0)
-  (tracking-button:SetAlpha 0)
-  (tracking:ClearAllPoints)
-  (tracking:SetPoint :TOPRIGHT minimap 0 0)
-  (tracking:SetScale 0.9))
-
-(let [mail-frame _G.MiniMapMailFrame
-      mail-border _G.MiniMapMailBorder
-      mail-icon _G.MiniMapMailIcon
-      minimap _G.Minimap]
+(let [mail-frame cluster.MailFrame]
   (mail-frame:ClearAllPoints)
-  (mail-frame:SetPoint :TOPLEFT minimap 0 0)
-  (mail-frame:SetFrameStrata :LOW)
-  (mail-border:Hide)
-  (mail-icon:SetTexture "Interface\\Minimap\\ObjectIcons.blp")
-  (mail-icon:SetTexCoord 0.875 1 0.25 0.375))
+  (mail-frame:SetPoint :TOPLEFT cluster :TOPLEFT 0 0)
+  (mail-frame:SetFrameStrata :LOW))
 
-(let [north-tag _G.MinimapNorthTag]
-  (north-tag:SetTexture nil))
+(let [compass _G.MinimapCompassTexture]
+  (compass:SetTexture nil))
 
-(let [zone-text _G.MinimapZoneTextButton]
-  (zone-text:Hide))
+;; (let [garrison _G.GarrisonLandingPageMinimapButton]
+;;   (garrison:Hide)
+;;   (garrison:UnregisterAllEvents))
 
-(let [garrison _G.GarrisonLandingPageMinimapButton]
-  (garrison:Hide)
-  (garrison:UnregisterAllEvents))
+;; (let [queue _G.QueueStatusMinimapButton
+;;       queue-border _G.QueueStatusMinimapButtonBorder
+;;       minimap _G.Minimap]
+;;   (queue:SetParent minimap)
+;;   (queue:ClearAllPoints)
+;;   (queue:SetPoint :BOTTOMRIGHT 0 0)
+;;   (queue-border:Hide))
 
-(let [queue _G.QueueStatusMinimapButton
-      queue-border _G.QueueStatusMinimapButtonBorder
-      minimap _G.Minimap]
-  (queue:SetParent minimap)
-  (queue:ClearAllPoints)
-  (queue:SetPoint :BOTTOMRIGHT 0 0)
-  (queue-border:Hide))
+;; (when (not (IsAddOnLoaded :Blizzard_TimeManager))
+;;   (LoadAddOn :Blizzard_TimeManager)
+;;   (let [clock _G.TimeManagerClockButton]
+;;     (clock:Hide)))
+;; (let [calendar _G.GameTimeFrame
+;;       border _G.MinimapCluster.BorderTop]
+;;   (calendar:Hide))
 
-(when (not (IsAddOnLoaded :Blizzard_TimeManager))
-  (LoadAddOn :Blizzard_TimeManager)
-  (let [clock _G.TimeManagerClockButton]
-    (clock:Hide)))
+;; (let [tracking-background _G.MiniMapTrackingBackground
+;;       tracking-button _G.MiniMapTrackingButton
+;;       tracking _G.MiniMapTracking
+;;       minimap _G.Minimap]
+;;   (tracking-background:SetAlpha 0)
+;;   (tracking-button:SetAlpha 0)
+;;   (tracking:ClearAllPoints)
+;;   (tracking:SetPoint :TOPRIGHT minimap 0 0)
+;;   (tracking:SetScale 0.9))
+

@@ -72,7 +72,7 @@
 
 (λ position-cluster []
   (let [x-offset -40
-        y-offset 0
+        y-offset -20
         minimap-width (minimap:GetWidth)
         minimap-height (minimap:GetHeight)]
     (cluster:SetSize minimap-width (+ header-offset minimap-height))

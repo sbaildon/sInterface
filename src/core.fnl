@@ -15,4 +15,9 @@
     (border:SetBackdropBorderColor 0.69803921568627 0.55686274509804
                                    0.3921568627451 1)))
 
+; credit http://richard.warburton.it
+(λ E.comma-value [number]
+  (local (left num right) (string.match number "^([^%d]*%d)(%d*)(.-)$"))
+  (.. left (: (: (num:reverse) :gsub "(%d%d%d)" "%1,") :reverse) right))
+
 (set ns.E E)

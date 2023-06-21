@@ -27,8 +27,8 @@
         x-offset 0
         y-offset -4]
     (border-top:ClearAllPoints)
-    (border-top:SetPoint :TOPLEFT cluster :TOPLEFT x-offset y-offset)
-    (border-top:SetPoint :TOPRIGHT cluster :TOPRIGHT x-offset y-offset)))
+    (border-top:SetPoint :BOTTOMLEFT minimap :TOPLEFT x-offset y-offset)
+    (border-top:SetPoint :BOTTOMRIGHT minimap :TOPRIGHT x-offset y-offset)))
 
 (let [border cluster.BorderTop]
   (each [_ edge (ipairs [border.BottomEdge

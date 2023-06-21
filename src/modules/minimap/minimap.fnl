@@ -63,6 +63,8 @@
   (ns.E:bordered minimap)
   (minimap:SetParent cluster)
   (minimap:SetMaskTexture "Interface\\ChatFrame\\ChatFrameBackground")
+  (minimap:ClearAllPoints)
+  (minimap:SetAllPoints cluster)
   (discard-clock)
   (discard-tracking)
   (discard-game-time-frame)

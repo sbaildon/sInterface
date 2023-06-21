@@ -25,7 +25,7 @@
 (λ position-border-top []
   (let [border-top cluster.BorderTop
         x-offset 0
-        y-offset 0]
+        y-offset -4]
     (border-top:ClearAllPoints)
     (border-top:SetPoint :TOPLEFT cluster :TOPLEFT x-offset y-offset)
     (border-top:SetPoint :TOPRIGHT cluster :TOPRIGHT x-offset y-offset)))

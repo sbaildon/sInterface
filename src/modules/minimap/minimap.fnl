@@ -75,13 +75,13 @@
         y-offset -20
         minimap-width (minimap:GetWidth)
         minimap-height (minimap:GetHeight)]
-    (cluster:SetSize minimap-width (+ header-offset minimap-height))
+    (cluster:SetSize minimap-width minimap-height)
     (cluster:ClearAllPoints)
     (cluster:SetPoint :TOPRIGHT uiparent :TOPRIGHT x-offset y-offset)))
 
 (λ on-update []
+  (position-cluster)
   (style-minimap)
-  (position-border-top)
-  (position-cluster))
+  (position-border-top))
 
 (hooksecurefunc cluster :SetRotateMinimap on-update)

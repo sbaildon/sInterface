@@ -6,6 +6,9 @@
 (local uiparent _G.UIParent)
 (local header-offset 9)
 
+(when (not (_G.IsAddOnLoaded :Blizzard_TimeManager))
+  (_G.LoadAddOn :Blizzard_TimeManager))
+
 (λ fake-mouseover [] true)
 (each [_ button (ipairs [minimap.ZoomIn minimap.ZoomOut])]
   (set button.IsMouseOver fake-mouseover)
@@ -13,7 +16,7 @@
 
 (let [zone-text _G.MinimapZoneText
       border-top cluster.BorderTop]
-  (zone-text:SetFontObject :GameFontNormalLargeOutline)
+  (zone-text:SetFontObject :GameFontNormalMed2Outline)
   (zone-text:ClearAllPoints)
   (zone-text:SetJustifyH :CENTER)
   (zone-text:SetPoint :CENTER border-top :CENTER))
@@ -21,19 +24,54 @@
 (λ position-border-top []
   (let [border-top cluster.BorderTop
         x-offset 0
-        y-offset -20]
+        y-offset 0]
     (border-top:ClearAllPoints)
     (border-top:SetPoint :TOPLEFT cluster :TOPLEFT x-offset y-offset)
     (border-top:SetPoint :TOPRIGHT cluster :TOPRIGHT x-offset y-offset)))
 
+(let [border cluster.BorderTop]
+  (each [_ edge (ipairs [border.BottomEdge
+                         border.BottomLeftCorner
+                         border.BottomRightCorner
+                         border.Center
+                         border.LeftEdge
+                         border.RightEdge
+                         border.TopEdge
+                         border.TopLeftCorner
+                         border.TopRightCorner])]
+    (edge:Hide)))
+
+(λ discard-compass []
+  (let [compass _G.MinimapCompassTexture]
+    (compass:SetTexture nil)
+    (compass:Hide)))
+
+(λ discard-tracking []
+  (let [tracking cluster.Tracking]
+    (tracking:Hide)))
+
+(λ discard-game-time-frame []
+  (let [calendar _G.GameTimeFrame]
+    (calendar:Hide)))
+
+(λ discard-clock []
+  (let [clock _G.TimeManagerClockTicker]
+    (clock:Hide)))
+
 (λ style-minimap []
   (ns.E:bordered minimap)
-  (minimap:SetMaskTexture "Interface\\ChatFrame\\ChatFrameBackground"))
+  (minimap:SetMaskTexture "Interface\\ChatFrame\\ChatFrameBackground")
+  (discard-clock)
+  (discard-tracking)
+  (discard-game-time-frame)
+  (discard-compass))
 
 (λ position-cluster []
   (let [x-offset -40
-        y-offset 0]
-    (cluster:SetSize (minimap:GetWidth) (+ header-offset (minimap:GetHeight)))
+        y-offset 0
+        minimap-width (minimap:GetWidth)
+        minimap-height (minimap:GetHeight)]
+    (cluster:SetSize minimap-width (+ header-offset minimap-height))
     (cluster:ClearAllPoints)
     (cluster:SetPoint :TOPRIGHT uiparent :TOPRIGHT x-offset y-offset)))
 

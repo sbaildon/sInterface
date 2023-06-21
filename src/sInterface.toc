@@ -5,6 +5,7 @@
 ## Notes: An opinionated replacement for Blizzard's UI
 ## OptionalDeps: sInterface_Config
 
+## X-oUF: sInterface
 ## X-WoWI-ID: 24674
 
 core.lua

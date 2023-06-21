@@ -16,7 +16,7 @@
 
 (let [zone-text _G.MinimapZoneText
       border-top cluster.BorderTop]
-  (zone-text:SetFontObject :GameFontNormalMed2Outline)
+  (zone-text:SetFontObject :GameFontNormalLargeOutline)
   (zone-text:ClearAllPoints)
   (zone-text:SetJustifyH :CENTER)
   (zone-text:SetPoint :CENTER border-top :CENTER))

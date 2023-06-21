@@ -61,6 +61,7 @@
 
 (λ style-minimap []
   (ns.E:bordered minimap)
+  (minimap:SetParent cluster)
   (minimap:SetMaskTexture "Interface\\ChatFrame\\ChatFrameBackground")
   (discard-clock)
   (discard-tracking)

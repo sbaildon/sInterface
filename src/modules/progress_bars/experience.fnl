@@ -74,8 +74,30 @@
 
 (local bars ns.sInterfaceProgressBars)
 
+(λ tt-show [self]
+  (let [tooltip _G.GameTooltip]
+    (tooltip:SetOwner self :ANCHOR_CURSOR)
+    (tooltip:ClearLines)
+    (tooltip:AddLine (if (is-watching-honor-as-xp) :Honor :Experience))
+    (tooltip:AddDoubleLine :Level (get-level) 1 1 1)
+    (tooltip:AddDoubleLine :Current (ns.E.comma-value (get-experience-current))
+                           1 1 1)
+    (tooltip:AddDoubleLine :Required (ns.E.comma-value (get-experience-max)) 1
+                           1 1)
+    (tooltip:AddDoubleLine "To level"
+                           (ns.E.comma-value (- (get-experience-max)
+                                                (get-experience-current)))
+                           1 1 1)
+    (tooltip:Show)))
+
+(λ tt-hide [self]
+  (let [tooltip _G.GameTooltip]
+    (tooltip:Hide)))
+
 (let [frame (bars:CreateBar :experience)]
   (frame:SetScript :OnEvent visibility)
+  (frame:SetScript :OnEnter tt-show)
+  (frame:SetScript :OnLeave tt-hide)
 
   (fn frame.Enable [_self]
     (each [_ event (ipairs [:PLAYER_LEVEL_UP

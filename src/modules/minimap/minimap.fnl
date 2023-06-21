@@ -19,7 +19,8 @@
   (zone-text:SetFontObject :GameFontNormalLargeOutline)
   (zone-text:ClearAllPoints)
   (zone-text:SetJustifyH :CENTER)
-  (zone-text:SetPoint :CENTER border-top :CENTER))
+  (zone-text:SetPoint :LEFT border-top :LEFT)
+  (zone-text:SetPoint :RIGHT border-top :RIGHT))
 
 (λ position-border-top []
   (let [border-top cluster.BorderTop

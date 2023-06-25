@@ -4,7 +4,6 @@
 (local minimap _G.Minimap)
 (local hooksecurefunc _G.hooksecurefunc)
 (local uiparent _G.UIParent)
-(local header-offset 9)
 
 (when (not (_G.IsAddOnLoaded :Blizzard_TimeManager))
   (_G.LoadAddOn :Blizzard_TimeManager))

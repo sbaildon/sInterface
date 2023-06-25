@@ -24,11 +24,13 @@
 
 (λ position-border-top []
   (let [border-top cluster.BorderTop
+        container cluster.MinimapContainer
         x-offset 0
         y-offset -4]
+    (border-top:SetParent container)
     (border-top:ClearAllPoints)
-    (border-top:SetPoint :BOTTOMLEFT minimap :TOPLEFT x-offset y-offset)
-    (border-top:SetPoint :BOTTOMRIGHT minimap :TOPRIGHT x-offset y-offset)))
+    (border-top:SetPoint :BOTTOMLEFT container :TOPLEFT x-offset y-offset)
+    (border-top:SetPoint :BOTTOMRIGHT container :TOPRIGHT x-offset y-offset)))
 
 (let [border cluster.BorderTop]
   (each [_ edge (ipairs [border.BottomEdge

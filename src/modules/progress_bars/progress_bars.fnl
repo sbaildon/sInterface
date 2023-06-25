@@ -1,9 +1,10 @@
 (local (_ ns) ...)
 
 (local create-frame _G.CreateFrame)
+(local ui-parent _G.UIParent)
 
 (let [minimap _G.Minimap
-      progress-bars (create-frame :Frame :sInterfaceProgressBars minimap)]
+      progress-bars (create-frame :Frame :sInterfaceProgressBars ui-parent)]
   (progress-bars:SetPoint :TOPLEFT minimap :BOTTOMLEFT 0 -10)
   (progress-bars:SetPoint :TOPRIGHT minimap :TOPRIGHT 0 -10)
   (progress-bars:SetHeight 20)

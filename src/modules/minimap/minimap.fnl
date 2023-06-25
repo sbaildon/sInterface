@@ -17,6 +17,7 @@
       border-top cluster.BorderTop]
   (zone-text:SetFontObject :GameFontNormalLargeOutline)
   (zone-text:ClearAllPoints)
+  (zone-text:SetParent border-top)
   (zone-text:SetJustifyH :CENTER)
   (zone-text:SetPoint :LEFT border-top :LEFT)
   (zone-text:SetPoint :RIGHT border-top :RIGHT))

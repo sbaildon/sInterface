@@ -75,8 +75,11 @@
 (λ position-cluster []
   (let [x-offset -40
         y-offset -20
+        container cluster.MinimapContainer
         minimap-width (minimap:GetWidth)
         minimap-height (minimap:GetHeight)]
+    (container:ClearAllPoints)
+    (container:SetAllPoints cluster)
     (cluster:SetSize minimap-width minimap-height)
     (cluster:ClearAllPoints)
     (cluster:SetPoint :TOPRIGHT uiparent :TOPRIGHT x-offset y-offset)))

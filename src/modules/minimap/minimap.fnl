@@ -62,8 +62,7 @@
     (clock:Hide)))
 
 (λ style-minimap []
-  (ns.E:bordered minimap)
-  (minimap:SetParent cluster)
+  (ns.E:bordered cluster.MinimapContainer)
   (minimap:SetMaskTexture "Interface\\ChatFrame\\ChatFrameBackground")
   (minimap:ClearAllPoints)
   (minimap:SetAllPoints cluster)

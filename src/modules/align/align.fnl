@@ -5,7 +5,7 @@
 (local vertical-rules 128)
 (local horizontal-rules 72)
 
-(let [align (get-screen-width :Frame :AlignFrame ui-parent)]
+(let [align (create-frame :Frame :AlignFrame ui-parent)]
   (align:SetAllPoints ui-parent)
   (align:Hide)
   (let [vertical-rule-spacing (/ (get-screen-width) vertical-rules)]

@@ -61,12 +61,17 @@
   (let [clock _G.TimeManagerClockTicker]
     (clock:Hide)))
 
+(λ position-indicator []
+  (let [indicator cluster.IndicatorFrame]
+    (indicator:SetPoint :TOPLEFT cluster :TOPLEFT 5 -5)))
+
 (λ style-minimap []
   (ns.E:bordered cluster.MinimapContainer)
   (minimap:SetMaskTexture "Interface\\ChatFrame\\ChatFrameBackground")
   (minimap:ClearAllPoints)
   (minimap:SetAllPoints cluster)
   (discard-clock)
+  (position-indicator)
   (discard-tracking)
   (discard-game-time-frame)
   (discard-compass))

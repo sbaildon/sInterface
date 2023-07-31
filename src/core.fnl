@@ -6,7 +6,7 @@
 
 (λ E.bordered [_self frame]
   (let [border-tex "Interface\\Tooltips\\UI-Tooltip-Border"
-        border (create-frame :Frame nil frame
+        border (create-frame :Frame :sInterfaceBorder frame
                              (and backdrop-template-mixin :BackdropTemplate))]
     (border:SetFrameStrata (frame:GetFrameStrata))
     (border:SetPoint :TOPLEFT frame :TOPLEFT -3 3)

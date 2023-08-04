@@ -9,4 +9,5 @@
 ## X-WoWI-ID: 24674
 
 core.lua
+_embeds.xml
 modules\_modules.xml

@@ -26,7 +26,9 @@
     (style)))
 
 (λ padder [self auras _]
-  (let [layout (grid-layout-util.CreateStandardGridLayout 11 15 15 -1 -1)]
+  (let [padding 12
+        layout (grid-layout-util.CreateStandardGridLayout self.iconStride
+                                                          padding padding -1 -1)]
     (grid-layout-util.ApplyGridLayout auras self.currentGridLayoutInfo.anchor
                                       layout)))
 

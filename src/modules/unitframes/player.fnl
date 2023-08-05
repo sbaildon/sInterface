@@ -1,22 +1,28 @@
-(print :hi)
-(local (_ {: oUF}) ...)
+(local (_ {: oUF : E}) ...)
 
 (local create-frame _G.CreateFrame)
 
 (fn health [unit]
-  (let [health (create-frame :StatusBar nil unit)]
-    (health:SetHeight 20)
-    (health:SetStatusBarTexture :something)
+  (let [health (create-frame :StatusBar :health unit)]
+    (health:SetAllPoints)
+    (tset health :colorClass true)
+    (health:SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar")
     (set unit.Health health)))
 
-(fn player [unit]
+(λ player [unit]
+  (E:bordered unit)
+  (unit:SetSize 300 20)
   (health unit)
   (print :testing)
   unit)
 
-(fn shared [_self unit]
-  (print unit)
-  (match unit :player player))
+(λ target [unit]
+  (print :target))
+
+(fn shared [self unit]
+  (match unit
+    :player (player self)
+    :target target))
 
 (oUF:RegisterStyle :sInterface shared)
 

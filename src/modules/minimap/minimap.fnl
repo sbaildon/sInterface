@@ -1,4 +1,4 @@
-(local (_ ns) ...)
+(local (_ {: E}) ...)
 
 (local cluster _G.MinimapCluster)
 (local minimap _G.Minimap)
@@ -66,7 +66,7 @@
     (indicator:SetPoint :TOPLEFT cluster :TOPLEFT 5 -5)))
 
 (λ style-minimap []
-  (ns.E:bordered cluster.MinimapContainer)
+  (E:bordered cluster.MinimapContainer)
   (minimap:SetMaskTexture "Interface\\ChatFrame\\ChatFrameBackground")
   (minimap:ClearAllPoints)
   (minimap:SetAllPoints cluster)

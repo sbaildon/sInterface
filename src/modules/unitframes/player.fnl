@@ -6,8 +6,10 @@
   (let [health (create-frame :StatusBar :health unit)]
     (health:SetAllPoints)
     (tset health :colorClass true)
+    (tset health :colorTapping true)
+    (tset health :olorReaction true)
     (health:SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar")
-    (set unit.Health health)))
+    (tset unit :Health health)))
 
 (λ player [unit]
   (E:bordered unit)

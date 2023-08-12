@@ -5,6 +5,7 @@
 (local unit-is-connected _G.UnitIsConnected)
 (local unit-health _G.UnitHealth)
 (local unit-health-max _G.UnitHealthMax)
+(local unit-power _G.UnitPower)
 
 (local dead [0.76 0.37 0.37])
 (local ghost [0.4 0.76 0.93])
@@ -48,3 +49,11 @@
 
 (tset oUF.Tags.Methods "sInterface:health" health)
 (tset oUF.Tags.Events "sInterface:health" "UNIT_HEALTH UNIT_CONNECTION")
+
+(lambda power [unit]
+  (.. ((. oUF.Tags.Methods :powercolor) unit)
+      (compact-health (unit-power unit))))
+
+(tset oUF.Tags.Methods "sInterface:power" power)
+(tset oUF.Tags.Events "sInterface:power"
+      "UNIT_POWER_UPDATE PLAYER_SPECIALIZATION_CHANGED PLAYER_TALENT_UPDATE UNIT_CONNECTION")

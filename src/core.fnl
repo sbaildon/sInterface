@@ -15,6 +15,9 @@
     (border:SetBackdropBorderColor 0.69803921568627 0.55686274509804
                                    0.3921568627451 1)))
 
+(λ E.draw-border [self frame]
+  (E.bordered self frame))
+
 ; credit http://richard.warburton.it
 (λ E.comma-value [number]
   (local (left num right) (string.match number "^([^%d]*%d)(%d*)(.-)$"))

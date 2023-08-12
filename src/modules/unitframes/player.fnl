@@ -23,6 +23,9 @@
 (λ tag [unit widget tag]
   (: unit :Tag widget tag))
 
+(λ create-font-string [frame ...]
+  (: frame :CreateFontString ...))
+
 (fn health [unit]
   (let [health (create-frame :StatusBar :health unit)]
     (set-all-points health)
@@ -37,6 +40,8 @@
   (set-size unit 300 20)
   (health unit)
   (print :testing)
+  (let [htext (create-font-string unit.Health :sInterface_PlayerHealth :ARTWORK
+                                  :GameFontNormalOutline)]
     (set-justify-h htext :RIGHT)
     (set-point htext :TOPRIGHT -10 10)
     (tag unit htext "[sInterface:health]"))

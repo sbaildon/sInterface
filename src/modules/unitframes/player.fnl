@@ -47,12 +47,22 @@
       (set-point :TOPRIGHT -10 10)
       (tag unit "[sInterface:health]"))))
 
+(λ power-text [unit]
+  (let [ptext (create-font-string unit.Health :sInterface_PlayerPower :ARTWORK
+                                  :GameFontNormalOutline)]
+    (doto ptext
+      (set-justify-h :LEFT)
+      (set-point :TOPLEFT 10 10)
+      (tset :frequentUpdates 0.1)
+      (tag unit "[sInterface:power]"))))
+
 (λ player [unit]
   (doto unit
     (E:bordered)
     (set-size 300 20)
     (health)
-    (health-text))
+    (health-text)
+    (power-text))
   unit)
 
 (λ target [unit]

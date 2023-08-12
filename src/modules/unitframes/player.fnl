@@ -7,7 +7,7 @@
     (health:SetAllPoints)
     (tset health :colorClass true)
     (tset health :colorTapping true)
-    (tset health :olorReaction true)
+    (tset health :colorReaction true)
     (health:SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar")
     (tset unit :Health health)))
 

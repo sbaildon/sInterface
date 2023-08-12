@@ -21,6 +21,6 @@
 ; credit http://richard.warburton.it
 (λ E.comma-value [number]
   (local (left num right) (string.match number "^([^%d]*%d)(%d*)(.-)$"))
-  (.. left (: (: (num:reverse) :gsub "(%d%d%d)" "%1,") :reverse) right))
+  (.. left (: (: (: num :reverse) :gsub "(%d%d%d)" "%1,") :reverse) right))
 
 (set ns.E E)

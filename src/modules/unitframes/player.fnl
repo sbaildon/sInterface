@@ -2,13 +2,16 @@
 
 (local create-frame _G.CreateFrame)
 
+(λ set-status-bar-texture [bar]
+  (: bar :SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar"))
+
 (fn health [unit]
   (let [health (create-frame :StatusBar :health unit)]
     (health:SetAllPoints)
     (tset health :colorClass true)
     (tset health :colorTapping true)
     (tset health :colorReaction true)
-    (health:SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar")
+    (set-status-bar-texture health)
     (tset unit :Health health)))
 
 (λ player [unit]

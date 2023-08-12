@@ -39,7 +39,6 @@
   (E:bordered unit)
   (set-size unit 300 20)
   (health unit)
-  (print :testing)
   (let [htext (create-font-string unit.Health :sInterface_PlayerHealth :ARTWORK
                                   :GameFontNormalOutline)]
     (set-justify-h htext :RIGHT)

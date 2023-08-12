@@ -48,10 +48,11 @@
       (tag unit "[sInterface:health]"))))
 
 (λ player [unit]
-  (E:bordered unit)
-  (set-size unit 300 20)
-  (health unit)
-  (health-text unit)
+  (doto unit
+    (E:bordered)
+    (set-size 300 20)
+    (health)
+    (health-text))
   unit)
 
 (λ target [unit]

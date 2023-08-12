@@ -14,6 +14,9 @@
 (λ set-size [frame ...]
   (: frame :SetSize ...))
 
+(λ set-justify-h [frame justification]
+  (: frame :SetJustifyH justification))
+
 (fn health [unit]
   (let [health (create-frame :StatusBar :health unit)]
     (set-all-points health)
@@ -28,6 +31,7 @@
   (set-size unit 300 20)
   (health unit)
   (print :testing)
+    (set-justify-h htext :RIGHT)
   unit)
 
 (λ target [unit]

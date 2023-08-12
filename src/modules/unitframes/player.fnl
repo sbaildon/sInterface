@@ -60,4 +60,4 @@
 (oUF:Factory (lambda [self]
                (self:SetActiveStyle :sInterface)
                (let [player (self:Spawn :player)]
-                 (player:SetPoint :CENTER))))
+                 (set-point player :CENTER))))

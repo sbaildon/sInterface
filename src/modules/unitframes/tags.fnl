@@ -24,7 +24,7 @@
 (lambda max-display [cur max]
   (math.floor (+ (* (/ cur max) 100) 0.5)))
 
-(lambda compact-health [value]
+(lambda compact-value [value]
   (let [place-value (: "%%.%df" :format 1)]
     (if (> value trillion) (.. (place-value:format (/ value trillion)) :t)
         (> value billion) (.. (place-value:format (/ value billion)) :b)
@@ -37,9 +37,9 @@
         max (unit-health-max unit)]
     (if (and (< cur max) (not= cur 0))
         (format-colour health
-                       (.. (.. (compact-health cur) " | ")
+                       (.. (.. (compact-value cur) " | ")
                            (.. (max-display cur max) "%")))
-        (format-colour health (compact-health cur)))))
+        (format-colour health (compact-value cur)))))
 
 (lambda health [unit]
   (if (unit-is-dead unit) (format-colour dead :Dead)
@@ -51,8 +51,7 @@
 (tset oUF.Tags.Events "sInterface:health" "UNIT_HEALTH UNIT_CONNECTION")
 
 (lambda power [unit]
-  (.. ((. oUF.Tags.Methods :powercolor) unit)
-      (compact-health (unit-power unit))))
+  (.. ((. oUF.Tags.Methods :powercolor) unit) (compact-value (unit-power unit))))
 
 (tset oUF.Tags.Methods "sInterface:power" power)
 (tset oUF.Tags.Events "sInterface:power"

@@ -5,9 +5,12 @@
 (λ set-status-bar-texture [bar]
   (: bar :SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar"))
 
+(λ set-all-points [frame]
+  (: frame :SetAllPoints))
+
 (fn health [unit]
   (let [health (create-frame :StatusBar :health unit)]
-    (health:SetAllPoints)
+    (set-all-points health)
     (tset health :colorClass true)
     (tset health :colorTapping true)
     (tset health :colorReaction true)

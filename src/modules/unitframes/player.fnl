@@ -1,30 +1,18 @@
-(local (_ {: oUF : E}) ...)
+(local (_ {: oUF : E : H}) ...)
 
-(local create-frame _G.CreateFrame)
-
-(λ set-status-bar-texture [bar]
-  (: bar :SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar"))
-
-(λ set-all-points [frame]
-  (: frame :SetAllPoints))
+(local {: set-all-points
+        : set-status-bar-texture
+        : set-size
+        : set-justify-h
+        : create-font-string
+        : create-frame
+        : set-point} H)
 
 (λ enable-feature [frame feature]
   (tset frame feature true))
 
-(λ set-size [frame ...]
-  (: frame :SetSize ...))
-
-(λ set-justify-h [frame justification]
-  (: frame :SetJustifyH justification))
-
-(λ set-point [frame ...]
-  (: frame :SetPoint ...))
-
 (λ tag [widget unit tag]
   (: unit :Tag widget tag))
-
-(λ create-font-string [frame ...]
-  (: frame :CreateFontString ...))
 
 (λ set-widget [widget unit key]
   (tset unit key widget))
@@ -58,7 +46,7 @@
 
 (λ player [unit]
   (doto unit
-    (E:bordered)
+    (E:draw-border)
     (set-size 300 20)
     (health)
     (health-text)

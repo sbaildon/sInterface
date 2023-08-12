@@ -3,6 +3,7 @@
 (local create-frame _G.CreateFrame)
 (local backdrop-template-mixin _G.BackdropTemplateMixin)
 (local E (create-frame :Frame :sEngine))
+(local H (create-frame :Frame :helpers))
 
 (λ get-frame-strata [frame]
   (: frame :GetFrameStrata))
@@ -35,4 +36,26 @@
   (local (left num right) (string.match number "^([^%d]*%d)(%d*)(.-)$"))
   (.. left (: (: (: num :reverse) :gsub "(%d%d%d)" "%1,") :reverse) right))
 
+(λ H.set-all-points [frame]
+  (: frame :SetAllPoints))
+
+(λ H.set-status-bar-texture [bar]
+  (: bar :SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar"))
+
+(λ H.set-size [frame ...]
+  (: frame :SetSize ...))
+
+(λ H.set-justify-h [frame justification]
+  (: frame :SetJustifyH justification))
+
+(λ H.set-point [frame ...]
+  (: frame :SetPoint ...))
+
+(λ H.create-font-string [frame ...]
+  (: frame :CreateFontString ...))
+
+(λ H.create-frame [...]
+  (create-frame ...))
+
 (set ns.E E)
+(set ns.H H)

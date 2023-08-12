@@ -10,6 +10,9 @@
 (λ set-frame-strata [frame strata]
   (: frame :SetFrameStrata strata))
 
+(λ set-backdrop [frame backdrop]
+  (: frame :SetBackdrop backdrop))
+
 (λ E.bordered [_self frame]
   (let [border-tex "Interface\\Tooltips\\UI-Tooltip-Border"
         border (create-frame :Frame :sInterfaceBorder frame
@@ -17,7 +20,7 @@
     (set-frame-strata frame (get-frame-strata frame))
     (border:SetPoint :TOPLEFT frame :TOPLEFT -3 3)
     (border:SetPoint :BOTTOMRIGHT frame :BOTTOMRIGHT 3 -3)
-    (border:SetBackdrop {:edgeFile border-tex :edgeSize 11})
+    (set-backdrop border {:edgeFile border-tex :edgeSize 11})
     (border:SetBackdropBorderColor 0.69803921568627 0.55686274509804
                                    0.3921568627451 1)))
 

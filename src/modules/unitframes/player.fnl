@@ -8,12 +8,15 @@
 (λ set-all-points [frame]
   (: frame :SetAllPoints))
 
+(λ enable-feature [frame feature]
+  (tset frame feature true))
+
 (fn health [unit]
   (let [health (create-frame :StatusBar :health unit)]
     (set-all-points health)
-    (tset health :colorClass true)
-    (tset health :colorTapping true)
-    (tset health :colorReaction true)
+    (enable-feature health :colorClass)
+    (enable-feature health :colorTapping)
+    (enable-feature health :colorReaction)
     (set-status-bar-texture health)
     (tset unit :Health health)))
 

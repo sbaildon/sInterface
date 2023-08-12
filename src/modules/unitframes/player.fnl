@@ -11,6 +11,9 @@
 (λ enable-feature [frame feature]
   (tset frame feature true))
 
+(λ set-size [frame ...]
+  (: frame :SetSize ...))
+
 (fn health [unit]
   (let [health (create-frame :StatusBar :health unit)]
     (set-all-points health)
@@ -22,7 +25,7 @@
 
 (λ player [unit]
   (E:bordered unit)
-  (unit:SetSize 300 20)
+  (set-size unit 300 20)
   (health unit)
   (print :testing)
   unit)

@@ -17,6 +17,9 @@
 (λ set-justify-h [frame justification]
   (: frame :SetJustifyH justification))
 
+(λ set-point [frame ...]
+  (: frame :SetPoint ...))
+
 (fn health [unit]
   (let [health (create-frame :StatusBar :health unit)]
     (set-all-points health)
@@ -32,6 +35,7 @@
   (health unit)
   (print :testing)
     (set-justify-h htext :RIGHT)
+    (set-point htext :TOPRIGHT -10 10)
   unit)
 
 (λ target [unit]

@@ -20,6 +20,9 @@
 (λ set-point [frame ...]
   (: frame :SetPoint ...))
 
+(λ tag [unit widget tag]
+  (: unit :Tag widget tag))
+
 (fn health [unit]
   (let [health (create-frame :StatusBar :health unit)]
     (set-all-points health)
@@ -36,6 +39,7 @@
   (print :testing)
     (set-justify-h htext :RIGHT)
     (set-point htext :TOPRIGHT -10 10)
+    (tag unit htext "[sInterface:health]"))
   unit)
 
 (λ target [unit]

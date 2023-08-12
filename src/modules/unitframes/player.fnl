@@ -26,14 +26,18 @@
 (λ create-font-string [frame ...]
   (: frame :CreateFontString ...))
 
+(λ set-widget [widget unit key]
+  (tset unit key widget))
+
 (fn health [unit]
   (let [health (create-frame :StatusBar :health unit)]
-    (set-all-points health)
-    (enable-feature health :colorClass)
-    (enable-feature health :colorTapping)
-    (enable-feature health :colorReaction)
-    (set-status-bar-texture health)
-    (tset unit :Health health)))
+    (doto health
+      (set-all-points)
+      (enable-feature :colorClass)
+      (enable-feature :colorTapping)
+      (enable-feature :colorReaction)
+      (set-status-bar-texture)
+      (set-widget unit :Health))))
 
 (λ player [unit]
   (E:bordered unit)

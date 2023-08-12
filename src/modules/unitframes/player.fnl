@@ -20,7 +20,7 @@
 (λ set-point [frame ...]
   (: frame :SetPoint ...))
 
-(λ tag [unit widget tag]
+(λ tag [widget unit tag]
   (: unit :Tag widget tag))
 
 (λ create-font-string [frame ...]
@@ -29,7 +29,7 @@
 (λ set-widget [widget unit key]
   (tset unit key widget))
 
-(fn health [unit]
+(λ health [unit]
   (let [health (create-frame :StatusBar :health unit)]
     (doto health
       (set-all-points)
@@ -39,15 +39,19 @@
       (set-status-bar-texture)
       (set-widget unit :Health))))
 
+(λ health-text [unit]
+  (let [htext (create-font-string unit.Health :sInterface_PlayerHealth :ARTWORK
+                                  :GameFontNormalOutline)]
+    (doto htext
+      (set-justify-h :RIGHT)
+      (set-point :TOPRIGHT -10 10)
+      (tag unit "[sInterface:health]"))))
+
 (λ player [unit]
   (E:bordered unit)
   (set-size unit 300 20)
   (health unit)
-  (let [htext (create-font-string unit.Health :sInterface_PlayerHealth :ARTWORK
-                                  :GameFontNormalOutline)]
-    (set-justify-h htext :RIGHT)
-    (set-point htext :TOPRIGHT -10 10)
-    (tag unit htext "[sInterface:health]"))
+  (health-text unit)
   unit)
 
 (λ target [unit]

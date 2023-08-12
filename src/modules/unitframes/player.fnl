@@ -56,16 +56,23 @@
   unit)
 
 (λ target [unit]
-  (print :target))
+  (doto unit
+    (E:bordered)
+    (set-size 300 20)
+    (health)
+    (health-text))
+  unit)
 
 (fn shared [self unit]
   (match unit
     :player (player self)
-    :target target))
+    :target (target self)))
 
 (oUF:RegisterStyle :sInterface shared)
 
 (oUF:Factory (lambda [self]
                (self:SetActiveStyle :sInterface)
-               (let [player (self:Spawn :player)]
-                 (set-point player :CENTER))))
+               (let [player (self:Spawn :player)
+                     target (self:Spawn :target)]
+                 (set-point player :CENTER)
+                 (set-point target :CENTER 0 -50))))

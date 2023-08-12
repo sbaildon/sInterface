@@ -4,11 +4,14 @@
 (local backdrop-template-mixin _G.BackdropTemplateMixin)
 (local E (create-frame :Frame :sEngine))
 
+(λ get-frame-strata [frame]
+  (: frame :GetFrameStrata))
+
 (λ E.bordered [_self frame]
   (let [border-tex "Interface\\Tooltips\\UI-Tooltip-Border"
         border (create-frame :Frame :sInterfaceBorder frame
                              (and backdrop-template-mixin :BackdropTemplate))]
-    (border:SetFrameStrata (frame:GetFrameStrata))
+    (border:SetFrameStrata (get-frame-strata frame))
     (border:SetPoint :TOPLEFT frame :TOPLEFT -3 3)
     (border:SetPoint :BOTTOMRIGHT frame :BOTTOMRIGHT 3 -3)
     (border:SetBackdrop {:edgeFile border-tex :edgeSize 11})

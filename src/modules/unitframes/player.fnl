@@ -80,7 +80,7 @@
 
 (λ target [unit]
   (doto unit
-    (E:bordered)
+    (E:draw-border)
     (set-size 230 16)
     (health)
     (health-text))

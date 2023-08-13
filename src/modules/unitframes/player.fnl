@@ -6,6 +6,9 @@
         : set-justify-h
         : create-font-string
         : create-frame
+        : get-width
+        : set-height
+        : create-status-bar
         : set-point} H)
 
 (λ enable-feature [frame feature]
@@ -18,7 +21,7 @@
   (tset unit key widget))
 
 (λ health [unit]
-  (let [health (create-frame :StatusBar :health unit)]
+  (let [health (create-status-bar :health unit)]
     (doto health
       (set-all-points)
       (enable-feature :colorClass)
@@ -27,36 +30,58 @@
       (set-status-bar-texture)
       (set-widget unit :Health))))
 
+(λ power [unit]
+  (let [power-frame (create-frame :Frame nil unit)]
+    (doto power-frame
+      (set-point :LEFT)
+      (set-point :RIGHT)
+      (set-point :TOP unit :BOTTOM 0 -1)
+      (set-height 3)
+      (set-widget unit :PowerFrame)))
+  (let [power (create-status-bar :power unit.PowerFrame)
+        padding (/ (get-width unit) 18)]
+    (doto power
+      (E:draw-border)
+      (set-status-bar-texture)
+      (set-point :LEFT padding 0)
+      (set-point :RIGHT (- padding) 0)
+      (set-point :TOP)
+      (set-point :BOTTOM)
+      (enable-feature :colorPower)
+      (enable-feature :Smooth)
+      (set-widget unit :Power))))
+
 (λ health-text [unit]
   (let [htext (create-font-string unit.Health :sInterface_PlayerHealth :ARTWORK
-                                  :GameFontNormalOutline)]
+                                  :GameFontNormalMed2Outline)]
     (doto htext
       (set-justify-h :RIGHT)
-      (set-point :TOPRIGHT -10 10)
+      (set-point :TOPRIGHT -4 7)
       (tag unit "[sInterface:health]"))))
 
 (λ power-text [unit]
   (let [ptext (create-font-string unit.Health :sInterface_PlayerPower :ARTWORK
-                                  :GameFontNormalOutline)]
+                                  :GameFontNormalMed2Outline)]
     (doto ptext
       (set-justify-h :LEFT)
-      (set-point :TOPLEFT 10 10)
+      (set-point :TOPLEFT 4 7)
       (tset :frequentUpdates 0.1)
       (tag unit "[sInterface:power]"))))
 
 (λ player [unit]
   (doto unit
     (E:draw-border)
-    (set-size 300 20)
+    (set-size 230 16)
     (health)
     (health-text)
+    (power)
     (power-text))
   unit)
 
 (λ target [unit]
   (doto unit
     (E:bordered)
-    (set-size 300 20)
+    (set-size 230 16)
     (health)
     (health-text))
   unit)

@@ -54,8 +54,17 @@
 (λ H.create-font-string [frame ...]
   (: frame :CreateFontString ...))
 
+(λ H.get-width [frame]
+  (: frame :GetWidth))
+
+(λ H.set-height [frame height]
+  (: frame :SetHeight height))
+
 (λ H.create-frame [...]
   (create-frame ...))
+
+(λ H.create-status-bar [...]
+  (create-frame :StatusBar ...))
 
 (set ns.E E)
 (set ns.H H)

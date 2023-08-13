@@ -17,6 +17,9 @@
 (local million 1000000)
 (local thousand 1000)
 
+(lambda format [thing ...]
+  (: thing :format ...))
+
 (lambda format-colour [[r g b] value]
   (: "|cff%02x%02x%02x%s|r" :format (* r 255) (* g 255) (* b 255) value))
 
@@ -26,10 +29,10 @@
 
 (lambda compact-value [value]
   (let [place-value (: "%%.%df" :format 1)]
-    (if (> value trillion) (.. (place-value:format (/ value trillion)) :t)
-        (> value billion) (.. (place-value:format (/ value billion)) :b)
-        (> value million) (.. (place-value:format (/ value million)) :m)
-        (> value thousand) (.. (place-value:format (/ value thousand)) :k)
+    (if (> value trillion) (.. (format place-value (/ value trillion)) :t)
+        (> value billion) (.. (format place-value (/ value billion)) :b)
+        (> value million) (.. (format place-value (/ value million)) :m)
+        (> value thousand) (.. (format place-value (/ value thousand)) :k)
         (: "%d" :format value))))
 
 (lambda health-val [unit]

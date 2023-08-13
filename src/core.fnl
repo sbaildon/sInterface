@@ -61,7 +61,7 @@
   (: frame :SetHeight height))
 
 (λ H.create-frame [...]
-  (create-frame ...))
+  (create-frame :Frame ...))
 
 (λ H.create-status-bar [...]
   (create-frame :StatusBar ...))

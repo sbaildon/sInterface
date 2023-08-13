@@ -31,7 +31,7 @@
       (set-widget unit :Health))))
 
 (λ power [unit]
-  (let [power-frame (create-frame :Frame nil unit)]
+  (let [power-frame (create-frame nil unit)]
     (doto power-frame
       (set-point :LEFT)
       (set-point :RIGHT)

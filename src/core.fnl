@@ -5,6 +5,8 @@
 (local E (create-frame :Frame :sEngine))
 (local H (create-frame :Frame :helpers))
 
+(local default-status-bar-texture "Interface\\AddOns\\sInterface\\media\\bar")
+
 (λ get-frame-strata [frame]
   (: frame :GetFrameStrata))
 
@@ -40,8 +42,7 @@
   (: frame :SetAllPoints))
 
 (λ H.set-status-bar-texture [bar ?texture]
-  (: bar :SetStatusBarTexture
-     (or ?texture "Interface\\AddOns\\sInterface\\media\\bar")))
+  (: bar :SetStatusBarTexture (or ?texture default-status-bar-texture)))
 
 (λ H.set-size [frame ...]
   (: frame :SetSize ...))

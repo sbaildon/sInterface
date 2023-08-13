@@ -39,8 +39,9 @@
 (λ H.set-all-points [frame]
   (: frame :SetAllPoints))
 
-(λ H.set-status-bar-texture [bar]
-  (: bar :SetStatusBarTexture "Interface\\AddOns\\sInterface\\media\\bar"))
+(λ H.set-status-bar-texture [bar ?texture]
+  (: bar :SetStatusBarTexture
+     (or ?texture "Interface\\AddOns\\sInterface\\media\\bar")))
 
 (λ H.set-size [frame ...]
   (: frame :SetSize ...))

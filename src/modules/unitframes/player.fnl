@@ -9,6 +9,8 @@
         : get-width
         : set-height
         : create-status-bar
+        : create-texture
+        : set-texture
         : set-point} H)
 
 (λ enable-feature [frame feature]
@@ -21,13 +23,19 @@
   (tset unit key widget))
 
 (λ health [unit]
-  (let [health (create-status-bar :health unit)]
+  (let [health (create-status-bar :health unit)
+        bg (create-texture health nil :BACKGROUND)]
+    (doto bg
+      (set-all-points)
+      (set-texture)
+      (tset :multiplier 0.4))
     (doto health
       (set-all-points)
       (enable-feature :colorClass)
       (enable-feature :colorTapping)
       (enable-feature :colorReaction)
       (set-status-bar-texture)
+      (tset :bg bg)
       (set-widget unit :Health))))
 
 (λ power [unit]

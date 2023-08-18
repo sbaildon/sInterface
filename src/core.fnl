@@ -101,5 +101,8 @@
 (λ H.set-text [font-string text]
   (: font-string :SetText text))
 
+(λ H.get-string-height [font-string]
+  (: font-string :GetStringHeight))
+
 (set ns.E E)
 (set ns.H H)

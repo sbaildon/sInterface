@@ -7,6 +7,10 @@
 (local unit-health-max _G.UnitHealthMax)
 (local unit-power _G.UnitPower)
 (local unit-effective-level _G.UnitEffectiveLevel)
+(local max-player-level _G.MAX_PLAYER_LEVEL)
+(local get-difficulty-color _G.GetDifficultyColor)
+(local get-content-difficulty-creature-for-player
+       _G.C_PlayerInfo.GetContentDifficultyCreatureForPlayer)
 
 (local dead [0.76 0.37 0.37])
 (local ghost [0.4 0.76 0.93])
@@ -61,8 +65,12 @@
       "UNIT_POWER_UPDATE PLAYER_SPECIALIZATION_CHANGED PLAYER_TALENT_UPDATE UNIT_CONNECTION")
 
 (lambda level [unit]
-  (let [level (unit-effective-level unit)]
-    (format-colour [1 1 1] level)))
+  (let [level (unit-effective-level unit)
+        difficulty (get-content-difficulty-creature-for-player unit)
+        {: r : g : b} (get-difficulty-color difficulty)]
+    (if (= level max-player-level) nil
+        (<= level 0) (format-colour [r g b] "??")
+        (format-colour [r g b] level))))
 
 (tset oUF.Tags.Methods "sInterface:level" level)
 (tset oUF.Tags.Events "sInterface:level" "UNIT_LEVEL UNIT_CONNECTION")

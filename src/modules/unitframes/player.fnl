@@ -7,6 +7,9 @@
 (local {: hide
         : show
         : set-all-points
+        : set-script
+        : set-vertex-color
+        : set-blend-mode
         : set-value
         : set-status-bar-texture
         : set-size
@@ -31,6 +34,16 @@
 
 (λ set-widget [widget unit key]
   (tset unit key widget))
+
+(λ highlight [{:Health health &as self}]
+  (let [highlight (create-texture health nil :OVERLAY nil nil nil 1)]
+    (doto highlight
+      (set-all-points self)
+      (set-texture :Interface/TargetingFrame/UI-TargetingFrame-BarFill)
+      (set-vertex-color 1 1 1 0.15)
+      (set-blend-mode :ADD)
+      (hide))
+    (tset self :Highlight highlight)))
 
 (λ post-update-health [self unit cur _max]
   (if (> cur 0) nil
@@ -103,12 +116,21 @@
       (tset :frequentUpdates 0.1)
       (tag unit "[sInterface:power]"))))
 
+(λ on-enter [{:Highlight highlight &as _self}]
+  (show highlight))
+
+(λ on-leave [{:Highlight highlight &as _self}]
+  (hide highlight))
+
 (λ player [unit]
   (doto unit
     (E:draw-border)
     (set-size 230 16)
     (health)
     (health-text)
+    (set-script :OnEnter on-enter)
+    (set-script :OnLeave on-leave)
+    (highlight)
     (power)
     (power-text))
   unit)
@@ -126,6 +148,9 @@
     (E:draw-border)
     (set-size 230 16)
     (health)
+    (highlight)
+    (set-script :OnEnter on-enter)
+    (set-script :OnLeave on-leave)
     (health-text)
     (power)
     (name-text))

@@ -1,8 +1,13 @@
 (local (_ {: oUF : E : H}) ...)
 
+(local unit-is-dead _G.UnitIsDead)
+(local unit-is-ghost _G.UnitIsGhost)
+(local unit-is-connected _G.UnitIsConnected)
+
 (local {: hide
         : show
         : set-all-points
+        : set-value
         : set-status-bar-texture
         : set-size
         : set-justify-h
@@ -15,6 +20,9 @@
         : set-texture
         : set-point} H)
 
+(λ unit-is-disconnected [unit]
+  (not (unit-is-connected unit)))
+
 (λ enable-feature [frame feature]
   (tset frame feature true))
 
@@ -23,6 +31,12 @@
 
 (λ set-widget [widget unit key]
   (tset unit key widget))
+
+(λ post-update-health [self unit cur _max]
+  (if (> cur 0) nil
+      (unit-is-dead unit) (set-value self 0)
+      (unit-is-disconnected unit) (set-value self 0)
+      (unit-is-dead unit) (set-value self 0)))
 
 (λ health [unit]
   (let [health (create-status-bar :health unit)
@@ -37,6 +51,7 @@
       (enable-feature :colorTapping)
       (enable-feature :colorReaction)
       (set-status-bar-texture)
+      (tset :PostUpdate post-update-health)
       (tset :bg bg)
       (set-widget unit :Health))))
 

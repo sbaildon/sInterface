@@ -86,6 +86,9 @@
   "TextureBase:SetColorTexture(colorR, colorG, colorB [, a])"
   (: texture-base :SetColorTexture r g b ?a))
 
+(λ H.get-status-bar-texture [status-bar]
+  (: status-bar :GetStatusBarTexture))
+
 (λ H.hide [region]
   (: region :Hide))
 

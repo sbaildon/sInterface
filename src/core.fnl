@@ -89,5 +89,8 @@
   "Region:SetVertexColor(colorR, colorG, colorB [, a])"
   (: region :SetVertexColor r g b ?a))
 
+(λ H.set-blend-mode [texture-base blend-mode]
+  (: texture-base :SetBlendMode blend-mode))
+
 (set ns.E E)
 (set ns.H H)

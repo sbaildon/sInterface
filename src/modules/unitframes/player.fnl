@@ -41,6 +41,8 @@
       (set-size 32 32)
       (set-point :CENTER)
       (tset :fontHeight 16)
+      (tset :useCLEU true)
+      (tset :format "|T%2$s:0:0:0:0:64:64:4:60:4:60|t %1$s")
       (tset :mode :Fountain))
     (for [i 1 6]
       (tset feedback i

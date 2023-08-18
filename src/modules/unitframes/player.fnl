@@ -38,7 +38,7 @@
 (λ highlight [{:Health health &as self}]
   (let [highlight (create-texture health nil :OVERLAY nil nil nil 1)]
     (doto highlight
-      (set-all-points self)
+      (set-all-points)
       (set-texture :Interface/TargetingFrame/UI-TargetingFrame-BarFill)
       (set-vertex-color 1 1 1 0.15)
       (set-blend-mode :ADD)

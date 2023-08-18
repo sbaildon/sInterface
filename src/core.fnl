@@ -92,5 +92,8 @@
 (λ H.set-blend-mode [texture-base blend-mode]
   (: texture-base :SetBlendMode blend-mode))
 
+(λ H.set-script [frame handler func]
+  (: frame :SetScript handler func))
+
 (set ns.E E)
 (set ns.H H)

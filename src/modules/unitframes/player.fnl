@@ -40,7 +40,7 @@
       (tset :bg bg)
       (set-widget unit :Health))))
 
-(λ post-update-power [self _unit _cur ?min max]
+(λ post-update-power [self _unit _cur ?_min max]
   (if (= max 0) (hide self) (show self)))
 
 (λ power [unit]

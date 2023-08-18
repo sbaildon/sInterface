@@ -72,9 +72,9 @@
   "Frame:CreateTexture([name, drawLayer, templateName, subLevel])"
   (: frame :CreateTexture ...))
 
-(λ H.set-texture [texture-base ...]
+(λ H.set-texture [texture-base ?texture ...]
   "TextureBase:SetTexture([textureAsset, wrapModeHorizontal, wrapModeVertical, filterMode])"
-  (: texture-base :SetTexture ...))
+  (: texture-base :SetTexture (or ?texture default-status-bar-texture) ...))
 
 (set ns.E E)
 (set ns.H H)

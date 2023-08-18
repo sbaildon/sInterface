@@ -76,5 +76,11 @@
   "TextureBase:SetTexture([textureAsset, wrapModeHorizontal, wrapModeVertical, filterMode])"
   (: texture-base :SetTexture (or ?texture default-status-bar-texture) ...))
 
+(λ H.hide [region]
+  (: region :Hide))
+
+(λ H.show [region]
+  (: region :Show))
+
 (set ns.E E)
 (set ns.H H)

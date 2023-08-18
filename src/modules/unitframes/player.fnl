@@ -84,7 +84,6 @@
     (doto name
       (set-justify-h :LEFT)
       (set-point :TOPLEFT unit 4 7)
-      (set-height 10)
       (tag unit "[sInterface:level<$ ][sInterface:name]"))))
 
 (λ target [unit]

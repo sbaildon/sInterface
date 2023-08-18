@@ -1,6 +1,8 @@
 (local (_ {: oUF : E : H}) ...)
 
-(local {: set-all-points
+(local {: hide
+        : show
+        : set-all-points
         : set-status-bar-texture
         : set-size
         : set-justify-h
@@ -38,6 +40,9 @@
       (tset :bg bg)
       (set-widget unit :Health))))
 
+(λ post-update-power [self _unit _cur ?min max]
+  (if (= max 0) (hide self) (show self)))
+
 (λ power [unit]
   (let [power-frame (create-frame nil unit)]
     (doto power-frame
@@ -64,6 +69,7 @@
       (enable-feature :frequentUpdates)
       (enable-feature :Smooth)
       (tset :bg bg)
+      (tset :PostUpdate post-update-power)
       (set-widget unit :Power))))
 
 (λ health-text [unit]

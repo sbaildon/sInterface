@@ -1,26 +1,27 @@
 {
-  description = "sInterface — An opinionated replacement for Blizzard's UI";
-
-  # go here for using all system
-  # https://serokell.io/blog/practical-nix-flakes
-
-  inputs = {
-    nixpkgs.url =
-      "github:NixOS/nixpkgs/819e4d63fc7f337a822a049fd055cd7615a5e0d6";
-  };
+  description = "sInterface";
 
   outputs = { self, nixpkgs }:
-    let pkgs = nixpkgs.legacyPackages.x86_64-darwin;
-    in {
-      formatter.x86_64-darwin = pkgs.nixfmt;
+    let pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+    in
+    {
+      formatter.aarch64-darwin = pkgs.nixfmt;
 
-      # nix develop
-      devShells.x86_64-darwin.default =
-        pkgs.mkShell { buildInputs = [ pkgs.fennel ]; };
+      devShells.aarch64-darwin.default = pkgs.mkShell {
+        buildInputs = [
+          pkgs.fennel
+          pkgs.fnlfmt
+        ];
+      };
 
-      apps.x86_64-darwin.fennel = {
+      apps.aarch64-darwin.fennel = {
         type = "app";
         program = "${pkgs.fennel}/bin/fennel";
+      };
+
+      apps.aarch64-darwin.fnlfmt = {
+        type = "app";
+        program = "${pkgs.fennelfmt}/bin/fnlfmt";
       };
     };
 }

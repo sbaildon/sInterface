@@ -13,6 +13,9 @@
 (λ set-frame-strata [frame strata]
   (: frame :SetFrameStrata strata))
 
+(λ set-draw-layer [region layer ...]
+  (: region :SetDrawLayer layer ...))
+
 (λ set-backdrop [frame backdrop]
   (: frame :SetBackdrop backdrop))
 

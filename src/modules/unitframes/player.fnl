@@ -35,6 +35,18 @@
 (λ set-widget [widget unit key]
   (tset unit key widget))
 
+(λ floating-combat-feedback [{:Health health &as self}]
+  (let [feedback (create-frame nil health)]
+    (doto feedback
+      (set-size 32 32)
+      (set-point :CENTER)
+      (tset :fontHeight 16)
+      (tset :mode :Fountain))
+    (for [i 1 6]
+      (tset feedback i
+            (create-font-string feedback (.. :fcf_ i) :OVERLAY :CombatTextFont)))
+    (tset self :FloatingCombatFeedback feedback)))
+
 (λ highlight [{:Health health &as self}]
   (let [highlight (create-texture health nil :OVERLAY nil nil nil 1)]
     (doto highlight
@@ -127,6 +139,7 @@
     (E:draw-border)
     (set-size 230 16)
     (health)
+    (floating-combat-feedback)
     (health-text)
     (set-script :OnEnter on-enter)
     (set-script :OnLeave on-leave)

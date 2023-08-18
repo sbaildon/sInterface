@@ -98,5 +98,8 @@
 (λ H.set-script [frame handler func]
   (: frame :SetScript handler func))
 
+(λ H.set-text [font-string text]
+  (: font-string :SetText text))
+
 (set ns.E E)
 (set ns.H H)

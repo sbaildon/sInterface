@@ -107,8 +107,8 @@
       (set-point :TOPRIGHT -4 7)
       (tag unit "[sInterface:health]"))))
 
-(λ power-text [unit]
-  (let [ptext (create-font-string unit.Health :sInterface_PlayerPower :ARTWORK
+(λ power-text [{:Health health &as unit}]
+  (let [ptext (create-font-string health :sInterface_PlayerPower :ARTWORK
                                   :GameFontNormalMed2Outline)]
     (doto ptext
       (set-justify-h :LEFT)

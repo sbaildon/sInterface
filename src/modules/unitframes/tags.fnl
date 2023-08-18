@@ -6,6 +6,7 @@
 (local unit-health _G.UnitHealth)
 (local unit-health-max _G.UnitHealthMax)
 (local unit-power _G.UnitPower)
+(local unit-effective-level _G.UnitEffectiveLevel)
 
 (local dead [0.76 0.37 0.37])
 (local ghost [0.4 0.76 0.93])
@@ -58,3 +59,10 @@
 (tset oUF.Tags.Methods "sInterface:power" power)
 (tset oUF.Tags.Events "sInterface:power"
       "UNIT_POWER_UPDATE PLAYER_SPECIALIZATION_CHANGED PLAYER_TALENT_UPDATE UNIT_CONNECTION")
+
+(lambda level [unit]
+  (let [level (unit-effective-level unit)]
+    (format-colour [1 1 1] level)))
+
+(tset oUF.Tags.Methods "sInterface:level" level)
+(tset oUF.Tags.Events "sInterface:level" "UNIT_LEVEL UNIT_CONNECTION")

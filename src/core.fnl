@@ -68,5 +68,9 @@
 (λ H.create-status-bar [...]
   (create-frame :StatusBar ...))
 
+(λ H.create-texture [frame ...]
+  "Frame:CreateTexture([name, drawLayer, templateName, subLevel])"
+  (: frame :CreateTexture ...))
+
 (set ns.E E)
 (set ns.H H)

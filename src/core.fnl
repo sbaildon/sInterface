@@ -85,5 +85,9 @@
 (λ H.set-value [status-bar value]
   (: status-bar :SetValue value))
 
+(λ H.set-vertex-color [region r g b ?a]
+  "Region:SetVertexColor(colorR, colorG, colorB [, a])"
+  (: region :SetVertexColor r g b ?a))
+
 (set ns.E E)
 (set ns.H H)

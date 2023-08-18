@@ -107,6 +107,7 @@
     (set-size 230 16)
     (health)
     (health-text)
+    (power)
     (name-text))
   unit)
 

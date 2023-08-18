@@ -47,7 +47,12 @@
       (set-height 3)
       (set-widget unit :PowerFrame)))
   (let [power (create-status-bar :power unit.PowerFrame)
+        bg (create-texture power nil :BACKGROUND)
         padding (/ (get-width unit) 18)]
+    (doto bg
+      (set-all-points)
+      (set-texture)
+      (tset :multiplier 0.4))
     (doto power
       (E:draw-border)
       (set-status-bar-texture)
@@ -58,6 +63,7 @@
       (enable-feature :colorPower)
       (enable-feature :frequentUpdates)
       (enable-feature :Smooth)
+      (tset :bg bg)
       (set-widget unit :Power))))
 
 (λ health-text [unit]

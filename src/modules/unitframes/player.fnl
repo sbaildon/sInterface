@@ -97,5 +97,5 @@
                (self:SetActiveStyle :sInterface)
                (let [player (self:Spawn :player)
                      target (self:Spawn :target)]
-                 (set-point player :CENTER)
                  (set-point target :CENTER 0 -50))))
+                 (set-point player :CENTER 0 -150)

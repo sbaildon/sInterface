@@ -40,8 +40,7 @@
         max (unit-health-max unit)]
     (if (and (< cur max) (not= cur 0))
         (format-colour health
-                       (.. (.. (compact-value cur) " | ")
-                           (.. (max-display cur max) "%")))
+                       (.. (compact-value cur) " | " (max-display cur max) "%"))
         (format-colour health (compact-value cur)))))
 
 (lambda health [unit]

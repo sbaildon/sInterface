@@ -62,6 +62,9 @@
 (λ H.get-width [frame]
   (: frame :GetWidth))
 
+(λ H.get-height [frame]
+  (: frame :GetHeight))
+
 (λ H.set-height [frame height]
   (: frame :SetHeight height))
 

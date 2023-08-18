@@ -79,6 +79,10 @@
   "TextureBase:SetTexture([textureAsset, wrapModeHorizontal, wrapModeVertical, filterMode])"
   (: texture-base :SetTexture (or ?texture default-status-bar-texture) ...))
 
+(λ H.set-color-texture [texture-base r g b ?a]
+  "TextureBase:SetColorTexture(colorR, colorG, colorB [, a])"
+  (: texture-base :SetColorTexture r g b ?a))
+
 (λ H.hide [region]
   (: region :Hide))
 

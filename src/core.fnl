@@ -82,5 +82,8 @@
 (λ H.show [region]
   (: region :Show))
 
+(λ H.set-value [status-bar value]
+  (: status-bar :SetValue value))
+
 (set ns.E E)
 (set ns.H H)

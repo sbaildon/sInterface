@@ -51,7 +51,6 @@
       (enable-feature :colorTapping)
       (enable-feature :colorReaction)
       (set-status-bar-texture)
-      (tset :PostUpdate post-update-health)
       (tset :bg bg)
       (set-widget unit :Health))))
 

@@ -23,5 +23,7 @@
         type = "app";
         program = "${pkgs.fennelfmt}/bin/fnlfmt";
       };
+
+      packages.aarch64-darwin.default = pkgs.fennel;
     };
 }

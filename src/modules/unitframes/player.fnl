@@ -99,8 +99,8 @@
       (tset :PostUpdate post-update-power)
       (set-widget unit :Power))))
 
-(λ health-text [unit]
-  (let [htext (create-font-string unit.Health :sInterface_PlayerHealth :ARTWORK
+(λ health-text [{:Health health &as unit}]
+  (let [htext (create-font-string health :sInterface_PlayerHealth :ARTWORK
                                   :GameFontNormalMed2Outline)]
     (doto htext
       (set-justify-h :RIGHT)

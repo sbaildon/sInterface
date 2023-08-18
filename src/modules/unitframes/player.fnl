@@ -135,8 +135,8 @@
     (power-text))
   unit)
 
-(λ name-text [unit]
-  (let [name (create-font-string unit.Health :sInterface_TargetName :ARTWORK
+(λ name-text [{:Health health &as unit}]
+  (let [name (create-font-string health :sInterface_TargetName :ARTWORK
                                  :GameFontNormalMed2Outline)]
     (doto name
       (set-justify-h :LEFT)

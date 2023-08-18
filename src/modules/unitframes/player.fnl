@@ -78,12 +78,22 @@
     (power-text))
   unit)
 
+(λ name-text [unit]
+  (let [name (create-font-string unit.Health :sInterface_TargetName :ARTWORK
+                                 :GameFontNormalMed2Outline)]
+    (doto name
+      (set-justify-h :LEFT)
+      (set-point :TOPLEFT unit 4 7)
+      (set-height 10)
+      (tag unit "[sInterface:level<$ ][sInterface:name]"))))
+
 (λ target [unit]
   (doto unit
     (E:draw-border)
     (set-size 230 16)
     (health)
-    (health-text))
+    (health-text)
+    (name-text))
   unit)
 
 (fn shared [self unit]

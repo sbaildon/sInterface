@@ -48,6 +48,7 @@
       (set-point :TOP)
       (set-point :BOTTOM)
       (enable-feature :colorPower)
+      (enable-feature :frequentUpdates)
       (enable-feature :Smooth)
       (set-widget unit :Power))))
 

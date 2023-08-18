@@ -1,4 +1,4 @@
 set shell := ["fish", "-c"]
 
 watch:
-    while true; git ls-files | entr -pz make; notify sinterface $status; end
+    while true; git ls-files | entr -cpz make; notify sinterface $status; end

@@ -66,3 +66,10 @@
 
 (tset oUF.Tags.Methods "sInterface:level" level)
 (tset oUF.Tags.Events "sInterface:level" "UNIT_LEVEL UNIT_CONNECTION")
+
+(lambda name [unit]
+  (format-colour [1 1 1] ((. oUF.Tags.Methods :name) unit)))
+
+(tset oUF.Tags.Methods "sInterface:name" name)
+(tset oUF.Tags.Events "sInterface:name"
+      "UNIT_CONNECTION UNIT_NAME_UPDATE UNIT_THREAT_SITUATION_UPDATE")

@@ -4,6 +4,7 @@
 (local unit-is-ghost _G.UnitIsGhost)
 (local unit-is-connected _G.UnitIsConnected)
 
+(local feedback-icon-texture "|T%2$s:0:0:0:0:64:64:4:60:4:60|t %1$s")
 (local {: hide
         : show
         : set-all-points
@@ -42,7 +43,7 @@
       (set-point :CENTER)
       (tset :fontHeight 16)
       (tset :useCLEU true)
-      (tset :format "|T%2$s:0:0:0:0:64:64:4:60:4:60|t %1$s")
+      (tset :format feedback-icon-texture)
       (tset :mode :Fountain))
     (for [i 1 6]
       (tset feedback i

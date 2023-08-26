@@ -9,6 +9,7 @@
 (local {: hide
         : show
         : set-text
+        : set-width
         : set-tex-coord
         : get-status-bar-texture
         : set-status-bar-color
@@ -57,10 +58,18 @@
             (create-font-string feedback (.. :fcf_ i) :OVERLAY :CombatTextFont)))
     (tset self :FloatingCombatFeedback feedback)))
 
+(λ layout-icon-and-cast-bar [unit-frame {:Icon icon &as cast-bar}]
+  (let [gap 7
+        uf-width (get-width unit-frame)
+        icon-width (get-width icon)]
+    (set-point icon :BOTTOMRIGHT cast-bar :BOTTOMLEFT (- gap) 0)
+    (set-width cast-bar (- uf-width (+ icon-width gap)))))
+
 (λ post-cast-fail [self unit]
   (: self.InterruptShakeAnim :Play))
 
 (λ post-cast-start [self unit]
+  (layout-icon-and-cast-bar (: self :GetParent) self)
   (case self
     {:notInterruptible _} (set-status-bar-color self 0.65 0.65 0.65)
     {:casting _} (set-status-bar-color self 1 1 0)

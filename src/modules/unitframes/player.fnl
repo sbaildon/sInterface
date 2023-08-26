@@ -98,8 +98,8 @@
 (λ post-update-health [self unit cur _max]
   (if (> cur 0) nil
       (unit-is-dead unit) (set-value self 0)
-      (unit-is-disconnected unit) (set-value self 0)
-      (unit-is-dead unit) (set-value self 0)))
+      (unit-is-ghost unit) (set-value self 0)
+      (unit-is-disconnected unit) (set-value self 0)))
 
 (λ health [unit]
   (let [health (create-status-bar :health unit)

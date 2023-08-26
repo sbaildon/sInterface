@@ -77,12 +77,12 @@
       (set-widget cast-bar :Spark))
     (doto name
       (set-justify-h :LEFT)
-      (set-point :TOPLEFT 4 7)
+      (set-point :TOPLEFT 7 7)
       (set-text :null)
       (set-height (get-string-height name)))
     (doto time
       (set-justify-h :RIGHT)
-      (set-point :TOPRIGHT -7 4)
+      (set-point :TOPRIGHT -7 7)
       (set-widget cast-bar :Time))))
 
 (λ highlight [{:Health health &as self}]

@@ -10,6 +10,7 @@
         : show
         : set-text
         : set-color-texture
+        : set-tex-coord
         : get-status-bar-texture
         : get-string-height
         : set-all-points
@@ -59,6 +60,7 @@
 (λ cast-bar [{:PowerFrame power-frame : unit &as self}]
   (let [cast-bar (create-status-bar (.. :cast_bar unit) self)
         spark (create-texture cast-bar nil :OVERLAY)
+        icon (create-texture cast-bar nil :ARTWORK)
         name (create-font-string cast-bar :name :ARTWORK
                                  :GameFontHighlightOutline)
         time (create-font-string cast-bar :casty :ARTWORK
@@ -70,6 +72,11 @@
       (tset :timeToHold 0.75)
       (set-size 230 10)
       (set-widget self :Castbar))
+    (doto icon
+      (set-point :TOPRIGHT cast-bar :TOPLEFT 0 0)
+      (set-size 30 30)
+      (set-tex-coord 0.1 0.9 0.1 0.9)
+      (set-widget cast-bar :Icon))
     (doto spark
       (set-size 10 (* (get-height cast-bar) 3))
       (set-blend-mode :ADD)

@@ -13,6 +13,12 @@
 (λ set-frame-strata [frame strata]
   (: frame :SetFrameStrata strata))
 
+(λ get-frame-level [frame]
+  (: frame :GetFrameLevel))
+
+(λ set-frame-level [frame level]
+  (: frame :SetFrameLevel level))
+
 (λ set-draw-layer [region layer ...]
   (: region :SetDrawLayer layer ...))
 
@@ -26,7 +32,8 @@
   (let [border-tex :Interface/Tooltips/UI-Tooltip-Border
         border (create-frame :Frame :sInterfaceBorder frame
                              (and backdrop-template-mixin :BackdropTemplate))]
-    (set-frame-strata frame (get-frame-strata frame))
+    (set-frame-strata border (get-frame-strata frame))
+    (set-frame-level border (get-frame-level frame))
     (border:SetPoint :TOPLEFT frame :TOPLEFT -3 3)
     (border:SetPoint :BOTTOMRIGHT frame :BOTTOMRIGHT 3 -3)
     (set-backdrop border {:edgeFile border-tex :edgeSize 11})

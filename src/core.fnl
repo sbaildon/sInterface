@@ -19,9 +19,6 @@
 (λ set-frame-level [frame level]
   (: frame :SetFrameLevel level))
 
-(λ set-draw-layer [region layer ...]
-  (: region :SetDrawLayer layer ...))
-
 (λ set-backdrop [frame backdrop]
   (: frame :SetBackdrop backdrop))
 

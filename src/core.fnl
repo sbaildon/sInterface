@@ -105,6 +105,9 @@
 (λ H.show [region]
   (: region :Show))
 
+(λ H.set-tex-coord [region ...]
+  (: region :SetTexCoord ...))
+
 (λ H.set-value [status-bar value]
   (: status-bar :SetValue value))
 

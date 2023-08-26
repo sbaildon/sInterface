@@ -8,6 +8,8 @@
 
 (local {: hide
         : show
+        : get-parent
+        : set-alpha
         : set-text
         : set-width
         : set-tex-coord
@@ -65,11 +67,22 @@
     (set-point icon :BOTTOMRIGHT cast-bar :BOTTOMLEFT (- gap) 0)
     (set-width cast-bar (- uf-width (+ icon-width gap)))))
 
+(λ handle-anim-finished [self _requested]
+  (let [cast-bar (get-parent self)]
+    (doto cast-bar
+      (hide)
+      (set-alpha 1))))
+
+(λ post-cast-stop [self unit]
+  (: self.HoldFadeOutAnim :Play))
+
 (λ post-cast-fail [self unit]
   (set-status-bar-color self 1 0.09 0)
+  (: self.HoldFadeOutAnim :Play)
   (: self.InterruptShakeAnim :Play))
 
 (λ post-cast-start [self unit]
+  (: self.HoldFadeOutAnim :Stop)
   (layout-icon-and-cast-bar (: self :GetParent) self)
   (case self
     {:notInterruptible _} (set-status-bar-color self 0.65 0.65 0.65)
@@ -85,13 +98,14 @@
                                  :GameFontHighlightOutline)
         time (create-font-string cast-bar :casty :ARTWORK
                                  :GameFontHighlightOutline)]
+    (set-script cast-bar.HoldFadeOutAnim :OnFinished handle-anim-finished)
     (doto cast-bar
       (E:draw-border)
       (set-status-bar-texture)
       (set-point :TOPRIGHT power-frame :BOTTOMRIGHT 0 -30)
-      (tset :timeToHold 0.75)
       (tset :PostCastStart post-cast-start)
       (tset :PostCastFail post-cast-fail)
+      (tset :PostCastStop post-cast-stop)
       (set-size 230 10)
       (set-widget self :Castbar))
     (doto icon

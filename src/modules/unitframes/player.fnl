@@ -5,8 +5,13 @@
 (local unit-is-connected _G.UnitIsConnected)
 
 (local feedback-icon-texture "|T%2$s:0:0:0:0:64:64:4:60:4:60|t %1$s")
+
 (local {: hide
         : show
+        : set-text
+        : set-color-texture
+        : get-status-bar-texture
+        : get-string-height
         : set-all-points
         : set-script
         : set-vertex-color
@@ -18,6 +23,7 @@
         : create-font-string
         : create-frame
         : get-width
+        : get-height
         : set-height
         : create-status-bar
         : create-texture
@@ -49,6 +55,35 @@
       (tset feedback i
             (create-font-string feedback (.. :fcf_ i) :OVERLAY :CombatTextFont)))
     (tset self :FloatingCombatFeedback feedback)))
+
+(λ cast-bar [{:PowerFrame power-frame : unit &as self}]
+  (let [cast-bar (create-status-bar (.. :cast_bar unit) self)
+        spark (create-texture cast-bar nil :OVERLAY)
+        name (create-font-string cast-bar :name :ARTWORK
+                                 :GameFontHighlightOutline)
+        time (create-font-string cast-bar :casty :ARTWORK
+                                 :GameFontHighlightOutline)]
+    (doto cast-bar
+      (E:draw-border)
+      (set-status-bar-texture)
+      (set-point :TOP power-frame :BOTTOM 0 -30)
+      (tset :timeToHold 0.75)
+      (set-size 230 10)
+      (set-widget self :Castbar))
+    (doto spark
+      (set-size 10 (get-height cast-bar))
+      (set-blend-mode :ADD)
+      (set-point :CENTER (get-status-bar-texture cast-bar) :RIGHT 0 0)
+      (set-widget cast-bar :Spark))
+    (doto name
+      (set-justify-h :LEFT)
+      (set-point :TOPLEFT 4 7)
+      (set-text :null)
+      (set-height (get-string-height name)))
+    (doto time
+      (set-justify-h :RIGHT)
+      (set-point :TOPRIGHT -7 4)
+      (set-widget cast-bar :Time))))
 
 (λ highlight [{:Health health &as self}]
   (let [highlight (create-texture health nil :OVERLAY nil nil nil 1)]
@@ -148,6 +183,7 @@
     (set-script :OnLeave on-leave)
     (highlight)
     (power)
+    (cast-bar)
     (power-text))
   unit)
 

@@ -1,11 +1,15 @@
 (local (_ ns) ...)
 
-(local create-frame _G.CreateFrame)
+(local cf _G.CreateFrame)
 (local backdrop-template-mixin _G.BackdropTemplateMixin)
-(local E (create-frame :Frame :sEngine))
-(local H (create-frame :Frame :helpers))
+(local E (cf :Frame :sEngine))
+(local H (cf :Frame :helpers))
 
 (local default-status-bar-texture "Interface\\AddOns\\sInterface\\media\\bar")
+
+(λ create-frame [...]
+  "CreateFrame(frameType [, name, parent, template, id])"
+  (_G.CreateFrame ...))
 
 (λ get-frame-strata [frame]
   (: frame :GetFrameStrata))

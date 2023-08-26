@@ -66,6 +66,7 @@
     (set-width cast-bar (- uf-width (+ icon-width gap)))))
 
 (λ post-cast-fail [self unit]
+  (set-status-bar-color self 1 0.09 0)
   (: self.InterruptShakeAnim :Play))
 
 (λ post-cast-start [self unit]

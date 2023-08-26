@@ -63,8 +63,7 @@
 (λ H.set-justify-h [frame justification]
   (: frame :SetJustifyH justification))
 
-(λ H.set-point [frame ...]
-  (: frame :SetPoint ...))
+(tset H :set-point set-point)
 
 (λ H.create-font-string [frame ...]
   (: frame :CreateFontString ...))

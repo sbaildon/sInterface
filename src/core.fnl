@@ -58,6 +58,9 @@
 (λ H.set-status-bar-texture [bar ?texture]
   (: bar :SetStatusBarTexture (or ?texture default-status-bar-texture)))
 
+(λ H.set-status-bar-color [bar r g b]
+  (: bar :SetStatusBarColor r g b))
+
 (λ H.set-size [frame ...]
   (: frame :SetSize ...))
 

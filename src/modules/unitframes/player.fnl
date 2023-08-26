@@ -9,9 +9,9 @@
 (local {: hide
         : show
         : set-text
-        : set-color-texture
         : set-tex-coord
         : get-status-bar-texture
+        : set-status-bar-color
         : get-string-height
         : set-all-points
         : set-script
@@ -57,8 +57,18 @@
             (create-font-string feedback (.. :fcf_ i) :OVERLAY :CombatTextFont)))
     (tset self :FloatingCombatFeedback feedback)))
 
+(λ post-cast-fail [self unit]
+  (: self.InterruptShakeAnim :Play))
+
+(λ post-cast-start [self unit]
+  (case self
+    {:notInterruptible _} (set-status-bar-color self 0.65 0.65 0.65)
+    {:casting _} (set-status-bar-color self 1 1 0)
+    {:channeling _} (set-status-bar-color self 0 1 0)))
+
 (λ cast-bar [{:PowerFrame power-frame : unit &as self}]
-  (let [cast-bar (create-status-bar (.. :cast_bar unit) self)
+  (let [cast-bar (create-status-bar (.. :cast_bar unit) self
+                                    :CastingBarFrameAnimsFXTemplate)
         spark (create-texture cast-bar nil :OVERLAY)
         icon (create-texture cast-bar nil :ARTWORK)
         name (create-font-string cast-bar :name :ARTWORK
@@ -70,11 +80,13 @@
       (set-status-bar-texture)
       (set-point :TOP power-frame :BOTTOM 0 -30)
       (tset :timeToHold 0.75)
+      (tset :PostCastStart post-cast-start)
+      (tset :PostCastFail post-cast-fail)
       (set-size 230 10)
       (set-widget self :Castbar))
     (doto icon
       (set-point :TOPRIGHT cast-bar :TOPLEFT 0 0)
-      (set-size 30 30)
+      (set-size 20 20)
       (set-tex-coord 0.1 0.9 0.1 0.9)
       (set-widget cast-bar :Icon))
     (doto spark

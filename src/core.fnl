@@ -23,7 +23,7 @@
   (: frame :SetBackdropBorderColor ...))
 
 (λ E.bordered [_self frame]
-  (let [border-tex "Interface\\Tooltips\\UI-Tooltip-Border"
+  (let [border-tex :Interface/Tooltips/UI-Tooltip-Border
         border (create-frame :Frame :sInterfaceBorder frame
                              (and backdrop-template-mixin :BackdropTemplate))]
     (set-frame-strata frame (get-frame-strata frame))

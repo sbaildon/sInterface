@@ -133,6 +133,9 @@
 (λ H.set-alpha [object alpha]
   (: object :SetAlpha alpha))
 
+(λ H.get-parent [frame]
+  (: frame :GetParent))
+
 (λ H.get-string-height [font-string]
   (: font-string :GetStringHeight))
 

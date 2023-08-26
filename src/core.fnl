@@ -81,6 +81,9 @@
 (λ H.set-height [frame height]
   (: frame :SetHeight height))
 
+(λ H.set-width [frame width]
+  (: frame :SetWidth width))
+
 (λ H.create-frame [...]
   (create-frame :Frame ...))
 

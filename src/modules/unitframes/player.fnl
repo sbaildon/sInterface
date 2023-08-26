@@ -71,7 +71,7 @@
       (set-size 230 10)
       (set-widget self :Castbar))
     (doto spark
-      (set-size 10 (get-height cast-bar))
+      (set-size 10 (* (get-height cast-bar) 3))
       (set-blend-mode :ADD)
       (set-point :CENTER (get-status-bar-texture cast-bar) :RIGHT 0 0)
       (set-widget cast-bar :Spark))

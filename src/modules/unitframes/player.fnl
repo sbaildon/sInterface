@@ -77,7 +77,7 @@
     {:channeling _} (set-status-bar-color self 0 1 0)))
 
 (λ cast-bar [{:PowerFrame power-frame : unit &as self}]
-  (let [cast-bar (create-status-bar (.. :cast_bar unit) self
+  (let [cast-bar (create-status-bar (.. :cast_bar_ unit) self
                                     :CastingBarFrameAnimsFXTemplate)
         spark (create-texture cast-bar nil :OVERLAY)
         icon (create-texture cast-bar nil :ARTWORK)

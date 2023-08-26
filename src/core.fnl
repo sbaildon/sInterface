@@ -130,6 +130,9 @@
 (λ H.set-text [font-string text]
   (: font-string :SetText text))
 
+(λ H.set-alpha [object alpha]
+  (: object :SetAlpha alpha))
+
 (λ H.get-string-height [font-string]
   (: font-string :GetStringHeight))
 

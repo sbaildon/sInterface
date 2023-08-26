@@ -88,14 +88,14 @@
     (doto cast-bar
       (E:draw-border)
       (set-status-bar-texture)
-      (set-point :TOP power-frame :BOTTOM 0 -30)
+      (set-point :TOPRIGHT power-frame :BOTTOMRIGHT 0 -30)
       (tset :timeToHold 0.75)
       (tset :PostCastStart post-cast-start)
       (tset :PostCastFail post-cast-fail)
       (set-size 230 10)
       (set-widget self :Castbar))
     (doto icon
-      (set-point :TOPRIGHT cast-bar :TOPLEFT 0 0)
+      (set-point :BOTTOMRIGHT cast-bar :BOTTOMLEFT 0 0)
       (set-size 20 20)
       (set-tex-coord 0.1 0.9 0.1 0.9)
       (set-widget cast-bar :Icon))
@@ -106,12 +106,13 @@
       (set-widget cast-bar :Spark))
     (doto name
       (set-justify-h :LEFT)
-      (set-point :TOPLEFT 7 7)
+      (set-point :TOPLEFT 4 7)
       (set-text :null)
+      (set-widget cast-bar :Text)
       (set-height (get-string-height name)))
     (doto time
       (set-justify-h :RIGHT)
-      (set-point :TOPRIGHT -7 7)
+      (set-point :TOPRIGHT -4 7)
       (set-widget cast-bar :Time))))
 
 (λ highlight [{:Health health &as self}]

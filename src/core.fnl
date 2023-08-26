@@ -28,14 +28,17 @@
 (λ set-backdrop-border-color [frame ...]
   (: frame :SetBackdropBorderColor ...))
 
+(λ set-point [frame ...]
+  (: frame :SetPoint ...))
+
 (λ E.bordered [_self frame]
   (let [border-tex :Interface/Tooltips/UI-Tooltip-Border
         border (create-frame :Frame :sInterfaceBorder frame
                              (and backdrop-template-mixin :BackdropTemplate))]
     (set-frame-strata border (get-frame-strata frame))
     (set-frame-level border (get-frame-level frame))
-    (border:SetPoint :TOPLEFT frame :TOPLEFT -3 3)
-    (border:SetPoint :BOTTOMRIGHT frame :BOTTOMRIGHT 3 -3)
+    (set-point border :TOPLEFT frame :TOPLEFT -3 3)
+    (set-point border :BOTTOMRIGHT frame :BOTTOMRIGHT 3 -3)
     (set-backdrop border {:edgeFile border-tex :edgeSize 11})
     (set-backdrop-border-color border 0.69803921568627 0.55686274509804
                                0.3921568627451 1)))

@@ -136,6 +136,9 @@
 (λ H.get-parent [frame]
   (: frame :GetParent))
 
+(λ H.set-word-wrap [font-string wrap]
+  (: font-string :SetWordWrap wrap))
+
 (λ H.get-string-height [font-string]
   (: font-string :GetStringHeight))
 

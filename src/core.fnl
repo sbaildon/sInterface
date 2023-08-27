@@ -78,6 +78,12 @@
 (λ H.get-height [frame]
   (: frame :GetHeight))
 
+(λ H.play [animation]
+  (: animation :Play))
+
+(λ H.stop [animation]
+  (: animation :Stop))
+
 (λ H.set-height [frame height]
   (: frame :SetHeight height))
 

@@ -139,6 +139,9 @@
 (λ H.set-word-wrap [font-string wrap]
   (: font-string :SetWordWrap wrap))
 
+(λ H.set-non-space-wrap [font-string wrap]
+  (: font-string :SetNonSpaceWrap wrap))
+
 (λ H.get-string-height [font-string]
   (: font-string :GetStringHeight))
 

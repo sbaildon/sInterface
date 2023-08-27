@@ -39,8 +39,8 @@
   (let [frame (or (and anchor.GetTexture (: anchor :GetParent) anchor))
         backdrop-offset 3
         backdrop-inset 2
-        shadow-offset 5
-        shadow-edgesize 5
+        shadow-offset 2
+        shadow-edgesize 2
         backdrop (create-frame :Frame nil frame :BackdropTemplate)
         shadow (create-frame :Frame nil frame :BackdropTemplate)]
     (doto backdrop
@@ -62,7 +62,7 @@
                  (- shadow-offset))
       (set-backdrop {:edgeFile :Interface/AddOns/sInterface/media/shadow_border
                      :edgeSize shadow-edgesize})
-      (set-backdrop-border-color 0 0 0 0.6))))
+      (set-backdrop-border-color 0 0 0 0.45))))
 
 (λ E.bordered [_self frame]
   (let [border-tex :Interface/Tooltips/UI-Tooltip-Border

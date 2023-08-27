@@ -242,7 +242,8 @@
   (set-font-object count :SystemFont_Shadow_Small_Outline)
   (set-point count :BOTTOMRIGHT 3 -2)
   (: cooldown :SetReverse true)
-  (set-tex-coord icon 0.05 0.95 0.2 0.7))
+  (set-tex-coord icon 0.05 0.95 0.2 0.7)
+  (E:draw-shadow button))
 
 (λ post-update-button [_auras button]
   (set-height button (/ (get-width button) 1.4)))

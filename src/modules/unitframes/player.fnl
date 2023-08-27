@@ -8,6 +8,7 @@
 
 (local {: hide
         : show
+        : set-word-wrap
         : get-parent
         : set-alpha
         : set-text
@@ -201,7 +202,8 @@
     (doto htext
       (set-justify-h :RIGHT)
       (set-point :TOPRIGHT -4 7)
-      (tag unit "[sInterface:health]"))))
+      (tag unit "[sInterface:health]"))
+    (tset unit :RightText htext)))
 
 (λ power-text [{:Health health &as unit}]
   (let [ptext (create-font-string health :sInterface_PlayerPower :ARTWORK
@@ -233,13 +235,20 @@
     (power-text))
   unit)
 
+(λ maybe-truncate-text [unit]
+  "Sets the left text against the right text, so that the left text will truncate"
+  (case unit
+    {:LeftText left :RightText right} (set-point left :RIGHT right :LEFT -3 0)
+    {} nil))
+
 (λ name-text [{:Health health &as unit}]
   (let [name (create-font-string health :sInterface_TargetName :ARTWORK
                                  :GameFontNormalMed2Outline)]
     (doto name
       (set-justify-h :LEFT)
       (set-point :TOPLEFT unit 4 7)
-      (tag unit "[sInterface:level<$ ][sInterface:name]"))))
+      (tag unit "[sInterface:level<$ ][sInterface:name]"))
+    (tset unit :LeftText name)))
 
 (λ target [unit]
   (doto unit
@@ -251,7 +260,8 @@
     (set-script :OnLeave on-leave)
     (health-text)
     (power)
-    (name-text))
+    (name-text)
+    (maybe-truncate-text))
   unit)
 
 (fn shared [self unit]

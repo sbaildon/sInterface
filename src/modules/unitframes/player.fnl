@@ -67,14 +67,14 @@
     (set-point icon :BOTTOMRIGHT cast-bar :BOTTOMLEFT (- gap) 0)
     (set-width cast-bar (- uf-width (+ icon-width gap)))))
 
-(λ handle-anim-finished [self _requested]
+(λ handle-cast-anim-finished [self _requested]
   (let [cast-bar (get-parent self)]
     (doto cast-bar
       (hide)
       (set-alpha 1))))
 
 (λ post-cast-stop [self unit]
-  (: self.HoldFadeOutAnim :Play))
+  (: self.FadeOutAnim :Play))
 
 (λ post-cast-fail [self unit]
   (set-status-bar-color self 1 0.09 0)
@@ -83,6 +83,7 @@
 
 (λ post-cast-start [self unit]
   (: self.HoldFadeOutAnim :Stop)
+  (: self.FadeOutAnim :Stop)
   (layout-icon-and-cast-bar (: self :GetParent) self)
   (case self
     {:notInterruptible _} (set-status-bar-color self 0.65 0.65 0.65)
@@ -98,7 +99,8 @@
                                  :GameFontHighlightOutline)
         time (create-font-string cast-bar :casty :ARTWORK
                                  :GameFontHighlightOutline)]
-    (set-script cast-bar.HoldFadeOutAnim :OnFinished handle-anim-finished)
+    (set-script cast-bar.HoldFadeOutAnim :OnFinished handle-cast-anim-finished)
+    (set-script cast-bar.FadeOutAnim :OnFinished handle-cast-anim-finished)
     (doto cast-bar
       (E:draw-border)
       (set-status-bar-texture)

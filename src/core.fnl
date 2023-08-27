@@ -84,6 +84,9 @@
 (λ H.set-width [frame width]
   (: frame :SetWidth width))
 
+(λ H.set-font-object [font-string object]
+  (: font-string :SetFontObject object))
+
 (λ H.create-frame [...]
   (create-frame :Frame ...))
 

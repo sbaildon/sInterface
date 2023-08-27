@@ -10,6 +10,7 @@
         : show
         : stop
         : play
+        : set-font-object
         : set-word-wrap
         : set-non-space-wrap
         : get-parent
@@ -223,10 +224,53 @@
 (λ on-leave [{:Highlight highlight &as _self}]
   (hide highlight))
 
+(λ calculate-spacing [width size]
+  (var spacing 0)
+  (var iterations 0)
+  (var buttons-per-row 0)
+  (while (< spacing 4)
+    (set buttons-per-row (- (math.floor (/ width size)) iterations))
+    (local leftover (- width (* buttons-per-row size)))
+    (set spacing (/ leftover (- buttons-per-row 1)))
+    (set iterations (+ iterations 1)))
+  (print spacing)
+  (print buttons-per-row)
+  [spacing buttons-per-row])
+
+(λ post-create-button [_auras
+                        {:Cooldown cooldown :Icon icon :Count count &as button}]
+  (set-font-object count :SystemFont_Shadow_Small_Outline)
+  (set-point count :BOTTOMRIGHT 3 -2)
+  (: cooldown :SetReverse true)
+  (set-tex-coord icon 0.05 0.95 0.2 0.7))
+
+(λ post-update-button [_auras button]
+  (set-height button (/ (get-width button) 1.4)))
+
+(λ auras [unit-frame ?mode]
+  (let [size 18
+        auras (create-frame :Frame nil unit-frame)
+        [spacing buttons-per-row] (calculate-spacing (get-width unit-frame)
+                                                     size)]
+    (doto auras
+      (set-point :BOTTOMLEFT unit-frame :TOPLEFT 0 8)
+      (set-size (get-width unit-frame) 300)
+      (tset :size size)
+      (tset :PostCreateButton post-create-button)
+      (tset :PostUpdateButton post-update-button)
+      (tset :spacing spacing)
+      (tset :buttonsPerRow buttons-per-row)
+      (tset :growth-y :UP))
+    (case (or ?mode :auras)
+      :auras (set-widget auras unit-frame :Auras)
+      :buffs (set-widget auras unit-frame :Buffs)
+      :debuffs (set-widget auras unit-frame :Debuffs))))
+
 (λ player [unit]
   (doto unit
     (E:draw-border)
     (set-size 230 16)
+    (auras :buffs)
     (health)
     (floating-combat-feedback)
     (health-text)
@@ -259,6 +303,7 @@
   (doto unit
     (E:draw-border)
     (set-size 230 16)
+    (auras :auras)
     (health)
     (highlight)
     (set-script :OnEnter on-enter)

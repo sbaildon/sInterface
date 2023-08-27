@@ -29,8 +29,40 @@
 (λ set-backdrop-border-color [frame ...]
   (: frame :SetBackdropBorderColor ...))
 
+(λ set-backdrop-color [frame ...]
+  (: frame :SetBackdropColor ...))
+
 (λ set-point [frame ...]
   (: frame :SetPoint ...))
+
+(λ E.draw-shadow [_self anchor]
+  (let [frame (or (and anchor.GetTexture (: anchor :GetParent) anchor))
+        backdrop-offset 3
+        backdrop-inset 2
+        shadow-offset 5
+        shadow-edgesize 5
+        backdrop (create-frame :Frame nil frame :BackdropTemplate)
+        shadow (create-frame :Frame nil frame :BackdropTemplate)]
+    (doto backdrop
+      (set-frame-strata :BACKGROUND)
+      (set-frame-level 0)
+      (set-point :TOPLEFT anchor :TOPLEFT (- backdrop-offset) backdrop-offset)
+      (set-point :BOTTOMRIGHT anchor :BOTTOMRIGHT backdrop-offset
+                 (- backdrop-offset))
+      (set-backdrop {:bgFile :Interface/ChatFrame/ChatFrameBackground
+                     :insets {:left backdrop-inset
+                              :right backdrop-inset
+                              :top backdrop-inset
+                              :bottom backdrop-inset}})
+      (set-backdrop-color 0 0 0 0.6))
+    (doto shadow
+      (set-frame-strata :BACKGROUND)
+      (set-point :TOPLEFT anchor :TOPLEFT (- shadow-offset) shadow-offset)
+      (set-point :BOTTOMRIGHT anchor :BOTTOMRIGHT shadow-offset
+                 (- shadow-offset))
+      (set-backdrop {:edgeFile :Interface/AddOns/sInterface/media/shadow_border
+                     :edgeSize shadow-edgesize})
+      (set-backdrop-border-color 0 0 0 0.6))))
 
 (λ E.bordered [_self frame]
   (let [border-tex :Interface/Tooltips/UI-Tooltip-Border

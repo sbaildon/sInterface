@@ -9,6 +9,7 @@
 (local {: hide
         : show
         : set-word-wrap
+        : set-non-space-wrap
         : get-parent
         : set-alpha
         : set-text
@@ -248,6 +249,7 @@
       (set-justify-h :LEFT)
       (set-point :TOPLEFT unit 4 7)
       (set-word-wrap false)
+      (set-non-space-wrap false)
       (tag unit "[sInterface:level<$ ][sInterface:name]"))
     (tset unit :LeftText name)))
 

@@ -7,7 +7,7 @@ LUA := $(patsubst $(SRC)/%.fnl, $(BUILD)/%.lua, ${FNL})
 XML := $(shell fd --strip-cwd-prefix --type f --extension xml .)
 XML_OUT := $(patsubst $(SRC)/%.xml, $(BUILD)/%.xml, ${XML})
 
-all: $(LUA) $(XML_OUT) $(BUILD)/sInterface.toc $(BUILD)/media/bar.tga $(EMBEDS_OUT)
+all: $(LUA) $(XML_OUT) $(BUILD)/sInterface.toc $(BUILD)/media/shadow_border.tga $(BUILD)/media/bar.tga $(EMBEDS_OUT)
 
 $(BUILD)/sInterface.toc: $(SRC)/sInterface.toc
 	@mkdir -p $(@D)
@@ -18,6 +18,10 @@ $(BUILD)/embeds/%: embeds/%
 	cp -r $< $@
 
 $(BUILD)/media/bar.tga: media/bar.tga
+	@mkdir -p $(@D)
+	cp $< $@
+
+$(BUILD)/media/shadow_border.tga: media/shadow_border.tga
 	@mkdir -p $(@D)
 	cp $< $@
 

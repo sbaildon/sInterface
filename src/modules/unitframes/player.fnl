@@ -240,7 +240,7 @@
 (λ post-create-button [_auras
                         {:Cooldown cooldown :Icon icon :Count count &as button}]
   (set-font-object count :SystemFont_Shadow_Small_Outline)
-  (set-point count :BOTTOMRIGHT 3 -2)
+  (set-point count :BOTTOMRIGHT 4 -4)
   (: cooldown :SetReverse true)
   (set-tex-coord icon 0.05 0.95 0.2 0.7)
   (E:draw-shadow button))

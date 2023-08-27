@@ -8,6 +8,8 @@
 
 (local {: hide
         : show
+        : stop
+        : play
         : set-word-wrap
         : set-non-space-wrap
         : get-parent
@@ -76,16 +78,16 @@
       (set-alpha 1))))
 
 (λ post-cast-stop [self unit]
-  (: self.FadeOutAnim :Play))
+  (play self.FadeOutAnim))
 
 (λ post-cast-fail [self unit]
   (set-status-bar-color self 1 0.09 0)
-  (: self.HoldFadeOutAnim :Play)
-  (: self.InterruptShakeAnim :Play))
+  (play self.HoldFadeOutAnim)
+  (play self.InterruptShakeAnim))
 
 (λ post-cast-start [self unit]
-  (: self.HoldFadeOutAnim :Stop)
-  (: self.FadeOutAnim :Stop)
+  (stop self.HoldFadeOutAnim)
+  (stop self.FadeOutAnim)
   (layout-icon-and-cast-bar (: self :GetParent) self)
   (case self
     {:notInterruptible _} (set-status-bar-color self 0.65 0.65 0.65)

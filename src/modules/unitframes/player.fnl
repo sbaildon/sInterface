@@ -247,6 +247,7 @@
     (doto name
       (set-justify-h :LEFT)
       (set-point :TOPLEFT unit 4 7)
+      (set-word-wrap false)
       (tag unit "[sInterface:level<$ ][sInterface:name]"))
     (tset unit :LeftText name)))
 

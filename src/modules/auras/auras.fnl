@@ -37,9 +37,9 @@
 (debuff-frame:ClearAllPoints)
 (debuff-frame:SetPoint :TOPRIGHT buff-frame :BOTTOMRIGHT 0 30)
 
-(λ style-aura-duration [{:Duration duration &as aura}]
-  (aura.Duration:SetFontObject :GameFontNormalOutline)
-  (aura.Duration:SetPoint :TOP aura :BOTTOM 0 14))
+(λ style-aura-duration [{:Duration duration :Icon icon}]
+  (duration:SetFontObject :GameFontNormalOutline)
+  (duration:SetPoint :TOP icon :BOTTOM 0 4))
 
 (λ style-aura [{:Count count :Icon icon &as aura}]
   (when aura.Duration

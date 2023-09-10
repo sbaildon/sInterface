@@ -1,4 +1,4 @@
-(local (_ {: E}) ...)
+(local (_ {: E : H}) ...)
 
 (local grid-layout-util _G.GridLayoutUtil)
 (local buff-frame _G.BuffFrame)
@@ -7,6 +7,8 @@
 (local hooksecurefunc _G.hooksecurefunc)
 (local in-combat-lockdown _G.InCombatLockdown)
 (local create-frame _G.CreateFrame)
+
+(local {: set-frame-level : set-frame-strata : get-draw-layer} H)
 
 (λ style []
   (let [aura-container buff-frame.AuraContainer]
@@ -44,8 +46,11 @@
 (λ style-aura [{:Count count :Icon icon &as aura}]
   (when aura.Duration
     (style-aura-duration aura))
-  (let [frame (create-frame :Frame nil aura)]
+  (let [frame (create-frame :Frame nil aura)
+        (layer sublayer) (get-draw-layer icon)]
     (frame:SetAllPoints icon)
+    (set-frame-strata frame layer)
+    (set-frame-level frame sublayer)
     (E:draw-border frame))
   (icon:SetTexCoord 0.1 0.9 0.1 0.9)
   (count:SetFontObject :GameFontNormalOutline)

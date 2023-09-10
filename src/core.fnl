@@ -101,6 +101,11 @@
 
 (tset H :set-point set-point)
 
+(tset H :get-frame-level get-frame-level)
+(tset H :set-frame-level set-frame-level)
+(tset H :get-frame-strata get-frame-strata)
+(tset H :set-frame-strata set-frame-strata)
+
 (λ H.create-font-string [frame ...]
   (: frame :CreateFontString ...))
 
@@ -149,6 +154,9 @@
 (λ H.set-parent [child parent]
   (: child :SetParent parent))
 
+(λ H.set-reverse [frame status]
+  (: frame :SetReverse status))
+
 (λ H.hide [region]
   (: region :Hide))
 
@@ -188,6 +196,15 @@
 
 (λ H.get-string-height [font-string]
   (: font-string :GetStringHeight))
+
+(λ H.get-frame-type [frame]
+  (: frame :GetFrameType))
+
+(λ H.get-object-type [object]
+  (: object :GetObjectType))
+
+(λ H.get-draw-layer [region]
+  (: region :GetDrawLayer))
 
 (set ns.E E)
 (set ns.H H)

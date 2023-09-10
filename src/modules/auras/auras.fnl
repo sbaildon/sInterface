@@ -1,6 +1,5 @@
 (local (_ {: E}) ...)
 
-(local anchor-util _G.AnchorUtil)
 (local grid-layout-util _G.GridLayoutUtil)
 (local buff-frame _G.BuffFrame)
 (local debuff-frame _G.DebuffFrame)

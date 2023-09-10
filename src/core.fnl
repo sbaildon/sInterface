@@ -146,6 +146,9 @@
 (λ H.get-status-bar-texture [status-bar]
   (: status-bar :GetStatusBarTexture))
 
+(λ H.set-parent [child parent]
+  (: child :SetParent parent))
+
 (λ H.hide [region]
   (: region :Hide))
 

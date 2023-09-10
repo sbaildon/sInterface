@@ -2,7 +2,6 @@
 
 (local create-frame _G.CreateFrame)
 (local is-watching-honor-as-xp _G.IsWatchingHonorAsXP)
-(local unit-level _G.IsWatchingHonorAsXP)
 (local get-restricted-account-data _G.GetRestrictedAccountData)
 (local unit-honor _G.UnitHonor)
 (local unit-xp _G.UnitXP)

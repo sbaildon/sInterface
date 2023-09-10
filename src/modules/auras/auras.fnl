@@ -1,4 +1,4 @@
-(local (_ ns) ...)
+(local (_ {: E}) ...)
 
 (local anchor-util _G.AnchorUtil)
 (local grid-layout-util _G.GridLayoutUtil)
@@ -47,7 +47,7 @@
     (style-aura-duration aura))
   (let [frame (create-frame :Frame nil aura)]
     (frame:SetAllPoints icon)
-    (ns.E:bordered frame)
+    (E:draw-border frame)
     (tset aura :frame frame))
   (icon:SetTexCoord 0.1 0.9 0.1 0.9)
   (count:SetFontObject :GameFontNormalOutline)

@@ -46,8 +46,7 @@
     (style-aura-duration aura))
   (let [frame (create-frame :Frame nil aura)]
     (frame:SetAllPoints icon)
-    (E:draw-border frame)
-    (tset aura :frame frame))
+    (E:draw-border frame))
   (icon:SetTexCoord 0.1 0.9 0.1 0.9)
   (count:SetFontObject :GameFontNormalOutline)
   (count:SetPoint :BOTTOMLEFT aura :TOPRIGHT 0 0))
